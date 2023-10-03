@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { getRoute } from './lib/getRoute'
-import { getAddress } from './lib/getAddress'
+import { getPositionFromAddress } from './lib/getPosition'
 
 export default function App() {
   getRoute()
-  getAddress()
+  getPositionFromAddress('glowarm central heating ltd mitcham CR4 4BE')
 
   return (
     <View style={styles.container}>
