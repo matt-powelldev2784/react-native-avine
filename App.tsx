@@ -5,7 +5,12 @@ import { getPositionFromAddress } from './lib/getPosition'
 
 export default function App() {
   getRoute()
-  getPositionFromAddress('glowarm central heating ltd mitcham CR4 4BE')
+  const add1 = getPositionFromAddress(
+    'glowarm central heating ltd mitcham CR4 4BE'
+  )
+  const add2 = getPositionFromAddress(
+    '102a beddinton gardens carshalton SM5 3HQ'
+  )
 
   return (
     <View style={styles.container}>
