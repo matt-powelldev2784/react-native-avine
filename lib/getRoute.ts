@@ -1,6 +1,26 @@
-export const getRoute = async () => {
+interface LatLng {
+  lat: number
+  lng: number
+}
+
+interface getRouteRequest {
+  start: LatLng
+  end: LatLng
+  waypoints: LatLng[]
+  city: string
+}
+
+export const getRoute = async (routeRequest: getRouteRequest) => {
+  console.log('routeRequest', routeRequest)
+  const { waypoints, start, end, city } = routeRequest
+
+  let waypointsString = ''
+  waypoints.forEach((waypoint, index) => {
+    waypointsString += `&destination${index}=${waypoint.lat},${waypoint.lng}`
+  })
+
   const res = await fetch(
-    `https://wps.hereapi.com/v8/findsequence2?apiKey=${process.env.HERE_API_KEY}&mode=fastest;car;traffic:disabled;motorway:-2&start=Munich;48.132777,11.565352&end=Paris;48.857397,2.346642`
+    `https://wps.hereapi.com/v8/findsequence2?apiKey=${process.env.HERE_API_KEY}&mode=fastest;car;traffic:disabled;motorway:-2&start=${start.lat},${start.lng}${waypointsString}&end=${end.lat},${end.lng}&return=polyline`
   )
 
   const json = await res.json()
