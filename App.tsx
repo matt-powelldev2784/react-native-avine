@@ -1,15 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { getRoute } from './lib/getRoute'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text className="bg-red-500">
-        Open up App.tsx to start working on your app!
-      </Text>
-      <StatusBar style="auto" />
-    </View>
-  )
+getRoute()
+
+return (
+  <View style={styles.container}>
+    <Text className="bg-blue-500">
+      Open up App.tsx to start working on your app!
+    </Text>
+    <StatusBar style="auto" />
+  </View>
+)
 }
 
 const styles = StyleSheet.create({
