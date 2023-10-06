@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { getRouteTest } from './lib/getRouteTest'
+import { getPolylines, arrayOfAddresses } from './lib/getPolylines'
 
 export default function App() {
-getRouteTest()
+  getPolylines()
 
   return (
     <View style={styles.container}>
