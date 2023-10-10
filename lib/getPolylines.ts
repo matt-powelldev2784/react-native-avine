@@ -12,6 +12,7 @@ const getPolylinesForOriginAndDestination = async ({
 }: string) => {
   const origin = await getPositionFromAddress(address1)
   const destination = await getPositionFromAddress(address2)
+  console.log('origin', origin)
 
   const routeParams = {
     transportMode: 'car',
@@ -21,18 +22,23 @@ const getPolylinesForOriginAndDestination = async ({
     apikey: process.env.HERE_API_KEY,
   }
 
+  console.log('routeParams', routeParams)
+
   const routeUrl = new URL('https://router.hereapi.com/v8/routes')
   Object.keys(routeParams).forEach((key) =>
     routeUrl.searchParams.append(key, routeParams[key])
   )
+
+  console.log('routeUrl', routeUrl)
 
   const route = await fetch(routeUrl)
   const routeJson = await route.json()
   console.log('routeJson', routeJson)
   const polylineString = routeJson.routes[0].sections[0].polyline
   const polylineGeoJson = polyline.toGeoJSON(polylineString)
-
   console.log('polylineGeoJson', polylineGeoJson)
+
+  console.log('polylineGeoJson.coordinates', polylineGeoJson.coordinates)
 
   const getMap = async (waypoints) => {
     const baseUrl = 'https://image.maps.ls.hereapi.com/mia/1.6/route'
