@@ -27,7 +27,7 @@ const MyMapComponent = () => {
         longitudeDelta: 0.0421,
       }}
       provider="google"
-      googleMapsApiKey=""
+      googleMapsApiKey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY}
     >
       <Polyline
         coordinates={coordinates}
