@@ -2,14 +2,6 @@ import React from 'react'
 import MapView, { Polyline } from 'react-native-maps'
 
 const MyMapComponent = () => {
-  console.log(
-    'process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY',
-    process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY
-  )
-
-  console.log('process.env', process.env)
-
-
   const coordinates = [
     { latitude: 37.8025259, longitude: -122.4351431 },
     { latitude: 37.7896386, longitude: -122.421646 },
