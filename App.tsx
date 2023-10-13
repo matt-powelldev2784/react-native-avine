@@ -1,5 +1,5 @@
 import React from 'react'
-import MapView, { Polyline } from 'react-native-maps'
+import MapView, { Polyline, Marker } from 'react-native-maps'
 
 const MyMapComponent = () => {
   const coordinates = [
@@ -24,17 +24,16 @@ const MyMapComponent = () => {
       <Polyline
         coordinates={coordinates}
         strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
-        strokeColors={[
-          '#7F0000',
-          '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
-          '#B24112',
-          '#E5845C',
-          '#238C23',
-          '#7F0000',
-          // add more colors for your polylines as needed
-        ]}
+        strokeColors={
+          [
+            // add more colors for your polylines as needed
+          ]
+        }
         strokeWidth={6}
       />
+      <Marker coordinate={coordinates[0]} />
+      <Marker coordinate={coordinates[1]} />
+      <Marker coordinate={coordinates[2]} />
     </MapView>
   )
 }
