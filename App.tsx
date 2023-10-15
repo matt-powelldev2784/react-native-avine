@@ -1,22 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useMemo } from 'react'
+import { View } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
+import WebMap from './components/WebMap'
+import NativeMap from './components/NativeMap'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text className="bg-red-500">
-        Open up App.tsx to start working on your app!
-      </Text>
-      <StatusBar style="auto" />
-    </View>
-  )
+const App = () => {
+  const Map = Platform.OS === 'web' ? <WebMap /> : <NativeMap />
+
+  return Map
 }
 
+export default App
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  mapContainer: {
+    width: '100%',
+    height: '100%',
   },
-});
+})
