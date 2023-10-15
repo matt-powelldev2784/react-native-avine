@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
+    "@react-google-maps/api": "^2.19.2",
     "@teovilla/react-native-web-maps": "^0.9.3",
     "expo": "~49.0.13",
     "expo-status-bar": "~1.6.0",
