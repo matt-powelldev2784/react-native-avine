@@ -9,8 +9,8 @@ import {
 import { Platform, StyleSheet } from 'react-native'
 
 const center = {
-  lat: 37.78825,
-  lng: -122.4324,
+  lat: 37.8025259,
+  lng: -122.4351431,
 }
 
 const pathCoordinates = [
@@ -26,7 +26,7 @@ const pathOptions = {
   strokeWeight: 6,
 }
 
-const MyMapComponent = () => {
+const WebMap = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY || '',
   })
@@ -35,22 +35,21 @@ const MyMapComponent = () => {
 
   return (
     <View style={styles.mapContainer}>
-      map
       <GoogleMap
-        zoom={10}
+        zoom={13}
         center={center}
         mapContainerStyle={{ width: '100%', height: '100%' }}
       >
-        {/* <Polyline path={pathCoordinates} options={pathOptions} />
-      {pathCoordinates.map((coordinate, i) => (
-        <Marker key={i} position={coordinate} />
-      ))} */}
+        <Polyline path={pathCoordinates} options={pathOptions} />
+        {pathCoordinates.map((coordinate, i) => (
+          <Marker key={i} position={coordinate} />
+        ))}
       </GoogleMap>
     </View>
   )
 }
 
-export default MyMapComponent
+export default WebMap
 
 const styles = StyleSheet.create({
   mapContainer: {
