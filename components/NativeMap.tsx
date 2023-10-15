@@ -19,7 +19,6 @@ const NativeMap = () => {
         longitudeDelta: 0.0421,
       }}
       provider="google"
-      googleMapsApiKey=""
     >
       <Polyline
         coordinates={coordinates}
