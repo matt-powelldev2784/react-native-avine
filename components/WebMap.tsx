@@ -27,19 +27,15 @@ const pathOptions = {
   strokeWeight: 6,
 }
 
-const getMapPointsAsync = async () => {
-  const test = await getMapPoints()
-  console.log('test', test)
-  return test
-}
-
 const WebMap = () => {
   const [mapPoints, setMapPoints] = React.useState([])
 
   useEffect(() => {
-    getMapPointsAsync().then((points) => {
+    const getPoints = async () => {
+      const points = await getMapPoints()
       setMapPoints(points)
-    })
+    }
+    getPoints()
   }, [])
 
   const { isLoaded } = useLoadScript({
