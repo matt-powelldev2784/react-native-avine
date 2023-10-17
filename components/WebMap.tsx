@@ -6,22 +6,12 @@ import {
   Marker,
   useLoadScript,
 } from '@react-google-maps/api'
-import { Platform, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { getMapPoints } from './getMapPoints'
-import { getGeoCode } from './getGeoCode'
-
-getGeoCode('34 Diceland Road, Banstead, Surrey, SM7 2ET')
-
-const center = {
-  lat: 51.31766,
-  lng: -0.20921,
-}
 
 const pathCoordinates = [
-  { lat: 37.8025259, lng: -122.4351431 },
-  { lat: 37.7896386, lng: -122.421646 },
-  { lat: 37.7665248, lng: -122.4161628 },
-  // Add more coordinates as needed
+  { lat: 51.4025653, lng: -0.1502123 },
+  { lat: 51.41609270000001, lng: -0.1529775 },
 ]
 
 const pathOptions = {
@@ -52,13 +42,16 @@ const WebMap = () => {
     <View style={styles.mapContainer}>
       <GoogleMap
         zoom={11}
-        center={center}
+        center={mapPoints[0]}
         mapContainerStyle={{ width: '100%', height: '100%' }}
         options={{ mapId: 'f53009f4e811f754' }}
       >
         <Polyline path={mapPoints} options={pathOptions} />
+
         {pathCoordinates.map((coordinate, i) => {
-          return <Marker key={i} position={coordinate} />
+          return (
+            <Marker key={i} position={coordinate} label={(i + 1).toString()} />
+          )
         })}
       </GoogleMap>
     </View>
