@@ -7,7 +7,7 @@ import {
   useLoadScript,
 } from '@react-google-maps/api'
 import { Platform, StyleSheet } from 'react-native'
-import { getMapPoints } from './getRoute'
+import { getMapPoints } from './getMapPoints'
 
 const center = {
   lat: 51.31766,
