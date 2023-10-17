@@ -47,7 +47,7 @@ const WebMap = () => {
   return (
     <View style={styles.mapContainer}>
       <GoogleMap
-        zoom={13}
+        zoom={11}
         center={center}
         mapContainerStyle={{ width: '100%', height: '100%' }}
         options={{ mapId: 'f53009f4e811f754' }}
