@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import {
   GoogleMap,
@@ -7,10 +7,11 @@ import {
   useLoadScript,
 } from '@react-google-maps/api'
 import { Platform, StyleSheet } from 'react-native'
+import { getMapPoints } from './getRoute'
 
 const center = {
-  lat: 37.8025259,
-  lng: -122.4351431,
+  lat: 51.31766,
+  lng: -0.20921,
 }
 
 const pathCoordinates = [
@@ -26,12 +27,26 @@ const pathOptions = {
   strokeWeight: 6,
 }
 
+const getMapPointsAsync = async () => {
+  const test = await getMapPoints()
+  console.log('test', test)
+  return test
+}
+
 const WebMap = () => {
+  const [mapPoints, setMapPoints] = React.useState([])
+
+  useEffect(() => {
+    getMapPointsAsync().then((points) => {
+      setMapPoints(points)
+    })
+  }, [])
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY || '',
   })
 
-  if (!isLoaded) return <div>Loading...</div>
+  if (!isLoaded || mapPoints.length === 0) return <div>Loading...</div>
 
   return (
     <View style={styles.mapContainer}>
@@ -39,11 +54,12 @@ const WebMap = () => {
         zoom={13}
         center={center}
         mapContainerStyle={{ width: '100%', height: '100%' }}
+        options={{ mapId: 'f53009f4e811f754' }}
       >
-        <Polyline path={pathCoordinates} options={pathOptions} />
-        {pathCoordinates.map((coordinate, i) => (
-          <Marker key={i} position={coordinate} />
-        ))}
+        <Polyline path={mapPoints} options={pathOptions} />
+        {pathCoordinates.map((coordinate, i) => {
+          return <Marker key={i} position={coordinate} />
+        })}
       </GoogleMap>
     </View>
   )
