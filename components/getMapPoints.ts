@@ -41,7 +41,6 @@ export const getMapPoints = async () => {
       body: JSON.stringify(body),
     })
     const data = await response.json()
-    console.log('data', data)
     const polyline = data.routes[0].polyline.encodedPolyline
     let points = Polyline.decode(polyline)
 

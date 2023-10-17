@@ -20,15 +20,17 @@ const pathOptions = {
   strokeWeight: 6,
 }
 
+type LatLngLiteral = google.maps.LatLngLiteral
+
 const WebMap = () => {
-  const [mapPoints, setMapPoints] = React.useState([])
+  const [mapPoints, setMapPoints] = React.useState<LatLngLiteral[]>([])
 
   useEffect(() => {
-    const getPoints = async () => {
+    const loadMapPoints = async () => {
       const points = await getMapPoints()
-      setMapPoints(points)
+      if (points) setMapPoints(points)
     }
-    getPoints()
+    loadMapPoints()
   }, [])
 
   const { isLoaded } = useLoadScript({
