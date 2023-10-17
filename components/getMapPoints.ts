@@ -14,6 +14,9 @@ const intermediates = [
   {
     address: '179 Streaham Road, Mitcham CR4',
   },
+  {
+    address: '102a Beddington Gardens, Carshalton, Surrey, SM5 3HQ',
+  },
 ]
 
 export const getMapPoints = async () => {
@@ -41,6 +44,7 @@ export const getMapPoints = async () => {
       body: JSON.stringify(body),
     })
     const data = await response.json()
+    console.log('data', data)
     const polyline = data.routes[0].polyline.encodedPolyline
     let points = Polyline.decode(polyline)
 
