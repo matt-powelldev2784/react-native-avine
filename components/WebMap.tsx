@@ -8,6 +8,9 @@ import {
 } from '@react-google-maps/api'
 import { Platform, StyleSheet } from 'react-native'
 import { getMapPoints } from './getMapPoints'
+import { getGeoCode } from './getGeoCode'
+
+getGeoCode('34 Diceland Road, Banstead, Surrey, SM7 2ET')
 
 const center = {
   lat: 51.31766,
@@ -40,6 +43,7 @@ const WebMap = () => {
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY || '',
+    libraries: ['places'],
   })
 
   if (!isLoaded || mapPoints.length === 0) return <div>Loading...</div>
