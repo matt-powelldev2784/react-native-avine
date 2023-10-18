@@ -29,11 +29,7 @@ const WebMap = () => {
   useEffect(() => {
     const loadMapPoints = async () => {
       const points = await getMapPoints()
-      const convertedPoints = points?.map((point) => ({
-        lat: point.latitude,
-        lng: point.longitude,
-      }))
-      if (convertedPoints) setMapPoints(convertedPoints)
+      if (points) setMapPoints(points)
     }
     loadMapPoints()
   }, [])

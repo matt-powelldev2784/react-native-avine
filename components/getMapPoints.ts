@@ -1,4 +1,5 @@
 import Polyline from '@mapbox/polyline'
+import { Platform } from 'react-native'
 
 const origin = {
   address: '34 Diceland Road, Banstead, Surrey, SM7 2ET',
@@ -48,6 +49,8 @@ export const getMapPoints = async () => {
     let points = Polyline.decode(polyline)
 
     const mapPoints = points.map((point) => ({
+      lat: point[0],
+      lng: point[1],
       latitude: point[0],
       longitude: point[1],
     }))
