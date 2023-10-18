@@ -61,7 +61,11 @@ const NativeMap = () => {
         <Polyline coordinates={mapPoints} strokeColor="#000" strokeWidth={6} />
 
         {pathCoordinates.map((coordinate, i) => (
-          <Marker key={i} coordinate={coordinate} title={(i + 1).toString()} />
+          <Marker key={i} coordinate={coordinate}>
+            <View style={styles.marker}>
+              <Text style={styles.text}>{i + 1}</Text>
+            </View>
+          </Marker>
         ))}
       </MapView>
     </View>
@@ -74,5 +78,14 @@ const styles = StyleSheet.create({
   mapContainer: {
     width: '100%',
     height: '50%',
+  },
+  marker: {
+    backgroundColor: '#000',
+    padding: 5,
+    borderRadius: 5,
+  },
+  text: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 })
