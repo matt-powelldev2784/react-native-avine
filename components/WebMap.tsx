@@ -13,6 +13,7 @@ const pathCoordinates = [
   { lat: 51.3576621, lng: -0.1585714 },
   { lat: 51.4025653, lng: -0.1502123 },
   { lat: 51.41609270000001, lng: -0.1529775 },
+  // { lat: 52.4049641, lng: -1.5104463 },
 ]
 
 type LatLngLiteral = google.maps.LatLngLiteral
