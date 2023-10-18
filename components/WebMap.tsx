@@ -20,18 +20,11 @@ type LatLngLiteral = google.maps.LatLngLiteral
 
 const WebMap = () => {
   const [mapPoints, setMapPoints] = useState<LatLngLiteral[]>([])
-  const [polylineCenter, setPolylineCenter] = useState<LatLngLiteral>({
-    lat: 51.5074,
-    lng: -0.1278, //fallback defaults to London
-  })
 
   useEffect(() => {
     const loadMapPoints = async () => {
       const points = await getMapPoints()
-      if (points) {
-        setMapPoints(points.mapPoints)
-        setPolylineCenter(points.polylineCenter.web)
-      }
+      if (points) setMapPoints(points.mapPoints)
     }
     loadMapPoints()
   }, [])
@@ -54,7 +47,6 @@ const WebMap = () => {
   return (
     <View style={styles.mapContainer}>
       <GoogleMap
-        center={polylineCenter}
         mapContainerStyle={{ width: '100%', height: '100%' }}
         options={{ mapId: 'f53009f4e811f754' }}
         onLoad={fitPolylineInMapView}
