@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
 import {
   GoogleMap,
@@ -24,12 +24,19 @@ const pathOptions = {
 type LatLngLiteral = google.maps.LatLngLiteral
 
 const WebMap = () => {
-  const [mapPoints, setMapPoints] = React.useState<LatLngLiteral[]>([])
+  const [mapPoints, setMapPoints] = useState<LatLngLiteral[]>([])
+  const [polylineCenter, setPolylineCenter] = useState<LatLngLiteral>({
+    lat: 51.5074,
+    lng: -0.1278, //fallback defaults to London
+  })
 
   useEffect(() => {
     const loadMapPoints = async () => {
       const points = await getMapPoints()
-      if (points) setMapPoints(points)
+      if (points) {
+        setMapPoints(points.mapPoints)
+        setPolylineCenter(points.polylineCenter.web)
+      }
     }
     loadMapPoints()
   }, [])
@@ -45,7 +52,7 @@ const WebMap = () => {
     <View style={styles.mapContainer}>
       <GoogleMap
         zoom={11}
-        center={mapPoints[0]}
+        center={polylineCenter}
         mapContainerStyle={{ width: '100%', height: '100%' }}
         options={{ mapId: 'f53009f4e811f754' }}
       >

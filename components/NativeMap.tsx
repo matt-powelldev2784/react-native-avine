@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import MapView, { Polyline, Marker } from 'react-native-maps'
 import { getMapPoints } from './getMapPoints'
 
@@ -16,26 +16,40 @@ type LatLngLiteral = {
 
 const NativeMap = () => {
   const [mapPoints, setMapPoints] = useState<LatLngLiteral[]>([])
+  const [polylineCenter, setPolylineCenter] = useState<LatLngLiteral>({
+    latitude: 51.5074,
+    longitude: -0.1278, //fallback defaults to London
+  })
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     const loadMapPoints = async () => {
       const points = await getMapPoints()
-      if (points) setMapPoints(points)
+      if (points) {
+        setMapPoints(points.mapPoints)
+        setPolylineCenter(points.polylineCenter.native)
+        setIsLoaded(true)
+      }
     }
     loadMapPoints()
   }, [])
 
-  if (mapPoints.length === 0) return null
+  if (mapPoints.length === 0 || !isLoaded)
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    )
 
   return (
     <View style={styles.mapContainer}>
       <MapView
         style={{ flex: 1 }}
         initialRegion={{
-          latitude: mapPoints[0].latitude,
-          longitude: mapPoints[0].longitude,
-          latitudeDelta: 0.25,
-          longitudeDelta: 0.25,
+          latitude: polylineCenter.latitude,
+          longitude: polylineCenter.longitude,
+          latitudeDelta: 0.15,
+          longitudeDelta: 0.15,
         }}
       >
         <Polyline coordinates={mapPoints} strokeColor="#000" strokeWidth={6} />
