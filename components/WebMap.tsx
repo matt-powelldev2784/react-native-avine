@@ -15,12 +15,6 @@ const pathCoordinates = [
   { lat: 51.41609270000001, lng: -0.1529775 },
 ]
 
-const pathOptions = {
-  strokeColor: '#000',
-  strokeOpacity: 1,
-  strokeWeight: 6,
-}
-
 type LatLngLiteral = google.maps.LatLngLiteral
 
 const WebMap = () => {
@@ -46,17 +40,32 @@ const WebMap = () => {
     libraries: ['places'],
   })
 
+  const fitPolylineInMapView = (map: google.maps.Map) => {
+    const bounds = new window.google.maps.LatLngBounds()
+    mapPoints.forEach((point) => {
+      bounds.extend(point)
+    })
+    map.fitBounds(bounds)
+  }
+
   if (!isLoaded || mapPoints.length === 0) return <div>Loading...</div>
 
   return (
     <View style={styles.mapContainer}>
       <GoogleMap
-        zoom={11}
         center={polylineCenter}
         mapContainerStyle={{ width: '100%', height: '100%' }}
         options={{ mapId: 'f53009f4e811f754' }}
+        onLoad={fitPolylineInMapView}
       >
-        <Polyline path={mapPoints} options={pathOptions} />
+        <Polyline
+          path={mapPoints}
+          options={{
+            strokeColor: '#000',
+            strokeOpacity: 1,
+            strokeWeight: 6,
+          }}
+        />
 
         {pathCoordinates.map((coordinate, i) => {
           return (

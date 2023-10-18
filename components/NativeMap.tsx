@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import MapView, { Polyline, Marker } from 'react-native-maps'
 import { getMapPoints } from './getMapPoints'
+import { calculateRegion } from './calculateRegion'
 
 const pathCoordinates = [
   { latitude: 51.3576621, longitude: -0.1585714 },
@@ -12,13 +13,18 @@ const pathCoordinates = [
 type LatLngLiteral = {
   latitude: number
   longitude: number
+  latitudeDelta?: number | undefined
+  longitudeDelta?: number | undefined
 }
 
 const NativeMap = () => {
   const [mapPoints, setMapPoints] = useState<LatLngLiteral[]>([])
   const [polylineCenter, setPolylineCenter] = useState<LatLngLiteral>({
     latitude: 51.5074,
-    longitude: -0.1278, //fallback defaults to London
+    longitude: -0.1278,
+    latitudeDelta: 0.15,
+    longitudeDelta: 0.15,
+    //fallback defaults to London
   })
   const [isLoaded, setIsLoaded] = useState(false)
 
@@ -27,7 +33,7 @@ const NativeMap = () => {
       const points = await getMapPoints()
       if (points) {
         setMapPoints(points.mapPoints)
-        setPolylineCenter(points.polylineCenter.native)
+        setPolylineCenter(calculateRegion(points.mapPoints))
         setIsLoaded(true)
       }
     }
@@ -48,8 +54,8 @@ const NativeMap = () => {
         initialRegion={{
           latitude: polylineCenter.latitude,
           longitude: polylineCenter.longitude,
-          latitudeDelta: 0.15,
-          longitudeDelta: 0.15,
+          latitudeDelta: polylineCenter.latitudeDelta || 0.15, //0.15 is a fallback for London map
+          longitudeDelta: polylineCenter.longitudeDelta || 0.15, //0.15 is a fallback for London map
         }}
       >
         <Polyline coordinates={mapPoints} strokeColor="#000" strokeWidth={6} />

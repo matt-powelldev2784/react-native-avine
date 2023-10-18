@@ -18,6 +18,10 @@ const intermediates = [
   {
     address: '102a Beddington Gardens, Carshalton, Surrey, SM5 3HQ',
   },
+  // {
+  //   address:
+  //     'Small Firms Services Ltd,Union House,111 New Union Street,Coventry,CV1 2NT',
+  // },
 ]
 
 export const getMapPoints = async () => {
