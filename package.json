@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
+    "@mapbox/polyline": "^1.2.1",
     "@react-google-maps/api": "^2.19.2",
     "@teovilla/react-native-web-maps": "^0.9.3",
     "expo": "~49.0.13",
@@ -19,10 +20,12 @@
     "react-dom": "^18.2.0",
     "react-native": "0.72.5",
     "react-native-maps": "^1.8.0",
-    "react-native-web": "~0.19.6"
+    "react-native-web": "~0.19.6",
+    "use-places-autocomplete": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/mapbox__polyline": "^1.0.3",
     "@types/react": "~18.2.14",
     "@types/react-native": "^0.72.3",
     "react-native-dotenv": "^3.4.9",

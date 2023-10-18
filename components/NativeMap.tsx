@@ -1,37 +1,91 @@
-import React from 'react'
-import MapView, { Polyline } from 'react-native-maps'
+import React, { useState, useEffect } from 'react'
+import { View, StyleSheet, Text } from 'react-native'
+import MapView, { Polyline, Marker } from 'react-native-maps'
+import { getMapPoints } from './getMapPoints'
+import { calculateRegion } from './calculateRegion'
+
+const pathCoordinates = [
+  { latitude: 51.3576621, longitude: -0.1585714 },
+  { latitude: 51.4025653, longitude: -0.1502123 },
+  { latitude: 51.41609270000001, longitude: -0.1529775 },
+]
+
+type LatLngLiteral = {
+  latitude: number
+  longitude: number
+  latitudeDelta?: number | undefined
+  longitudeDelta?: number | undefined
+}
 
 const NativeMap = () => {
-  const coordinates = [
-    { latitude: 37.8025259, longitude: -122.4351431 },
-    { latitude: 37.7896386, longitude: -122.421646 },
-    { latitude: 37.7665248, longitude: -122.4161628 },
-    // Add more coordinates as needed
-  ]
+  const [mapPoints, setMapPoints] = useState<LatLngLiteral[]>([])
+  const [polylineCenter, setPolylineCenter] = useState<LatLngLiteral>({
+    latitude: 51.5074,
+    longitude: -0.1278,
+    latitudeDelta: 0.15,
+    longitudeDelta: 0.15,
+    //fallback defaults to London
+  })
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(() => {
+    const loadMapPoints = async () => {
+      const points = await getMapPoints()
+      if (points) {
+        setMapPoints(points.mapPoints)
+        setPolylineCenter(calculateRegion(points.mapPoints))
+        setIsLoaded(true)
+      }
+    }
+    loadMapPoints()
+  }, [])
+
+  if (mapPoints.length === 0 || !isLoaded)
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    )
 
   return (
-    <MapView
-      style={{ flex: 1 }}
-      initialRegion={{
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }}
-      provider="google"
-    >
-      <Polyline
-        coordinates={coordinates}
-        strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
-        strokeColors={
-          [
-            // add more colors for your polylines as needed
-          ]
-        }
-        strokeWidth={6}
-      />
-    </MapView>
+    <View style={styles.mapContainer}>
+      <MapView
+        style={{ flex: 1 }}
+        initialRegion={{
+          latitude: polylineCenter.latitude,
+          longitude: polylineCenter.longitude,
+          latitudeDelta: polylineCenter.latitudeDelta || 0.15, //0.15 is a fallback for London map
+          longitudeDelta: polylineCenter.longitudeDelta || 0.15, //0.15 is a fallback for London map
+        }}
+      >
+        <Polyline coordinates={mapPoints} strokeColor="#000" strokeWidth={6} />
+
+        {pathCoordinates.map((coordinate, i) => (
+          <Marker key={i} coordinate={coordinate}>
+            <View style={styles.marker}>
+              <Text style={styles.text}>{i + 1}</Text>
+            </View>
+          </Marker>
+        ))}
+      </MapView>
+    </View>
   )
 }
 
 export default NativeMap
+
+const styles = StyleSheet.create({
+  mapContainer: {
+    width: '100%',
+    height: '50%',
+  },
+  marker: {
+    backgroundColor: '#000',
+    padding: 5,
+    borderRadius: 5,
+  },
+  text: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+})
