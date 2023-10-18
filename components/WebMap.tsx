@@ -29,7 +29,11 @@ const WebMap = () => {
   useEffect(() => {
     const loadMapPoints = async () => {
       const points = await getMapPoints()
-      if (points) setMapPoints(points)
+      const convertedPoints = points?.map((point) => ({
+        lat: point.latitude,
+        lng: point.longitude,
+      }))
+      if (convertedPoints) setMapPoints(convertedPoints)
     }
     loadMapPoints()
   }, [])
@@ -66,6 +70,6 @@ export default WebMap
 const styles = StyleSheet.create({
   mapContainer: {
     width: '100%',
-    height: '100%',
+    height: '50%',
   },
 })
