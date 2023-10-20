@@ -9,7 +9,7 @@ const App = () => {
   const Map = Platform.OS === 'web' ? <WebMap /> : <NativeMap />
 
   return (
-    <View className="w-full">
+    <View className="w-full h-full">
       <StatusBar style="auto" />
       <View className="h-1/2">{Map}</View>
 
