@@ -19,10 +19,3 @@ const App = () => {
 }
 
 export default App
-
-const styles = StyleSheet.create({
-  mapContainer: {
-    width: '100%',
-    height: '100%',
-  },
-})
