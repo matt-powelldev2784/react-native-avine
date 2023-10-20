@@ -48,7 +48,7 @@ const NativeMap = () => {
     )
 
   return (
-    <View className="w-full h-full">
+    <View className="flex-1">
       <MapView
         className="flex-1"
         initialRegion={{
