@@ -75,6 +75,6 @@ export default WebMap
 const styles = StyleSheet.create({
   mapContainer: {
     width: '100%',
-    height: '50%',
+    height: '100%',
   },
 })

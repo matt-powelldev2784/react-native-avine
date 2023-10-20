@@ -77,7 +77,7 @@ export default NativeMap
 const styles = StyleSheet.create({
   mapContainer: {
     width: '100%',
-    height: '50%',
+    height: '100%',
   },
   marker: {
     backgroundColor: '#000',
