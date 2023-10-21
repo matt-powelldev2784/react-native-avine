@@ -6,7 +6,6 @@ import {
   Marker,
   useLoadScript,
 } from '@react-google-maps/api'
-import { StyleSheet } from 'react-native'
 import { getMapPoints } from './getMapPoints'
 
 const pathCoordinates = [
