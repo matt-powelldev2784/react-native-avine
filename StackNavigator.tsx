@@ -12,10 +12,16 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 const StackNavigator = () => {
+  const user = false
+
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Home" component={HomeScreen} />
+      {!user ? <Stack.Screen name="Login" component={LoginScreen} /> : null}
+      {user ? (
+        <>
+          <Stack.Screen name="Home" component={HomeScreen} />
+        </>
+      ) : null}
     </Stack.Navigator>
   )
 }
