@@ -48,9 +48,9 @@ const NativeMap = () => {
     )
 
   return (
-    <View style={styles.mapContainer}>
+    <View className="flex-1">
       <MapView
-        style={{ flex: 1 }}
+        className="flex-1"
         initialRegion={{
           latitude: polylineCenter.latitude,
           longitude: polylineCenter.longitude,
@@ -62,8 +62,8 @@ const NativeMap = () => {
 
         {pathCoordinates.map((coordinate, i) => (
           <Marker key={i} coordinate={coordinate}>
-            <View style={styles.marker}>
-              <Text style={styles.text}>{i + 1}</Text>
+            <View className="bg-red-500 p-1 rounded">
+              <Text className="text-white font-bold">{i + 1}</Text>
             </View>
           </Marker>
         ))}
@@ -73,19 +73,3 @@ const NativeMap = () => {
 }
 
 export default NativeMap
-
-const styles = StyleSheet.create({
-  mapContainer: {
-    width: '100%',
-    height: '50%',
-  },
-  marker: {
-    backgroundColor: '#000',
-    padding: 5,
-    borderRadius: 5,
-  },
-  text: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-})

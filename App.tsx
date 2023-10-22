@@ -1,20 +1,19 @@
-import React, { useMemo } from 'react'
-import { View } from 'react-native'
-import { Platform, StyleSheet } from 'react-native'
+import React from 'react'
+import { Platform } from 'react-native'
 import WebMap from './components/WebMap'
 import NativeMap from './components/NativeMap'
+import { NavigationContainer } from '@react-navigation/native'
+
+import StackNavigator from './StackNavigator'
 
 const App = () => {
   const Map = Platform.OS === 'web' ? <WebMap /> : <NativeMap />
 
-  return Map
+  return (
+    <NavigationContainer>
+      <StackNavigator />
+    </NavigationContainer>
+  )
 }
 
 export default App
-
-const styles = StyleSheet.create({
-  mapContainer: {
-    width: '100%',
-    height: '100%',
-  },
-})

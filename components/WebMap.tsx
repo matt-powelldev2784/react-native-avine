@@ -6,7 +6,6 @@ import {
   Marker,
   useLoadScript,
 } from '@react-google-maps/api'
-import { StyleSheet } from 'react-native'
 import { getMapPoints } from './getMapPoints'
 
 const pathCoordinates = [
@@ -45,7 +44,7 @@ const WebMap = () => {
   if (!isLoaded || mapPoints.length === 0) return <div>Loading...</div>
 
   return (
-    <View style={styles.mapContainer}>
+    <View className="flex-1">
       <GoogleMap
         mapContainerStyle={{ width: '100%', height: '100%' }}
         options={{ mapId: 'f53009f4e811f754' }}
@@ -72,9 +71,3 @@ const WebMap = () => {
 
 export default WebMap
 
-const styles = StyleSheet.create({
-  mapContainer: {
-    width: '100%',
-    height: '50%',
-  },
-})
