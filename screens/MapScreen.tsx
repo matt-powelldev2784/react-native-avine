@@ -1,4 +1,4 @@
-import { Platform, View } from 'react-native'
+import { Platform, Text, View } from 'react-native'
 import React from 'react'
 import WebMap from '../components/WebMap'
 import NativeMap from '../components/NativeMap'

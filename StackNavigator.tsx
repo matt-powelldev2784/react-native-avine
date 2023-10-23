@@ -16,11 +16,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>()
 const StackNavigator = () => {
   const user = true
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       {!user ? <Stack.Screen name="Login" component={LoginScreen} /> : null}
       {user ? (
         <>
-          <Stack.Screen name="Map" component={MapScreen}  />
+          <Stack.Screen name="Map" component={MapScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
         </>
       ) : null}
