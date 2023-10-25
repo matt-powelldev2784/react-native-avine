@@ -7,8 +7,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import StackNavigator from './StackNavigator'
 
 const App = () => {
-  const Map = Platform.OS === 'web' ? <WebMap /> : <NativeMap />
-
   return (
     <NavigationContainer>
       <StackNavigator />
