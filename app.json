@@ -25,6 +25,25 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
-  }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "57fc5be8-99ae-42f8-b2f5-913b83313e14"
+      }
+    },
+    "plugins": [
+      "expo-build-properties"
+    ]
+  },
+  "plugins": [
+    "@react-native-firebase/app",
+    [
+      "expo-build-properties",
+      {
+        "ios": {
+          "useFrameworks": "static"
+        }
+      }
+    ]
+  ]
 }
