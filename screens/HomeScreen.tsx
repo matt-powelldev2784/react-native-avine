@@ -1,23 +1,37 @@
-import { View, Text, Platform } from 'react-native'
+import { View, Text, Platform, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React from 'react'
 import { Image } from 'react-native'
 import logo from '../assets/planme_logo_white.png'
+import PlanMeLogo from '../components/PlanMeLogo'
 
 const HomeScreen = () => {
   return (
-    <SafeAreaView className="w-full h-full bg-primaryBlue">
-      <View className="flex-1 items-center p-4 bg-primaryBlue">
-        {Platform.OS === 'web' ? (
-          <Image source={{ uri: logo }} style={{ width: 300, height: 74 }} />
-        ) : (
-          <Image source={require('../assets/planme_logo_white.png')} />
-        )}
-
-        <Text className="bg-primaryBlue">HomeScreen1</Text>
-      </View>
+    <SafeAreaView style={styles.container}>
+      <PlanMeLogo />
+      <Text style={styles.text}>Quick and Simple Round Planner</Text>
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 4,
+    backgroundColor: '#337bae',
+  },
+  image: {
+    width: 300,
+    height: 74,
+  },
+  text: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
+    padding: 8,
+  },
+})
 
 export default HomeScreen
