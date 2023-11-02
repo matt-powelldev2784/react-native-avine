@@ -20,8 +20,8 @@ const StackNavigator = () => {
       {!user ? <Stack.Screen name="Login" component={LoginScreen} /> : null}
       {user ? (
         <>
-          <Stack.Screen name="Map" component={MapScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Map" component={MapScreen} />
         </>
       ) : null}
     </Stack.Navigator>
