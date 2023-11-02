@@ -1,13 +1,18 @@
 import React from 'react'
 import { Svg, Path, G } from 'react-native-svg'
 
-const PlanMeLogo = () => (
+interface PlanMeLogoProps {
+  width?: number
+  height?: number
+}
+
+const PlanMeLogo = ({ width, height }: PlanMeLogoProps) => (
   <Svg
     id="Layer_1"
     x="0px"
     y="0px"
-    width="300px"
-    height="61.2px"
+    width={width ? width : '300px'}
+    height={height ? height : '61.2px'}
     viewBox="0 0 300 61.2"
   >
     <G>
