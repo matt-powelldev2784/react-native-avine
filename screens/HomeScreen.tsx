@@ -9,7 +9,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <PlanMeLogo />
-      <Text style={styles.text}>Quick and Simple Round Planner</Text>
+      <Text style={styles.text}>Quick and Simple Cleaning Planner</Text>
     </SafeAreaView>
   )
 }
