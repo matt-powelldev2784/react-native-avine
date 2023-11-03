@@ -1,8 +1,6 @@
-import { View, Text, Platform, StyleSheet } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import React from 'react'
-import { Image } from 'react-native'
-import logo from '../assets/planme_logo_white.png'
+import React, { useEffect } from 'react'
 import PlanMeLogo from '../components/PlanMeLogo'
 
 const HomeScreen = () => {
