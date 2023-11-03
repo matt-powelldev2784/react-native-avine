@@ -10,7 +10,7 @@ const Dashboard = () => {
         <PlanMeLogo width={150} height={40} />
       </View>
       <View style={styles.page}>
-        <Text style={styles.text}>Quick and Simple Cleaning Planner</Text>
+        <Text style={styles.text}>Quick and Simple Round Planner</Text>
       </View>
       <View style={styles.nav}>
         <Image
