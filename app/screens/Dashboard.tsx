@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React from 'react'
 import PlanMeLogo from '../components/PlanMeLogo/PlanMeLogo'
@@ -7,7 +7,11 @@ const Dashboard = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.logoBackground}>
-        <PlanMeLogo width={150} height={40} />
+        {Platform.OS === 'web' ? (
+          <PlanMeLogo width={200} height={50} />
+        ) : (
+          <PlanMeLogo width={150} height={40} />
+        )}
       </View>
       <View style={styles.page}>
         <Text style={styles.text}>Quick and Simple Round Planner</Text>
