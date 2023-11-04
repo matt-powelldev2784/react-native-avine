@@ -22,8 +22,8 @@ const StackNavigator = () => {
       {!user ? <Stack.Screen name="Login" component={LoginScreen} /> : null}
       {user ? (
         <>
-          <Stack.Screen name="Dashboard" component={Dashboard} />
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Dashboard" component={Dashboard} />
           <Stack.Screen name="Map" component={MapScreen} />
         </>
       ) : null}

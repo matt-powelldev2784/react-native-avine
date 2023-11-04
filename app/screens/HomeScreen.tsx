@@ -1,4 +1,4 @@
-import { Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet, ActivityIndicator } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { useEffect } from 'react'
 import PlanMeLogo from '../components/PlanMeLogo/PlanMeLogo'
@@ -8,6 +8,11 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.container}>
       <PlanMeLogo />
       <Text style={styles.text}>Quick and Simple Round Planner</Text>
+      <ActivityIndicator
+        color={'#ffffff'}
+        size="large"
+        style={{ padding: 8, position: 'absolute', bottom: 32 }}
+      />
     </SafeAreaView>
   )
 }
