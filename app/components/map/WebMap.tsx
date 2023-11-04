@@ -70,4 +70,3 @@ const WebMap = () => {
 }
 
 export default WebMap
-
