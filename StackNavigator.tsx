@@ -1,14 +1,15 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import HomeScreen from './screens/HomeScreen'
-import LoginScreen from './screens/LoginScreen'
-import MapScreen from './screens/MapScreen'
-import Dashboard from './screens/Dashboard'
+import HomeScreen from './app/screens/HomeScreen'
+import LoginScreen from './app/screens/LoginScreen'
+import MapScreen from './app/screens/MapScreen'
+import Dashboard from './app/screens/Dashboard'
 
 export type RootStackParamList = {
-  Home: undefined
   Login: undefined
+  Home: undefined
+  Dashboard: undefined
   Map: undefined
 }
 
@@ -21,7 +22,8 @@ const StackNavigator = () => {
       {!user ? <Stack.Screen name="Login" component={LoginScreen} /> : null}
       {user ? (
         <>
-          <Stack.Screen name="Home" component={Dashboard} />
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Map" component={MapScreen} />
         </>
       ) : null}

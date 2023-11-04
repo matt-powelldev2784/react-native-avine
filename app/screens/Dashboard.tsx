@@ -14,15 +14,15 @@ const Dashboard = () => {
       </View>
       <View style={styles.nav}>
         <Image
-          source={require('../assets/customers.png')}
+          source={require('../../assets/customers.png')}
           style={{ width: 40, height: 40 }}
         />
         <Image
-          source={require('../assets/round.png')}
+          source={require('../../assets/round.png')}
           style={{ width: 40, height: 40 }}
         />
         <Image
-          source={require('../assets/pay.png')}
+          source={require('../../assets/pay.png')}
           style={{ width: 40, height: 40 }}
         />
       </View>
