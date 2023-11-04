@@ -3,7 +3,24 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { useEffect } from 'react'
 import PlanMeLogo from '../components/PlanMeLogo/PlanMeLogo'
 
-const HomeScreen = () => {
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../StackNavigator'
+
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>
+
+type Props = {
+  navigation: HomeScreenNavigationProp
+}
+
+const HomeScreen = ({ navigation }: Props) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.navigate('Dashboard')
+    }, 2000)
+
+    return () => clearTimeout(timer) // This will clear the timer when the component unmounts
+  }, [navigation])
+
   return (
     <SafeAreaView style={styles.container}>
       <PlanMeLogo />
