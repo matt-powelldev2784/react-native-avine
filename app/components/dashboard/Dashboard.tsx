@@ -48,17 +48,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     width: '100%',
   },
-  nav: {
-    position: 'absolute',
-    bottom: 0,
-    paddingBottom: 32,
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    backgroundColor: '#ffffff',
-    width: '100%',
-  },
   text: {
     color: '#337bae',
     fontSize: 14,
