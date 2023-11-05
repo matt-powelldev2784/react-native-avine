@@ -1,10 +1,14 @@
 import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import PlanMeLogo from '../components/PlanMeLogo/PlanMeLogo'
 import NavBar from '../components/navBar/NavBar'
 
-const Dashboard = () => {
+interface DashboardProps {
+  Children?: ReactNode
+}
+
+const Dashboard = ({ Children }: DashboardProps) => {
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.logoBackground}>
@@ -15,9 +19,13 @@ const Dashboard = () => {
         )}
         {Platform.OS === 'web' ? <NavBar /> : null}
       </View>
+
       <View style={styles.page}>
         <Text style={styles.text}>Quick and Simple Round Planner</Text>
       </View>
+
+      {Children}
+
       {Platform.OS !== 'web' ? <NavBar /> : null}
     </SafeAreaView>
   )
