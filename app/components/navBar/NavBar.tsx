@@ -49,14 +49,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: Platform.OS === 'web' ? 'flex-end' : 'space-around',
     backgroundColor: '#337bae',
-    gap: 16,
+    gap: Platform.OS === 'web' ? 32 : 0,
     width: '100%',
   },
   button: {
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 4,
-    elevation: 3,
   },
   buttonText: {
     color: '#ffffff',
