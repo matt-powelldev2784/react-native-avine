@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "avine_windows",
-    "slug": "avine_windows",
+    "name": "PlanMe",
+    "slug": "PlanMe",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7eadff23-7ea7-42cb-9400-e546e5d7a443"
+      }
     }
   }
 }

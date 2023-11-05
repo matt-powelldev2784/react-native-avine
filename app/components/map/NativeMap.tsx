@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, Text } from 'react-native'
 import MapView, { Polyline, Marker } from 'react-native-maps'
 import { getMapPoints } from './getMapPoints'
 import { calculateRegion } from './calculateRegion'

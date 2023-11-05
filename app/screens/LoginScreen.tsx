@@ -2,7 +2,7 @@ import { View, Text, Button } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../StackNavigator'
+import { RootStackParamList } from '../../StackNavigator'
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'Login'>
 
