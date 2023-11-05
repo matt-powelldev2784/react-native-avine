@@ -35,9 +35,10 @@ const styles = StyleSheet.create({
   },
   logoBackground: {
     backgroundColor: '#337bae',
-    paddingHorizontal: Platform.OS === 'web' ? 12 : 0,
+    paddingHorizontal: Platform.OS === 'web' ? 24 : 0,
     flexDirection: 'row',
     justifyContent: Platform.OS === 'web' ? 'space-between' : 'center',
+    alignItems: 'center',
     width: '100%',
   },
   page: {

@@ -7,11 +7,19 @@ import {
   Pressable,
 } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../StackNavigator'
 
 const NavBar = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+
   return (
     <View style={styles.nav}>
-      <Pressable style={styles.button}>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate('Customers')}
+      >
         <Image
           source={require('../../../assets/customers.png')}
           style={{ width: 25, height: 25 }}
@@ -19,7 +27,10 @@ const NavBar = () => {
         <Text style={styles.buttonText}>CUSTOMERS</Text>
       </Pressable>
 
-      <Pressable style={styles.button}>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate('Rounds')}
+      >
         <Image
           source={require('../../../assets/round.png')}
           style={{ width: 25, height: 25 }}
@@ -27,7 +38,10 @@ const NavBar = () => {
         <Text style={styles.buttonText}>ROUNDS</Text>
       </Pressable>
 
-      <Pressable style={styles.button}>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate('Payments')}
+      >
         <Image
           source={require('../../../assets/pay.png')}
           style={{ width: 25, height: 25 }}
@@ -56,8 +70,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 4,
+    paddingVertical: Platform.OS === 'web' ? 8 : 0,
   },
   buttonText: {
+    paddingTop: 4,
     color: '#ffffff',
   },
 })
