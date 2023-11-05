@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React from 'react'
 import PlanMeLogo from '../components/PlanMeLogo/PlanMeLogo'
+import NavBar from '../components/navBar/NavBar'
 
 const Dashboard = () => {
   return (
@@ -12,24 +13,12 @@ const Dashboard = () => {
         ) : (
           <PlanMeLogo width={150} height={40} />
         )}
+        {Platform.OS === 'web' ? <NavBar /> : null}
       </View>
       <View style={styles.page}>
         <Text style={styles.text}>Quick and Simple Round Planner</Text>
       </View>
-      <View style={styles.nav}>
-        <Image
-          source={require('../../assets/customers.png')}
-          style={{ width: 40, height: 40 }}
-        />
-        <Image
-          source={require('../../assets/round.png')}
-          style={{ width: 40, height: 40 }}
-        />
-        <Image
-          source={require('../../assets/pay.png')}
-          style={{ width: 40, height: 40 }}
-        />
-      </View>
+      {Platform.OS !== 'web' ? <NavBar /> : null}
     </SafeAreaView>
   )
 }
@@ -37,16 +26,19 @@ const Dashboard = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: Platform.OS === 'web' ? 'flex-start' : 'center',
     backgroundColor: '#337bae',
   },
   logoBackground: {
     backgroundColor: '#337bae',
+    paddingHorizontal: Platform.OS === 'web' ? 12 : 0,
+    flexDirection: 'row',
+    justifyContent: Platform.OS === 'web' ? 'space-between' : 'center',
+    width: '100%',
   },
   page: {
     flex: 1,
     alignItems: 'center',
-
     gap: 8,
     backgroundColor: '#ffffff',
     width: '100%',
