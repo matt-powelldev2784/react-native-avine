@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Platform } from 'react-native'
+import { View, StyleSheet, Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { ReactNode } from 'react'
 import PlanMeLogo from '../PlanMeLogo/PlanMeLogo'
