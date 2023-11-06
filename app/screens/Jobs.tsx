@@ -3,11 +3,11 @@ import React from 'react'
 import Dashboard from '../components/dashboard/Dashboard'
 import JobList from '../components/Jobs/jobsList/JobList'
 
-const Rounds = () => {
+const Jobs = () => {
   return (
     <>
       <Dashboard>
-        <Text style={styles.pageTitle}>Rounds</Text>
+        <Text style={styles.pageTitle}>Jobs</Text>
         <JobList />
       </Dashboard>
     </>
@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Rounds
+export default Jobs

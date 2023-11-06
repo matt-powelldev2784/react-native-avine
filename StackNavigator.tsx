@@ -7,6 +7,7 @@ import MapScreen from './app/screens/MapScreen'
 import Customers from './app/screens/Customers'
 import Payments from './app/screens/Paymemts'
 import Rounds from './app/screens/Rounds'
+import Jobs from './app/screens/Jobs'
 
 export type RootStackParamList = {
   Login: undefined
@@ -14,6 +15,7 @@ export type RootStackParamList = {
   Customers: undefined
   Rounds: undefined
   Payments: undefined
+  Jobs: undefined
   Map: undefined
 }
 
@@ -26,6 +28,7 @@ const StackNavigator = () => {
       {!user ? <Stack.Screen name="Login" component={LoginScreen} /> : null}
       {user ? (
         <>
+          <Stack.Screen name="Jobs" component={Jobs} />
           <Stack.Screen name="Customers" component={Customers} />
           <Stack.Screen name="Rounds" component={Rounds} />
           <Stack.Screen name="Payments" component={Payments} />
