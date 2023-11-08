@@ -2,12 +2,11 @@ import { Text, StyleSheet, ActivityIndicator } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { useEffect } from 'react'
 import PlanMeLogo from '../components/PlanMeLogo/PlanMeLogo'
-
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../StackNavigator'
 
-const HomeScreen = () => {
+const SplashScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
   useEffect(() => {
@@ -51,4 +50,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default HomeScreen
+export default SplashScreen

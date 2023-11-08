@@ -1,12 +1,12 @@
-import { Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Platform } from 'react-native'
 import React from 'react'
 import { Dashboard, JobList } from '../components'
 
-const Rounds = () => {
+const Jobs = () => {
   return (
     <>
       <Dashboard>
-        <Text style={styles.pageTitle}>Rounds</Text>
+        <Text style={styles.pageTitle}>Jobs</Text>
         <JobList />
       </Dashboard>
     </>
@@ -69,4 +69,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Rounds
+export default Jobs
