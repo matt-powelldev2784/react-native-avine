@@ -1,4 +1,4 @@
-import { View, StyleSheet, Platform } from 'react-native'
+import { View, StyleSheet, Platform, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { ReactNode } from 'react'
 import PlanMeLogo from '../PlanMeLogo/PlanMeLogo'
@@ -9,16 +9,32 @@ interface DashboardProps {
 }
 
 const Dashboard = ({ children }: DashboardProps) => {
+  const windowWidth = useWindowDimensions().width
+
   return (
     <SafeAreaView style={styles.screen}>
-      <View style={styles.logoBackground}>
-        {Platform.OS === 'web' ? (
+      {/* Large Screen Web View */}
+      {Platform.OS === 'web' && windowWidth < 768 ? (
+        <View style={styles.navSmallScreen}>
           <PlanMeLogo width={200} height={50} />
-        ) : (
+          <NavBar />
+        </View>
+      ) : null}
+
+      {/* Small Screen Web View */}
+      {Platform.OS === 'web' && windowWidth > 768 ? (
+        <View style={styles.navLargeScreen}>
+          <PlanMeLogo width={200} height={50} />
+          <NavBar />
+        </View>
+      ) : null}
+
+      {/* Native App View */}
+      {Platform.OS !== 'web' ? (
+        <View style={styles.navNative}>
           <PlanMeLogo width={150} height={40} />
-        )}
-        {Platform.OS === 'web' ? <NavBar /> : null}
-      </View>
+        </View>
+      ) : null}
 
       <View style={styles.page}>{children}</View>
 
@@ -33,11 +49,25 @@ const styles = StyleSheet.create({
     alignItems: Platform.OS === 'web' ? 'flex-start' : 'center',
     backgroundColor: '#337bae',
   },
-  logoBackground: {
+  navSmallScreen: {
+    backgroundColor: '#337bae',
+    paddingHorizontal: Platform.OS === 'web' ? 24 : 0,
+    justifyContent: Platform.OS === 'web' ? 'center' : 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
+  navLargeScreen: {
     backgroundColor: '#337bae',
     paddingHorizontal: Platform.OS === 'web' ? 24 : 0,
     flexDirection: 'row',
-    justifyContent: Platform.OS === 'web' ? 'space-between' : 'center',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+  },
+  navNative: {
+    backgroundColor: '#337bae',
+    paddingHorizontal: Platform.OS === 'web' ? 24 : 0,
+    justifyContent: Platform.OS === 'web' ? 'center' : 'center',
     alignItems: 'center',
     width: '100%',
   },

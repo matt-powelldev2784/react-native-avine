@@ -30,10 +30,11 @@ const StackNavigator = () => {
       {!user ? <Stack.Screen name="Login" component={LoginScreen} /> : null}
       {user ? (
         <>
+          <Stack.Screen name="Rounds" component={Rounds} />
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
           <Stack.Screen name="Jobs" component={Jobs} />
           <Stack.Screen name="Customers" component={Customers} />
-          <Stack.Screen name="Rounds" component={Rounds} />
+
           <Stack.Screen name="Payments" component={Payments} />
 
           <Stack.Screen name="Map" component={MapScreen} />
