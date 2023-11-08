@@ -8,7 +8,7 @@ export const dummyJobsdata: job[] = [
     town: '',
     postcode: 'AB1 2CD',
     cleanType: 'Front',
-    price: '£20',
+    price: '£2000',
     time: '1.50',
   },
   {

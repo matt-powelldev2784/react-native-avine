@@ -1,12 +1,13 @@
 import { Text, StyleSheet } from 'react-native'
 import React from 'react'
-import { Dashboard, JobList } from '../components'
+import { Dashboard, JobList, RoundList } from '../components'
 
 const Rounds = () => {
   return (
     <>
       <Dashboard>
         <Text style={styles.pageTitle}>Rounds</Text>
+        <RoundList />
         <JobList />
       </Dashboard>
     </>

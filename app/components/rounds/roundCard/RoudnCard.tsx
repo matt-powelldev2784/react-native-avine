@@ -1,47 +1,39 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
-import { job } from '../../../../../types/Job'
+import { RoundTS } from '../../../../types/Round'
 
-const JobCard = ({
-  name,
-  address,
-  town,
-  postcode,
-  cleanType,
-  time,
-  price,
-}: job) => {
+const RoundCard = ({ name, place, numOfJobs, roundTime }: RoundTS) => {
   return (
     <View style={styles.card}>
-      <View style={styles.numberContainer}>
-        <Text style={styles.number}>1</Text>
+      <View style={styles.shortNameContainer}>
+        <Text style={styles.shortName}>{name.slice(0, 1).toUpperCase()}</Text>
+        <Text style={styles.shortName}>{name.slice(1, 2).toUpperCase()}</Text>
+        <Text style={styles.shortName}>{name.slice(2, 3).toUpperCase()}</Text>
       </View>
       <View style={styles.leftContainer}>
-        <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+        <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
           {name}
         </Text>
         <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-          {address}
-          {town ? `, ${town}` : null}
+          Place: {place}
         </Text>
-        <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-          {postcode}
-        </Text>
-        <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-          {cleanType}
-        </Text>
+        <View>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+            Round Time: {roundTime}
+          </Text>
+        </View>
       </View>
       <View style={styles.rightContainer}>
         <View style={styles.rightText}>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            Time: {time}
+            Jobs: {numOfJobs}
           </Text>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            Price: {price}
+            Total Price: £{numOfJobs}
           </Text>
         </View>
         <Image
-          source={require('../../../../../assets/edit.png')}
+          source={require('../../../../assets/edit.png')}
           style={{ width: 25, height: 25 }}
         />
       </View>
@@ -68,7 +60,8 @@ const styles = StyleSheet.create({
     height: 100,
     overflow: 'hidden',
   },
-  numberContainer: {
+  shortNameContainer: {
+    flexDirection: 'column',
     justifyContent: 'center',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 10,
@@ -76,7 +69,7 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#337bae',
   },
-  number: {
+  shortName: {
     color: '#fff',
     fontSize: 20,
     fontWeight: 'bold',
@@ -98,7 +91,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-end',
   },
-  title: {
+  name: {
     fontSize: 20,
     color: '#337bae',
     marginBottom: 2,
@@ -110,4 +103,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default JobCard
+export default RoundCard
