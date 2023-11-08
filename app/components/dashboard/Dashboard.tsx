@@ -1,4 +1,10 @@
-import { View, StyleSheet, Platform, useWindowDimensions } from 'react-native'
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Platform,
+  useWindowDimensions,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { ReactNode } from 'react'
 import PlanMeLogo from '../PlanMeLogo/PlanMeLogo'
@@ -36,7 +42,12 @@ const Dashboard = ({ children }: DashboardProps) => {
         </View>
       ) : null}
 
-      <View style={styles.page}>{children}</View>
+      <ScrollView
+        contentContainerStyle={styles.pageContentContainer}
+        style={styles.page}
+      >
+        {children}
+      </ScrollView>
 
       {Platform.OS !== 'web' ? <NavBar /> : null}
     </SafeAreaView>
@@ -71,12 +82,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  page: {
-    flex: 1,
+  pageContentContainer: {
     alignItems: 'center',
     gap: 8,
     backgroundColor: '#ffffff',
+    paddingBottom: 64,
+  },
+  page: {
+    flex: 1,
     width: '100%',
+    backgroundColor: '#ffffff',
   },
   text: {
     color: '#337bae',
