@@ -11,6 +11,7 @@ const RoundList = () => {
   return (
     <View style={styles.list}>
       {Platform.OS === 'web' ? RoundCards : null}
+      {Platform.OS === 'web' ? <View style={styles.whiteSpace}></View> : null}
       {Platform.OS !== 'web' ? (
         <FlatList
           style={{ width: '95%' }}
@@ -28,6 +29,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     width: '100%',
+  },
+  whiteSpace: {
+    display: 'flex',
+    height: 100,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'white',
   },
 })
 

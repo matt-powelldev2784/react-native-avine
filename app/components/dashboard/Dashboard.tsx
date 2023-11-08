@@ -71,14 +71,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  pageContentContainer: {},
   page: {
     flex: 1,
     width: '100%',
     backgroundColor: '#ffffff',
     alignItems: 'center',
     gap: 8,
-    paddingBottom: Platform.OS !== 'web' ? 52 : 0,
+    paddingBottom: Platform.OS !== 'web' ? 52 : 128,
   },
   text: {
     color: '#337bae',

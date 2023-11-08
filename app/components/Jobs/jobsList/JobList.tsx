@@ -11,6 +11,7 @@ const JobList = () => {
   return (
     <View style={styles.list}>
       {Platform.OS === 'web' ? JobCards : null}
+      {Platform.OS === 'web' ? <View style={styles.whiteSpace}></View> : null}
       <FlatList
         style={{ width: '95%' }}
         data={dummyJobsdata}
@@ -26,6 +27,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     width: '100%',
+  },
+  whiteSpace: {
+    display: 'flex',
+    height: 100,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'white',
   },
 })
 
