@@ -7,7 +7,7 @@ const Rounds = () => {
     <>
       <Dashboard>
         <Text style={styles.pageTitle}>Rounds</Text>
-        <RoundList />
+        {/* <RoundList /> */}
         <JobList />
       </Dashboard>
     </>
