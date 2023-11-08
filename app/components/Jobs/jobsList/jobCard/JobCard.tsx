@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import React from 'react'
 import { job } from '../../../../../types/Job'
 
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     borderColor: '#337bae',
     height: 100,
     overflow: 'hidden',
+    width: Platform.OS === 'web' ? '95%' : '100%',
   },
   numberContainer: {
     justifyContent: 'center',

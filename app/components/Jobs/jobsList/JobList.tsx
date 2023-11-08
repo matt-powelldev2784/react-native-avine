@@ -1,15 +1,16 @@
-import { View, FlatList, StyleSheet } from 'react-native'
+import { View, FlatList, StyleSheet, Platform } from 'react-native'
 import React from 'react'
 import { dummyJobsdata } from './dummyJobsdata/dummyJobsdata'
 import JobCard from './jobCard/JobCard'
 
 const JobList = () => {
   const JobCards = dummyJobsdata.map((job) => {
-    return <JobCard {...job} />
+    return <JobCard {...job} key={job.id} />
   })
 
   return (
     <View style={styles.list}>
+      {Platform.OS === 'web' ? JobCards : null}
       <FlatList
         style={{ width: '95%' }}
         data={dummyJobsdata}
