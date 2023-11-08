@@ -7,8 +7,8 @@ const Rounds = () => {
     <>
       <Dashboard>
         <Text style={styles.pageTitle}>Rounds</Text>
-        {/* <RoundList /> */}
-        <JobList />
+        <RoundList />
+        {/* <JobList /> */}
       </Dashboard>
     </>
   )
