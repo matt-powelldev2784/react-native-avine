@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "PlanMe",
-    "slug": "PlanMe",
+    "slug": "planme",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mattpowell2784.planme"
@@ -32,6 +30,7 @@
       "eas": {
         "projectId": "7eadff23-7ea7-42cb-9400-e546e5d7a443"
       }
-    }
+    },
+    "scheme": "planme"
   }
 }

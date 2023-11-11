@@ -27,6 +27,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
+          <string>planme</string>
           <string>com.mattpowell2784.planme</string>
         </array>
       </dict>

@@ -9,9 +9,11 @@ import {
   Payments,
   Rounds,
   Jobs,
+  SignInScreen,
 } from './app/screens'
 
 export type RootStackParamList = {
+  SignIn: undefined
   Login: undefined
   SplashScreen: undefined
   Customers: undefined

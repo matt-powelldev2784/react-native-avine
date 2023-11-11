@@ -5,6 +5,7 @@ import Payments from './Paymemts'
 import Rounds from './Rounds'
 import SplashScreen from './SplashScreen'
 import MapScreen from './MapScreen'
+import SignInScreen from './SignInScreen'
 
 export {
   Customers,
@@ -14,4 +15,5 @@ export {
   Rounds,
   SplashScreen,
   MapScreen,
+  SignInScreen,
 }
