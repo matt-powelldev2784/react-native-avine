@@ -81,9 +81,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.avinewindows"
+    namespace 'com.mattpowell2784.planme'
     defaultConfig {
-        applicationId 'com.matt.powell2784.avine_windows'
+        applicationId 'com.mattpowell2784.planme'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
