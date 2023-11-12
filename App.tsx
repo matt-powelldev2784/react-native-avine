@@ -8,8 +8,9 @@ import {
   signInWithCredential,
 } from 'firebase/auth'
 import { auth } from './firebaseConfig'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import StackNavigator from './StackNavigator'
-import { SignIn } from './app/components'
+import { SignIn, SignOut } from './app/components'
 
 WebBrowser.maybeCompleteAuthSession()
 
@@ -32,14 +33,23 @@ const App = () => {
     }
   }, [response])
 
+  const checkForLocalUser = async () => {
+    const user = await AsyncStorage.getItem('@user')
+    console.log('user', user)
+    if (user) {
+      setUserInfo(JSON.parse(user))
+    }
+  }
+
   useEffect(() => {
+    checkForLocalUser()
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUserInfo(user)
-        console.log(user)
+        await AsyncStorage.setItem('@user', JSON.stringify(user))
       } else {
         setUserInfo(null)
-        console.log('no user')
+        console.log('User is not authenticated')
       }
     })
 
@@ -48,7 +58,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      {userInfo ? <StackNavigator /> : <SignIn promptAsync={promptAsync} />}
+      {userInfo ? <SignOut /> : <SignIn promptAsync={promptAsync} />}
 
       {/* <StackNavigator /> */}
     </NavigationContainer>

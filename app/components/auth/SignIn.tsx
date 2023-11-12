@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 const SignIn = ({ promptAsync }: any) => {
   return (
     <View>
-      <Text>SignInScreen</Text>
+      <Text>SignIn</Text>
       <TouchableOpacity onPress={() => promptAsync()}>
         <Text>Sign In With Google</Text>
       </TouchableOpacity>
