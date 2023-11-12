@@ -1,20 +1,20 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
   SplashScreen,
-  LoginScreen,
   MapScreen,
   Customers,
   Payments,
   Rounds,
   Jobs,
   SignInScreen,
+  SignOutScreen,
 } from './app/screens'
+import { useAuth } from './app/components/auth/AuthProvider'
 
 export type RootStackParamList = {
   SignIn: undefined
-  Login: undefined
+  SignOut: undefined
   SplashScreen: undefined
   Customers: undefined
   Rounds: undefined
@@ -26,22 +26,25 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 const StackNavigator = () => {
-  const user = true
+  const { userInfo } = useAuth()
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {!user ? <Stack.Screen name="Login" component={LoginScreen} /> : null}
-      {user ? (
+      {userInfo ? (
         <>
+          <Stack.Screen name="SignOut" component={SignOutScreen} />
           <Stack.Screen name="Rounds" component={Rounds} />
+
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
           <Stack.Screen name="Jobs" component={Jobs} />
           <Stack.Screen name="Customers" component={Customers} />
 
           <Stack.Screen name="Payments" component={Payments} />
-
           <Stack.Screen name="Map" component={MapScreen} />
         </>
-      ) : null}
+      ) : (
+        <Stack.Screen name="SignIn" component={SignInScreen} />
+      )}
     </Stack.Navigator>
   )
 }
