@@ -11,7 +11,7 @@ const SplashScreen = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.navigate('Customers')
+      navigation.navigate('SignIn')
     }, 2000)
 
     return () => clearTimeout(timer) // This will clear the timer when the component unmounts
