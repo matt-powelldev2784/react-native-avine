@@ -35,7 +35,6 @@ const StackNavigator = () => {
           <Stack.Screen name="SignOut" component={SignOutScreen} />
           <Stack.Screen name="Rounds" component={Rounds} />
 
-          <Stack.Screen name="SplashScreen" component={SplashScreen} />
           <Stack.Screen name="Jobs" component={Jobs} />
           <Stack.Screen name="Customers" component={Customers} />
 
@@ -43,7 +42,10 @@ const StackNavigator = () => {
           <Stack.Screen name="Map" component={MapScreen} />
         </>
       ) : (
-        <Stack.Screen name="SignIn" component={SignInScreen} />
+        <>
+          <Stack.Screen name="SignIn" component={SignInScreen} />
+          <Stack.Screen name="SplashScreen" component={SplashScreen} />
+        </>
       )}
     </Stack.Navigator>
   )
