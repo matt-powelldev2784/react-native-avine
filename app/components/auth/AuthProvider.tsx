@@ -35,12 +35,9 @@ export const useAuth = () => useContext(AuthContext)
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [userInfo, setUserInfo] = useState<any>(null)
   const [request, response, promptAsync] = Google.useAuthRequest({
-    iosClientId:
-      '945554496854-hr1nsd0b4l7r34fs3upmkjscl3sg63ei.apps.googleusercontent.com',
-    androidClientId:
-      '945554496854-2m9h20r6qj02ie99qe9n600jd58ms83b.apps.googleusercontent.com',
-    webClientId:
-      '945554496854-07dm2kur1tskgs11liu31ffpo5ubrtjb.apps.googleusercontent.com',
+    iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
+    androidClientId: process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
+    webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
   })
 
   const signIn = async () => {
