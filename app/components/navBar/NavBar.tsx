@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     position: Platform.OS === 'web' ? 'relative' : 'absolute',
     bottom: 0,
     paddingBottom:
-      Platform.OS === 'ios' ? 32 : Platform.OS === 'android' ? 6 : 0,
+      Platform.OS === 'ios' ? 32 : Platform.OS === 'android' ? 10 : 0,
     paddingTop: Platform.OS === 'web' ? 0 : 8,
     flexDirection: 'row',
     alignItems: 'center',
@@ -71,9 +71,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 4,
     paddingVertical: Platform.OS === 'web' ? 8 : 0,
+    paddingTop: 4,
   },
   buttonText: {
-    paddingTop: 4,
+    paddingTop: 2,
     color: '#ffffff',
   },
 })
