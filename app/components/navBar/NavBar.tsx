@@ -48,6 +48,17 @@ const NavBar = () => {
         />
         <Text style={styles.buttonText}>PAYMENTS</Text>
       </Pressable>
+
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate('SignOut')}
+      >
+        <Image
+          source={require('../../../assets/settings.png')}
+          style={{ width: 25, height: 25 }}
+        />
+        <Text style={styles.buttonText}>SETTINGS</Text>
+      </Pressable>
     </View>
   )
 }
