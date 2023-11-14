@@ -1,4 +1,10 @@
-import { View, StyleSheet, Platform, useWindowDimensions } from 'react-native'
+import {
+  View,
+  StyleSheet,
+  Platform,
+  useWindowDimensions,
+  Text,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { ReactNode } from 'react'
 import PlanMeLogo from '../PlanMeLogo/PlanMeLogo'
@@ -13,7 +19,7 @@ const Dashboard = ({ children }: DashboardProps) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      {/* Large Screen Web View */}
+      {/* Small Screen Web View */}
       {Platform.OS === 'web' && windowWidth < 768 ? (
         <View style={styles.navSmallScreen}>
           <PlanMeLogo width={200} height={50} />
@@ -21,7 +27,7 @@ const Dashboard = ({ children }: DashboardProps) => {
         </View>
       ) : null}
 
-      {/* Small Screen Web View */}
+      {/* Large Screen Web View */}
       {Platform.OS === 'web' && windowWidth > 768 ? (
         <View style={styles.navLargeScreen}>
           <PlanMeLogo width={200} height={50} />
@@ -33,6 +39,9 @@ const Dashboard = ({ children }: DashboardProps) => {
       {Platform.OS !== 'web' ? (
         <View style={styles.headerNative}>
           <PlanMeLogo width={150} height={40} />
+          <View style={styles.circle}>
+            <Text>AB</Text>
+          </View>
         </View>
       ) : null}
 
@@ -52,9 +61,10 @@ const styles = StyleSheet.create({
   navSmallScreen: {
     backgroundColor: '#337bae',
     paddingHorizontal: Platform.OS === 'web' ? 24 : 0,
-    justifyContent: Platform.OS === 'web' ? 'center' : 'center',
+    justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    gap: 6,
   },
   navLargeScreen: {
     backgroundColor: '#337bae',
@@ -66,12 +76,12 @@ const styles = StyleSheet.create({
   },
   headerNative: {
     backgroundColor: '#337bae',
-    paddingHorizontal: Platform.OS === 'web' ? 24 : 0,
-    justifyContent: Platform.OS === 'web' ? 'center' : 'center',
+    paddingHorizontal: Platform.OS === 'web' ? 24 : 16,
+    paddingVertical: Platform.OS === 'web' ? 0 : 6,
+    flexDirection: 'row',
+    justifyContent: Platform.OS === 'web' ? 'center' : 'space-between',
     alignItems: 'center',
     width: '100%',
-    borderStyle: 'solid',
-    borderColor: 'red',
   },
   page: {
     flex: 1,
@@ -86,6 +96,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     padding: 8,
+  },
+  circle: {
+    width: 32,
+    height: 32,
+    borderRadius: 50,
+    backgroundColor: 'skyblue',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })
 
