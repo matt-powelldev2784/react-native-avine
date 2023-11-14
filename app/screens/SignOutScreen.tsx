@@ -3,7 +3,6 @@ import React from 'react'
 import { useAuth } from '../components/auth/AuthProvider'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import PlanMeLogo from '../components/PlanMeLogo/PlanMeLogo'
-import * as WebBrowser from 'expo-web-browser'
 
 const SignOutScreen = () => {
   const { signOut } = useAuth()
