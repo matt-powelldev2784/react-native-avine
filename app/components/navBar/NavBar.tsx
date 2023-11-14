@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
   nav: {
     position: Platform.OS === 'web' ? 'relative' : 'absolute',
     bottom: 0,
-    paddingBottom: Platform.OS === 'web' ? 0 : 32,
+    paddingBottom:
+      Platform.OS === 'ios' ? 32 : Platform.OS === 'android' ? 6 : 0,
     paddingTop: Platform.OS === 'web' ? 0 : 8,
     flexDirection: 'row',
     alignItems: 'center',

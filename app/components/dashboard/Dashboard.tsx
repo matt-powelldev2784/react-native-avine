@@ -31,7 +31,7 @@ const Dashboard = ({ children }: DashboardProps) => {
 
       {/* Native App View */}
       {Platform.OS !== 'web' ? (
-        <View style={styles.navNative}>
+        <View style={styles.headerNative}>
           <PlanMeLogo width={150} height={40} />
         </View>
       ) : null}
@@ -46,7 +46,7 @@ const Dashboard = ({ children }: DashboardProps) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    alignItems: Platform.OS === 'web' ? 'flex-start' : 'center',
+    alignItems: 'flex-start',
     backgroundColor: '#337bae',
   },
   navSmallScreen: {
@@ -64,12 +64,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  navNative: {
+  headerNative: {
     backgroundColor: '#337bae',
     paddingHorizontal: Platform.OS === 'web' ? 24 : 0,
     justifyContent: Platform.OS === 'web' ? 'center' : 'center',
     alignItems: 'center',
     width: '100%',
+    borderStyle: 'solid',
+    borderColor: 'red',
   },
   page: {
     flex: 1,
