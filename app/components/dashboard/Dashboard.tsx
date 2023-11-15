@@ -2,7 +2,6 @@ import {
   View,
   StyleSheet,
   Platform,
-  useWindowDimensions,
   Text,
   TouchableOpacity,
 } from 'react-native'
@@ -14,6 +13,7 @@ import { useAuth } from '../auth/AuthProvider'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../StackNavigator'
+import { useDeviceType } from '../../utils/deviveTypes'
 
 interface DashboardProps {
   children?: ReactNode
@@ -21,7 +21,7 @@ interface DashboardProps {
 
 const Dashboard = ({ children }: DashboardProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const windowWidth = useWindowDimensions().width
+  const { isWeb, isLargeWeb, isSmallWeb, isNative } = useDeviceType()
   const { userInfo } = useAuth()
   const userInitials = userInfo?.displayName
     .split(' ')
@@ -31,7 +31,7 @@ const Dashboard = ({ children }: DashboardProps) => {
   return (
     <SafeAreaView style={styles.screen}>
       {/* --------------------------  Small Screen Web View  -------------------------- */}
-      {Platform.OS === 'web' && windowWidth < 768 ? (
+      {isSmallWeb ? (
         <View style={styles.navSmallScreen}>
           <View style={styles.logoContainer}>
             <PlanMeLogo width={200} height={50} />
@@ -49,7 +49,7 @@ const Dashboard = ({ children }: DashboardProps) => {
       ) : null}
 
       {/* -------------------------- Large Screen Web View --------------------------  */}
-      {Platform.OS === 'web' && windowWidth > 768 ? (
+      {isLargeWeb ? (
         <View style={styles.navLargeScreen}>
           <PlanMeLogo width={200} height={50} />
           <NavBar />
@@ -57,7 +57,7 @@ const Dashboard = ({ children }: DashboardProps) => {
       ) : null}
 
       {/* -------------------------- Native App View --------------------------  */}
-      {Platform.OS !== 'web' ? (
+      {isNative ? (
         <View style={styles.headerNative}>
           <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
             <PlanMeLogo width={150} height={40} />
@@ -77,9 +77,7 @@ const Dashboard = ({ children }: DashboardProps) => {
       <View style={styles.page}>{children}</View>
 
       {/* -------------------------- Navbar For Native App --------------------------  */}
-      {Platform.OS !== 'web' || (Platform.OS === 'web' && windowWidth < 768) ? (
-        <NavBar />
-      ) : null}
+      {isNative ? <NavBar /> : null}
     </SafeAreaView>
   )
 }
