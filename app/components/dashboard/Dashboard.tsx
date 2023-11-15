@@ -77,7 +77,7 @@ const Dashboard = ({ children }: DashboardProps) => {
       <View style={styles.page}>{children}</View>
 
       {/* -------------------------- Navbar For Native App --------------------------  */}
-      {isNative ? <NavBar /> : null}
+      {isNative || isSmallWeb ? <NavBar /> : null}
     </SafeAreaView>
   )
 }
