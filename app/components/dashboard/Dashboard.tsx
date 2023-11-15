@@ -32,8 +32,8 @@ const Dashboard = ({ children }: DashboardProps) => {
     <SafeAreaView style={styles.screen}>
       {/* --------------------------  Small Screen Web View  -------------------------- */}
       {isSmallWeb ? (
-        <View style={styles.navSmallScreen}>
-          <View style={styles.logoContainer}>
+        <View style={styles.headerSmallScreen}>
+          <View style={styles.logoContainerSmallScreen}>
             <PlanMeLogo width={200} height={50} />
 
             <TouchableOpacity
@@ -50,8 +50,19 @@ const Dashboard = ({ children }: DashboardProps) => {
 
       {/* -------------------------- Large Screen Web View --------------------------  */}
       {isLargeWeb ? (
-        <View style={styles.navLargeScreen}>
-          <PlanMeLogo width={200} height={50} />
+        <View style={styles.headerLargeScreen}>
+          <View style={styles.logoContainerLargeScreen}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('SignOut')}
+            >
+              <View style={styles.circle}>
+                <Text style={styles.account}>{userInitials || null}</Text>
+              </View>
+            </TouchableOpacity>
+            <PlanMeLogo width={200} height={50} />
+          </View>
+
           <NavBar />
         </View>
       ) : null}
@@ -88,7 +99,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     backgroundColor: '#337bae',
   },
-  navSmallScreen: {
+  headerSmallScreen: {
     backgroundColor: '#337bae',
     paddingHorizontal: Platform.OS === 'web' ? 24 : 0,
     justifyContent: 'center',
@@ -96,7 +107,7 @@ const styles = StyleSheet.create({
     width: '100%',
     gap: 6,
   },
-  navLargeScreen: {
+  headerLargeScreen: {
     backgroundColor: '#337bae',
     paddingHorizontal: Platform.OS === 'web' ? 24 : 0,
     flexDirection: 'row',
@@ -113,11 +124,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  logoContainer: {
+  logoContainerSmallScreen: {
     flexDirection: 'row',
     gap: 16,
     justifyContent: 'space-between',
     width: '100%',
+  },
+  logoContainerLargeScreen: {
+    flexDirection: 'row',
+    gap: 16,
   },
   page: {
     flex: 1,
@@ -150,10 +165,6 @@ const styles = StyleSheet.create({
   buttonText: {
     paddingTop: Platform.OS !== 'web' ? 2 : 0,
     color: '#ffffff',
-  },
-  navSmall: {
-    position: 'absolute',
-    bottom: 0,
   },
 })
 
