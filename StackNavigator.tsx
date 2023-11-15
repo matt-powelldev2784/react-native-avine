@@ -44,6 +44,7 @@ const StackNavigator = () => {
       ) : (
         <>
           <Stack.Screen name="Rounds" component={Rounds} />
+          <Stack.Screen name="Customers" component={Customers} />
           <Stack.Screen name="SignIn" component={SignInScreen} />
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
         </>
