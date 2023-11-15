@@ -2,52 +2,93 @@ import {
   View,
   StyleSheet,
   Platform,
-  useWindowDimensions,
   Text,
+  TouchableOpacity,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { ReactNode } from 'react'
 import PlanMeLogo from '../PlanMeLogo/PlanMeLogo'
 import NavBar from '../navBar/NavBar'
+import { useAuth } from '../auth/AuthProvider'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../StackNavigator'
+import { useDeviceType } from '../../utils/deviveTypes'
 
 interface DashboardProps {
   children?: ReactNode
 }
 
 const Dashboard = ({ children }: DashboardProps) => {
-  const windowWidth = useWindowDimensions().width
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const { isWeb, isLargeWeb, isSmallWeb, isNative } = useDeviceType()
+  const { userInfo } = useAuth()
+  const userInitials = userInfo?.displayName
+    .split(' ')
+    .map((word: string) => word.charAt(0))
+    .join('')
 
   return (
     <SafeAreaView style={styles.screen}>
-      {/* Small Screen Web View */}
-      {Platform.OS === 'web' && windowWidth < 768 ? (
-        <View style={styles.navSmallScreen}>
-          <PlanMeLogo width={200} height={50} />
-          <NavBar />
-        </View>
-      ) : null}
+      {/* --------------------------  Small Screen Web View  -------------------------- */}
+      {isSmallWeb ? (
+        <View style={styles.headerSmallScreen}>
+          <View style={styles.logoContainerSmallScreen}>
+            <PlanMeLogo width={200} height={50} />
 
-      {/* Large Screen Web View */}
-      {Platform.OS === 'web' && windowWidth > 768 ? (
-        <View style={styles.navLargeScreen}>
-          <PlanMeLogo width={200} height={50} />
-          <NavBar />
-        </View>
-      ) : null}
-
-      {/* Native App View */}
-      {Platform.OS !== 'web' ? (
-        <View style={styles.headerNative}>
-          <PlanMeLogo width={150} height={40} />
-          <View style={styles.circle}>
-            <Text>AB</Text>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('SignOut')}
+            >
+              <View style={styles.circle}>
+                <Text style={styles.account}>{userInitials || null}</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       ) : null}
 
+      {/* -------------------------- Large Screen Web View --------------------------  */}
+      {isLargeWeb ? (
+        <View style={styles.headerLargeScreen}>
+          <View style={styles.logoContainerLargeScreen}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('SignOut')}
+            >
+              <View style={styles.circle}>
+                <Text style={styles.account}>{userInitials || null}</Text>
+              </View>
+            </TouchableOpacity>
+            <PlanMeLogo width={200} height={50} />
+          </View>
+
+          <NavBar />
+        </View>
+      ) : null}
+
+      {/* -------------------------- Native App View --------------------------  */}
+      {isNative ? (
+        <View style={styles.headerNative}>
+          <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+            <PlanMeLogo width={150} height={40} />
+          </TouchableOpacity>
+          <View style={styles.circle}>
+            <Text
+              style={styles.account}
+              onPress={() => navigation.navigate('SignOut')}
+            >
+              {userInitials || null}
+            </Text>
+          </View>
+        </View>
+      ) : null}
+
+      {/* -------------------------- Children for Main View --------------------------  */}
       <View style={styles.page}>{children}</View>
 
-      {Platform.OS !== 'web' ? <NavBar /> : null}
+      {/* -------------------------- Navbar For Native App --------------------------  */}
+      {isNative || isSmallWeb ? <NavBar /> : null}
     </SafeAreaView>
   )
 }
@@ -58,7 +99,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     backgroundColor: '#337bae',
   },
-  navSmallScreen: {
+  headerSmallScreen: {
     backgroundColor: '#337bae',
     paddingHorizontal: Platform.OS === 'web' ? 24 : 0,
     justifyContent: 'center',
@@ -66,7 +107,7 @@ const styles = StyleSheet.create({
     width: '100%',
     gap: 6,
   },
-  navLargeScreen: {
+  headerLargeScreen: {
     backgroundColor: '#337bae',
     paddingHorizontal: Platform.OS === 'web' ? 24 : 0,
     flexDirection: 'row',
@@ -83,6 +124,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
+  logoContainerSmallScreen: {
+    flexDirection: 'row',
+    gap: 16,
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  logoContainerLargeScreen: {
+    flexDirection: 'row',
+    gap: 16,
+  },
   page: {
     flex: 1,
     width: '100%',
@@ -98,12 +149,22 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   circle: {
-    width: 32,
-    height: 32,
+    width: 35,
+    height: 35,
     borderRadius: 50,
     backgroundColor: 'skyblue',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  account: { color: '#337bae', fontWeight: 'bold' },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4,
+  },
+  buttonText: {
+    paddingTop: Platform.OS !== 'web' ? 2 : 0,
+    color: '#ffffff',
   },
 })
 

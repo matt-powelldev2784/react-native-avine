@@ -3,9 +3,13 @@ import React from 'react'
 import { useAuth } from '../components/auth/AuthProvider'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import PlanMeLogo from '../components/PlanMeLogo/PlanMeLogo'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../StackNavigator'
 
 const SignOutScreen = () => {
   const { signOut } = useAuth()
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
   return (
     <SafeAreaView style={styles.container}>
@@ -18,7 +22,14 @@ const SignOutScreen = () => {
         <Text style={styles.buttonText}>Sign Out</Text>
       </TouchableOpacity>
 
-      <Text style={styles.linkText}></Text>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => {
+          navigation.goBack()
+        }}
+      >
+        <Text style={styles.backText}>Go Back</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }
@@ -66,6 +77,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     marginBottom: 16,
+  },
+  backButton: {
+    backgroundColor: '#ffffff',
+    padding: 6,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+    paddingHorizontal: 32,
+    marginBottom: 16,
+  },
+  backText: {
+    color: '#000000',
+    fontSize: 12,
+    textAlign: 'center',
   },
 })
 
