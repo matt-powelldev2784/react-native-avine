@@ -33,8 +33,18 @@ const Dashboard = ({ children }: DashboardProps) => {
       {/* --------------------------  Small Screen Web View  -------------------------- */}
       {Platform.OS === 'web' && windowWidth < 768 ? (
         <View style={styles.navSmallScreen}>
-          <PlanMeLogo width={200} height={50} />
-          <NavBar />
+          <View style={styles.logoContainer}>
+            <PlanMeLogo width={200} height={50} />
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('SignOut')}
+            >
+              <View style={styles.circle}>
+                <Text style={styles.account}>{userInitials || null}</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       ) : null}
 
@@ -67,7 +77,9 @@ const Dashboard = ({ children }: DashboardProps) => {
       <View style={styles.page}>{children}</View>
 
       {/* -------------------------- Navbar For Native App --------------------------  */}
-      {Platform.OS !== 'web' ? <NavBar /> : null}
+      {Platform.OS !== 'web' || (Platform.OS === 'web' && windowWidth < 768) ? (
+        <NavBar />
+      ) : null}
     </SafeAreaView>
   )
 }
@@ -103,6 +115,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
+  logoContainer: {
+    flexDirection: 'row',
+    gap: 16,
+    justifyContent: 'space-between',
+    width: '100%',
+  },
   page: {
     flex: 1,
     width: '100%',
@@ -118,14 +136,27 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   circle: {
-    width: 32,
-    height: 32,
+    width: 35,
+    height: 35,
     borderRadius: 50,
     backgroundColor: 'skyblue',
     justifyContent: 'center',
     alignItems: 'center',
   },
   account: { color: '#337bae', fontWeight: 'bold' },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4,
+  },
+  buttonText: {
+    paddingTop: Platform.OS !== 'web' ? 2 : 0,
+    color: '#ffffff',
+  },
+  navSmall: {
+    position: 'absolute',
+    bottom: 0,
+  },
 })
 
 export default Dashboard

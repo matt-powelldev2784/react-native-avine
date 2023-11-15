@@ -13,24 +13,38 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../StackNavigator'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useAuth } from '../auth/AuthProvider'
 
 const NavBar = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const insets = useSafeAreaInsets()
   const windowWidth = useWindowDimensions().width
+  const { userInfo } = useAuth()
+  const userInitials = userInfo?.displayName
+    .split(' ')
+    .map((word: string) => word.charAt(0))
+    .join('')
 
   const safeAreaStyle = StyleSheet.create({
     nav: {
-      position: Platform.OS === 'web' ? 'relative' : 'absolute',
+      position:
+        Platform.OS === 'web' && Platform.OS === 'web' && windowWidth < 768
+          ? 'fixed'
+          : Platform.OS === 'web'
+          ? 'relative'
+          : ('absolute' as any),
       bottom: 0,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: Platform.OS === 'web' ? 'center' : 'space-around',
       backgroundColor: '#337bae',
       gap: Platform.OS === 'web' ? 32 : 0,
-      paddingTop: Platform.OS !== 'web' ? 8 : windowWidth > 768 ? 8 : 0,
+      paddingTop: 8,
       paddingBottom: Platform.OS !== 'web' && insets.bottom > 0 ? 0 : 6,
-      width: Platform.OS !== 'web' ? '100%' : 'auto',
+      width:
+        Platform.OS !== 'web' || (Platform.OS === 'web' && windowWidth < 768)
+          ? '100%'
+          : 'auto',
     },
   })
 
