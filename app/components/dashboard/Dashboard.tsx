@@ -4,22 +4,33 @@ import {
   Platform,
   useWindowDimensions,
   Text,
+  TouchableOpacity,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { ReactNode } from 'react'
 import PlanMeLogo from '../PlanMeLogo/PlanMeLogo'
 import NavBar from '../navBar/NavBar'
+import { useAuth } from '../auth/AuthProvider'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../StackNavigator'
 
 interface DashboardProps {
   children?: ReactNode
 }
 
 const Dashboard = ({ children }: DashboardProps) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const windowWidth = useWindowDimensions().width
+  const { userInfo } = useAuth()
+  const userInitials = userInfo?.displayName
+    .split(' ')
+    .map((word: string) => word.charAt(0))
+    .join('')
 
   return (
     <SafeAreaView style={styles.screen}>
-      {/* Small Screen Web View */}
+      {/* --------------------------  Small Screen Web View  -------------------------- */}
       {Platform.OS === 'web' && windowWidth < 768 ? (
         <View style={styles.navSmallScreen}>
           <PlanMeLogo width={200} height={50} />
@@ -27,7 +38,7 @@ const Dashboard = ({ children }: DashboardProps) => {
         </View>
       ) : null}
 
-      {/* Large Screen Web View */}
+      {/* -------------------------- Large Screen Web View --------------------------  */}
       {Platform.OS === 'web' && windowWidth > 768 ? (
         <View style={styles.navLargeScreen}>
           <PlanMeLogo width={200} height={50} />
@@ -35,18 +46,27 @@ const Dashboard = ({ children }: DashboardProps) => {
         </View>
       ) : null}
 
-      {/* Native App View */}
+      {/* -------------------------- Native App View --------------------------  */}
       {Platform.OS !== 'web' ? (
         <View style={styles.headerNative}>
-          <PlanMeLogo width={150} height={40} />
+          <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+            <PlanMeLogo width={150} height={40} />
+          </TouchableOpacity>
           <View style={styles.circle}>
-            <Text>AB</Text>
+            <Text
+              style={styles.account}
+              onPress={() => navigation.navigate('SignOut')}
+            >
+              {userInitials || null}
+            </Text>
           </View>
         </View>
       ) : null}
 
+      {/* -------------------------- Children for Main View --------------------------  */}
       <View style={styles.page}>{children}</View>
 
+      {/* -------------------------- Navbar For Native App --------------------------  */}
       {Platform.OS !== 'web' ? <NavBar /> : null}
     </SafeAreaView>
   )
@@ -105,6 +125,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  account: { color: '#337bae', fontWeight: 'bold' },
 })
 
 export default Dashboard
