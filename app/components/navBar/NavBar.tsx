@@ -1,55 +1,54 @@
-import {
-  View,
-  Image,
-  StyleSheet,
-  Platform,
-  Text,
-  Pressable,
-  useWindowDimensions,
-} from 'react-native'
+import { Image, StyleSheet, Text, Pressable } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../StackNavigator'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useAuth } from '../auth/AuthProvider'
+import { useDeviceType } from '../../utils/deviveTypes'
 
 const NavBar = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const insets = useSafeAreaInsets()
-  const windowWidth = useWindowDimensions().width
-  const { userInfo } = useAuth()
-  const userInitials = userInfo?.displayName
-    .split(' ')
-    .map((word: string) => word.charAt(0))
-    .join('')
+  const { isWeb, isLargeWeb, isSmallWeb, isNative } = useDeviceType()
 
-  const safeAreaStyle = StyleSheet.create({
-    nav: {
-      position:
-        Platform.OS === 'web' && Platform.OS === 'web' && windowWidth < 768
-          ? 'fixed'
-          : Platform.OS === 'web'
-          ? 'relative'
-          : ('absolute' as any),
-      bottom: 0,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: Platform.OS === 'web' ? 'center' : 'space-around',
-      backgroundColor: '#337bae',
-      gap: Platform.OS === 'web' ? 32 : 0,
-      paddingTop: 8,
-      paddingBottom: Platform.OS !== 'web' && insets.bottom > 0 ? 0 : 6,
-      width:
-        Platform.OS !== 'web' || (Platform.OS === 'web' && windowWidth < 768)
-          ? '100%'
-          : 'auto',
-    },
-  })
+  const styles = React.useMemo(
+    () =>
+      StyleSheet.create({
+        nav: {
+          position:
+            (isLargeWeb && 'relative') ||
+            (isSmallWeb && 'fixed') ||
+            (isNative && ('absolute' as any)),
+          bottom: 0,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: isWeb ? 'center' : 'space-around',
+          backgroundColor: '#337bae',
+          gap: isWeb ? 32 : 0,
+          paddingTop: 8,
+          paddingBottom: isNative && insets.bottom > 0 ? 0 : 6,
+          width:
+            (isLargeWeb && 'auto') ||
+            (isSmallWeb && '100%') ||
+            (isNative && '100%') ||
+            'auto',
+        },
+        button: {
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 4,
+        },
+        buttonText: {
+          paddingTop: isWeb ? 2 : 0,
+          color: '#ffffff',
+        },
+      }),
+    [isWeb, isLargeWeb, isSmallWeb, isNative, insets.bottom]
+  )
 
   return (
-    <SafeAreaView edges={['right', 'bottom', 'left']} style={safeAreaStyle.nav}>
+    <SafeAreaView edges={['right', 'bottom', 'left']} style={styles.nav}>
       <Pressable
         style={styles.button}
         onPress={() => navigation.navigate('Customers')}
@@ -85,17 +84,5 @@ const NavBar = () => {
     </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 4,
-  },
-  buttonText: {
-    paddingTop: Platform.OS !== 'web' ? 2 : 0,
-    color: '#ffffff',
-  },
-})
 
 export default NavBar
