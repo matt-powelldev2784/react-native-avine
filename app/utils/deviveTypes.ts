@@ -1,5 +1,4 @@
 import { Platform, useWindowDimensions } from 'react-native'
-import { useState } from 'react'
 
 export const useDeviceType = () => {
   const windowWidth = useWindowDimensions().width
