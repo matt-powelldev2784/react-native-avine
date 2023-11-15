@@ -5,17 +5,37 @@ import {
   Platform,
   Text,
   Pressable,
+  useWindowDimensions,
 } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../StackNavigator'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const NavBar = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const insets = useSafeAreaInsets()
+  const windowWidth = useWindowDimensions().width
+
+  const safeAreaStyle = StyleSheet.create({
+    nav: {
+      position: Platform.OS === 'web' ? 'relative' : 'absolute',
+      bottom: 0,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: Platform.OS === 'web' ? 'center' : 'space-around',
+      backgroundColor: '#337bae',
+      gap: Platform.OS === 'web' ? 32 : 0,
+      paddingTop: Platform.OS !== 'web' ? 8 : windowWidth > 768 ? 8 : 0,
+      paddingBottom: Platform.OS !== 'web' && insets.bottom > 0 ? 0 : 6,
+      width: Platform.OS !== 'web' ? '100%' : 'auto',
+    },
+  })
 
   return (
-    <View style={styles.nav}>
+    <SafeAreaView edges={['right', 'bottom', 'left']} style={safeAreaStyle.nav}>
       <Pressable
         style={styles.button}
         onPress={() => navigation.navigate('Customers')}
@@ -48,31 +68,18 @@ const NavBar = () => {
         />
         <Text style={styles.buttonText}>PAYMENTS</Text>
       </Pressable>
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  nav: {
-    position: Platform.OS === 'web' ? 'relative' : 'absolute',
-    bottom: 0,
-    paddingBottom: Platform.OS === 'web' ? 0 : 32,
-    paddingTop: Platform.OS === 'web' ? 0 : 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: Platform.OS === 'web' ? 'center' : 'space-around',
-    backgroundColor: '#337bae',
-    gap: Platform.OS === 'web' ? 32 : 0,
-    width: Platform.OS !== 'web' ? '100%' : 'auto',
-  },
   button: {
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 4,
-    paddingVertical: Platform.OS === 'web' ? 8 : 0,
   },
   buttonText: {
-    paddingTop: 4,
+    paddingTop: Platform.OS !== 'web' ? 2 : 0,
     color: '#ffffff',
   },
 })

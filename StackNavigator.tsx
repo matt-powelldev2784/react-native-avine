@@ -32,17 +32,18 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
-          <Stack.Screen name="SignOut" component={SignOutScreen} />
           <Stack.Screen name="Rounds" component={Rounds} />
 
           <Stack.Screen name="Jobs" component={Jobs} />
           <Stack.Screen name="Customers" component={Customers} />
-
           <Stack.Screen name="Payments" component={Payments} />
+          <Stack.Screen name="SignOut" component={SignOutScreen} />
+
           <Stack.Screen name="Map" component={MapScreen} />
         </>
       ) : (
         <>
+          <Stack.Screen name="Rounds" component={Rounds} />
           <Stack.Screen name="SignIn" component={SignInScreen} />
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
         </>
