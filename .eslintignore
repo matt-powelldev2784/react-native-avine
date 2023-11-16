@@ -1,0 +1,6 @@
+android/app/build
+ios/build
+web-build/
+node_modules/
+metro.config.js
+webpack.config.js

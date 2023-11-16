@@ -12,7 +12,7 @@ import NavBar from '../navBar/NavBar'
 import { useAuth } from '../auth/AuthProvider'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../StackNavigator'
+import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 import { useDeviceType } from '../../utils/deviveTypes'
 
 interface DashboardProps {
@@ -21,7 +21,7 @@ interface DashboardProps {
 
 const Dashboard = ({ children }: DashboardProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { isWeb, isLargeWeb, isSmallWeb, isNative } = useDeviceType()
+  const { isLargeWeb, isSmallWeb, isNative } = useDeviceType()
   const { userInfo } = useAuth()
   const userInitials = userInfo?.displayName
     .split(' ')

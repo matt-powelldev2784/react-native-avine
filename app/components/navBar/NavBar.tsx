@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, Pressable } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../StackNavigator'
+import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDeviceType } from '../../utils/deviveTypes'
@@ -44,7 +44,7 @@ const NavBar = () => {
           color: '#ffffff',
         },
       }),
-    [isWeb, isLargeWeb, isSmallWeb, isNative, insets.bottom]
+    [isWeb, isLargeWeb, isSmallWeb, isNative, insets.bottom],
   )
 
   return (

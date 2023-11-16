@@ -11,7 +11,7 @@ const JobList = () => {
   return (
     <View style={styles.list}>
       {Platform.OS === 'web' ? JobCards : null}
-      {Platform.OS === 'web' ? <View style={styles.whiteSpace}></View> : null}
+      {Platform.OS === 'web' ? <View style={styles.whiteSpace} /> : null}
       <FlatList
         style={{ width: '95%' }}
         data={dummyJobsdata}

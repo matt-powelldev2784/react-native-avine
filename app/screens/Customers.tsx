@@ -7,10 +7,12 @@ import { auth, db } from '../../firebaseConfig'
 const Customers = () => {
   useEffect(() => {
     const addUser = async () => {
-      if (auth.currentUser === null) return
+      if (auth.currentUser === null) {
+        return
+      }
 
       const userDoc = doc(db, 'users', auth.currentUser.uid)
-      
+
       await setDoc(userDoc, {
         email: auth.currentUser.email,
         userId: auth.currentUser.uid,
@@ -27,7 +29,9 @@ const Customers = () => {
     }
 
     const addRound = async (roundData: any) => {
-      if (auth.currentUser === null) return
+      if (auth.currentUser === null) {
+        return
+      }
 
       const userDoc = doc(db, 'users', auth.currentUser.uid)
 

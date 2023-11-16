@@ -4,7 +4,7 @@ type LatLngLiteral = {
 }
 
 export const calculateRegion = (
-  points: LatLngLiteral[]
+  points: LatLngLiteral[],
 ): LatLngLiteral & { latitudeDelta: number; longitudeDelta: number } => {
   const latitudes = points.map((point) => point.latitude)
   const longitudes = points.map((point) => point.longitude)

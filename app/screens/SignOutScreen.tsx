@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import PlanMeLogo from '../components/PlanMeLogo/PlanMeLogo'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../StackNavigator'
+import { RootStackParamList } from './stackNavigator/StackNavigator'
 
 const SignOutScreen = () => {
   const { signOut } = useAuth()

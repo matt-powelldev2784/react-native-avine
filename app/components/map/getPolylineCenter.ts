@@ -10,10 +10,18 @@ export const getPolylineCenter = (mapPoints: LatLngLiteral[]) => {
   let maxLng: number = 0
 
   mapPoints.forEach((point) => {
-    if (!minLat || point.latitude < minLat) minLat = point.latitude
-    if (!maxLat || point.latitude > maxLat) maxLat = point.latitude
-    if (!minLng || point.longitude < minLng) minLng = point.longitude
-    if (!maxLng || point.longitude > maxLng) maxLng = point.longitude
+    if (!minLat || point.latitude < minLat) {
+      minLat = point.latitude
+    }
+    if (!maxLat || point.latitude > maxLat) {
+      maxLat = point.latitude
+    }
+    if (!minLng || point.longitude < minLng) {
+      minLng = point.longitude
+    }
+    if (!maxLng || point.longitude > maxLng) {
+      maxLng = point.longitude
+    }
   })
 
   // Calculate map center

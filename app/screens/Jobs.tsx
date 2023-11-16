@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Platform } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { Dashboard, JobList } from '../components'
 
