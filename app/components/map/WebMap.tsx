@@ -23,7 +23,9 @@ const WebMap = () => {
   useEffect(() => {
     const loadMapPoints = async () => {
       const points = await getMapPoints()
-      if (points) setMapPoints(points.mapPoints)
+      if (points) {
+        setMapPoints(points.mapPoints)
+      }
     }
     loadMapPoints()
   }, [])
@@ -41,7 +43,9 @@ const WebMap = () => {
     map.fitBounds(bounds)
   }
 
-  if (!isLoaded || mapPoints.length === 0) return <div>Loading...</div>
+  if (!isLoaded || mapPoints.length === 0) {
+    return <div>Loading...</div>
+  }
 
   return (
     <View className="flex-1">

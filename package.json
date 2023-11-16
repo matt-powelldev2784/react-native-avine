@@ -7,7 +7,8 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "web:build": "react-scripts build"
+    "web:build": "react-scripts build",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
@@ -44,8 +45,16 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@react-native-community/eslint-config": "^3.2.0",
     "@types/mapbox__polyline": "^1.0.3",
     "@types/react": "~18.2.14",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
+    "eslint": "^8.53.0",
+    "eslint-plugin-jest": "^27.6.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "prettier": "3.1.0",
     "react-native-dotenv": "^3.4.9",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.1.3"

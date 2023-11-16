@@ -44,7 +44,7 @@ const NavBar = () => {
           color: '#ffffff',
         },
       }),
-    [isWeb, isLargeWeb, isSmallWeb, isNative, insets.bottom]
+    [isWeb, isLargeWeb, isSmallWeb, isNative, insets.bottom],
   )
 
   return (

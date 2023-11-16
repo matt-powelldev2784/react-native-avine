@@ -1,4 +1,4 @@
-import { View, FlatList, StyleSheet, Platform, Text } from 'react-native'
+import { View, FlatList, StyleSheet, Platform } from 'react-native'
 import React from 'react'
 import RoundCard from './roundCard/RoudnCard'
 import { dummyRoundData } from './dummyRoundData/dummyRoundData'
@@ -11,7 +11,7 @@ const RoundList = () => {
   return (
     <View style={styles.list}>
       {Platform.OS === 'web' ? RoundCards : null}
-      {Platform.OS === 'web' ? <View style={styles.whiteSpace}></View> : null}
+      {Platform.OS === 'web' ? <View style={styles.whiteSpace} /> : null}
       {Platform.OS !== 'web' ? (
         <FlatList
           style={{ width: '95%' }}

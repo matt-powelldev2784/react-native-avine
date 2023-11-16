@@ -21,7 +21,7 @@ interface DashboardProps {
 
 const Dashboard = ({ children }: DashboardProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { isWeb, isLargeWeb, isSmallWeb, isNative } = useDeviceType()
+  const { isLargeWeb, isSmallWeb, isNative } = useDeviceType()
   const { userInfo } = useAuth()
   const userInitials = userInfo?.displayName
     .split(' ')

@@ -50,7 +50,7 @@ export const getMapPoints = async () => {
     })
     const data = await response.json()
     const polyline = data.routes[0].polyline.encodedPolyline
-    let points = Polyline.decode(polyline)
+    const points = Polyline.decode(polyline)
 
     const mapPoints = points.map((point) => ({
       lat: point[0],

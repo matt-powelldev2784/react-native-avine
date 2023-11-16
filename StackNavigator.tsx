@@ -36,7 +36,7 @@ const StackNavigator = () => {
     } else {
       navigation.navigate('SignIn')
     }
-  }, [userInfo])
+  }, [userInfo, navigation])
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

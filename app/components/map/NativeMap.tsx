@@ -40,12 +40,13 @@ const NativeMap = () => {
     loadMapPoints()
   }, [])
 
-  if (mapPoints.length === 0 || !isLoaded)
+  if (mapPoints.length === 0 || !isLoaded) {
     return (
       <View>
         <Text>Loading...</Text>
       </View>
     )
+  }
 
   return (
     <View className="flex-1">
