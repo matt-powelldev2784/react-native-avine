@@ -1,8 +1,6 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
-  SplashScreen,
-  MapScreen,
   Customers,
   Payments,
   Rounds,
@@ -20,7 +18,6 @@ export type RootStackParamList = {
   Rounds: undefined
   Payments: undefined
   Jobs: undefined
-  Map: undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -32,21 +29,23 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
-          <Stack.Screen name="Rounds" component={Rounds} />
-
-          <Stack.Screen name="Jobs" component={Jobs} />
+          {/* --------------------------  Customer Screens  ---------------------- */}
           <Stack.Screen name="Customers" component={Customers} />
-          <Stack.Screen name="Payments" component={Payments} />
-          <Stack.Screen name="SignOut" component={SignOutScreen} />
 
-          <Stack.Screen name="Map" component={MapScreen} />
+          {/* --------------------------  Round Screens  ------------------------- */}
+          <Stack.Screen name="Rounds" component={Rounds} />
+          <Stack.Screen name="Jobs" component={Jobs} />
+
+          {/* --------------------------  Round Screens  -------------------------- */}
+          <Stack.Screen name="Payments" component={Payments} />
+
+          {/* --------------------------  Auth Screens Screens  ------------------- */}
+          <Stack.Screen name="SignIn" component={SignInScreen} />
+          <Stack.Screen name="SignOut" component={SignOutScreen} />
         </>
       ) : (
         <>
-          <Stack.Screen name="Rounds" component={Rounds} />
-          <Stack.Screen name="Customers" component={Customers} />
           <Stack.Screen name="SignIn" component={SignInScreen} />
-          <Stack.Screen name="SplashScreen" component={SplashScreen} />
         </>
       )}
     </Stack.Navigator>
