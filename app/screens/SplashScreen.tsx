@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import PlanMeLogo from '../components/PlanMeLogo/PlanMeLogo'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../StackNavigator'
+import { RootStackParamList } from './stackNavigator/StackNavigator'
 
 const SplashScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()

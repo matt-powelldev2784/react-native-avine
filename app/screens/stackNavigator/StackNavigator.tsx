@@ -7,8 +7,8 @@ import {
   Jobs,
   SignInScreen,
   SignOutScreen,
-} from './app/screens'
-import { useAuth } from './app/components/auth/AuthProvider'
+} from '..'
+import { useAuth } from '../../components/auth/AuthProvider'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native'
 
