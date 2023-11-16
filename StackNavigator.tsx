@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
   Customers,
@@ -9,6 +9,8 @@ import {
   SignOutScreen,
 } from './app/screens'
 import { useAuth } from './app/components/auth/AuthProvider'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { useNavigation } from '@react-navigation/native'
 
 export type RootStackParamList = {
   SignIn: undefined
@@ -24,10 +26,21 @@ const Stack = createNativeStackNavigator<RootStackParamList>()
 
 const StackNavigator = () => {
   const { userInfo } = useAuth()
+  const [user, setUser] = useState(userInfo)
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+
+  useEffect(() => {
+    setUser(userInfo)
+    if (userInfo) {
+      setTimeout(() => navigation.navigate('Customers'), 100)
+    } else {
+      navigation.navigate('SignIn')
+    }
+  }, [userInfo])
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {userInfo ? (
+      {user ? (
         <>
           {/* --------------------------  Customer Screens  ---------------------- */}
           <Stack.Screen name="Customers" component={Customers} />
