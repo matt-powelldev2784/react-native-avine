@@ -62,7 +62,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const checkForLocalUser = async () => {
     const user = await AsyncStorage.getItem('@user')
-    console.log('user', user)
     if (user) {
       setUserInfo(JSON.parse(user))
     }
