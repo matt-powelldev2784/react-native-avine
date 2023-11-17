@@ -1,6 +1,17 @@
-import React, { createContext, useContext, ReactNode, useState } from 'react'
-import { signInWithPopup, signOut } from 'firebase/auth'
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from 'react'
+import {
+  signInWithCredential,
+  signOut,
+  onAuthStateChanged,
+} from 'firebase/auth'
 import { auth } from '../../../firebaseConfig'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Google from 'expo-auth-session/providers/google'
 import { GoogleAuthProvider } from 'firebase/auth'
 
@@ -23,7 +34,6 @@ export const useAuth = () => useContext(AuthContext)
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [userInfo, setUserInfo] = useState<any>(null)
-  const provider = new GoogleAuthProvider()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [request, response, promptAsync] = Google.useAuthRequest({
     iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
@@ -31,39 +41,44 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
   })
 
-  const signInWithGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider)
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      // The signed-in user info.
-      const user = result.user
-      console.log('user', user)
-      // IdP data available using getAdditionalUserInfo(result)
-      // ...
-    } catch (error: any) {
-      // Handle Errors here.
-      const errorCode = error.code
-      const errorMessage = error.message
-      // The email of the user's account used.
-      const email = error.customData.email
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error)
-      // ...
-      console.log('errorCode', errorCode)
-      console.log('errorMessage', errorMessage)
-      console.log('email', email)
-      console.log('credential', credential)
-    }
-  }
-
   const signOutHandler = async () => {
     await signOut(auth)
+    await AsyncStorage.removeItem('@user')
     setUserInfo(null)
   }
 
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { id_token } = response.params
+      const credential = GoogleAuthProvider.credential(id_token)
+      signInWithCredential(auth, credential)
+    }
+  }, [response])
+
+  const checkForLocalUser = async () => {
+    const user = await AsyncStorage.getItem('@user')
+    if (user) {
+      setUserInfo(JSON.parse(user))
+    }
+  }
+
+  useEffect(() => {
+    checkForLocalUser()
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setUserInfo(user)
+        await AsyncStorage.setItem('@user', JSON.stringify(user))
+      } else {
+        setUserInfo(null)
+      }
+    })
+
+    return () => unsubscribe()
+  }, [])
+
   const authContextValues = {
     userInfo,
-    signIn: signInWithGoogle,
+    signIn: promptAsync,
     signOut: signOutHandler,
   }
 
