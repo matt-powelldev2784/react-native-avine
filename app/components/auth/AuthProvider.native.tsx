@@ -1,12 +1,18 @@
 import React, {
   createContext,
   useContext,
-  ReactNode,
-  useState,
   useEffect,
+  useState,
+  ReactNode,
+  useCallback,
 } from 'react'
-import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth'
+import {
+  signInWithCredential,
+  signOut,
+  onAuthStateChanged,
+} from 'firebase/auth'
 import { auth } from '../../../firebaseConfig'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Google from 'expo-auth-session/providers/google'
 import { GoogleAuthProvider } from 'firebase/auth'
 
@@ -29,7 +35,6 @@ export const useAuth = () => useContext(AuthContext)
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [userInfo, setUserInfo] = useState<any>(null)
-  const provider = new GoogleAuthProvider()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [request, response, promptAsync] = Google.useAuthRequest({
     iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
@@ -37,20 +42,39 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
   })
 
-  const signInHandler = async () => {
-    await signInWithPopup(auth, provider)
-  }
-
   const signOutHandler = async () => {
     await signOut(auth)
+    await AsyncStorage.removeItem('@user')
     setUserInfo(null)
   }
 
+  const signInHandler = useCallback(async () => {
+    if (response?.type === 'success') {
+      const { id_token } = response.params
+      const credential = GoogleAuthProvider.credential(id_token)
+      signInWithCredential(auth, credential)
+    }
+  }, [response])
+
+  const checkForLocalUser = async () => {
+    const user = await AsyncStorage.getItem('@user')
+    if (user) {
+      setUserInfo(JSON.parse(user))
+    }
+  }
+
+  //user will be signed in if firebase repsonse object is changed
+  useEffect(() => {
+    signInHandler()
+  }, [response, signInHandler])
+
   //if user is stored locally stack navigator will check for userInfo and navigate to appropriate screen
   useEffect(() => {
+    checkForLocalUser()
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUserInfo(user)
+        await AsyncStorage.setItem('@user', JSON.stringify(user))
       } else {
         setUserInfo(null)
       }
@@ -61,7 +85,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const authContextValues = {
     userInfo,
-    signIn: signInHandler,
+    signIn: promptAsync,
     signOut: signOutHandler,
   }
 
