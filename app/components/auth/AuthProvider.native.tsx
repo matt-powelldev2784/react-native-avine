@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useState,
   ReactNode,
+  useCallback,
 } from 'react'
 import {
   signInWithCredential,
@@ -47,7 +48,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     setUserInfo(null)
   }
 
-  useEffect(() => {
+  const signInHandler = useCallback(async () => {
     if (response?.type === 'success') {
       const { id_token } = response.params
       const credential = GoogleAuthProvider.credential(id_token)
@@ -62,6 +63,12 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }
 
+  //user will be signed in if firebase repsonse object is changed
+  useEffect(() => {
+    signInHandler()
+  }, [response, signInHandler])
+
+  //if user is stored locally stack navigator will check for userInfo and navigate to appropriate screen
   useEffect(() => {
     checkForLocalUser()
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
