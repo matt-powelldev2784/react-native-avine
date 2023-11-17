@@ -1,6 +1,6 @@
 import { Text, StyleSheet } from 'react-native'
 import React from 'react'
-import { Dashboard, JobList, RoundList } from '../components'
+import { Dashboard, RoundList } from '../components'
 
 const Rounds = () => {
   return (
@@ -8,7 +8,6 @@ const Rounds = () => {
       <Dashboard>
         <Text style={styles.pageTitle}>Rounds</Text>
         <RoundList />
-        <JobList />
       </Dashboard>
     </>
   )
