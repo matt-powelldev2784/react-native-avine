@@ -1,5 +1,11 @@
-import React, { createContext, useContext, ReactNode, useState } from 'react'
-import { signInWithPopup, signOut } from 'firebase/auth'
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+} from 'react'
+import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../../firebaseConfig'
 import * as Google from 'expo-auth-session/providers/google'
 import { GoogleAuthProvider } from 'firebase/auth'
@@ -31,29 +37,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
   })
 
-  const signInWithGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider)
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      // The signed-in user info.
-      const user = result.user
-      console.log('user', user)
-      // IdP data available using getAdditionalUserInfo(result)
-      // ...
-    } catch (error: any) {
-      // Handle Errors here.
-      const errorCode = error.code
-      const errorMessage = error.message
-      // The email of the user's account used.
-      const email = error.customData.email
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error)
-      // ...
-      console.log('errorCode', errorCode)
-      console.log('errorMessage', errorMessage)
-      console.log('email', email)
-      console.log('credential', credential)
-    }
+  const signInHandler = async () => {
+    await signInWithPopup(auth, provider)
   }
 
   const signOutHandler = async () => {
@@ -61,9 +46,22 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     setUserInfo(null)
   }
 
+  //if user is stored locally stack navigator will check for userInfo and navigate to appropriate screen
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setUserInfo(user)
+      } else {
+        setUserInfo(null)
+      }
+    })
+
+    return () => unsubscribe()
+  }, [])
+
   const authContextValues = {
     userInfo,
-    signIn: signInWithGoogle,
+    signIn: signInHandler,
     signOut: signOutHandler,
   }
 
