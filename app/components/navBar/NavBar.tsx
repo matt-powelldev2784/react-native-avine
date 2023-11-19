@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, Pressable } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -49,7 +49,7 @@ const NavBar = () => {
 
   return (
     <SafeAreaView edges={['right', 'bottom', 'left']} style={styles.nav}>
-      <Pressable
+      <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Customers')}
       >
@@ -58,9 +58,9 @@ const NavBar = () => {
           style={{ width: 25, height: 25 }}
         />
         <Text style={styles.buttonText}>CUSTOMERS</Text>
-      </Pressable>
+      </TouchableOpacity>
 
-      <Pressable
+      <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Rounds')}
       >
@@ -69,9 +69,9 @@ const NavBar = () => {
           style={{ width: 25, height: 25 }}
         />
         <Text style={styles.buttonText}>ROUNDS</Text>
-      </Pressable>
+      </TouchableOpacity>
 
-      <Pressable
+      <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Payments')}
       >
@@ -80,7 +80,20 @@ const NavBar = () => {
           style={{ width: 25, height: 25 }}
         />
         <Text style={styles.buttonText}>PAYMENTS</Text>
-      </Pressable>
+      </TouchableOpacity>
+
+      {isLargeWeb && (
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('SignOut')}
+        >
+          <Image
+            source={require('../../../assets/settings.png')}
+            style={{ width: 25, height: 25 }}
+          />
+          <Text style={styles.buttonText}>SETTINGS</Text>
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   )
 }
