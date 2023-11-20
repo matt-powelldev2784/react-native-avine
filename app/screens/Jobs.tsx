@@ -1,5 +1,5 @@
-import { Text, StyleSheet } from 'react-native'
 import React from 'react'
+import { Text, StyleSheet } from 'react-native'
 import { Dashboard, JobList } from '../components'
 
 const Jobs = () => {
