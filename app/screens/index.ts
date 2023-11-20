@@ -3,7 +3,6 @@ import Jobs from './Jobs'
 import Payments from './Paymemts'
 import Rounds from './Rounds'
 import SplashScreen from './SplashScreen'
-import MapScreen from './MapScreen'
 import SignInScreen from './SignInScreen'
 import SignOutScreen from './SignOutScreen'
 
@@ -13,7 +12,6 @@ export {
   Payments,
   Rounds,
   SplashScreen,
-  MapScreen,
   SignInScreen,
   SignOutScreen,
 }
