@@ -1,10 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Platform,
-  Image,
-  TouchableOpacity,
-} from 'react-native'
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { ReactNode } from 'react'
 import PlanMeLogo from '../PlanMeLogo/PlanMeLogo'
