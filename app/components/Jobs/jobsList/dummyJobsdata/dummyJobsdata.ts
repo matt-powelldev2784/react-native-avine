@@ -10,6 +10,7 @@ export const dummyJobsdata: job[] = [
     cleanType: 'Front',
     price: '£2000',
     time: '1.50',
+    frequency: 'Daily',
   },
   {
     id: '2',
@@ -20,6 +21,7 @@ export const dummyJobsdata: job[] = [
     cleanType: 'Front',
     price: '£20',
     time: '1.50',
+    frequency: 'Daily',
   },
   {
     id: '3',
@@ -30,6 +32,7 @@ export const dummyJobsdata: job[] = [
     cleanType: 'Front Back Rear Tiles Cats Dogs',
     price: '£20',
     time: '1.75',
+    frequency: 'Daily',
   },
   {
     id: '4',
@@ -40,6 +43,7 @@ export const dummyJobsdata: job[] = [
     cleanType: 'Front Back Rear Tiles Cats Dogs',
     price: '£20',
     time: '1.75',
+    frequency: 'Daily',
   },
   {
     id: '5',
@@ -50,6 +54,7 @@ export const dummyJobsdata: job[] = [
     cleanType: 'Front Back Rear Tiles Cats Dogs',
     price: '£20',
     time: '1.75',
+    frequency: 'Daily',
   },
   {
     id: '6',
@@ -60,6 +65,7 @@ export const dummyJobsdata: job[] = [
     cleanType: 'Front Back Rear Tiles Cats Dogs',
     price: '£20',
     time: '1.75',
+    frequency: 'Monthly',
   },
   {
     id: '7',
@@ -70,6 +76,7 @@ export const dummyJobsdata: job[] = [
     cleanType: 'Front Back Rear Tiles Cats Dogs',
     price: '£20',
     time: '1.75',
+    frequency: '4 Weekly',
   },
   {
     id: '8',
@@ -80,5 +87,6 @@ export const dummyJobsdata: job[] = [
     cleanType: 'Front Back Rear Tiles Cats Dogs',
     price: '£20',
     time: '1.75',
+    frequency: 'Weekly',
   },
 ]

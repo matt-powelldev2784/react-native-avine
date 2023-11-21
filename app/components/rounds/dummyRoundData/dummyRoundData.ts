@@ -7,6 +7,7 @@ export const dummyRoundData: RoundTS[] = [
     place: 'Wallington',
     numOfJobs: '5',
     roundTime: '3.75',
+    frequency: 'Daily',
   },
   {
     id: '2',
@@ -14,6 +15,7 @@ export const dummyRoundData: RoundTS[] = [
     place: 'Sutton',
     numOfJobs: '5',
     roundTime: '3.75',
+    frequency: 'Weekly',
   },
   {
     id: '3',
@@ -21,6 +23,7 @@ export const dummyRoundData: RoundTS[] = [
     place: 'Oprtington',
     numOfJobs: '5',
     roundTime: '3.75',
+    frequency: 'Monthly',
   },
   {
     id: '4',
@@ -28,6 +31,7 @@ export const dummyRoundData: RoundTS[] = [
     place: 'Wallington',
     numOfJobs: '5',
     roundTime: '3.75',
+    frequency: 'Daily',
   },
   {
     id: '5',
@@ -35,6 +39,7 @@ export const dummyRoundData: RoundTS[] = [
     place: 'Sutton',
     numOfJobs: '5',
     roundTime: '3.75',
+    frequency: 'Daily',
   },
   {
     id: '6',
@@ -42,6 +47,7 @@ export const dummyRoundData: RoundTS[] = [
     place: 'Oprtington',
     numOfJobs: '5',
     roundTime: '3.75',
+    frequency: 'Daily',
   },
   {
     id: '7',
@@ -49,6 +55,7 @@ export const dummyRoundData: RoundTS[] = [
     place: 'Wallington',
     numOfJobs: '5',
     roundTime: '3.75',
+    frequency: 'Daily',
   },
   {
     id: '8',
@@ -56,6 +63,7 @@ export const dummyRoundData: RoundTS[] = [
     place: 'Sutton',
     numOfJobs: '5',
     roundTime: '3.75',
+    frequency: 'Daily',
   },
   {
     id: '9',
@@ -63,5 +71,6 @@ export const dummyRoundData: RoundTS[] = [
     place: 'Oprtington',
     numOfJobs: '5',
     roundTime: '3.75',
+    frequency: 'Daily',
   },
 ]

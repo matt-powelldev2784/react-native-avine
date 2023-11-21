@@ -2,7 +2,13 @@ import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import React from 'react'
 import { RoundTS } from '../../../../types/Round'
 
-const RoundCard = ({ name, place, numOfJobs, roundTime }: RoundTS) => {
+const RoundCard = ({
+  name,
+  place,
+  numOfJobs,
+  roundTime,
+  frequency,
+}: RoundTS) => {
   return (
     <View style={styles.card}>
       <View style={styles.shortNameContainer}>
@@ -30,6 +36,9 @@ const RoundCard = ({ name, place, numOfJobs, roundTime }: RoundTS) => {
           </Text>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Total Price: £{numOfJobs}
+          </Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+            Freq: {frequency}
           </Text>
         </View>
         <Image
