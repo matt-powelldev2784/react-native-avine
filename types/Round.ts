@@ -4,4 +4,5 @@ export interface RoundTS {
   place: string
   numOfJobs: string
   roundTime: string
+  frequency: string
 }
