@@ -3,6 +3,7 @@ import React from 'react'
 import { job } from '../../../../../types/Job'
 
 const JobCard = ({
+  id,
   name,
   address,
   town,
@@ -10,11 +11,12 @@ const JobCard = ({
   cleanType,
   time,
   price,
+  frequency,
 }: job) => {
   return (
     <View style={styles.card}>
       <View style={styles.numberContainer}>
-        <Text style={styles.number}>1</Text>
+        <Text style={styles.number}>{id}</Text>
       </View>
       <View style={styles.leftContainer}>
         <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
@@ -39,10 +41,13 @@ const JobCard = ({
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Price: {price}
           </Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+            Freq: {frequency}
+          </Text>
         </View>
         <Image
           source={require('../../../../../assets/edit.png')}
-          style={{ width: 25, height: 25 }}
+          style={{ width: 20, height: 20 }}
         />
       </View>
     </View>
