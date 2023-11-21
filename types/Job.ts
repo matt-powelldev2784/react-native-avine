@@ -7,4 +7,5 @@ export interface job {
   cleanType: string
   time: string
   price: string
+  frequency: string
 }
