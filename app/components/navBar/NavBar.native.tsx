@@ -4,37 +4,9 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useDeviceType } from '../../utils/deviveTypes'
 
 const NavBar = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { isLargeWeb } = useDeviceType()
-
-  const styles = StyleSheet.create({
-    nav: {
-      position: isLargeWeb ? 'relative' : ('fixed' as any),
-      bottom: 0,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-around',
-      backgroundColor: '#337bae',
-      gap: 32,
-      paddingTop: 8,
-      paddingBottom: 6,
-      width: isLargeWeb ? 'auto' : '100%',
-    },
-    button: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 4,
-      width: 80,
-    },
-    buttonText: {
-      paddingTop: 2,
-      color: '#ffffff',
-      fontSize: 14,
-    },
-  })
 
   return (
     <SafeAreaView edges={['right', 'bottom', 'left']} style={styles.nav}>
@@ -70,21 +42,32 @@ const NavBar = () => {
         />
         <Text style={styles.buttonText}>PAYMENTS</Text>
       </TouchableOpacity>
-
-      {isLargeWeb && (
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('SignOut')}
-        >
-          <Image
-            source={require('../../../assets/settings.png')}
-            style={{ width: 25, height: 25 }}
-          />
-          <Text style={styles.buttonText}>SETTINGS</Text>
-        </TouchableOpacity>
-      )}
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  nav: {
+    position: 'absolute' as any,
+    bottom: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    backgroundColor: '#337bae',
+    paddingTop: 8,
+    paddingBottom: 6,
+    width: '100%',
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4,
+    width: 80,
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 12,
+  },
+})
 
 export default NavBar
