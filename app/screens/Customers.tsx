@@ -1,4 +1,4 @@
-import { Text } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
 import { Dashboard } from '../components'
 import { doc, setDoc, getDoc, collection } from 'firebase/firestore'
@@ -59,10 +59,36 @@ const Customers = () => {
   return (
     <>
       <Dashboard>
-        <Text>Customers</Text>
+        <View style={styles.nav}>
+          <TouchableOpacity>
+            <Text style={styles.navText}>List</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={styles.navText}>Add</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={styles.navText}>Edit</Text>
+          </TouchableOpacity>
+        </View>
       </Dashboard>
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  nav: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    padding: 8,
+    backgroundColor: '#59b6ef',
+    width: '100%',
+  },
+  navText: {
+    fontSize: 16,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+})
 
 export default Customers
