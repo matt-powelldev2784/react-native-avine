@@ -13,7 +13,7 @@ const JobList = () => {
       {Platform.OS === 'web' ? JobCards : null}
       {Platform.OS === 'web' ? <View style={styles.whiteSpace} /> : null}
       <FlatList
-        style={{ width: '95%' }}
+        style={{ width: '95%', paddingTop: 10, paddingBottom: 100 }}
         data={dummyJobsdata}
         renderItem={({ item }) => <JobCard {...item} />}
         keyExtractor={(item) => item.id}
