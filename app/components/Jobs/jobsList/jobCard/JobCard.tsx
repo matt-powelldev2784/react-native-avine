@@ -47,7 +47,7 @@ const JobCard = ({
         </View>
         <Image
           source={require('../../../../../assets/edit.png')}
-          style={{ width: 20, height: 20 }}
+          style={{ width: 24, height: 24 }}
         />
       </View>
     </View>
