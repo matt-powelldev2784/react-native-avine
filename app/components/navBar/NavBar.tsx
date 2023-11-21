@@ -23,7 +23,7 @@ const NavBar = () => {
           bottom: 0,
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: isWeb ? 'center' : 'space-around',
+          justifyContent: 'space-around',
           backgroundColor: '#337bae',
           gap: isWeb ? 32 : 0,
           paddingTop: 8,
@@ -38,10 +38,12 @@ const NavBar = () => {
           alignItems: 'center',
           justifyContent: 'center',
           borderRadius: 4,
+          width: 80,
         },
         buttonText: {
           paddingTop: isWeb ? 2 : 0,
           color: '#ffffff',
+          fontSize: 12,
         },
       }),
     [isWeb, isLargeWeb, isSmallWeb, isNative, insets.bottom],
@@ -51,17 +53,6 @@ const NavBar = () => {
     <SafeAreaView edges={['right', 'bottom', 'left']} style={styles.nav}>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Customers')}
-      >
-        <Image
-          source={require('../../../assets/customers.png')}
-          style={{ width: 25, height: 25 }}
-        />
-        <Text style={styles.buttonText}>CUSTOMERS</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.button}
         onPress={() => navigation.navigate('Rounds')}
       >
         <Image
@@ -69,6 +60,17 @@ const NavBar = () => {
           style={{ width: 25, height: 25 }}
         />
         <Text style={styles.buttonText}>ROUNDS</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Jobs')}
+      >
+        <Image
+          source={require('../../../assets/customers.png')}
+          style={{ width: 25, height: 25 }}
+        />
+        <Text style={styles.buttonText}>JOBS</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
