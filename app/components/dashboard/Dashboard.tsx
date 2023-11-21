@@ -73,15 +73,15 @@ const styles = StyleSheet.create({
   },
   headerSmallScreen: {
     backgroundColor: '#337bae',
-    paddingHorizontal: Platform.OS === 'web' ? 24 : 0,
+    paddingHorizontal: 16,
+    paddingVertical: 2,
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    gap: 6,
   },
   headerLargeScreen: {
     backgroundColor: '#337bae',
-    paddingHorizontal: Platform.OS === 'web' ? 24 : 0,
+    paddingHorizontal: 24,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

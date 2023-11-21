@@ -1,10 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Platform,
-  Image,
-  TouchableOpacity,
-} from 'react-native'
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { ReactNode } from 'react'
 import PlanMeLogo from '../PlanMeLogo/PlanMeLogo'
@@ -57,10 +51,10 @@ const styles = StyleSheet.create({
   },
   headerNative: {
     backgroundColor: '#337bae',
-    paddingHorizontal: Platform.OS === 'web' ? 24 : 16,
-    paddingVertical: Platform.OS === 'web' ? 0 : 6,
+    paddingHorizontal: 16,
+    paddingVertical: 6,
     flexDirection: 'row',
-    justifyContent: Platform.OS === 'web' ? 'center' : 'space-between',
+    justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
   },
@@ -70,7 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     alignItems: 'center',
     gap: 8,
-    paddingBottom: Platform.OS !== 'web' ? 52 : 128,
+    paddingBottom: 128,
   },
   text: {
     color: '#337bae',
@@ -92,7 +86,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   buttonText: {
-    paddingTop: Platform.OS !== 'web' ? 2 : 0,
+    paddingTop: 0,
     color: '#ffffff',
   },
 })

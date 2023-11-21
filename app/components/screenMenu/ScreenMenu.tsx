@@ -14,7 +14,7 @@ interface ScreenMenuProps {
 
 const ScreenMenu = ({ title }: ScreenMenuProps) => {
   return (
-    <View style={styles.pageContianer}>
+    <View style={styles.menuContianer}>
       <Text style={styles.pageTitle}>{title}</Text>
       <TouchableOpacity style={styles.button}>
         <Image
@@ -27,13 +27,13 @@ const ScreenMenu = ({ title }: ScreenMenuProps) => {
 }
 
 const styles = StyleSheet.create({
-  pageContianer: {
+  menuContianer: {
     backgroundColor: '#ae337b',
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: Platform.OS === 'web' ? '4%' : '5%',
+    paddingHorizontal: Platform.OS === 'web' ? 18 : '5%',
     paddingVertical: 5,
   },
   button: {

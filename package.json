@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "web:build": "npx expo export:web",
     "lint": "eslint .",
-    "dev" : "npx expo start --dev-client -c"
+    "dev": "npx expo start --dev-client -c"
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",

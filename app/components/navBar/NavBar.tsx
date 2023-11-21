@@ -18,7 +18,7 @@ const NavBar = () => {
       alignItems: 'center',
       justifyContent: 'space-around',
       backgroundColor: '#337bae',
-      gap: 32,
+      gap: isLargeWeb ? 32 : 0,
       paddingTop: 8,
       paddingBottom: 6,
       width: isLargeWeb ? 'auto' : '100%',
@@ -32,7 +32,7 @@ const NavBar = () => {
     buttonText: {
       paddingTop: 2,
       color: '#ffffff',
-      fontSize: 14,
+      fontSize: isLargeWeb ? 14 : 12,
     },
   })
 
