@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     alignItems: 'center',
     gap: 8,
-    paddingBottom: Platform.OS !== 'web' ? 52 : 128,
+    paddingBottom: 52,
   },
   text: {
     color: '#337bae',

@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     alignItems: 'center',
     gap: 8,
-    paddingBottom: 128,
+    paddingBottom: 52,
   },
   text: {
     color: '#337bae',
