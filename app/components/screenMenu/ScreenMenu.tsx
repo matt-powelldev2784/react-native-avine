@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Platform,
+} from 'react-native'
 import React from 'react'
 
 interface ScreenMenuProps {
@@ -26,7 +33,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: '5%',
+    paddingHorizontal: Platform.OS === 'web' ? '4%' : '5%',
     paddingVertical: 5,
   },
   button: {
