@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
     backgroundColor: 'white',
+    width: '100%',
   },
   button: {
     alignItems: 'center',

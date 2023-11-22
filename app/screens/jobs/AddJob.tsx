@@ -1,23 +1,14 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { AddJobForm } from '../../components'
+import { AddJobForm, Dashboard } from '../../components'
+import { ScreenMenu } from '../../components'
 
 const AddJob = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <Dashboard>
+      <ScreenMenu title={'Add Job'} />
       <AddJobForm />
-    </SafeAreaView>
+    </Dashboard>
   )
 }
 
 export default AddJob
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-    backgroundColor: 'white',
-  },
-})
