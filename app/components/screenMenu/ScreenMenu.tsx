@@ -7,16 +7,25 @@ import {
   Platform,
 } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 
 interface ScreenMenuProps {
   title: string
+  navigateTo: keyof RootStackParamList
 }
 
-const ScreenMenu = ({ title }: ScreenMenuProps) => {
+const ScreenMenu = ({ title, navigateTo }: ScreenMenuProps) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+
   return (
     <View style={styles.menuContianer}>
       <Text style={styles.pageTitle}>{title}</Text>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate(navigateTo)}
+      >
         <Image
           source={require('../../../assets/plus.png')}
           style={{ width: 20, height: 20 }}
