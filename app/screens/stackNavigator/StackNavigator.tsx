@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Payments, Rounds, Jobs, SignInScreen, SignOutScreen } from '..'
+import { Payments, Rounds, Jobs, SignInScreen, SignOutScreen, AddJob } from '..'
 import { useAuth } from '../../components/auth/AuthProvider'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native'
@@ -12,6 +12,7 @@ export type RootStackParamList = {
   Rounds: undefined
   Payments: undefined
   Jobs: undefined
+  AddJob: undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -36,7 +37,7 @@ const StackNavigator = () => {
         <>
           {/* --------------------------  Job Screens  ---------------------- */}
           <Stack.Screen name="Jobs" component={Jobs} />
-          {/* <Stack.Screen name="Customers" component={Customers} /> */}
+          <Stack.Screen name="AddJob" component={AddJob} />
 
           {/* --------------------------  Round Screens  ------------------------- */}
           <Stack.Screen name="Rounds" component={Rounds} />
