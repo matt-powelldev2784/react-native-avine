@@ -1,22 +1,11 @@
 import React from 'react'
 import { Button, TextInput, View, Text, StyleSheet } from 'react-native'
-import { Formik } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
-// Define validation schema
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required('Required'),
-  address: Yup.string().required('Required'),
-  postcode: Yup.string().required('Required'),
-  jobType: Yup.string().required('Required'),
-  time: Yup.number().required('Required').positive(),
-  price: Yup.number().required('Required').positive(),
-  frequency: Yup.string().required('Required'),
-})
-
-const AddJobForm = () => (
-  <Formik
-    initialValues={{
+const AddJobForm = () => {
+  const formik = useFormik({
+    initialValues: {
       name: '',
       address: '',
       postcode: '',
@@ -24,84 +13,98 @@ const AddJobForm = () => (
       time: 0,
       price: 0,
       frequency: '',
-    }}
-    onSubmit={(values) => console.log(values)}
-    validationSchema={validationSchema}
-  >
-    {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          onChangeText={handleChange('name')}
-          onBlur={handleBlur('name')}
-          value={values.name}
-          placeholder="Name"
-        />
-        {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
-        <TextInput
-          style={styles.input}
-          onChangeText={handleChange('address')}
-          onBlur={handleBlur('address')}
-          value={values.address}
-          placeholder="Address"
-        />
-        {errors.address && (
-          <Text style={styles.errorText}>{errors.address}</Text>
-        )}
-        <TextInput
-          style={styles.input}
-          onChangeText={handleChange('postcode')}
-          onBlur={handleBlur('postcode')}
-          value={values.postcode}
-          placeholder="Postcode"
-        />
-        {errors.postcode && (
-          <Text style={styles.errorText}>{errors.postcode}</Text>
-        )}
-        <TextInput
-          style={styles.input}
-          onChangeText={handleChange('jobType')}
-          onBlur={handleBlur('jobType')}
-          value={values.jobType}
-          placeholder="Job Type"
-        />
-        {errors.jobType && (
-          <Text style={styles.errorText}>{errors.jobType}</Text>
-        )}
-        <TextInput
-          style={styles.input}
-          onChangeText={handleChange('time')}
-          onBlur={handleBlur('time')}
-          value={values.time.toString()}
-          placeholder="Time"
-          keyboardType="numeric"
-        />
-        {errors.time && <Text style={styles.errorText}>{errors.time}</Text>}
-        <TextInput
-          style={styles.input}
-          onChangeText={handleChange('price')}
-          onBlur={handleBlur('price')}
-          value={values.price.toString()}
-          placeholder="Price"
-          keyboardType="numeric"
-        />
-        {errors.price && <Text style={styles.errorText}>{errors.price}</Text>}
-        <TextInput
-          style={styles.input}
-          onChangeText={handleChange('frequency')}
-          onBlur={handleBlur('frequency')}
-          value={values.frequency}
-          placeholder="Frequency"
-        />
-        {errors.frequency && (
-          <Text style={styles.errorText}>{errors.frequency}</Text>
-        )}
-        {/* @ts-expect-error due to react native not having form element */}
-        <Button onPress={handleSubmit} title="Submit" color="#337bae" />
-      </View>
-    )}
-  </Formik>
-)
+    },
+    onSubmit: (values) => console.log(values),
+    validationSchema: Yup.object().shape({
+      name: Yup.string().required('Required'),
+      address: Yup.string().required('Required'),
+      postcode: Yup.string().required('Required'),
+      jobType: Yup.string().required('Required'),
+      time: Yup.number().required('Required').positive(),
+      price: Yup.number().required('Required').positive(),
+      frequency: Yup.string().required('Required'),
+    }),
+  })
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        onChangeText={formik.handleChange('name')}
+        onBlur={formik.handleBlur('name')}
+        value={formik.values.name}
+        placeholder="Name"
+      />
+      {formik.errors.name && formik.touched.name && (
+        <Text style={styles.errorText}>{formik.errors.name}</Text>
+      )}
+      <TextInput
+        style={styles.input}
+        onChangeText={formik.handleChange('address')}
+        onBlur={formik.handleBlur('address')}
+        value={formik.values.address}
+        placeholder="Address"
+      />
+      {formik.errors.address && formik.touched.address && (
+        <Text style={styles.errorText}>{formik.errors.address}</Text>
+      )}
+      <TextInput
+        style={styles.input}
+        onChangeText={formik.handleChange('postcode')}
+        onBlur={formik.handleBlur('postcode')}
+        value={formik.values.postcode}
+        placeholder="Postcode"
+      />
+      {formik.errors.postcode && formik.touched.postcode && (
+        <Text style={styles.errorText}>{formik.errors.postcode}</Text>
+      )}
+      <TextInput
+        style={styles.input}
+        onChangeText={formik.handleChange('jobType')}
+        onBlur={formik.handleBlur('jobType')}
+        value={formik.values.jobType}
+        placeholder="Job Type"
+      />
+      {formik.errors.jobType && formik.touched.jobType && (
+        <Text style={styles.errorText}>{formik.errors.jobType}</Text>
+      )}
+      <TextInput
+        style={styles.input}
+        onChangeText={formik.handleChange('time')}
+        onBlur={formik.handleBlur('time')}
+        value={formik.values.time.toString()}
+        placeholder="Time"
+        keyboardType="numeric"
+      />
+      {formik.errors.time && formik.touched.time && (
+        <Text style={styles.errorText}>{formik.errors.time}</Text>
+      )}
+      <TextInput
+        style={styles.input}
+        onChangeText={formik.handleChange('price')}
+        onBlur={formik.handleBlur('price')}
+        value={formik.values.price.toString()}
+        placeholder="Price"
+        keyboardType="numeric"
+      />
+      {formik.errors.price && formik.touched.price && (
+        <Text style={styles.errorText}>{formik.errors.price}</Text>
+      )}
+      <TextInput
+        style={styles.input}
+        onChangeText={formik.handleChange('frequency')}
+        onBlur={formik.handleBlur('frequency')}
+        value={formik.values.frequency}
+        placeholder="Frequency"
+      />
+      {formik.errors.frequency && formik.touched.frequency && (
+        <Text style={styles.errorText}>{formik.errors.frequency}</Text>
+      )}
+      {/* @ts-expect-error due to react native not having form element */}
+      <Button onPress={formik.handleSubmit} title="Submit" color="#337bae" />
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
