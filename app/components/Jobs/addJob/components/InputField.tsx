@@ -6,14 +6,14 @@ interface InputFieldProps {
   formik: FormikProps<any>
   name: string
   placeholder: string
-  numericInput?: boolean // Add this line
+  numericInput?: boolean
 }
 
 const InputField: React.FC<InputFieldProps> = ({
   formik,
   name,
   placeholder,
-  numericInput, // Add this line
+  numericInput,
 }) => {
   return (
     <>
@@ -22,8 +22,12 @@ const InputField: React.FC<InputFieldProps> = ({
         onBlur={formik.handleBlur(name)}
         value={formik.values[name]}
         placeholder={placeholder}
-        style={styles.input}
-        keyboardType={numericInput ? 'numeric' : 'default'} // Add this line
+        style={[
+          formik.touched[name] && formik.errors[name]
+            ? styles.errorInput
+            : styles.input,
+        ]}
+        keyboardType={numericInput ? 'numeric' : 'default'}
       />
       {formik.touched[name] && formik.errors[name] ? (
         <Text style={styles.errorText}>{String(formik.errors[name])}</Text>
@@ -46,6 +50,12 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderColor: '#337bae',
+    borderWidth: 1,
+    padding: 10,
+  },
+  errorInput: {
+    height: 40,
+    borderColor: 'red',
     borderWidth: 1,
     padding: 10,
   },
