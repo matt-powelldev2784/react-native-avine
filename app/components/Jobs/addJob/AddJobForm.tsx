@@ -17,13 +17,19 @@ const AddJobForm = () => {
     },
     onSubmit: (values) => console.log(values),
     validationSchema: Yup.object().shape({
-      name: Yup.string().required('Required'),
-      address: Yup.string().required('Required'),
-      postcode: Yup.string().required('Required'),
-      jobType: Yup.string().required('Required'),
-      time: Yup.number().required('Required').positive(),
-      price: Yup.number().required('Required').positive(),
-      frequency: Yup.string().required('Required'),
+      name: Yup.string().required('Name is required'),
+      address: Yup.string().required('Address is required'),
+      postcode: Yup.string().required('Post Code is required'),
+      jobType: Yup.string().required('Job Type is required'),
+      time: Yup.number()
+        .typeError('Time must be a number')
+        .required('Time is required')
+        .positive(),
+      price: Yup.number()
+        .typeError('Price must be a number')
+        .required('Price is required')
+        .positive(),
+      frequency: Yup.string().required('Frequency is required'),
     }),
   })
 
