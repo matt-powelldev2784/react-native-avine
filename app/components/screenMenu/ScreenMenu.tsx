@@ -13,7 +13,7 @@ import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 
 interface ScreenMenuProps {
   title: string
-  navigateTo: keyof RootStackParamList
+  navigateTo?: keyof RootStackParamList
 }
 
 const ScreenMenu = ({ title, navigateTo }: ScreenMenuProps) => {
@@ -22,15 +22,18 @@ const ScreenMenu = ({ title, navigateTo }: ScreenMenuProps) => {
   return (
     <View style={styles.menuContianer}>
       <Text style={styles.pageTitle}>{title}</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate(navigateTo)}
-      >
-        <Image
-          source={require('../../../assets/plus.png')}
-          style={{ width: 20, height: 20 }}
-        />
-      </TouchableOpacity>
+
+      {navigateTo ? (
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate(navigateTo)}
+        >
+          <Image
+            source={require('../../../assets/plus.png')}
+            style={{ width: 20, height: 20 }}
+          />
+        </TouchableOpacity>
+      ) : null}
     </View>
   )
 }
