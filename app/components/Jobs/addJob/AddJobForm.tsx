@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, View, StyleSheet, Text } from 'react-native'
+import { TouchableOpacity, StyleSheet, Text, ScrollView } from 'react-native'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import InputField from './components/InputField' // Import the InputField component
@@ -28,7 +28,7 @@ const AddJobForm = () => {
   })
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <InputField formik={formik} name="name" placeholder="Name" />
       <InputField formik={formik} name="address" placeholder="Address" />
       <InputField formik={formik} name="postcode" placeholder="Postcode" />
@@ -53,15 +53,13 @@ const AddJobForm = () => {
       >
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
+    padding: 16,
     backgroundColor: 'white',
     width: '100%',
   },
