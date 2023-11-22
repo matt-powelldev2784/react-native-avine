@@ -1,7 +1,8 @@
 import React from 'react'
-import { Button, TextInput, View, Text, StyleSheet } from 'react-native'
+import { TouchableOpacity, View, StyleSheet, Text } from 'react-native'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import InputField from './components/InputField' // Import the InputField component
 
 const AddJobForm = () => {
   const formik = useFormik({
@@ -28,80 +29,30 @@ const AddJobForm = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        onChangeText={formik.handleChange('name')}
-        onBlur={formik.handleBlur('name')}
-        value={formik.values.name}
-        placeholder="Name"
-      />
-      {formik.errors.name && formik.touched.name && (
-        <Text style={styles.errorText}>{formik.errors.name}</Text>
-      )}
-      <TextInput
-        style={styles.input}
-        onChangeText={formik.handleChange('address')}
-        onBlur={formik.handleBlur('address')}
-        value={formik.values.address}
-        placeholder="Address"
-      />
-      {formik.errors.address && formik.touched.address && (
-        <Text style={styles.errorText}>{formik.errors.address}</Text>
-      )}
-      <TextInput
-        style={styles.input}
-        onChangeText={formik.handleChange('postcode')}
-        onBlur={formik.handleBlur('postcode')}
-        value={formik.values.postcode}
-        placeholder="Postcode"
-      />
-      {formik.errors.postcode && formik.touched.postcode && (
-        <Text style={styles.errorText}>{formik.errors.postcode}</Text>
-      )}
-      <TextInput
-        style={styles.input}
-        onChangeText={formik.handleChange('jobType')}
-        onBlur={formik.handleBlur('jobType')}
-        value={formik.values.jobType}
-        placeholder="Job Type"
-      />
-      {formik.errors.jobType && formik.touched.jobType && (
-        <Text style={styles.errorText}>{formik.errors.jobType}</Text>
-      )}
-      <TextInput
-        style={styles.input}
-        onChangeText={formik.handleChange('time')}
-        onBlur={formik.handleBlur('time')}
-        value={formik.values.time.toString()}
+      <InputField formik={formik} name="name" placeholder="Name" />
+      <InputField formik={formik} name="address" placeholder="Address" />
+      <InputField formik={formik} name="postcode" placeholder="Postcode" />
+      <InputField formik={formik} name="jobType" placeholder="Job Type" />
+      <InputField
+        formik={formik}
+        name="time"
         placeholder="Time"
-        keyboardType="numeric"
+        numericInput={true}
       />
-      {formik.errors.time && formik.touched.time && (
-        <Text style={styles.errorText}>{formik.errors.time}</Text>
-      )}
-      <TextInput
-        style={styles.input}
-        onChangeText={formik.handleChange('price')}
-        onBlur={formik.handleBlur('price')}
-        value={formik.values.price.toString()}
+      <InputField
+        formik={formik}
+        name="price"
         placeholder="Price"
-        keyboardType="numeric"
+        numericInput={true}
       />
-      {formik.errors.price && formik.touched.price && (
-        <Text style={styles.errorText}>{formik.errors.price}</Text>
-      )}
-      <TextInput
-        style={styles.input}
-        onChangeText={formik.handleChange('frequency')}
-        onBlur={formik.handleBlur('frequency')}
-        value={formik.values.frequency}
-        placeholder="Frequency"
-      />
-      {formik.errors.frequency && formik.touched.frequency && (
-        <Text style={styles.errorText}>{formik.errors.frequency}</Text>
-      )}
-      {/* @ts-expect-error due to react native not having form element */}
-      <Button onPress={formik.handleSubmit} title="Submit" color="#337bae" />
+      <InputField formik={formik} name="frequency" placeholder="Frequency" />
+
+      <TouchableOpacity
+        onPress={() => formik.handleSubmit()}
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>Submit</Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -113,15 +64,15 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: 'white',
   },
-  input: {
-    height: 40,
-    borderColor: '#337bae',
-    borderWidth: 1,
-    marginBottom: 10,
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#337bae',
     padding: 10,
+    margin: 10,
   },
-  errorText: {
-    color: 'red',
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 })
 
