@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dashboard, JobList, ScreenMenu } from '../components'
+import { Dashboard, JobList, ScreenMenu } from '../../components'
 
 const Jobs = () => {
   return (

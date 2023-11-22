@@ -1,11 +1,11 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
-import { useAuth } from '../components/auth/AuthProvider'
+import { useAuth } from '../../components/auth/AuthProvider'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import PlanMeLogo from '../components/PlanMeLogo/PlanMeLogo'
+import PlanMeLogo from '../../components/PlanMeLogo/PlanMeLogo'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from './stackNavigator/StackNavigator'
+import { RootStackParamList } from '../stackNavigator/StackNavigator'
 
 const SignOutScreen = () => {
   const { signOut } = useAuth()

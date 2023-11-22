@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dashboard, RoundList, ScreenMenu } from '../components'
+import { Dashboard, RoundList, ScreenMenu } from '../../components'
 
 const Rounds = () => {
   return (
