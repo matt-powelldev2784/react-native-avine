@@ -50,25 +50,31 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderColor: '#337bae',
-    borderWidth: 1,
+    borderWidth: 2,
     padding: 10,
+    borderRadius: 8,
+    fontSize: 16,
   },
   errorInput: {
     height: 40,
     borderColor: 'red',
-    borderWidth: 1,
+    borderWidth: 2,
     padding: 10,
+    borderRadius: 8,
+    fontSize: 16,
   },
   errorText: {
     color: 'red',
-    marginBottom: 10,
+    marginBottom: 8,
     textAlign: 'center',
+    fontSize: 12,
   },
   errorPlaceholder: {
     color: 'red',
-    marginBottom: 10,
+    marginBottom: 8,
     textAlign: 'center',
     opacity: 0,
+    fontSize: 12,
   },
 })
 
