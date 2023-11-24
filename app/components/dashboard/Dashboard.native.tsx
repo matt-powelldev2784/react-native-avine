@@ -23,10 +23,7 @@ const Dashboard = ({ children }: DashboardProps) => {
           <PlanMeLogo width={150} height={40} />
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.circle}
-          onPress={() => navigation.navigate('SignOut')}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate('SignOut')}>
           <Image
             source={require('../../../assets/settings.png')}
             style={{ width: 25, height: 25 }}
@@ -71,13 +68,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     padding: 8,
-  },
-  circle: {
-    width: 35,
-    height: 35,
-    borderRadius: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   account: { color: '#337bae', fontWeight: 'bold' },
   button: {
