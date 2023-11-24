@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     fontSize: 16,
-    paddingLeft: 36,
+    paddingLeft: Platform.OS === 'web' ? 40 : 36,
   },
   errorInput: {
     height: 40,
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     fontSize: 16,
+    paddingLeft: Platform.OS === 'web' ? 40 : 36,
   },
   errorText: {
     color: 'red',

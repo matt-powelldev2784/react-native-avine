@@ -11,7 +11,7 @@ const AddJobForm = () => {
       <InputField
         formik={formik}
         name="name"
-        placeholder="Name"
+        placeholder="Job Name"
         imageName={'person'}
       />
       <InputField
@@ -29,13 +29,13 @@ const AddJobForm = () => {
       <InputField
         formik={formik}
         name="jobType"
-        placeholder="Job Type"
+        placeholder="Job Type e.g Front or Front and rear"
         imageName={'diamond'}
       />
       <InputField
         formik={formik}
         name="time"
-        placeholder="Time"
+        placeholder="Estimated Job Time In Hours e.g 1.5"
         numericInput={true}
         imageName={'clock'}
       />
@@ -49,7 +49,7 @@ const AddJobForm = () => {
       <InputField
         formik={formik}
         name="frequency"
-        placeholder="Frequency"
+        placeholder="Frequency e.g Weekly or Monthly"
         imageName={'calender'}
       />
 
