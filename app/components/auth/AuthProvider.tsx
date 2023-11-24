@@ -9,6 +9,7 @@ import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../../firebaseConfig'
 import * as Google from 'expo-auth-session/providers/google'
 import { GoogleAuthProvider } from 'firebase/auth'
+import { addUserToDb } from '../../db/addUserToDb'
 
 interface AuthProviderProps {
   children?: ReactNode
@@ -39,6 +40,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const signInHandler = async () => {
     await signInWithPopup(auth, provider)
+    await addUserToDb()
   }
 
   const signOutHandler = async () => {
