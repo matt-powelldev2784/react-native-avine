@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import { useAuth } from '../components/auth/AuthProvider'
+import { useAuth } from '../../components/auth/AuthProvider'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import PlanMeLogo from '../components/PlanMeLogo/PlanMeLogo'
+import PlanMeLogo from '../../components/PlanMeLogo/PlanMeLogo'
 import * as WebBrowser from 'expo-web-browser'
-import GoogleLoginButton from '../components/auth/components/GoogleLoginButton'
+import GoogleLoginButton from '../../components/auth/components/GoogleLoginButton'
 
 const SignInScreen = () => {
   const { signIn } = useAuth()

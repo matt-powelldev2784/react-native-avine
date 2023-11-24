@@ -1,11 +1,11 @@
 import React from 'react'
-import { Dashboard, JobList, ScreenMenu } from '../components'
+import { Dashboard, JobList, ScreenMenu } from '../../components'
 
 const Jobs = () => {
   return (
     <>
       <Dashboard>
-        <ScreenMenu title={'Jobs'} />
+        <ScreenMenu title={'Jobs'} navigateTo={'AddJob'} />
         <JobList />
       </Dashboard>
     </>
