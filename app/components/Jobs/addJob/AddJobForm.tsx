@@ -35,23 +35,50 @@ const AddJobForm = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <InputField formik={formik} name="name" placeholder="Name" />
-      <InputField formik={formik} name="address" placeholder="Address" />
-      <InputField formik={formik} name="postcode" placeholder="Postcode" />
-      <InputField formik={formik} name="jobType" placeholder="Job Type" />
+      <InputField
+        formik={formik}
+        name="name"
+        placeholder="Name"
+        imageName={'person'}
+      />
+      <InputField
+        formik={formik}
+        name="address"
+        placeholder="Address"
+        imageName={'location'}
+      />
+      <InputField
+        formik={formik}
+        name="postcode"
+        placeholder="Post Code"
+        imageName={'locationCircle'}
+      />
+      <InputField
+        formik={formik}
+        name="jobType"
+        placeholder="Job Type"
+        imageName={'diamond'}
+      />
       <InputField
         formik={formik}
         name="time"
         placeholder="Time"
         numericInput={true}
+        imageName={'clock'}
       />
       <InputField
         formik={formik}
         name="price"
         placeholder="Price"
         numericInput={true}
+        imageName={'poundSign'}
       />
-      <InputField formik={formik} name="frequency" placeholder="Frequency" />
+      <InputField
+        formik={formik}
+        name="frequency"
+        placeholder="Frequency"
+        imageName={'calender'}
+      />
 
       <TouchableOpacity
         onPress={() => formik.handleSubmit()}

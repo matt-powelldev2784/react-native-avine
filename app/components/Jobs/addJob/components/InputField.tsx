@@ -1,12 +1,23 @@
 import React from 'react'
-import { TextInput, Text, StyleSheet } from 'react-native'
+import { TextInput, Text, StyleSheet, View, Image } from 'react-native'
 import { FormikProps } from 'formik'
+
+const images = {
+  person: require('../../../../../assets/person.png'),
+  location: require('../../../../../assets/location.png'),
+  locationCircle: require('../../../../../assets/location_circle.png'),
+  diamond: require('../../../../../assets/diamond.png'),
+  clock: require('../../../../../assets/clock.png'),
+  poundSign: require('../../../../../assets/pound_sign.png'),
+  calender: require('../../../../../assets/calender.png'),
+}
 
 interface InputFieldProps {
   formik: FormikProps<any>
   name: string
   placeholder: string
   numericInput?: boolean
+  imageName: keyof typeof images
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -14,9 +25,12 @@ const InputField: React.FC<InputFieldProps> = ({
   name,
   placeholder,
   numericInput,
+  imageName,
 }) => {
   return (
-    <>
+    <View style={styles.container}>
+      <Image source={images[imageName]} style={styles.image} />
+
       <TextInput
         onChangeText={formik.handleChange(name)}
         onBlur={formik.handleBlur(name)}
@@ -36,16 +50,20 @@ const InputField: React.FC<InputFieldProps> = ({
           {String(formik.errors[name])}
         </Text>
       )}
-    </>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-    backgroundColor: 'white',
+    position: 'relative',
+  },
+  image: {
+    position: 'absolute',
+    width: 20,
+    height: 20,
+    top: 9.5,
+    left: 10,
   },
   input: {
     height: 40,
@@ -54,6 +72,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     fontSize: 16,
+    paddingLeft: 36,
   },
   errorInput: {
     height: 40,
