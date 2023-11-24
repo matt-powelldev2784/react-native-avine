@@ -29,7 +29,7 @@ const AddJobForm = () => {
       <InputField
         formik={formik}
         name="jobType"
-        placeholder="Job Type e.g Front or Front and rear"
+        placeholder="Job Type e.g Front Only"
         imageName={'diamond'}
       />
       <InputField
