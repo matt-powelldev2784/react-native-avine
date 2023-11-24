@@ -15,6 +15,7 @@ import { auth } from '../../../firebaseConfig'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Google from 'expo-auth-session/providers/google'
 import { GoogleAuthProvider } from 'firebase/auth'
+import { addUserToDb } from '../../db/addUserToDb'
 
 interface AuthProviderProps {
   children?: ReactNode
@@ -52,7 +53,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     if (response?.type === 'success') {
       const { id_token } = response.params
       const credential = GoogleAuthProvider.credential(id_token)
-      signInWithCredential(auth, credential)
+      await signInWithCredential(auth, credential)
+      await addUserToDb()
     }
   }, [response])
 
