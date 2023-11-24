@@ -1,5 +1,12 @@
 import React from 'react'
-import { TextInput, Text, StyleSheet, View, Image } from 'react-native'
+import {
+  TextInput,
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  Platform,
+} from 'react-native'
 import { FormikProps } from 'formik'
 
 const images = {
@@ -60,9 +67,9 @@ const styles = StyleSheet.create({
   },
   image: {
     position: 'absolute',
-    width: 20,
-    height: 20,
-    top: 9.5,
+    width: Platform.OS === 'web' ? 24 : 20,
+    height: Platform.OS === 'web' ? 24 : 20,
+    top: Platform.OS === 'web' ? 8 : 9.5,
     left: 10,
   },
   input: {
