@@ -37,7 +37,7 @@ const Dropdown = ({
       <DropdownCustom
         data={items}
         labelField="label"
-        valueField="value"
+        valueField={formik.values[name] ? (null as any) : 'value'}
         placeholder={placeholder}
         placeholderStyle={styles.placeholder}
         onChange={handleChange}
