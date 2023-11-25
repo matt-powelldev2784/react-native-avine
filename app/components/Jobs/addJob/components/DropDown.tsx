@@ -1,46 +1,52 @@
 import React from 'react'
-import {
-  TextInput,
-  Text,
-  StyleSheet,
-  View,
-  Image,
-  Platform,
-} from 'react-native'
+import { Picker } from '@react-native-picker/picker'
 import { FormikProps } from 'formik'
+import { View, Image, Platform, StyleSheet, Text } from 'react-native'
 import { inputIcons } from './inputIcons'
 
-interface InputFieldProps {
+interface DropdownProps {
   formik: FormikProps<any>
   name: string
   placeholder: string
-  numericInput?: boolean
+  options: string[]
   imageName: keyof typeof inputIcons
 }
 
-const InputField: React.FC<InputFieldProps> = ({
+const Dropdown = ({
   formik,
   name,
   placeholder,
-  numericInput,
+  options,
   imageName,
-}) => {
+}: DropdownProps) => {
+  const handleChange = (selectedValue: string) => {
+    formik.setFieldValue(name, selectedValue)
+  }
+
   return (
     <View style={styles.container}>
       <Image source={inputIcons[imageName]} style={styles.image} />
 
-      <TextInput
-        onChangeText={formik.handleChange(name)}
-        onBlur={formik.handleBlur(name)}
-        value={formik.values[name]}
-        placeholder={placeholder}
+      <Picker
+        selectedValue={formik.values[name]}
+        onValueChange={handleChange}
         style={[
           formik.touched[name] && formik.errors[name]
             ? styles.errorInput
             : styles.input,
         ]}
-        keyboardType={numericInput ? 'numeric' : 'default'}
-      />
+      >
+        <Picker.Item label={placeholder} value="" />
+        {options.map((option, index) => (
+          <Picker.Item
+            key={index}
+            label={option}
+            value={option}
+            style={styles.input}
+          />
+        ))}
+      </Picker>
+
       {formik.touched[name] && formik.errors[name] ? (
         <Text style={styles.errorText}>{String(formik.errors[name])}</Text>
       ) : (
@@ -67,16 +73,15 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: '#337bae',
     borderWidth: 2,
-    padding: 10,
     borderRadius: 8,
     fontSize: 16,
     paddingLeft: Platform.OS === 'web' ? 40 : 36,
+    backgroundColor: 'white',
   },
   errorInput: {
     height: 40,
     borderColor: 'red',
     borderWidth: 2,
-    padding: 10,
     borderRadius: 8,
     fontSize: 16,
     paddingLeft: Platform.OS === 'web' ? 40 : 36,
@@ -96,4 +101,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default InputField
+export default Dropdown

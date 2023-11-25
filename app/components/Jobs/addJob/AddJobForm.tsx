@@ -2,6 +2,7 @@ import React from 'react'
 import { TouchableOpacity, StyleSheet, Text, ScrollView } from 'react-native'
 import useFormikProps from './hooks/useFormikProps'
 import InputField from './components/InputField'
+import Dropdown from './components/DropDown'
 
 const AddJobForm = () => {
   const formik = useFormikProps()
@@ -46,10 +47,11 @@ const AddJobForm = () => {
         numericInput={true}
         imageName={'poundSign'}
       />
-      <InputField
+      <Dropdown
         formik={formik}
         name="frequency"
-        placeholder="Frequency e.g Weekly or Monthly"
+        placeholder="Cleaning Frequency"
+        options={['Daily', 'Weekly', 'Monthly', '2 Monthly', '3 Monthly']}
         imageName={'calender'}
       />
       <InputField

@@ -5,7 +5,7 @@ import { addJobToDb } from '../../../../db/jobs/addJobtoDb'
 const useFormikProps = () => {
   const formik = useFormik({
     initialValues: {
-      name: '',
+      jobName: '',
       address: '',
       postcode: '',
       jobType: '',
