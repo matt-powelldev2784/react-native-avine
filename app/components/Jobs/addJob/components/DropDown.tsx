@@ -36,7 +36,7 @@ const Dropdown = ({
             : styles.input,
         ]}
       >
-        <Picker.Item label={placeholder} value="" />
+        <Picker.Item label={placeholder} value="" style={styles.placeholder} />
         {options.map((option, index) => (
           <Picker.Item
             key={index}
@@ -77,6 +77,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: Platform.OS === 'web' ? 40 : 36,
     backgroundColor: 'white',
+  },
+  placeholder: {
+    color: '#bfbfbf',
   },
   errorInput: {
     height: 40,
