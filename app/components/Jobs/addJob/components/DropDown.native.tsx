@@ -6,17 +6,18 @@ import DropDownPicker from 'react-native-dropdown-picker'
 interface DropdownProps {
   formik: FormikProps<any>
   name: string
+  placeholder: string
   options: string[]
 }
 
-const Dropdown = ({ formik, name, options }: DropdownProps) => {
+const Dropdown = ({ formik, name, placeholder, options }: DropdownProps) => {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState(null)
   const [items, setItems] = useState(
     options.map((option) => ({ label: option, value: option })),
   )
 
-  const handleChange = (selectedValue: string | null) => {
+  const handleChange = () => {
     if (value) {
       formik.setFieldValue(name, value)
     }
@@ -31,7 +32,7 @@ const Dropdown = ({ formik, name, options }: DropdownProps) => {
         setOpen={setOpen}
         setValue={setValue}
         setItems={setItems}
-        placeholder="Select an option..."
+        placeholder={placeholder}
         onChangeValue={handleChange} // call handleChange when the value changes
       />
       {formik.touched[name] && formik.errors[name] ? (
