@@ -1,7 +1,7 @@
 import React from 'react'
 import { TouchableOpacity, StyleSheet, Text, ScrollView } from 'react-native'
 import useFormikProps from './hooks/useFormikProps'
-import InputField from './components/InputField' // Import the InputField component
+import InputField from './components/InputField'
 
 const AddJobForm = () => {
   const formik = useFormikProps()
