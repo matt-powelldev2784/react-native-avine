@@ -68,6 +68,14 @@ const AddJobForm = () => {
         imageName={'tel'}
       />
 
+      <InputField
+        formik={formik}
+        name="notes"
+        placeholder="Notes"
+        numericInput={true}
+        imageName={'notes'}
+      />
+
       <TouchableOpacity
         onPress={() => formik.handleSubmit()}
         style={styles.button}

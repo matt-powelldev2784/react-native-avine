@@ -1,7 +1,7 @@
 import React from 'react'
-import { Picker } from '@react-native-picker/picker'
+import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import { FormikProps } from 'formik'
-import { View, Image, Platform, StyleSheet, Text } from 'react-native'
+import { Dropdown as DropdownCustom } from 'react-native-element-dropdown'
 import { inputIcons } from './inputIcons'
 
 interface DropdownProps {
@@ -19,33 +19,34 @@ const Dropdown = ({
   options,
   imageName,
 }: DropdownProps) => {
-  const handleChange = (selectedValue: string) => {
-    formik.setFieldValue(name, selectedValue)
+  const items = options.map((option) => ({
+    label: option,
+    value: option,
+  }))
+
+  const handleChange = (item: any) => {
+    if (item) {
+      formik.setFieldValue(name, item.value)
+    }
   }
 
   return (
     <View style={styles.container}>
       <Image source={inputIcons[imageName]} style={styles.image} />
 
-      <Picker
-        selectedValue={formik.values[name]}
-        onValueChange={handleChange}
+      <DropdownCustom
+        data={items}
+        labelField="label"
+        valueField={formik.values[name] ? (null as any) : 'value'}
+        placeholder={placeholder}
+        placeholderStyle={styles.placeholder}
+        onChange={handleChange}
         style={[
           formik.touched[name] && formik.errors[name]
             ? styles.errorInput
             : styles.input,
         ]}
-      >
-        <Picker.Item label={placeholder} value="" style={styles.placeholder} />
-        {options.map((option, index) => (
-          <Picker.Item
-            key={index}
-            label={option}
-            value={option}
-            style={styles.input}
-          />
-        ))}
-      </Picker>
+      />
 
       {formik.touched[name] && formik.errors[name] ? (
         <Text style={styles.errorText}>{String(formik.errors[name])}</Text>
@@ -61,25 +62,26 @@ const Dropdown = ({
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
+    zIndex: 1,
   },
   image: {
     position: 'absolute',
-    width: Platform.OS === 'web' ? 24 : 20,
-    height: Platform.OS === 'web' ? 24 : 20,
-    top: Platform.OS === 'web' ? 8 : 9.5,
+    width: 20,
+    height: 20,
+    top: 9.5,
     left: 10,
+    zIndex: 10,
   },
   input: {
-    height: 40,
     borderColor: '#337bae',
     borderWidth: 2,
     borderRadius: 8,
     fontSize: 16,
-    paddingLeft: Platform.OS === 'web' ? 40 : 36,
-    backgroundColor: 'white',
+    paddingLeft: 36,
+    zIndex: 0,
   },
   placeholder: {
-    color: '#bfbfbf',
+    color: Platform.OS === 'web' ? '#828585' : '#bfbfbf',
   },
   errorInput: {
     height: 40,
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 8,
     fontSize: 16,
-    paddingLeft: Platform.OS === 'web' ? 40 : 36,
+    paddingLeft: 36,
   },
   errorText: {
     color: 'red',

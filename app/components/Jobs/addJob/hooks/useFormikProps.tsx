@@ -14,6 +14,7 @@ const useFormikProps = () => {
       frequency: '',
       contactName: '',
       contactTel: '',
+      notes: '',
     },
     onSubmit: (values) => {
       console.log(values)
@@ -38,6 +39,7 @@ const useFormikProps = () => {
         .typeError('Telephone number must be a number')
         .required('Telephone number is required')
         .positive(),
+      notes: Yup.string(),
     }),
   })
 
