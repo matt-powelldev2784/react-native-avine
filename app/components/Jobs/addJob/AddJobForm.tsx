@@ -10,9 +10,9 @@ const AddJobForm = () => {
     <ScrollView style={styles.container}>
       <InputField
         formik={formik}
-        name="name"
+        name="jobName"
         placeholder="Job Name"
-        imageName={'person'}
+        imageName={'wiper'}
       />
       <InputField
         formik={formik}
@@ -51,6 +51,19 @@ const AddJobForm = () => {
         name="frequency"
         placeholder="Frequency e.g Weekly or Monthly"
         imageName={'calender'}
+      />
+      <InputField
+        formik={formik}
+        name="contactName"
+        placeholder="Contact Name"
+        imageName={'person'}
+      />
+      <InputField
+        formik={formik}
+        name="contactTel"
+        placeholder="Contact Telephone Number"
+        numericInput={true}
+        imageName={'tel'}
       />
 
       <TouchableOpacity

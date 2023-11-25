@@ -17,6 +17,8 @@ const images = {
   clock: require('../../../../../assets/clock.png'),
   poundSign: require('../../../../../assets/pound_sign.png'),
   calender: require('../../../../../assets/calender.png'),
+  tel: require('../../../../../assets/tel.png'),
+  wiper: require('../../../../../assets/wiper_icon.png'),
 }
 
 interface InputFieldProps {
