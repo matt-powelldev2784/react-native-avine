@@ -39,6 +39,7 @@ const Dropdown = ({
         labelField="label"
         valueField="value"
         placeholder={placeholder}
+        placeholderStyle={styles.placeholder}
         onChange={handleChange}
         style={[
           formik.touched[name] && formik.errors[name]
@@ -78,6 +79,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 36,
     zIndex: 0,
+  },
+  placeholder: {
+    color: '#bfbfbf',
   },
   errorInput: {
     height: 40,
