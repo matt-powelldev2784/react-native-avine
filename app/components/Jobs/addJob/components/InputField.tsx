@@ -14,6 +14,7 @@ interface InputFieldProps {
   formik: FormikProps<any>
   name: string
   placeholder: string
+  title: string
   numericInput?: boolean
   imageName: keyof typeof inputIcons
 }
@@ -22,11 +23,13 @@ const InputField: React.FC<InputFieldProps> = ({
   formik,
   name,
   placeholder,
+  title,
   numericInput,
   imageName,
 }) => {
   return (
     <View style={styles.container}>
+      <Text style={styles.label}>{title.toUpperCase()}</Text>
       <Image source={inputIcons[imageName]} style={styles.image} />
 
       <TextInput
@@ -55,6 +58,15 @@ const InputField: React.FC<InputFieldProps> = ({
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
+    marginTop: 8,
+  },
+  label: {
+    position: 'absolute',
+    fontSize: Platform.OS === 'web' ? 16 : 16,
+    marginBottom: 5,
+    top: Platform.OS === 'web' ? -22 : -20,
+    color: '#337bae',
+    fontWeight: 'bold',
   },
   image: {
     position: 'absolute',
@@ -71,6 +83,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     fontSize: 16,
     paddingLeft: Platform.OS === 'web' ? 40 : 36,
+    color: Platform.OS === 'web' ? '#828585' : '#bfbfbf',
   },
   errorInput: {
     height: 40,
@@ -83,13 +96,13 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
-    marginBottom: 8,
+    marginBottom: 12,
     textAlign: 'center',
     fontSize: 12,
   },
   errorPlaceholder: {
     color: 'red',
-    marginBottom: 8,
+    marginBottom: 12,
     textAlign: 'center',
     opacity: 0,
     fontSize: 12,

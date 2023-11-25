@@ -32,30 +32,35 @@ const AddJobForm = () => {
             formik={formik}
             name="jobName"
             placeholder="Job Name"
+            title="Job Name"
             imageName={'wiper'}
           />
           <InputField
             formik={formik}
             name="address"
             placeholder="Address"
+            title="Job Address"
             imageName={'location'}
           />
           <InputField
             formik={formik}
             name="postcode"
             placeholder="Post Code"
+            title="Post Code"
             imageName={'locationCircle'}
           />
           <InputField
             formik={formik}
             name="contactName"
             placeholder="Contact Name"
+            title="Contact Name"
             imageName={'person'}
           />
           <InputField
             formik={formik}
             name="contactTel"
             placeholder="Contact Telephone Number"
+            title="Contact Telephone Number"
             numericInput={true}
             imageName={'tel'}
           />
@@ -66,12 +71,14 @@ const AddJobForm = () => {
             formik={formik}
             name="jobType"
             placeholder="Job Type e.g Front Only"
+            title="Job Type"
             imageName={'diamond'}
           />
           <InputField
             formik={formik}
             name="time"
             placeholder="Estimated Job Time In Hours e.g 1.5"
+            title="Estimated Job Time"
             numericInput={true}
             imageName={'clock'}
           />
@@ -79,6 +86,7 @@ const AddJobForm = () => {
             formik={formik}
             name="price"
             placeholder="Price"
+            title="Price"
             numericInput={true}
             imageName={'poundSign'}
           />
@@ -86,6 +94,7 @@ const AddJobForm = () => {
             formik={formik}
             name="frequency"
             placeholder="Cleaning Frequency"
+            title="Cleaning Frequency"
             options={['Daily', 'Weekly', 'Monthly', '2 Monthly', '3 Monthly']}
             imageName={'calender'}
           />
@@ -97,6 +106,7 @@ const AddJobForm = () => {
           formik={formik}
           name="notes"
           placeholder="Notes"
+          title="Notes"
           numericInput={true}
           imageName={'notes'}
         />

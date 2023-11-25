@@ -8,6 +8,7 @@ interface DropdownProps {
   formik: FormikProps<any>
   name: string
   placeholder: string
+  title: string
   options: string[]
   imageName: keyof typeof inputIcons
 }
@@ -16,6 +17,7 @@ const Dropdown = ({
   formik,
   name,
   placeholder,
+  title,
   options,
   imageName,
 }: DropdownProps) => {
@@ -33,6 +35,7 @@ const Dropdown = ({
   return (
     <View style={styles.container}>
       <Image source={inputIcons[imageName]} style={styles.image} />
+      <Text style={styles.label}>{title.toUpperCase()}</Text>
 
       <DropdownCustom
         data={items}
@@ -63,6 +66,15 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     zIndex: 1,
+    marginTop: 8,
+  },
+  label: {
+    position: 'absolute',
+    fontSize: Platform.OS === 'web' ? 16 : 16,
+    marginBottom: 5,
+    top: Platform.OS === 'web' ? -22 : -20,
+    color: '#337bae',
+    fontWeight: 'bold',
   },
   image: {
     position: 'absolute',
@@ -93,16 +105,19 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
-    marginBottom: 8,
+    marginBottom: 16,
     textAlign: 'center',
     fontSize: 12,
   },
   errorPlaceholder: {
     color: 'red',
-    marginBottom: 8,
+    marginBottom: 16,
     textAlign: 'center',
     opacity: 0,
     fontSize: 12,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'red',
   },
 })
 
