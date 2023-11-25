@@ -8,4 +8,5 @@ export const inputIcons = {
   calender: require('../../../../../assets/calender.png'),
   tel: require('../../../../../assets/tel.png'),
   wiper: require('../../../../../assets/wiper_icon.png'),
+  notes: require('../../../../../assets/notes.png'),
 }
