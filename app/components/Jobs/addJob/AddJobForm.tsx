@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  ScrollView,
-  View,
-} from 'react-native'
+import { TouchableOpacity, StyleSheet, Text, View, Image } from 'react-native'
 import useFormikProps from './hooks/useFormikProps'
 import InputField from './components/InputField'
 import Dropdown from './components/DropDown'
@@ -14,94 +8,84 @@ const AddJobForm = () => {
   const formik = useFormikProps()
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.contentContainer}
-      style={styles.scrollView}
-    >
-      {/* <View style={styles.titleContainer}>
-        <Image
-          source={require('../../../../assets/wiper_icon.png')}
-          style={{ width: 25, height: 25 }}
+    <div style={styles.scrollView}>
+      <View style={styles.formContainer}>
+        <View style={styles.titleContainer}>
+          <Image
+            source={require('../../../../assets/stars.png')}
+            style={{ width: 50, height: 50 }}
+          />
+          <Text style={styles.title}>Add Job Details</Text>
+        </View>
+
+        <InputField
+          formik={formik}
+          name="jobName"
+          placeholder="Job Name"
+          title="Job Name"
+          imageName={'wiper'}
         />
-        <Text style={styles.title}>Add Job Details</Text>
-      </View> */}
+        <InputField
+          formik={formik}
+          name="address"
+          placeholder="Address"
+          title="Job Address"
+          imageName={'location'}
+        />
+        <InputField
+          formik={formik}
+          name="postcode"
+          placeholder="Post Code"
+          title="Post Code"
+          imageName={'locationCircle'}
+        />
+        <InputField
+          formik={formik}
+          name="contactName"
+          placeholder="Contact Name"
+          title="Contact Name"
+          imageName={'person'}
+        />
+        <InputField
+          formik={formik}
+          name="contactTel"
+          placeholder="Contact Telephone Number"
+          title="Contact Telephone Number"
+          numericInput={true}
+          imageName={'tel'}
+        />
 
-      <View style={styles.form}>
-        <View style={styles.leftConatiner}>
-          <InputField
-            formik={formik}
-            name="jobName"
-            placeholder="Job Name"
-            title="Job Name"
-            imageName={'wiper'}
-          />
-          <InputField
-            formik={formik}
-            name="address"
-            placeholder="Address"
-            title="Job Address"
-            imageName={'location'}
-          />
-          <InputField
-            formik={formik}
-            name="postcode"
-            placeholder="Post Code"
-            title="Post Code"
-            imageName={'locationCircle'}
-          />
-          <InputField
-            formik={formik}
-            name="contactName"
-            placeholder="Contact Name"
-            title="Contact Name"
-            imageName={'person'}
-          />
-          <InputField
-            formik={formik}
-            name="contactTel"
-            placeholder="Contact Telephone Number"
-            title="Contact Telephone Number"
-            numericInput={true}
-            imageName={'tel'}
-          />
-        </View>
-
-        <View style={styles.rightConatiner}>
-          <InputField
-            formik={formik}
-            name="jobType"
-            placeholder="Job Type e.g Front Only"
-            title="Job Type"
-            imageName={'diamond'}
-          />
-          <InputField
-            formik={formik}
-            name="time"
-            placeholder="Estimated Job Time In Hours e.g 1.5"
-            title="Estimated Job Time"
-            numericInput={true}
-            imageName={'clock'}
-          />
-          <InputField
-            formik={formik}
-            name="price"
-            placeholder="Price"
-            title="Price"
-            numericInput={true}
-            imageName={'poundSign'}
-          />
-          <Dropdown
-            formik={formik}
-            name="frequency"
-            placeholder="Cleaning Frequency"
-            title="Cleaning Frequency"
-            options={['Daily', 'Weekly', 'Monthly', '2 Monthly', '3 Monthly']}
-            imageName={'calender'}
-          />
-        </View>
-      </View>
-
-      <View style={styles.notesConatiner}>
+        <InputField
+          formik={formik}
+          name="jobType"
+          placeholder="Job Type e.g Front Only"
+          title="Job Type"
+          imageName={'diamond'}
+        />
+        <InputField
+          formik={formik}
+          name="time"
+          placeholder="Estimated Job Time In Hours e.g 1.5"
+          title="Estimated Job Time"
+          numericInput={true}
+          imageName={'clock'}
+        />
+        <InputField
+          formik={formik}
+          name="price"
+          placeholder="Price"
+          title="Price"
+          numericInput={true}
+          imageName={'poundSign'}
+        />
+        <Dropdown
+          formik={formik}
+          name="frequency"
+          placeholder="Cleaning Frequency"
+          title="Cleaning Frequency"
+          options={['Daily', 'Weekly', 'Monthly', '2 Monthly', '3 Monthly']}
+          imageName={'calender'}
+        />
         <InputField
           formik={formik}
           name="notes"
@@ -110,76 +94,69 @@ const AddJobForm = () => {
           numericInput={true}
           imageName={'notes'}
         />
-      </View>
 
-      <TouchableOpacity
-        onPress={() => formik.handleSubmit()}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => formik.handleSubmit()}
+            style={styles.buttonSubmit}
+          >
+            <Text style={styles.buttonText}>Add Job</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </div>
   )
 }
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    width: '100%',
-    alignItems: 'center',
-  },
   scrollView: {
-    backgroundColor: 'white',
     width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f1f2f2',
     flex: 1,
   },
+
   titleContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    marginTop: 16,
-    marginBottom: 8,
+    marginVertical: 16,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#337bae',
+    marginVertical: 8,
   },
-  form: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+  formContainer: {
+    width: '100%',
+    maxWidth: 700,
+    alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
-    gap: 30,
-  },
-  leftConatiner: {
-    flex: 1,
+    paddingHorizontal: 64,
     padding: 16,
+    margin: 32,
     backgroundColor: 'white',
-    maxWidth: 500,
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    borderWidth: 1,
+    borderColor: '#f1f2f2',
   },
-  rightConatiner: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: 'white',
-    maxWidth: 500,
-    width: '100%',
+  buttonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
-  notesConatiner: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: 'white',
-    width: '100%',
-    maxWidth: 1030,
-  },
-  button: {
+  buttonSubmit: {
     alignItems: 'center',
     backgroundColor: '#337bae',
     padding: 10,
-    margin: 10,
+    paddingHorizontal: 32,
+    marginHorizontal: 10,
     borderRadius: 8,
     marginBottom: 52,
-    marginHorizontal: 16,
     width: '100%',
     maxWidth: 300,
   },
