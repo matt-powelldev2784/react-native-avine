@@ -32,6 +32,8 @@ const Dropdown = ({
     }
   }
 
+  console.log('formil.values.frequency', formik.values.frequency)
+
   return (
     <View style={styles.container}>
       <Image source={inputIcons[imageName]} style={styles.image} />
@@ -40,7 +42,8 @@ const Dropdown = ({
       <DropdownCustom
         data={items}
         labelField="label"
-        valueField={formik.values[name] ? (null as any) : 'value'}
+        valueField={'value'}
+        value={formik.values[name]}
         placeholder={placeholder}
         placeholderStyle={styles.placeholder}
         onChange={handleChange}

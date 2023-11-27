@@ -10,13 +10,13 @@ const AddJobForm = () => {
   return (
     <div style={styles.scrollView}>
       <View style={styles.formContainer}>
-        <View style={styles.titleContainer}>
+        {/* <View style={styles.titleContainer}>
           <Image
             source={require('../../../../assets/stars.png')}
             style={{ width: 50, height: 50 }}
           />
           <Text style={styles.title}>Add Job Details</Text>
-        </View>
+        </View> */}
 
         <InputField
           formik={formik}
@@ -114,7 +114,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f1f2f2',
+    // backgroundColor: '#f1f2f2',
+    backgroundColor: 'white',
     flex: 1,
   },
 
@@ -129,20 +130,17 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#337bae',
-    marginVertical: 8,
+    marginBottom: 32,
   },
   formContainer: {
     width: '100%',
-    maxWidth: 700,
+    maxWidth: 600,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 64,
+    paddingHorizontal: 16,
     padding: 16,
-    margin: 32,
+    marginVertical: 16,
     backgroundColor: 'white',
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    borderWidth: 1,
-    borderColor: '#f1f2f2',
   },
   buttonContainer: {
     alignItems: 'center',
