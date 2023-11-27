@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, StyleSheet, Text, View, Image } from 'react-native'
+import { TouchableOpacity, StyleSheet, Text, View } from 'react-native'
 import useFormikProps from './hooks/useFormikProps'
 import InputField from './components/InputField'
 import Dropdown from './components/DropDown'
@@ -8,16 +8,8 @@ const AddJobForm = () => {
   const formik = useFormikProps()
 
   return (
-    <div style={styles.scrollView}>
-      <View style={styles.formContainer}>
-        {/* <View style={styles.titleContainer}>
-          <Image
-            source={require('../../../../assets/stars.png')}
-            style={{ width: 50, height: 50 }}
-          />
-          <Text style={styles.title}>Add Job Details</Text>
-        </View> */}
-
+    <section style={styles.wrapper}>
+      <div style={styles.formContainer}>
         <InputField
           formik={formik}
           name="jobName"
@@ -103,34 +95,20 @@ const AddJobForm = () => {
             <Text style={styles.buttonText}>Add Job</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </div>
+      </div>
+    </section>
   )
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
+  wrapper: {
     width: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: '#f1f2f2',
     backgroundColor: 'white',
-    flex: 1,
-  },
-
-  titleContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    marginVertical: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#337bae',
-    marginBottom: 32,
+    paddingTop: 16,
+    paddingBottom: 32,
   },
   formContainer: {
     width: '100%',
