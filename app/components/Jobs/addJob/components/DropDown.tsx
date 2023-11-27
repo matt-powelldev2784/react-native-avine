@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 36,
     zIndex: 0,
+    backgroundColor: 'white',
   },
   placeholder: {
     color: Platform.OS === 'web' ? '#828585' : '#bfbfbf',
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     fontSize: 16,
     paddingLeft: 36,
+    backgroundColor: 'white',
   },
   errorText: {
     color: 'red',
