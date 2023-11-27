@@ -1,20 +1,27 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { addJobToDb } from '../../../../db/jobs/addJobtoDb'
 
 const useFormikProps = () => {
   const formik = useFormik({
     initialValues: {
-      name: '',
+      jobName: '',
       address: '',
       postcode: '',
       jobType: '',
       time: '',
       price: '',
       frequency: '',
+      contactName: '',
+      contactTel: '',
+      notes: '',
     },
-    onSubmit: (values) => console.log(values),
+    onSubmit: (values) => {
+      console.log(values)
+      addJobToDb(values)
+    },
     validationSchema: Yup.object().shape({
-      name: Yup.string().required('Name is required'),
+      jobName: Yup.string().required('Name is required'),
       address: Yup.string().required('Address is required'),
       postcode: Yup.string().required('Post Code is required'),
       jobType: Yup.string().required('Job Type is required'),
@@ -27,6 +34,12 @@ const useFormikProps = () => {
         .required('Price is required')
         .positive(),
       frequency: Yup.string().required('Frequency is required'),
+      contactName: Yup.string().required('Name is required'),
+      contactTel: Yup.number()
+        .typeError('Telephone number must be a number')
+        .required('Telephone number is required')
+        .positive(),
+      notes: Yup.string(),
     }),
   })
 

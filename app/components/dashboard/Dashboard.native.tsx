@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#ffffff',
     alignItems: 'center',
-    gap: 8,
     paddingBottom: 52,
   },
   text: {

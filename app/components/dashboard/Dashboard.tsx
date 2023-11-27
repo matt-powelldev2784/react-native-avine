@@ -100,10 +100,8 @@ const styles = StyleSheet.create({
   page: {
     flex: 1,
     width: '100%',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#f1f2f2',
     alignItems: 'center',
-    gap: 8,
-    paddingBottom: 52,
   },
   text: {
     color: '#337bae',
