@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     zIndex: 1,
     marginTop: 8,
+    width: '100%',
   },
   label: {
     position: 'absolute',

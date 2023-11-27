@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     marginTop: 8,
+    width: '100%',
   },
   label: {
     position: 'absolute',
@@ -84,6 +85,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: Platform.OS === 'web' ? 40 : 36,
     color: Platform.OS === 'web' ? '#828585' : '#bfbfbf',
+    backgroundColor: 'white',
   },
   errorInput: {
     height: 40,
