@@ -1,17 +1,24 @@
 import React, { useState } from 'react'
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native'
-import useFormikProps from './hooks/useFormikProps'
+import useFormikSteps from './hooks/useFormikSteps'
 import InputField from './components/InputField'
 import Dropdown from './components/DropDown'
 
 const AddJobForm = () => {
   const [activeStep, setActiveStep] = useState(0)
-  const formik = useFormikProps(activeStep)
-  const moveToNextStepIfFormIsValid = () => {
-    if (formik.isValid) {
-      setActiveStep((prev) => {
-        return prev + 1
-      })
+  const formik = useFormikSteps(activeStep)
+
+  const moveToNextStepIfFormIsValid = async () => {
+    const formHasBeenTouched = Object.keys(formik.touched).length > 0
+    const formIsValid = Object.keys(formik.errors).length === 0
+
+    if (formHasBeenTouched) {
+      await formik.validateForm()
+    }
+
+    if (formHasBeenTouched && formIsValid) {
+      setActiveStep((prev) => prev + 1)
+      formik.setTouched({})
     }
   }
 
@@ -153,7 +160,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     paddingTop: 16,
-    paddingBottom: 32,
+    paddingBottom: 80,
     flex: 1,
   },
   formContainer: {
