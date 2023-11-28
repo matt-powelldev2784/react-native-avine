@@ -35,11 +35,17 @@ const AddJobForm = () => {
     <section style={styles.wrapper}>
       <div style={styles.formContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.titleActive}>Add Location Details</Text>
+          <Text style={activeStep === 0 ? styles.titleActive : styles.title}>
+            Add Location Details
+          </Text>
           <View style={styles.line} />
-          <Text style={styles.title}>Add Contact Details</Text>
+          <Text style={activeStep === 1 ? styles.titleActive : styles.title}>
+            Add Contact Details
+          </Text>
           <View style={styles.line} />
-          <Text style={styles.title}>Add Job Details</Text>
+          <Text style={activeStep === 2 ? styles.titleActive : styles.title}>
+            Add Job Details
+          </Text>
         </View>
 
         {/*********************  Step 1 ***************************/}
