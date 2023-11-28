@@ -8,15 +8,24 @@ const AddJobForm = () => {
   const [activeStep, setActiveStep] = useState(0)
   const formik = useFormikSteps(activeStep)
 
+  const setFieldsAsTouched = () => {
+    Object.keys(formik.values).forEach((key) => {
+      formik.setFieldTouched(key)
+    })
+  }
+
   const moveToNextStepIfFormIsValid = async () => {
     const formHasBeenTouched = Object.keys(formik.touched).length > 0
     const formIsValid = Object.keys(formik.errors).length === 0
+
+    setFieldsAsTouched()
 
     if (formHasBeenTouched) {
       await formik.validateForm()
     }
 
     if (formHasBeenTouched && formIsValid) {
+      console.log('a')
       setActiveStep((prev) => prev + 1)
       formik.setTouched({})
     }

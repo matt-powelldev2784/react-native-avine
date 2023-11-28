@@ -2,13 +2,13 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { addJobToDb } from '../../../../db/jobs/addJobtoDb'
 
-const stepOneSchema = Yup.object().shape({
+export const stepOneSchema = Yup.object().shape({
   jobName: Yup.string().required('Name is required'),
   address: Yup.string().required('Address is required'),
   postcode: Yup.string().required('Post Code is required'),
 })
 
-const stepTwoSchema = Yup.object().shape({
+export const stepTwoSchema = Yup.object().shape({
   contactName: Yup.string().required('Name is required'),
   contactTel: Yup.number()
     .typeError('Telephone number must be a number')
@@ -16,7 +16,7 @@ const stepTwoSchema = Yup.object().shape({
     .positive(),
 })
 
-const stepThreeSchema = Yup.object().shape({
+export const stepThreeSchema = Yup.object().shape({
   jobType: Yup.string().required('Job Type is required'),
   time: Yup.number()
     .typeError('Time must be a number')
