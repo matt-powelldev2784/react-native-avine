@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native'
+import { TouchableOpacity, StyleSheet, Text, View, Image } from 'react-native'
 import useFormikProps from './hooks/useFormikProps'
 import InputField from './components/InputField'
 import Dropdown from './components/DropDown'
@@ -10,6 +10,14 @@ const AddJobForm = () => {
   return (
     <section style={styles.wrapper}>
       <div style={styles.formContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleActive}>Add Place Details</Text>
+          <View style={styles.line} />
+          <Text style={styles.title}>Add Contact Details</Text>
+          <View style={styles.line} />
+          <Text style={styles.title}>Add Job Details</Text>
+        </View>
+
         <InputField
           formik={formik}
           name="jobName"
@@ -31,7 +39,7 @@ const AddJobForm = () => {
           title="Post Code"
           imageName={'locationCircle'}
         />
-        <InputField
+        {/* <InputField
           formik={formik}
           name="contactName"
           placeholder="Contact Name"
@@ -85,14 +93,14 @@ const AddJobForm = () => {
           title="Notes"
           numericInput={true}
           imageName={'notes'}
-        />
+        /> */}
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             onPress={() => formik.handleSubmit()}
             style={styles.buttonSubmit}
           >
-            <Text style={styles.buttonText}>Add Job</Text>
+            <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>
       </div>
@@ -104,11 +112,12 @@ const styles = StyleSheet.create({
   wrapper: {
     width: '100%',
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     backgroundColor: 'white',
     paddingTop: 16,
     paddingBottom: 32,
+    flex: 1,
   },
   formContainer: {
     width: '100%',
@@ -117,24 +126,57 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 16,
     padding: 16,
-    marginVertical: 16,
     backgroundColor: 'white',
   },
+  titleContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    marginBottom: 48,
+  },
+  titleActive: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
+    backgroundColor: '#337bae',
+    borderRadius: 8,
+    padding: 8,
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#337bae',
+    backgroundColor: '#f1f2f2',
+    borderRadius: 8,
+    padding: 8,
+    textAlign: 'center',
+  },
+  line: {
+    height: '100%',
+    width: 32,
+    backgroundColor: '#337bae',
+    borderWidth: 3,
+    borderStyle: 'solid',
+    borderColor: '#337bae', // change this to the color of your choice
+  },
   buttonContainer: {
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    maxWidth: 600,
   },
   buttonSubmit: {
     alignItems: 'center',
     backgroundColor: '#337bae',
     padding: 10,
     paddingHorizontal: 32,
-    marginHorizontal: 10,
     borderRadius: 8,
-    marginBottom: 52,
     width: '100%',
-    maxWidth: 300,
+    maxWidth: 270,
   },
   buttonText: {
     color: 'white',
