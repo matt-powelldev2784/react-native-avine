@@ -34,25 +34,25 @@ const AddJobForm = () => {
 
   return (
     <section style={styles.wrapper}>
+      <View style={styles.titleContainer}>
+        <Text style={activeStep === 0 ? styles.titleActive : styles.title}>
+          {isSmallWeb ? ' Add\nLocation\nDetails' : ' Add Location Details'}
+        </Text>
+
+        <View style={isSmallWeb ? styles.lineSmallWeb : styles.line} />
+
+        <Text style={activeStep === 1 ? styles.titleActive : styles.title}>
+          {isSmallWeb ? 'Add\nContact\nDetails' : 'Add Contact Details'}
+        </Text>
+
+        <View style={isSmallWeb ? styles.lineSmallWeb : styles.line} />
+
+        <Text style={[activeStep === 2 ? styles.titleActive : styles.title]}>
+          {isSmallWeb ? 'Add\nJob\nDetails' : 'Add Job Details'}
+        </Text>
+      </View>
+
       <div style={styles.formContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={activeStep === 0 ? styles.titleActive : styles.title}>
-            {isSmallWeb ? ' Add Location \nDetails' : ' Add Location Details'}
-          </Text>
-
-          <View style={isSmallWeb ? styles.lineSmallWeb : styles.line} />
-
-          <Text style={activeStep === 1 ? styles.titleActive : styles.title}>
-            {isSmallWeb ? 'Add Contact \nDetails' : 'Add Contact Details'}
-          </Text>
-
-          <View style={isSmallWeb ? styles.lineSmallWeb : styles.line} />
-
-          <Text style={[activeStep === 2 ? styles.titleActive : styles.title]}>
-            {isSmallWeb ? 'Add \nJob \nDetails' : 'Add Job Details'}
-          </Text>
-        </View>
-
         {/*********************  Step 1 ***************************/}
         {activeStep === 0 ? (
           <>
@@ -176,29 +176,28 @@ const styles = StyleSheet.create({
   wrapper: {
     width: '100%',
     display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
     backgroundColor: 'white',
     paddingTop: 16,
     paddingBottom: 80,
     flex: 1,
   },
   formContainer: {
-    width: '100%',
+    width: '90%',
     maxWidth: 600,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 16,
-    padding: 16,
+    paddingTop: 24,
     backgroundColor: 'white',
   },
   titleContainer: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    marginBottom: 48,
+    marginBottom: 16,
   },
   titleActive: {
     fontSize: 16,
@@ -221,20 +220,18 @@ const styles = StyleSheet.create({
     minWidth: 88,
   },
   line: {
-    height: '100%',
     width: 32,
     backgroundColor: '#337bae',
     borderWidth: 3,
     borderStyle: 'solid',
-    borderColor: '#337bae', // change this to the color of your choice
+    borderColor: '#337bae',
   },
   lineSmallWeb: {
-    height: '100%',
     width: 24,
     backgroundColor: '#337bae',
     borderWidth: 3,
     borderStyle: 'solid',
-    borderColor: '#337bae', // change this to the color of your choice
+    borderColor: '#337bae',
   },
   buttonContainer: {
     display: 'flex',
