@@ -197,7 +197,6 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     paddingTop: 16,
-    paddingBottom: 80,
   },
   formContainer: {
     width: '90%',
@@ -206,6 +205,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 24,
     backgroundColor: 'white',
+    paddingBottom: 80,
   },
   titleContainer: {
     flexDirection: 'row',
