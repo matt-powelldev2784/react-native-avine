@@ -34,7 +34,11 @@ const AddJobForm = () => {
 
   return (
     <section style={styles.wrapper}>
-      <View style={styles.titleContainer}>
+      <View
+        style={
+          isSmallWeb ? styles.titleContainerSmallWeb : styles.titleContainer
+        }
+      >
         <Text style={activeStep === 0 ? styles.titleActive : styles.title}>
           {isSmallWeb ? ' Add\nLocation\nDetails' : ' Add Location Details'}
         </Text>
@@ -193,6 +197,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    marginBottom: 16,
+    marginTop: 16,
+  },
+  titleContainerSmallWeb: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
