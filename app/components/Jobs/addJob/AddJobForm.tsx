@@ -9,42 +9,20 @@ import {
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from './components/InputField'
 import Dropdown from './components/DropDown'
-import { useDeviceType } from '../../../utils/deviveTypes'
+import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
 
 const AddJobForm = () => {
   const [activeStep, setActiveStep] = useState(0)
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
-  const { isSmallWeb, isNative } = useDeviceType()
-  const isSmallDevice = isSmallWeb || isNative
 
   return (
     <ScrollView
       contentContainerStyle={styles.contentContainer}
       style={styles.wrapper}
     >
-      <View
-        style={
-          isSmallDevice ? styles.titleContainerSmallWeb : styles.titleContainer
-        }
-      >
-        <Text style={activeStep === 0 ? styles.titleActive : styles.title}>
-          {isSmallDevice ? ' Add\nLocation\nDetails' : ' Add Location Details'}
-        </Text>
-
-        <View style={isSmallDevice ? styles.lineSmallWeb : styles.line} />
-
-        <Text style={activeStep === 1 ? styles.titleActive : styles.title}>
-          {isSmallDevice ? 'Add\nContact\nDetails' : 'Add Contact Details'}
-        </Text>
-
-        <View style={isSmallDevice ? styles.lineSmallWeb : styles.line} />
-
-        <Text style={[activeStep === 2 ? styles.titleActive : styles.title]}>
-          {isSmallDevice ? 'Add\nJob\nDetails' : 'Add Job Details'}
-        </Text>
-      </View>
+      <FormFlowTitles activeStep={activeStep} />
 
       <View style={styles.formContainer}>
         {/*********************  Step 1 ***************************/}
@@ -183,57 +161,6 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     backgroundColor: 'white',
     paddingBottom: 80,
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    marginBottom: 16,
-    marginTop: 16,
-  },
-  titleContainerSmallWeb: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    marginBottom: 16,
-  },
-  titleActive: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'white',
-    backgroundColor: '#337bae',
-    borderRadius: 8,
-    padding: 7,
-    textAlign: 'center',
-    minWidth: 88,
-    overflow: 'hidden',
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#337bae',
-    backgroundColor: '#f1f2f2',
-    borderRadius: 8,
-    padding: 7,
-    textAlign: 'center',
-    minWidth: 88,
-    overflow: 'hidden',
-  },
-  line: {
-    width: 32,
-    backgroundColor: '#337bae',
-    borderWidth: 3,
-    borderStyle: 'solid',
-    borderColor: '#337bae',
-  },
-  lineSmallWeb: {
-    width: 24,
-    backgroundColor: '#337bae',
-    borderWidth: 3,
-    borderStyle: 'solid',
-    borderColor: '#337bae',
   },
   buttonContainer: {
     display: 'flex',

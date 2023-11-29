@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useDeviceType } from '../../utils/deviveTypes'
+import { useDeviceType } from '../../utils/deviceTypes'
 
 const NavBar = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
