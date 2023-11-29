@@ -33,7 +33,7 @@ const AddJobForm = () => {
   }
 
   return (
-    <section style={styles.wrapper}>
+    <View style={styles.wrapper}>
       <View
         style={
           isSmallWeb ? styles.titleContainerSmallWeb : styles.titleContainer
@@ -56,7 +56,7 @@ const AddJobForm = () => {
         </Text>
       </View>
 
-      <div style={styles.formContainer}>
+      <View style={styles.formContainer}>
         {/*********************  Step 1 ***************************/}
         {activeStep === 0 ? (
           <>
@@ -171,8 +171,8 @@ const AddJobForm = () => {
             </TouchableOpacity>
           ) : null}
         </View>
-      </div>
-    </section>
+      </View>
+    </View>
   )
 }
 
