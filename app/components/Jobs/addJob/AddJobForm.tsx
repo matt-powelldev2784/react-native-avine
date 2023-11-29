@@ -3,10 +3,12 @@ import { TouchableOpacity, StyleSheet, Text, View } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from './components/InputField'
 import Dropdown from './components/DropDown'
+import { useDeviceType } from '../../../utils/deviveTypes'
 
 const AddJobForm = () => {
   const [activeStep, setActiveStep] = useState(0)
   const formik = useFormikSteps(activeStep)
+  const { isSmallWeb } = useDeviceType()
 
   const setFieldsAsTouched = () => {
     Object.keys(formik.values).forEach((key) => {
@@ -25,7 +27,6 @@ const AddJobForm = () => {
     }
 
     if (formHasBeenTouched && formIsValid) {
-      console.log('a')
       setActiveStep((prev) => prev + 1)
       formik.setTouched({})
     }
@@ -36,15 +37,19 @@ const AddJobForm = () => {
       <div style={styles.formContainer}>
         <View style={styles.titleContainer}>
           <Text style={activeStep === 0 ? styles.titleActive : styles.title}>
-            Add Location Details
+            {isSmallWeb ? ' Add Location \nDetails' : ' Add Location Details'}
           </Text>
-          <View style={styles.line} />
+
+          <View style={isSmallWeb ? styles.lineSmallWeb : styles.line} />
+
           <Text style={activeStep === 1 ? styles.titleActive : styles.title}>
-            Add Contact Details
+            {isSmallWeb ? 'Add Contact \nDetails' : 'Add Contact Details'}
           </Text>
-          <View style={styles.line} />
-          <Text style={activeStep === 2 ? styles.titleActive : styles.title}>
-            Add Job Details
+
+          <View style={isSmallWeb ? styles.lineSmallWeb : styles.line} />
+
+          <Text style={[activeStep === 2 ? styles.titleActive : styles.title]}>
+            {isSmallWeb ? 'Add \nJob \nDetails' : 'Add Job Details'}
           </Text>
         </View>
 
@@ -201,8 +206,9 @@ const styles = StyleSheet.create({
     color: 'white',
     backgroundColor: '#337bae',
     borderRadius: 8,
-    padding: 8,
+    padding: 7,
     textAlign: 'center',
+    minWidth: 88,
   },
   title: {
     fontSize: 16,
@@ -210,12 +216,21 @@ const styles = StyleSheet.create({
     color: '#337bae',
     backgroundColor: '#f1f2f2',
     borderRadius: 8,
-    padding: 8,
+    padding: 7,
     textAlign: 'center',
+    minWidth: 88,
   },
   line: {
     height: '100%',
     width: 32,
+    backgroundColor: '#337bae',
+    borderWidth: 3,
+    borderStyle: 'solid',
+    borderColor: '#337bae', // change this to the color of your choice
+  },
+  lineSmallWeb: {
+    height: '100%',
+    width: 24,
     backgroundColor: '#337bae',
     borderWidth: 3,
     borderStyle: 'solid',
