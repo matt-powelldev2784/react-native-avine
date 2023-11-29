@@ -10,34 +10,14 @@ import useFormikSteps from './hooks/useFormikSteps'
 import InputField from './components/InputField'
 import Dropdown from './components/DropDown'
 import { useDeviceType } from '../../../utils/deviveTypes'
+import { useMoveToNextStep } from './hooks/useMoveToNextStep'
 
 const AddJobForm = () => {
   const [activeStep, setActiveStep] = useState(0)
   const formik = useFormikSteps(activeStep)
+  const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isSmallWeb, isNative } = useDeviceType()
   const isSmallDevice = isSmallWeb || isNative
-
-  const setFieldsAsTouched = () => {
-    Object.keys(formik.values).forEach((key) => {
-      formik.setFieldTouched(key)
-    })
-  }
-
-  const moveToNextStepIfFormIsValid = async () => {
-    const formHasBeenTouched = Object.keys(formik.touched).length > 0
-    const formIsValid = Object.keys(formik.errors).length === 0
-
-    setFieldsAsTouched()
-
-    if (formHasBeenTouched) {
-      await formik.validateForm()
-    }
-
-    if (formHasBeenTouched && formIsValid) {
-      setActiveStep((prev) => prev + 1)
-      formik.setTouched({})
-    }
-  }
 
   return (
     <ScrollView
@@ -163,10 +143,7 @@ const AddJobForm = () => {
         <View style={styles.buttonContainer}>
           {activeStep < 2 ? (
             <>
-              <TouchableOpacity
-                onPress={moveToNextStepIfFormIsValid}
-                style={styles.button}
-              >
+              <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
                 <Text style={styles.buttonText}>Next</Text>
               </TouchableOpacity>
             </>
