@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native'
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+} from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from './components/InputField'
 import Dropdown from './components/DropDown'
@@ -8,7 +14,8 @@ import { useDeviceType } from '../../../utils/deviveTypes'
 const AddJobForm = () => {
   const [activeStep, setActiveStep] = useState(0)
   const formik = useFormikSteps(activeStep)
-  const { isSmallWeb } = useDeviceType()
+  const { isSmallWeb, isNative } = useDeviceType()
+  const isSmallDevice = isSmallWeb || isNative
 
   const setFieldsAsTouched = () => {
     Object.keys(formik.values).forEach((key) => {
@@ -33,26 +40,29 @@ const AddJobForm = () => {
   }
 
   return (
-    <View style={styles.wrapper}>
+    <ScrollView
+      contentContainerStyle={styles.contentContainer}
+      style={styles.wrapper}
+    >
       <View
         style={
-          isSmallWeb ? styles.titleContainerSmallWeb : styles.titleContainer
+          isSmallDevice ? styles.titleContainerSmallWeb : styles.titleContainer
         }
       >
         <Text style={activeStep === 0 ? styles.titleActive : styles.title}>
-          {isSmallWeb ? ' Add\nLocation\nDetails' : ' Add Location Details'}
+          {isSmallDevice ? ' Add\nLocation\nDetails' : ' Add Location Details'}
         </Text>
 
-        <View style={isSmallWeb ? styles.lineSmallWeb : styles.line} />
+        <View style={isSmallDevice ? styles.lineSmallWeb : styles.line} />
 
         <Text style={activeStep === 1 ? styles.titleActive : styles.title}>
-          {isSmallWeb ? 'Add\nContact\nDetails' : 'Add Contact Details'}
+          {isSmallDevice ? 'Add\nContact\nDetails' : 'Add Contact Details'}
         </Text>
 
-        <View style={isSmallWeb ? styles.lineSmallWeb : styles.line} />
+        <View style={isSmallDevice ? styles.lineSmallWeb : styles.line} />
 
         <Text style={[activeStep === 2 ? styles.titleActive : styles.title]}>
-          {isSmallWeb ? 'Add\nJob\nDetails' : 'Add Job Details'}
+          {isSmallDevice ? 'Add\nJob\nDetails' : 'Add Job Details'}
         </Text>
       </View>
 
@@ -172,21 +182,22 @@ const AddJobForm = () => {
           ) : null}
         </View>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
+  contentContainer: {
     width: '100%',
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    flexDirection: 'column',
+    backgroundColor: 'white',
+  },
+  wrapper: {
+    width: '100%',
     backgroundColor: 'white',
     paddingTop: 16,
     paddingBottom: 80,
-    flex: 1,
   },
   formContainer: {
     width: '90%',
@@ -220,6 +231,7 @@ const styles = StyleSheet.create({
     padding: 7,
     textAlign: 'center',
     minWidth: 88,
+    overflow: 'hidden',
   },
   title: {
     fontSize: 16,
@@ -230,6 +242,7 @@ const styles = StyleSheet.create({
     padding: 7,
     textAlign: 'center',
     minWidth: 88,
+    overflow: 'hidden',
   },
   line: {
     width: 32,
