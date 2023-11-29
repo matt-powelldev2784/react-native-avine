@@ -32,8 +32,6 @@ const Dropdown = ({
     }
   }
 
-  console.log('formil.values.frequency', formik.values.frequency)
-
   return (
     <View style={styles.container}>
       <Image source={inputIcons[imageName]} style={styles.image} />
