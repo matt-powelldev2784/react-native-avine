@@ -1,11 +1,4 @@
-import {
-  View,
-  FlatList,
-  StyleSheet,
-  Platform,
-  TouchableOpacity,
-  Text,
-} from 'react-native'
+import { View, FlatList, StyleSheet } from 'react-native'
 import React from 'react'
 import { dummyJobsdata } from './dummyJobsdata/dummyJobsdata'
 import JobCard from './jobCard/JobCard'
@@ -47,7 +40,7 @@ const styles = StyleSheet.create({
     paddingBottom: 120,
     paddingHorizontal: 24,
     flexDirection: 'row',
-    width: '100vw',
+    width: '100vw' as any,
     flexWrap: 'wrap',
   },
   smallWebCards: {
