@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   headerNative: {
     backgroundColor: '#337bae',
-    paddingHorizontal: 16,
+    paddingHorizontal: '5%',
     paddingVertical: 6,
     flexDirection: 'row',
     justifyContent: 'space-between',

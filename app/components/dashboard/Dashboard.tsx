@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   headerSmallScreen: {
     backgroundColor: '#337bae',
-    paddingHorizontal: 16,
+    paddingHorizontal: '5%',
     paddingVertical: 2,
     justifyContent: 'center',
     alignItems: 'center',
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   headerLargeScreen: {
     backgroundColor: '#337bae',
-    paddingHorizontal: 24,
+    paddingHorizontal: 36,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
   page: {
     flex: 1,
     width: '100%',
+    height: '100%',
     backgroundColor: '#f1f2f2',
     alignItems: 'center',
   },
