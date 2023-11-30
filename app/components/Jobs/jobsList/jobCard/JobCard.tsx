@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import { job } from '../../../../../types/Job'
+import { useDeviceType } from '../../../../utils/deviceTypes'
 
 const JobCard = ({
   id,
@@ -13,8 +14,10 @@ const JobCard = ({
   price,
   frequency,
 }: job) => {
+  const { isLargeWeb } = useDeviceType()
+
   return (
-    <View style={styles.card}>
+    <View style={isLargeWeb ? styles.cardLargeWeb : styles.cardSmallScreen}>
       <View style={styles.numberContainer}>
         <Text style={styles.number}>{id}</Text>
       </View>
@@ -55,18 +58,24 @@ const JobCard = ({
 }
 
 const styles = StyleSheet.create({
-  pageTitle: {
-    fontSize: 20,
-    color: '#337bae',
-    marginVertical: 10,
-    fontWeight: 'bold',
-  },
-  card: {
+  cardSmallScreen: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '#fff',
     borderRadius: 12,
     marginBottom: 8,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#337bae',
+    height: 100,
+    overflow: 'hidden',
+    width: '100%',
+  },
+  cardLargeWeb: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    borderRadius: 12,
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: '#337bae',

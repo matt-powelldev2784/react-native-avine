@@ -33,15 +33,17 @@ const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'flex-start',
     width: '100%',
   },
   largeWebCards: {
-    paddingTop: 10,
-    paddingBottom: 120,
-    paddingHorizontal: 24,
-    flexDirection: 'row',
+    display: 'grid' as any,
+    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' as any,
     width: '100vw' as any,
-    flexWrap: 'wrap',
+    justifyItems: 'center',
+    alignItems: 'center',
+    gap: 20,
+    padding: 20,
   },
   smallWebCards: {
     width: '100%',
