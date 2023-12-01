@@ -1,42 +1,30 @@
-import { View, FlatList, StyleSheet, Text } from 'react-native'
+import { View, FlatList, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { dummyJobsdata } from './dummyJobsdata/dummyJobsdata'
 import JobCard from './jobCard/JobCard'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import { getUserJobsFromDb } from '../../../db/jobs/getUserJobsFromDb'
 import { JobT } from '../../../../types/JobT'
+import ErrorNoData from './errorNoData/ErrorNoData'
 
 const JobList = () => {
   const { isSmallWeb, isLargeWeb, isNative } = useDeviceType()
   const [jobsData, setJobsData] = useState<JobT[] | null | undefined>(null)
-  console.log('jobsData', jobsData)
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const data = await getUserJobsFromDb()
-        console.log('data', data)
-        setJobsData(data)
-      } catch (error) {
-        console.error('Error fetching jobs data:', error)
-      }
+      const data = await getUserJobsFromDb()
+      setJobsData(data)
     }
 
     fetchData()
   }, [])
 
   if (!jobsData) {
-    return (
-      <View>
-        <Text>Error</Text>
-      </View>
-    )
+    return <ErrorNoData />
   }
-  const JobCards = jobsData
-    ? jobsData.map((job) => {
-        return <JobCard {...job} key={job.id} />
-      })
-    : null
+  const JobCards = jobsData.map((job) => {
+    return <JobCard {...job} key={job.id} />
+  })
 
   return (
     <View style={styles.listContainer}>
@@ -87,13 +75,16 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    backgroundColor: '#337bae',
-    padding: 10,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    paddingVertical: 8,
     paddingHorizontal: 32,
+    backgroundColor: '#337bae',
     borderRadius: 8,
     width: '100%',
     maxWidth: 270,
     margin: 8,
+    gap: 4,
   },
   buttonText: {
     color: 'white',

@@ -7,4 +7,6 @@ import RoundList from './rounds/RoundList'
 
 import ScreenMenu from './screenMenu/ScreenMenu'
 
-export { Dashboard, JobList, RoundList, ScreenMenu, AddJobForm }
+import PlanMeLogo from './PlanMeLogo/PlanMeLogo'
+
+export { PlanMeLogo, Dashboard, JobList, RoundList, ScreenMenu, AddJobForm }
