@@ -5,7 +5,7 @@ const Jobs = () => {
   return (
     <>
       <Dashboard>
-        <ScreenMenu title={'Jobs'} navigateTo={'AddJob'} />
+        <ScreenMenu title={'Job List'} navigateTo={'AddJob'} />
         <JobList />
       </Dashboard>
     </>
