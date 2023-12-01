@@ -3,9 +3,11 @@ import React from 'react'
 import { dummyJobsdata } from './dummyJobsdata/dummyJobsdata'
 import JobCard from './jobCard/JobCard'
 import { useDeviceType } from '../../../utils/deviceTypes'
+import { getUserJobsFromDb } from '../../../db/jobs/getUserJobsFromDb'
 
 const JobList = () => {
   const { isSmallWeb, isLargeWeb, isNative } = useDeviceType()
+  const jobsData = getUserJobsFromDb()
 
   const JobCards = dummyJobsdata.map((job) => {
     return <JobCard {...job} key={job.id} />
