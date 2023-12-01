@@ -1,6 +1,6 @@
 import { doc, setDoc, collection } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { JobT } from '../../../types/Job'
+import { JobT } from '../../../types/JobT'
 
 export const addJobToDb = async (jobData: JobT) => {
   if (auth.currentUser === null) {
