@@ -1,27 +1,44 @@
 import { View, FlatList, StyleSheet } from 'react-native'
-import React from 'react'
-import { dummyJobsdata } from './dummyJobsdata/dummyJobsdata'
+import React, { useEffect, useState } from 'react'
 import JobCard from './jobCard/JobCard'
 import { useDeviceType } from '../../../utils/deviceTypes'
+import { getUserJobsFromDb } from '../../../db/jobs/getUserJobsFromDb'
+import { JobT } from '../../../../types/JobT'
+import ErrorNoData from './errorNoData/ErrorNoData'
 
 const JobList = () => {
   const { isSmallWeb, isLargeWeb, isNative } = useDeviceType()
+  const [jobsData, setJobsData] = useState<JobT[] | null | undefined>(null)
 
-  const JobCards = dummyJobsdata.map((job) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getUserJobsFromDb()
+      setJobsData(data)
+    }
+
+    fetchData()
+  }, [])
+
+  if (!jobsData) {
+    return <ErrorNoData />
+  }
+  const JobCards = jobsData.map((job) => {
     return <JobCard {...job} key={job.id} />
   })
 
   return (
     <View style={styles.listContainer}>
-      {isLargeWeb ? <View style={styles.largeWebCards}>{JobCards}</View> : null}
-      {isSmallWeb ? (
+      {jobsData && isLargeWeb ? (
+        <View style={styles.largeWebCards}>{JobCards}</View>
+      ) : null}
+      {jobsData && isSmallWeb ? (
         <View style={styles.smallDeviceCards}>{JobCards}</View>
       ) : null}
 
-      {isNative ? (
+      {jobsData && isNative ? (
         <FlatList
           style={styles.smallDeviceCards}
-          data={dummyJobsdata}
+          data={jobsData}
           renderItem={({ item }) => <JobCard {...item} />}
           keyExtractor={(item) => item.id}
           ListFooterComponent={<View style={styles.flatlistFooter} />}
@@ -58,13 +75,16 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    backgroundColor: '#337bae',
-    padding: 10,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    paddingVertical: 8,
     paddingHorizontal: 32,
+    backgroundColor: '#337bae',
     borderRadius: 8,
     width: '100%',
     maxWidth: 270,
     margin: 8,
+    gap: 4,
   },
   buttonText: {
     color: 'white',

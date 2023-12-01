@@ -1,39 +1,51 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
-import { job } from '../../../../../types/Job'
+import { JobT } from '../../../../../types/JobT'
 import { useDeviceType } from '../../../../utils/deviceTypes'
 
 const JobCard = ({
-  id,
-  name,
+  jobName,
   address,
-  town,
   postcode,
-  cleanType,
+  jobType,
   time,
   price,
   frequency,
-}: job) => {
+}: JobT) => {
   const { isLargeWeb } = useDeviceType()
+  const jobShortName = jobName
+    .split(' ')
+    .map((word): string => word[0])
+    .join('')
+    .substring(0, 3)
 
   return (
     <View style={isLargeWeb ? styles.cardLargeWeb : styles.cardSmallScreen}>
-      <View style={styles.numberContainer}>
-        <Text style={styles.number}>{id}</Text>
+      <View style={styles.jobShortNameContainer}>
+        <Text style={styles.jobShortNameText}>
+          <Text style={styles.jobShortNameText}>
+            {jobShortName.slice(0, 1).toUpperCase()}
+          </Text>
+          <Text style={styles.jobShortNameText}>
+            {jobShortName.slice(1, 2).toUpperCase()}
+          </Text>
+          <Text style={styles.jobShortNameText}>
+            {jobShortName.slice(2, 3).toUpperCase()}
+          </Text>
+        </Text>
       </View>
       <View style={styles.leftContainer}>
         <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-          {name}
+          {jobName}
         </Text>
         <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
           {address}
-          {town ? `, ${town}` : null}
         </Text>
         <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
           {postcode}
         </Text>
         <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-          {cleanType}
+          {jobType}
         </Text>
       </View>
       <View style={styles.rightContainer}>
@@ -83,15 +95,17 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     width: '100%',
   },
-  numberContainer: {
+  jobShortNameContainer: {
+    flexDirection: 'column',
     justifyContent: 'center',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 10,
-    width: 30,
+    width: 25,
+    padding: 4,
     height: '100%',
     backgroundColor: '#337bae',
   },
-  number: {
+  jobShortNameText: {
     color: '#fff',
     fontSize: 20,
     fontWeight: 'bold',
