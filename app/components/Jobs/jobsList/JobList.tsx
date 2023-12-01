@@ -15,14 +15,14 @@ const JobList = () => {
     <View style={styles.listContainer}>
       {isLargeWeb ? <View style={styles.largeWebCards}>{JobCards}</View> : null}
       {isSmallWeb ? <View style={styles.smallWebCards}>{JobCards}</View> : null}
-      {isNative ? <View style={styles.smallWebCards}>{JobCards}</View> : null}
 
       {isNative ? (
         <FlatList
-          style={{ width: '100%', paddingTop: 10, paddingBottom: 120 }}
+          style={styles.smallWebCards}
           data={dummyJobsdata}
           renderItem={({ item }) => <JobCard {...item} />}
           keyExtractor={(item) => item.id}
+          ListFooterComponent={<View style={styles.flatlistFooter} />}
         />
       ) : null}
     </View>
@@ -48,8 +48,11 @@ const styles = StyleSheet.create({
   smallWebCards: {
     width: '100%',
     paddingTop: 10,
-    paddingBottom: 120,
+    paddingBottom: 70,
     paddingHorizontal: '2.5%',
+  },
+  flatlistFooter: {
+    height: 20,
   },
   button: {
     alignItems: 'center',
