@@ -14,11 +14,13 @@ const JobList = () => {
   return (
     <View style={styles.listContainer}>
       {isLargeWeb ? <View style={styles.largeWebCards}>{JobCards}</View> : null}
-      {isSmallWeb ? <View style={styles.smallWebCards}>{JobCards}</View> : null}
+      {isSmallWeb ? (
+        <View style={styles.smallDeviceCards}>{JobCards}</View>
+      ) : null}
 
       {isNative ? (
         <FlatList
-          style={styles.smallWebCards}
+          style={styles.smallDeviceCards}
           data={dummyJobsdata}
           renderItem={({ item }) => <JobCard {...item} />}
           keyExtractor={(item) => item.id}
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     gap: 20,
     padding: 20,
   },
-  smallWebCards: {
+  smallDeviceCards: {
     width: '100%',
     paddingTop: 10,
     paddingBottom: 70,
