@@ -1,29 +1,56 @@
-import { View, FlatList, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, FlatList, StyleSheet, Text } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { dummyJobsdata } from './dummyJobsdata/dummyJobsdata'
 import JobCard from './jobCard/JobCard'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import { getUserJobsFromDb } from '../../../db/jobs/getUserJobsFromDb'
+import { JobT } from '../../../../types/JobT'
 
 const JobList = () => {
   const { isSmallWeb, isLargeWeb, isNative } = useDeviceType()
-  const jobsData = getUserJobsFromDb()
+  const [jobsData, setJobsData] = useState<JobT[] | null | undefined>(null)
+  console.log('jobsData', jobsData)
 
-  const JobCards = dummyJobsdata.map((job) => {
-    return <JobCard {...job} key={job.id} />
-  })
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getUserJobsFromDb()
+        console.log('data', data)
+        setJobsData(data)
+      } catch (error) {
+        console.error('Error fetching jobs data:', error)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  if (!jobsData) {
+    return (
+      <View>
+        <Text>Error</Text>
+      </View>
+    )
+  }
+  const JobCards = jobsData
+    ? jobsData.map((job) => {
+        return <JobCard {...job} key={job.id} />
+      })
+    : null
 
   return (
     <View style={styles.listContainer}>
-      {isLargeWeb ? <View style={styles.largeWebCards}>{JobCards}</View> : null}
-      {isSmallWeb ? (
+      {jobsData && isLargeWeb ? (
+        <View style={styles.largeWebCards}>{JobCards}</View>
+      ) : null}
+      {jobsData && isSmallWeb ? (
         <View style={styles.smallDeviceCards}>{JobCards}</View>
       ) : null}
 
-      {isNative ? (
+      {jobsData && isNative ? (
         <FlatList
           style={styles.smallDeviceCards}
-          data={dummyJobsdata}
+          data={jobsData}
           renderItem={({ item }) => <JobCard {...item} />}
           keyExtractor={(item) => item.id}
           ListFooterComponent={<View style={styles.flatlistFooter} />}

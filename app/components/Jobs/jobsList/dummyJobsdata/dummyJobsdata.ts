@@ -1,4 +1,4 @@
-import { job } from '../../../../../types/Job'
+import { job } from '../../../../../types/JobT'
 
 export const dummyJobsdata: job[] = [
   {
