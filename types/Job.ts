@@ -1,11 +1,12 @@
-export interface job {
-  id: string
-  name: string
+export interface JobT {
+  jobName: string
   address: string
-  town: string
   postcode: string
-  cleanType: string
+  jobType: string
   time: string
-  price: string
+  price: number
   frequency: string
+  contactName: string
+  contactTel: number
+  notes: string | null
 }
