@@ -1,6 +1,7 @@
 import { View, FlatList, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import JobCard from './jobCard/JobCard'
+import { Loading } from '../../../ui'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import { getUserJobsFromDb } from '../../../db/jobs/getUserJobsFromDb'
 import { JobWithIdT } from '../../../../types/JobT'
@@ -10,18 +11,25 @@ import { useRoute } from '@react-navigation/native'
 const JobList = () => {
   const route = useRoute()
   const { isSmallWeb, isLargeWeb, isNative } = useDeviceType()
+  const [isLoading, setIsLoading] = useState(true)
   const [jobsData, setJobsData] = useState<JobWithIdT[] | null | undefined>(
     null,
   )
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true)
       const data = await getUserJobsFromDb()
       setJobsData(data)
+      setIsLoading(false)
     }
 
     fetchData()
   }, [route])
+
+  if (isLoading) {
+    return <Loading loadingText={'Loading jobs list...'} />
+  }
 
   if (!jobsData || jobsData.length === 0) {
     return <ErrorNoData />
