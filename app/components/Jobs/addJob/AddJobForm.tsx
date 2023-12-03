@@ -136,7 +136,7 @@ const AddJobForm = () => {
               onPress={() => {
                 formik.handleSubmit()
                 if (formik.isValid) {
-                  navigation.navigate('Jobs')
+                  navigation.navigate('Jobs', { refresh: true })
                 }
               }}
               style={styles.button}

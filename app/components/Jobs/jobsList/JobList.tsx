@@ -5,8 +5,10 @@ import { useDeviceType } from '../../../utils/deviceTypes'
 import { getUserJobsFromDb } from '../../../db/jobs/getUserJobsFromDb'
 import { JobWithIdT } from '../../../../types/JobT'
 import ErrorNoData from './errorNoData/ErrorNoData'
+import { useRoute } from '@react-navigation/native'
 
 const JobList = () => {
+  const route = useRoute()
   const { isSmallWeb, isLargeWeb, isNative } = useDeviceType()
   const [jobsData, setJobsData] = useState<JobWithIdT[] | null | undefined>(
     null,
@@ -19,7 +21,7 @@ const JobList = () => {
     }
 
     fetchData()
-  }, [])
+  }, [route])
 
   if (!jobsData || jobsData.length === 0) {
     return <ErrorNoData />
