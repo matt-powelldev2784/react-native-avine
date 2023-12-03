@@ -19,7 +19,7 @@ const JobList = () => {
     fetchData()
   }, [])
 
-  if (!jobsData) {
+  if (!jobsData || jobsData.length === 0) {
     return <ErrorNoData />
   }
   const JobCards = jobsData.map((job) => {
