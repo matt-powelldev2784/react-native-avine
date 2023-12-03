@@ -20,8 +20,8 @@ const JobList = () => {
     const fetchData = async () => {
       setIsLoading(true)
       const data = await getUserJobsFromDb()
-      setJobsData(data)
       setIsLoading(false)
+      setJobsData(data)
     }
 
     fetchData()
