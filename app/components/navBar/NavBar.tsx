@@ -5,6 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDeviceType } from '../../utils/deviceTypes'
+import theme from '../../utils/theme/theme'
 
 const NavBar = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -17,7 +18,7 @@ const NavBar = () => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-around',
-      backgroundColor: '#337bae',
+      backgroundColor: theme.colors.primary,
       gap: isLargeWeb ? 32 : 0,
       paddingTop: 8,
       paddingBottom: 6,
@@ -31,7 +32,7 @@ const NavBar = () => {
     },
     buttonText: {
       paddingTop: 2,
-      color: '#ffffff',
+      color: 'white',
       fontSize: isLargeWeb ? 14 : 12,
     },
   })

@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 import { useDeviceType } from '../../utils/deviceTypes'
+import theme from '../../utils/theme/theme'
 
 interface ScreenMenuProps {
   title: string
@@ -42,7 +43,7 @@ const ScreenMenu = ({ title, navigateTo }: ScreenMenuProps) => {
 
 const styles = StyleSheet.create({
   menuContianerSmallScreen: {
-    backgroundColor: '#aa337b',
+    backgroundColor: theme.colors.jobPrimary,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   menuContianerLargeWeb: {
-    backgroundColor: '#aa337b',
+    backgroundColor: theme.colors.jobPrimary,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     borderColor: 'white',
   },
   buttonText: {
-    color: '#ffffff',
+    color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
     marginLeft: 8,
@@ -82,18 +83,6 @@ const styles = StyleSheet.create({
     marginTop: 2,
     marginBottom: 2,
     fontWeight: 'bold',
-  },
-  pageTitleHidden: {
-    opacity: 0,
-  },
-  circle: {
-    top: 5,
-    width: 45,
-    height: 45,
-    borderRadius: 50,
-    backgroundColor: 'grey',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   text: {
     color: 'white',

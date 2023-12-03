@@ -5,6 +5,7 @@ import PlanMeLogo from '../../components/PlanMeLogo/PlanMeLogo'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../stackNavigator/StackNavigator'
+import theme from '../../utils/theme/theme'
 
 const SplashScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -22,7 +23,7 @@ const SplashScreen = () => {
       <PlanMeLogo />
       <Text style={styles.text}>Quick and Simple Round Planner</Text>
       <ActivityIndicator
-        color={'#ffffff'}
+        color={'white'}
         size="large"
         style={{ padding: 8, position: 'absolute', bottom: 32 }}
       />
@@ -36,14 +37,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 4,
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
   },
   image: {
     width: 300,
     height: 74,
   },
   text: {
-    color: '#fff',
+    color: 'white',
     fontSize: 14,
     fontWeight: 'bold',
     padding: 8,

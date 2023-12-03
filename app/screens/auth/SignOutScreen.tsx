@@ -6,6 +6,7 @@ import PlanMeLogo from '../../components/PlanMeLogo/PlanMeLogo'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../stackNavigator/StackNavigator'
+import theme from '../../utils/theme/theme'
 
 const SignOutScreen = () => {
   const { signOut } = useAuth()
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 4,
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
   },
   logoContainer: {
     alignItems: 'center',
@@ -52,13 +53,13 @@ const styles = StyleSheet.create({
     height: 40,
   },
   text: {
-    color: '#fff',
+    color: 'white',
     fontSize: 14,
     fontWeight: 'bold',
     padding: 8,
   },
   button: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'white',
     padding: 10,
     borderRadius: 5,
     flexDirection: 'row',
@@ -67,19 +68,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
   },
   buttonText: {
-    color: '#000000',
+    color: 'black',
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   linkText: {
-    color: '#fff',
+    color: 'white',
     fontSize: 12,
     fontWeight: 'bold',
     marginBottom: 16,
   },
   backButton: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'white',
     padding: 6,
     borderRadius: 5,
     flexDirection: 'row',
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   backText: {
-    color: '#000000',
+    color: 'black',
     fontSize: 12,
     textAlign: 'center',
   },

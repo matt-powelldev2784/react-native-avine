@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import { FormikProps } from 'formik'
 import { inputIcons } from './inputIcons'
+import theme from '../../utils/theme/theme'
 
 interface InputFieldProps {
   formik: FormikProps<any>
@@ -37,6 +38,7 @@ const InputField: React.FC<InputFieldProps> = ({
         onBlur={formik.handleBlur(name)}
         value={formik.values[name]}
         placeholder={placeholder}
+        placeholderTextColor={Platform.OS === 'web' ? '#828585' : '#bfbfbf'}
         style={[
           formik.touched[name] && formik.errors[name]
             ? styles.errorInput
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
     fontSize: Platform.OS === 'web' ? 16 : 16,
     marginBottom: 5,
     top: Platform.OS === 'web' ? -22 : -20,
-    color: '#337bae',
+    color: theme.colors.primary,
     fontWeight: 'bold',
   },
   image: {
@@ -79,13 +81,13 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: '#337bae',
+    borderColor: theme.colors.primary,
     borderWidth: 2,
     padding: 10,
     borderRadius: 8,
     fontSize: 16,
     paddingLeft: Platform.OS === 'web' ? 40 : 36,
-    color: Platform.OS === 'web' ? '#828585' : '#bfbfbf',
+    color: 'black',
     backgroundColor: 'white',
   },
   errorInput: {

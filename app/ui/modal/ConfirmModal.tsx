@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native'
+import theme from '../../utils/theme/theme'
 
 interface ConfirmModalProps {
   visible: boolean
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   buttonCancel: {
-    backgroundColor: '#8c8c8c',
+    backgroundColor: theme.colors.buttonSecondary,
   },
   buttonConfirm: {
     backgroundColor: '#337bae',

@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { useDeviceType } from '../../../../utils/deviceTypes'
+import theme from '../../../../utils/theme/theme'
 
 interface FormFlowTitlesProps {
   activeStep: number
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
     borderRadius: 8,
     padding: 7,
     textAlign: 'center',
@@ -67,8 +68,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#337bae',
-    backgroundColor: '#f1f2f2',
+    color: theme.colors.primary,
+    backgroundColor: theme.colors.formFlowSecondary,
     borderRadius: 8,
     padding: 7,
     textAlign: 'center',
@@ -77,17 +78,17 @@ const styles = StyleSheet.create({
   },
   line: {
     width: 32,
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
     borderWidth: 3,
     borderStyle: 'solid',
-    borderColor: '#337bae',
+    borderColor: theme.colors.primary,
   },
   lineSmallWeb: {
     width: 24,
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
     borderWidth: 3,
     borderStyle: 'solid',
-    borderColor: '#337bae',
+    borderColor: theme.colors.primary,
   },
 })
 

@@ -7,6 +7,7 @@ import { getUserJobsFromDb } from '../../../db/jobs/getUserJobsFromDb'
 import { JobWithIdT } from '../../../../types/JobT'
 import ErrorNoData from './errorNoData/ErrorNoData'
 import { useRoute } from '@react-navigation/native'
+import theme from '../../../utils/theme/theme'
 
 const JobList = () => {
   const route = useRoute()
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 8,
     paddingHorizontal: 32,
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
     borderRadius: 8,
     width: '100%',
     maxWidth: 270,

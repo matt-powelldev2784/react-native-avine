@@ -14,6 +14,7 @@ import { useMoveToNextStep } from './hooks/useMoveToNextStep'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
+import theme from '../../../utils/theme/theme'
 
 const AddJobForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
     padding: 10,
     paddingHorizontal: 32,
     borderRadius: 8,

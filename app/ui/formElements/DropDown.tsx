@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import { FormikProps } from 'formik'
 import { Dropdown as DropdownCustom } from 'react-native-element-dropdown'
 import { inputIcons } from './inputIcons'
+import theme from '../../utils/theme/theme'
 
 interface DropdownProps {
   formik: FormikProps<any>
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     fontSize: Platform.OS === 'web' ? 16 : 16,
     marginBottom: 5,
     top: Platform.OS === 'web' ? -22 : -20,
-    color: '#337bae',
+    color: theme.colors.primary,
     fontWeight: 'bold',
   },
   image: {
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   input: {
-    borderColor: '#337bae',
+    borderColor: theme.colors.primary,
     borderWidth: 2,
     borderRadius: 8,
     fontSize: 16,
