@@ -1,6 +1,9 @@
+import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { addJobToDb } from '../../../../db/jobs/addJobtoDb'
+import { updateJobInDb } from '../../../../db/jobs/updateJobIDb'
+import { getJobById } from '../../../../db/jobs/getJobById'
+import { JobWithIdT } from '../../../../../types/JobT'
 
 export const stepOneSchema = Yup.object().shape({
   jobName: Yup.string().required('Name is required'),
@@ -30,8 +33,28 @@ export const stepThreeSchema = Yup.object().shape({
   notes: Yup.string(),
 })
 
-const useFormikSteps = (activeStep: number) => {
+interface useFormikStepsInterface {
+  activeStep: number
+  jobId: string
+}
+
+const useFormikSteps = ({ activeStep, jobId }: useFormikStepsInterface) => {
+  const [jobData, setJobData] = useState<JobWithIdT | null | undefined>(null)
+
   let validationSchema
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getJobById(jobId)
+      if (data) {
+        setJobData(data)
+      }
+    }
+
+    if (jobId) {
+      fetchData()
+    }
+  }, [jobId])
 
   if (activeStep === 0) {
     validationSchema = stepOneSchema
@@ -42,7 +65,8 @@ const useFormikSteps = (activeStep: number) => {
   }
 
   const formik = useFormik({
-    initialValues: {
+    initialValues: jobData || {
+      id: '',
       jobName: '',
       address: '',
       postcode: '',
@@ -54,11 +78,11 @@ const useFormikSteps = (activeStep: number) => {
       contactTel: 0,
       notes: '',
     },
-    onSubmit: (values) => {
-      console.log(values)
-      addJobToDb(values)
+    onSubmit: async (values) => {
+      await updateJobInDb({ jobId, jobData: values })
     },
     validationSchema,
+    enableReinitialize: true,
   })
 
   return formik

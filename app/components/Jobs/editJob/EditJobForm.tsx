@@ -11,10 +11,21 @@ import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
+import { useRoute } from '@react-navigation/native'
+import { RouteProp } from '@react-navigation/native'
+import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 
-const AddJobForm = () => {
+type EditJobFormRouteProp = RouteProp<RootStackParamList, 'EditJob'>
+
+const EditJobForm = () => {
+  const route = useRoute<EditJobFormRouteProp>()
   const [activeStep, setActiveStep] = useState(0)
-  const formik = useFormikSteps(activeStep)
+
+  const jobId = route?.params?.jobId ? route?.params?.jobId : ''
+  const formik = useFormikSteps({
+    activeStep,
+    jobId,
+  })
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
 
   return (
@@ -129,10 +140,13 @@ const AddJobForm = () => {
 
           {activeStep === 2 ? (
             <TouchableOpacity
-              onPress={() => formik.handleSubmit()}
+              onPress={() => {
+                formik.handleSubmit()
+                setActiveStep(0)
+              }}
               style={styles.button}
             >
-              <Text style={styles.buttonText}>Add Job</Text>
+              <Text style={styles.buttonText}>Update Job</Text>
             </TouchableOpacity>
           ) : null}
         </View>
@@ -185,4 +199,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default AddJobForm
+export default EditJobForm
