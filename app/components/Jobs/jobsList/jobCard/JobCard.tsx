@@ -1,9 +1,13 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { JobT } from '../../../../../types/JobT'
+import { JobWithIdT } from '../../../../../types/JobT'
 import { useDeviceType } from '../../../../utils/deviceTypes'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 
 const JobCard = ({
+  id,
   jobName,
   address,
   postcode,
@@ -11,7 +15,8 @@ const JobCard = ({
   time,
   price,
   frequency,
-}: JobT) => {
+}: JobWithIdT) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { isLargeWeb } = useDeviceType()
   const jobShortName = jobName
     .split(' ')
@@ -60,10 +65,17 @@ const JobCard = ({
             Freq: {frequency}
           </Text>
         </View>
-        <Image
-          source={require('../../../../../assets/edit.png')}
-          style={{ width: 25, height: 25 }}
-        />
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('EditJob', { jobId: id })
+          }}
+        >
+          <Image
+            source={require('../../../../../assets/edit.png')}
+            style={{ width: 25, height: 25 }}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   )
