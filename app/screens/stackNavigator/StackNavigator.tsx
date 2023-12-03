@@ -26,7 +26,7 @@ export type RootStackParamList = {
   Payments: undefined
 
   //jobs
-  Jobs: undefined
+  Jobs: { refresh?: boolean } | undefined
   AddJob: undefined
   EditJob: { jobId: string } | undefined
 }
