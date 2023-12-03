@@ -140,10 +140,13 @@ const EditJobForm = () => {
 
           {activeStep === 2 ? (
             <TouchableOpacity
-              onPress={() => formik.handleSubmit()}
+              onPress={() => {
+                formik.handleSubmit()
+                setActiveStep(0)
+              }}
               style={styles.button}
             >
-              <Text style={styles.buttonText}>Add Job</Text>
+              <Text style={styles.buttonText}>Update Job</Text>
             </TouchableOpacity>
           ) : null}
         </View>
