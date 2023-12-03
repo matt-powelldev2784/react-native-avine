@@ -1,10 +1,11 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { JobWithIdT } from '../../../../../types/JobT'
 import { useDeviceType } from '../../../../utils/deviceTypes'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import { ConfirmModal } from '../../../../ui'
 import { deleteJobById } from '../../../../db/jobs/deleteJobById'
 
 const JobCard = ({
@@ -17,6 +18,7 @@ const JobCard = ({
   price,
   frequency,
 }: JobWithIdT) => {
+  const [modalVisible, setModalVisible] = useState(false)
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { isLargeWeb } = useDeviceType()
   const jobShortName = jobName
@@ -83,11 +85,8 @@ const JobCard = ({
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={async () => {
-              const deletedJob = await deleteJobById(id)
-              if (deletedJob) {
-                navigation.navigate('Jobs', { refresh: true })
-              }
+            onPress={() => {
+              setModalVisible(true)
             }}
           >
             <Image
@@ -97,6 +96,18 @@ const JobCard = ({
           </TouchableOpacity>
         </View>
       </View>
+
+      <ConfirmModal
+        modalText={`Are you sure you want to delete ${jobName}`}
+        onConfirm={async () => {
+          const deletedJob = await deleteJobById(id)
+          if (deletedJob) {
+            navigation.navigate('Jobs', { refresh: true })
+          }
+        }}
+        onCancel={() => setModalVisible(false)}
+        visible={modalVisible}
+      />
     </View>
   )
 }
