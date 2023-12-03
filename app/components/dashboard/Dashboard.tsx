@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 import { useDeviceType } from '../../utils/deviceTypes'
+import theme from '../../utils/theme/theme'
 
 interface DashboardProps {
   children?: ReactNode
@@ -69,10 +70,10 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     alignItems: 'flex-start',
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
   },
   headerSmallScreen: {
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
     paddingHorizontal: '5%',
     paddingVertical: 2,
     justifyContent: 'center',
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   headerLargeScreen: {
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
     paddingHorizontal: 36,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   text: {
-    color: '#337bae',
+    color: theme.colors.primary,
     fontSize: 14,
     fontWeight: 'bold',
     padding: 8,
@@ -127,11 +128,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   account: {
-    color: '#337bae',
+    color: theme.colors.primary,
     fontWeight: 'bold',
   },
   accountLarge: {
-    color: '#337bae',
+    color: theme.colors.primary,
     fontWeight: 'bold',
     fontSize: 20,
   },
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     paddingTop: Platform.OS !== 'web' ? 2 : 0,
-    color: '#ffffff',
+    color: theme.colors.secondary,
   },
 })
 

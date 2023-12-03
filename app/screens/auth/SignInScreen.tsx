@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import PlanMeLogo from '../../components/PlanMeLogo/PlanMeLogo'
 import * as WebBrowser from 'expo-web-browser'
 import GoogleLoginButton from '../../components/auth/components/GoogleLoginButton'
+import theme from '../../utils/theme/theme'
 
 const SignInScreen = () => {
   const { signIn } = useAuth()
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 4,
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
   },
   logoContainer: {
     alignItems: 'center',
@@ -44,13 +45,13 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   text: {
-    color: '#fff',
+    color: 'white',
     fontSize: 14,
     fontWeight: 'bold',
     padding: 8,
   },
   linkText: {
-    color: '#fff',
+    color: 'white',
     fontSize: 12,
     fontWeight: 'bold',
     marginBottom: 16,

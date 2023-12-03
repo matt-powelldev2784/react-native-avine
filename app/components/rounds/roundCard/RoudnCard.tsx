@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import React from 'react'
 import { RoundTS } from '../../../../types/Round'
+import theme from '../../../utils/theme/theme'
 
 const RoundCard = ({
   name,
@@ -53,19 +54,18 @@ const RoundCard = ({
 const styles = StyleSheet.create({
   pageTitle: {
     fontSize: 20,
-    color: '#337bae',
+    color: theme.colors.primary,
     marginVertical: 10,
     fontWeight: 'bold',
   },
   card: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#fff',
     borderRadius: 12,
     marginBottom: 4,
     borderWidth: 1,
     borderStyle: 'solid',
-    borderColor: '#337bae',
+    borderColor: theme.colors.primary,
     height: 100,
     overflow: 'hidden',
     width: Platform.OS === 'web' ? '95%' : '100%',
@@ -77,10 +77,10 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     width: 30,
     height: '100%',
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
   },
   shortName: {
-    color: '#fff',
+    color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -103,12 +103,12 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 20,
-    color: '#337bae',
+    color: theme.colors.primary,
     marginBottom: 2,
   },
   text: {
     fontSize: 14,
-    color: '#333',
+    color: 'black',
     marginBottom: 0,
   },
 })

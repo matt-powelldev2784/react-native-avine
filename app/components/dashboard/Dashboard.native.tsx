@@ -6,6 +6,7 @@ import NavBar from '../navBar/NavBar'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
+import theme from '../../utils/theme/theme'
 
 interface DashboardProps {
   children?: ReactNode
@@ -44,10 +45,10 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     alignItems: 'flex-start',
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
   },
   headerNative: {
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
     paddingHorizontal: '5%',
     paddingVertical: 6,
     flexDirection: 'row',
@@ -63,12 +64,12 @@ const styles = StyleSheet.create({
     paddingBottom: 52,
   },
   text: {
-    color: '#337bae',
+    backgroundColor: theme.colors.primary,
     fontSize: 14,
     fontWeight: 'bold',
     padding: 8,
   },
-  account: { color: '#337bae', fontWeight: 'bold' },
+  account: { color: theme.colors.primary, fontWeight: 'bold' },
   button: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     paddingTop: 0,
-    color: '#ffffff',
+    color: theme.colors.secondary,
   },
 })
 

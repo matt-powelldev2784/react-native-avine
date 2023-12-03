@@ -1,5 +1,6 @@
 import { View, ActivityIndicator, Text } from 'react-native'
 import React from 'react'
+import theme from '../../utils/theme/theme'
 
 interface LoadingProps {
   loadingText: string
@@ -14,9 +15,9 @@ const Loading = ({ loadingText }: LoadingProps) => {
           marginBottom: 16,
         }}
         size="large"
-        color="#337bae"
+        color={theme.colors.primary}
       />
-      <Text style={{ color: '#337bae', fontWeight: 'bold' }}>
+      <Text style={{ color: theme.colors.primary, fontWeight: 'bold' }}>
         {loadingText}
       </Text>
     </View>

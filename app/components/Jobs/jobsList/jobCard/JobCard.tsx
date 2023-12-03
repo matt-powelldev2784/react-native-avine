@@ -7,6 +7,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 import { ConfirmModal } from '../../../../ui'
 import { deleteJobById } from '../../../../db/jobs/deleteJobById'
+import theme from '../../../../utils/theme/theme'
 
 const JobCard = ({
   id,
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderWidth: 1,
     borderStyle: 'solid',
-    borderColor: '#337bae',
+    borderColor: theme.colors.primary,
     height: 110,
     overflow: 'hidden',
     width: '100%',
@@ -129,11 +130,10 @@ const styles = StyleSheet.create({
   cardLargeWeb: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#fff',
     borderRadius: 12,
     borderWidth: 1,
     borderStyle: 'solid',
-    borderColor: '#337bae',
+    borderColor: theme.colors.primary,
     height: 110,
     overflow: 'hidden',
     width: '100%',
@@ -146,10 +146,10 @@ const styles = StyleSheet.create({
     width: 25,
     padding: 4,
     height: '100%',
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
   },
   jobShortNameText: {
-    color: '#fff',
+    color: theme.colors.secondary,
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -177,12 +177,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: '#337bae',
+    color: theme.colors.primary,
     marginBottom: 2,
   },
   text: {
     fontSize: 14,
-    color: '#333',
+    color: 'black',
     marginBottom: 0,
   },
   buttons: {

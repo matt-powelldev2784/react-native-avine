@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import theme from '../../utils/theme/theme'
 
 const NavBar = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
     paddingTop: 8,
     paddingBottom: 6,
     width: '100%',
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
     width: 80,
   },
   buttonText: {
-    color: '#ffffff',
+    color: 'white',
     fontSize: 12,
   },
 })

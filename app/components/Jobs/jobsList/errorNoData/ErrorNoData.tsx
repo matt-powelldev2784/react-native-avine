@@ -3,6 +3,7 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import theme from '../../../../utils/theme/theme'
 
 const ErrorNoData = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -58,12 +59,12 @@ const styles = StyleSheet.create({
   primaryText: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#337bae',
+    color: theme.colors.primary,
     marginVertical: 16,
   },
   secondaryText: {
     fontSize: 18,
-    color: '#337bae',
+    color: theme.colors.primary,
     margin: 4,
     textAlign: 'center',
     marginHorizontal: 50,
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 8,
     paddingHorizontal: 32,
-    backgroundColor: '#337bae',
+    backgroundColor: theme.colors.primary,
     borderRadius: 8,
     gap: 8,
     marginBottom: 60,
