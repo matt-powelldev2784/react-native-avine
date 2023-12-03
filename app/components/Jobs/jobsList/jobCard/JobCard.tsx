@@ -40,15 +40,18 @@ const JobCard = ({
         </Text>
       </View>
       <View style={styles.leftContainer}>
-        <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-          {jobName}
-        </Text>
-        <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-          {address}
-        </Text>
-        <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-          {postcode}
-        </Text>
+        <View style={styles.leftInfo}>
+          <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+            {jobName}
+          </Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+            {address}
+          </Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+            {postcode}
+          </Text>
+        </View>
+
         <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
           {jobType}
         </Text>
@@ -56,7 +59,7 @@ const JobCard = ({
       <View style={styles.rightContainer}>
         <View style={styles.rightText}>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            Time: {time}
+            Time: {time} hrs
           </Text>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Price: {price}
@@ -73,7 +76,7 @@ const JobCard = ({
         >
           <Image
             source={require('../../../../../assets/edit.png')}
-            style={{ width: 25, height: 25 }}
+            style={{ width: 35, height: 35 }}
           />
         </TouchableOpacity>
       </View>
@@ -91,7 +94,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: '#337bae',
-    height: 100,
+    height: 110,
     overflow: 'hidden',
     width: '100%',
   },
@@ -103,7 +106,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: '#337bae',
-    height: 100,
+    height: 110,
     overflow: 'hidden',
     width: '100%',
   },
@@ -128,6 +131,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexGrow: 2,
     padding: 8,
+  },
+  leftInfo: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    flexGrow: 2,
   },
   rightContainer: {
     flex: 1,

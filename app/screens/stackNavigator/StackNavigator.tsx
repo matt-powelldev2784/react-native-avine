@@ -41,7 +41,7 @@ const StackNavigator = () => {
   useEffect(() => {
     setUser(userInfo)
     if (userInfo) {
-      setTimeout(() => navigation.navigate('EditJob'), 100)
+      setTimeout(() => navigation.navigate('Jobs'), 100)
     } else {
       navigation.navigate('SignIn')
     }
