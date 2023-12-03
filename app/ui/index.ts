@@ -1,3 +1,4 @@
 import Loading from './loading/Loading'
+import ConfirmModal from './modal/ConfirmModal'
 
-export { Loading }
+export { Loading, ConfirmModal }

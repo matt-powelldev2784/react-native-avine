@@ -1,10 +1,12 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { JobWithIdT } from '../../../../../types/JobT'
 import { useDeviceType } from '../../../../utils/deviceTypes'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import { ConfirmModal } from '../../../../ui'
+import { deleteJobById } from '../../../../db/jobs/deleteJobById'
 
 const JobCard = ({
   id,
@@ -16,6 +18,7 @@ const JobCard = ({
   price,
   frequency,
 }: JobWithIdT) => {
+  const [modalVisible, setModalVisible] = useState(false)
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { isLargeWeb } = useDeviceType()
   const jobShortName = jobName
@@ -69,17 +72,42 @@ const JobCard = ({
           </Text>
         </View>
 
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('EditJob', { jobId: id })
-          }}
-        >
-          <Image
-            source={require('../../../../../assets/edit.png')}
-            style={{ width: 35, height: 35 }}
-          />
-        </TouchableOpacity>
+        <View style={styles.buttons}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('EditJob', { jobId: id })
+            }}
+          >
+            <Image
+              source={require('../../../../../assets/pen.png')}
+              style={{ width: 35, height: 35 }}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              setModalVisible(true)
+            }}
+          >
+            <Image
+              source={require('../../../../../assets/bin.png')}
+              style={{ width: 35, height: 35 }}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
+
+      <ConfirmModal
+        modalText={`Are you sure you want to delete ${jobName}`}
+        onConfirm={async () => {
+          const deletedJob = await deleteJobById(id)
+          if (deletedJob) {
+            navigation.navigate('Jobs', { refresh: true })
+          }
+        }}
+        onCancel={() => setModalVisible(false)}
+        visible={modalVisible}
+      />
     </View>
   )
 }
@@ -156,6 +184,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#333',
     marginBottom: 0,
+  },
+  buttons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
 })
 
