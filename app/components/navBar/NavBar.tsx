@@ -40,7 +40,7 @@ const NavBar = () => {
     <SafeAreaView edges={['right', 'bottom', 'left']} style={styles.nav}>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Jobs')}
+        onPress={() => navigation.navigate('Jobs', { refresh: true })}
       >
         <Image
           source={require('../../../assets/customers.png')}

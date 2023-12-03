@@ -148,7 +148,7 @@ const EditJobForm = () => {
 
                 if (formik.isValid) {
                   setActiveStep(0)
-                  navigation.navigate('Jobs')
+                  navigation.navigate('Jobs', { refresh: true })
                 }
               }}
               style={styles.button}
