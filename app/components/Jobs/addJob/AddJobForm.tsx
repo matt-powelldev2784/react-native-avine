@@ -7,8 +7,8 @@ import {
   ScrollView,
 } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
-import InputField from './components/InputField'
-import Dropdown from './components/DropDown'
+import InputField from '../../../ui/formElements/InputField'
+import Dropdown from '../../../ui/formElements/DropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
 
