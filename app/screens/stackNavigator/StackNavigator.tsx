@@ -28,7 +28,7 @@ export type RootStackParamList = {
   //jobs
   Jobs: undefined
   AddJob: undefined
-  EditJob: undefined
+  EditJob: { jobId: string } | undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
