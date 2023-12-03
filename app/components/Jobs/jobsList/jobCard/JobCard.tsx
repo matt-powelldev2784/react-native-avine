@@ -5,6 +5,7 @@ import { useDeviceType } from '../../../../utils/deviceTypes'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import { deleteJobById } from '../../../../db/jobs/deleteJobById'
 
 const JobCard = ({
   id,
@@ -69,16 +70,32 @@ const JobCard = ({
           </Text>
         </View>
 
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('EditJob', { jobId: id })
-          }}
-        >
-          <Image
-            source={require('../../../../../assets/edit.png')}
-            style={{ width: 35, height: 35 }}
-          />
-        </TouchableOpacity>
+        <View style={styles.buttons}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('EditJob', { jobId: id })
+            }}
+          >
+            <Image
+              source={require('../../../../../assets/pen.png')}
+              style={{ width: 35, height: 35 }}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={async () => {
+              const deletedJob = await deleteJobById(id)
+              if (deletedJob) {
+                navigation.navigate('Jobs', { refresh: true })
+              }
+            }}
+          >
+            <Image
+              source={require('../../../../../assets/bin.png')}
+              style={{ width: 35, height: 35 }}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   )
@@ -156,6 +173,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#333',
     marginBottom: 0,
+  },
+  buttons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
 })
 
