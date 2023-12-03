@@ -11,8 +11,12 @@ import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 
 const AddJobForm = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [activeStep, setActiveStep] = useState(0)
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
@@ -129,7 +133,12 @@ const AddJobForm = () => {
 
           {activeStep === 2 ? (
             <TouchableOpacity
-              onPress={() => formik.handleSubmit()}
+              onPress={() => {
+                formik.handleSubmit()
+                if (formik.isValid) {
+                  navigation.navigate('Jobs')
+                }
+              }}
               style={styles.button}
             >
               <Text style={styles.buttonText}>Add Job</Text>

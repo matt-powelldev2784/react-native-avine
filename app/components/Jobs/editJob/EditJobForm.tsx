@@ -14,10 +14,13 @@ import { useMoveToNextStep } from './hooks/useMoveToNextStep'
 import { useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 
 type EditJobFormRouteProp = RouteProp<RootStackParamList, 'EditJob'>
 
 const EditJobForm = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const route = useRoute<EditJobFormRouteProp>()
   const [activeStep, setActiveStep] = useState(0)
 
@@ -142,7 +145,11 @@ const EditJobForm = () => {
             <TouchableOpacity
               onPress={() => {
                 formik.handleSubmit()
-                setActiveStep(0)
+
+                if (formik.isValid) {
+                  setActiveStep(0)
+                  navigation.navigate('Jobs')
+                }
               }}
               style={styles.button}
             >
