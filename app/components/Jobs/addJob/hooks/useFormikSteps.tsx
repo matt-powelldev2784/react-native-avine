@@ -48,10 +48,10 @@ const useFormikSteps = (activeStep: number) => {
       postcode: '',
       jobType: '',
       time: '',
-      price: '',
+      price: 0,
       frequency: '',
       contactName: '',
-      contactTel: '',
+      contactTel: 0,
       notes: '',
     },
     onSubmit: (values) => {

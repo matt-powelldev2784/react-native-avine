@@ -1,5 +1,4 @@
 export interface JobT {
-  id: string
   jobName: string
   address: string
   postcode: string
@@ -10,4 +9,8 @@ export interface JobT {
   contactName: string
   contactTel: number
   notes: string | null
+}
+
+export interface JobWithIdT extends JobT {
+  id: string
 }

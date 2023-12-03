@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react'
 import JobCard from './jobCard/JobCard'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import { getUserJobsFromDb } from '../../../db/jobs/getUserJobsFromDb'
-import { JobT } from '../../../../types/JobT'
+import { JobWithIdT } from '../../../../types/JobT'
 import ErrorNoData from './errorNoData/ErrorNoData'
 
 const JobList = () => {
   const { isSmallWeb, isLargeWeb, isNative } = useDeviceType()
-  const [jobsData, setJobsData] = useState<JobT[] | null | undefined>(null)
+  const [jobsData, setJobsData] = useState<JobWithIdT[] | null | undefined>(
+    null,
+  )
 
   useEffect(() => {
     const fetchData = async () => {
