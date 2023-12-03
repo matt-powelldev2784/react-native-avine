@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: '100%',
+    backgroundColor: 'white',
   },
   largeWebCards: {
     display: 'grid' as any,

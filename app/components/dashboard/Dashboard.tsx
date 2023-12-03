@@ -101,8 +101,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: '#f1f2f2',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   text: {
     color: '#337bae',
