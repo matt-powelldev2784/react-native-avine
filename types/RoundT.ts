@@ -1,4 +1,4 @@
-export interface RoundWithSummary {
+export interface RoundWithSummaryT {
   id: string
   name: string
   place: string

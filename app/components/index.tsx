@@ -6,7 +6,7 @@ import AddJobForm from './Jobs/addJob/AddJobForm'
 import EditJobForm from './Jobs/editJob/EditJobForm'
 
 //rounds
-import RoundList from './rounds/RoundList'
+import RoundList from './rounds/roundList/RoundList'
 
 //otheres
 import ScreenMenu from './screenMenu/ScreenMenu'

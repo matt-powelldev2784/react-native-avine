@@ -1,6 +1,6 @@
-import { RoundTS } from '../../../../types/RoundT'
+import { RoundWithSummaryT } from '../../../../../types/RoundT'
 
-export const dummyRoundData: RoundTS[] = [
+export const dummyRoundData: RoundWithSummaryT[] = [
   {
     id: '1',
     name: 'Wallington All',
@@ -8,6 +8,7 @@ export const dummyRoundData: RoundTS[] = [
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Daily',
+    jobs: ['123', '123', '123', '123', '123'],
   },
   {
     id: '2',
@@ -16,6 +17,7 @@ export const dummyRoundData: RoundTS[] = [
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Weekly',
+    jobs: ['123', '123', '123', '123', '123'],
   },
   {
     id: '3',
@@ -24,6 +26,7 @@ export const dummyRoundData: RoundTS[] = [
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Monthly',
+    jobs: ['123', '123', '123', '123', '123'],
   },
   {
     id: '4',
@@ -32,6 +35,7 @@ export const dummyRoundData: RoundTS[] = [
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Daily',
+    jobs: ['123', '123', '123', '123', '123'],
   },
   {
     id: '5',
@@ -40,6 +44,7 @@ export const dummyRoundData: RoundTS[] = [
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Daily',
+    jobs: ['123', '123', '123', '123', '123'],
   },
   {
     id: '6',
@@ -48,6 +53,7 @@ export const dummyRoundData: RoundTS[] = [
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Daily',
+    jobs: ['123', '123', '123', '123', '123'],
   },
   {
     id: '7',
@@ -56,6 +62,7 @@ export const dummyRoundData: RoundTS[] = [
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Daily',
+    jobs: ['123', '123', '123', '123', '123'],
   },
   {
     id: '8',
@@ -64,6 +71,7 @@ export const dummyRoundData: RoundTS[] = [
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Daily',
+    jobs: ['123', '123', '123', '123', '123'],
   },
   {
     id: '9',
@@ -72,5 +80,6 @@ export const dummyRoundData: RoundTS[] = [
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Daily',
+    jobs: ['123', '123', '123', '123', '123'],
   },
 ]

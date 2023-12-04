@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import React from 'react'
-import { RoundWithSummary } from '../../../../types/RoundT'
-import theme from '../../../utils/theme/theme'
+import { RoundWithSummaryT } from '../../../../../types/RoundT'
+import theme from '../../../../utils/theme/theme'
 
 const RoundCard = ({
   name,
@@ -9,7 +9,7 @@ const RoundCard = ({
   numOfJobs,
   roundTime,
   frequency,
-}: RoundWithSummary) => {
+}: RoundWithSummaryT) => {
   return (
     <View style={styles.card}>
       <View style={styles.shortNameContainer}>
