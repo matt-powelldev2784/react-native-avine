@@ -119,7 +119,13 @@ const EditJobForm = () => {
               name="frequency"
               placeholder="Cleaning Frequency"
               title="Cleaning Frequency"
-              options={['Daily', 'Weekly', 'Monthly', '2 Monthly', '3 Monthly']}
+              options={[
+                { label: 'Daily', value: 'Daily' },
+                { label: 'Weekly', value: 'Weekly' },
+                { label: 'Monthly', value: 'Monthly' },
+                { label: '2 Monthly', value: '2 Monthly' },
+                { label: '3 Monthly', value: '3 Monthly' },
+              ]}
               imageName={'calender'}
             />
             <InputField

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   TouchableOpacity,
   StyleSheet,
@@ -15,12 +15,34 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../utils/theme/theme'
+import { getUserJobsFromDb } from '../../../db/jobs/getUserJobsFromDb'
+
+interface JobOption {
+  label: string
+  value: string
+}
 
 const AddRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [activeStep, setActiveStep] = useState(0)
+  const [userJobs, setUserJobs] = useState<JobOption[]>([])
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getUserJobsFromDb()
+      const jobOptions = data?.map((job) => ({
+        label: job.jobName,
+        value: job.id,
+      }))
+      if (jobOptions) {
+        setUserJobs(jobOptions)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <ScrollView
@@ -52,7 +74,13 @@ const AddRoundForm = () => {
               name="frequency"
               placeholder="Round Frequency"
               title="Round Frequency"
-              options={['Daily', 'Weekly', 'Monthly', '2 Monthly', '3 Monthly']}
+              options={[
+                { label: 'Daily', value: 'Daily' },
+                { label: 'Weekly', value: 'Weekly' },
+                { label: 'Monthly', value: 'Monthly' },
+                { label: '2 Monthly', value: '2 Monthly' },
+                { label: '3 Monthly', value: '3 Monthly' },
+              ]}
               imageName={'calender'}
             />
           </>
@@ -66,7 +94,7 @@ const AddRoundForm = () => {
               name="Add Job"
               placeholder="Select job to add..."
               title="Add job"
-              options={['Daily', 'Weekly', 'Monthly', '2 Monthly', '3 Monthly']}
+              options={userJobs}
               imageName={'wiper'}
             />
           </>

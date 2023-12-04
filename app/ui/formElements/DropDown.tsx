@@ -10,7 +10,7 @@ interface DropdownProps {
   name: string
   placeholder: string
   title: string
-  options: any[]
+  options: { label: string; value: string }[] // Updated type
   imageName: keyof typeof inputIcons
 }
 
@@ -22,11 +22,6 @@ const Dropdown = ({
   options,
   imageName,
 }: DropdownProps) => {
-  const items = options.map((option) => ({
-    label: option,
-    value: option,
-  }))
-
   const handleChange = (item: any) => {
     if (item) {
       formik.setFieldValue(name, item.value)
@@ -39,7 +34,7 @@ const Dropdown = ({
       <Text style={styles.label}>{title.toUpperCase()}</Text>
 
       <DropdownCustom
-        data={items}
+        data={options}
         labelField="label"
         valueField={'value'}
         value={formik.values[name]}
