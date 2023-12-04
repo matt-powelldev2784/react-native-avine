@@ -30,7 +30,7 @@ export const addRoundToDb = async (roundData: RoundDbT) => {
 // Assuming you have an array of job IDs and other round details
 const roundData: RoundDbT = {
   name: 'Morning Round',
-  place: 'Kingswood',
+  location: 'Kingswood',
   frequency: 'Daily',
   jobs: ['QnjcwQZIj8409ljfjT2K', 'anotherJobId'], // Replace with actual job IDs
 }
