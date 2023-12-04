@@ -5,7 +5,7 @@ import theme from '../../../../utils/theme/theme'
 
 const RoundCard = ({
   name,
-  place,
+  location,
   numOfJobs,
   roundTime,
   frequency,
@@ -22,7 +22,7 @@ const RoundCard = ({
           {name}
         </Text>
         <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-          Place: {place}
+          Location: {location}
         </Text>
         <View>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
