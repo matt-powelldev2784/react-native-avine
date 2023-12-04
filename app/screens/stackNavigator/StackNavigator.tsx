@@ -8,6 +8,7 @@ import {
   SignOutScreen,
   AddJob,
   EditJob,
+  AddRound,
 } from '..'
 import { useAuth } from '../../components/auth/AuthProvider'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -21,6 +22,7 @@ export type RootStackParamList = {
 
   //rounds
   Rounds: undefined
+  AddRound: undefined
 
   //payments
   Payments: undefined
@@ -41,7 +43,7 @@ const StackNavigator = () => {
   useEffect(() => {
     setUser(userInfo)
     if (userInfo) {
-      setTimeout(() => navigation.navigate('Jobs'), 100)
+      setTimeout(() => navigation.navigate('AddRound'), 100)
     } else {
       navigation.navigate('SignIn')
     }
@@ -58,6 +60,7 @@ const StackNavigator = () => {
 
           {/* --------------------------  Round Screens  ------------------------- */}
           <Stack.Screen name="Rounds" component={Rounds} />
+          <Stack.Screen name="AddRound" component={AddRound} />
 
           {/* --------------------------  Round Screens  -------------------------- */}
           <Stack.Screen name="Payments" component={Payments} />

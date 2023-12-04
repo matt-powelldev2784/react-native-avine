@@ -12,6 +12,7 @@ import Payments from './paymnets/Paymemts'
 
 //rounds
 import Rounds from './rounds/Rounds'
+import AddRound from './rounds/AddRound'
 
 //others
 import SplashScreen from './auth/SplashScreen'
@@ -20,8 +21,9 @@ export {
   Jobs,
   AddJob,
   EditJob,
-  Payments,
   Rounds,
+  AddRound,
+  Payments,
   SplashScreen,
   SignInScreen,
   SignOutScreen,
