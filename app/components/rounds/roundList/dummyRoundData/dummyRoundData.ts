@@ -4,7 +4,7 @@ export const dummyRoundData: RoundWithSummaryT[] = [
   {
     id: '1',
     name: 'Wallington All',
-    place: 'Wallington',
+    location: 'Wallington',
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Daily',
@@ -13,7 +13,7 @@ export const dummyRoundData: RoundWithSummaryT[] = [
   {
     id: '2',
     name: 'Sutton Shops',
-    place: 'Sutton',
+    location: 'Sutton',
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Weekly',
@@ -22,7 +22,7 @@ export const dummyRoundData: RoundWithSummaryT[] = [
   {
     id: '3',
     name: 'Oprtington',
-    place: 'Oprtington',
+    location: 'Oprtington',
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Monthly',
@@ -31,7 +31,7 @@ export const dummyRoundData: RoundWithSummaryT[] = [
   {
     id: '4',
     name: 'Wallington All',
-    place: 'Wallington',
+    location: 'Wallington',
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Daily',
@@ -40,7 +40,7 @@ export const dummyRoundData: RoundWithSummaryT[] = [
   {
     id: '5',
     name: 'Sutton Shops',
-    place: 'Sutton',
+    location: 'Sutton',
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Daily',
@@ -49,7 +49,7 @@ export const dummyRoundData: RoundWithSummaryT[] = [
   {
     id: '6',
     name: 'Oprtington',
-    place: 'Oprtington',
+    location: 'Oprtington',
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Daily',
@@ -58,7 +58,7 @@ export const dummyRoundData: RoundWithSummaryT[] = [
   {
     id: '7',
     name: 'Wallington All',
-    place: 'Wallington',
+    location: 'Wallington',
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Daily',
@@ -67,7 +67,7 @@ export const dummyRoundData: RoundWithSummaryT[] = [
   {
     id: '8',
     name: 'Sutton Shops',
-    place: 'Sutton',
+    location: 'Sutton',
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Daily',
@@ -76,7 +76,7 @@ export const dummyRoundData: RoundWithSummaryT[] = [
   {
     id: '9',
     name: 'Oprtington',
-    place: 'Oprtington',
+    location: 'Oprtington',
     numOfJobs: '5',
     roundTime: '3.75',
     frequency: 'Daily',

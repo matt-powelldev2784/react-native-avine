@@ -1,7 +1,7 @@
 export interface RoundWithSummaryT {
   id: string
   name: string
-  place: string
+  location: string
   numOfJobs: string
   roundTime: string
   frequency: string
@@ -11,7 +11,7 @@ export interface RoundWithSummaryT {
 export interface RoundDbT {
   id?: string
   name: string
-  place: string
+  location: string
   frequency: string
   jobs: string[]
 }
