@@ -9,4 +9,5 @@ export const inputIcons = {
   tel: require('../../../assets/tel.png'),
   wiper: require('../../../assets/wiper_icon.png'),
   notes: require('../../../assets/notes.png'),
+  round: require('../../../assets/round_icon.png'),
 }
