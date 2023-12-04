@@ -43,7 +43,7 @@ const RoundCard = ({
           </Text>
         </View>
         <Image
-          source={require('../../../../assets/edit.png')}
+          source={require('../../../../../assets/pen.png')}
           style={{ width: 25, height: 25 }}
         />
       </View>
