@@ -1,4 +1,4 @@
-import { RoundTS } from '../../../../types/Round'
+import { RoundTS } from '../../../../types/RoundT'
 
 export const dummyRoundData: RoundTS[] = [
   {
