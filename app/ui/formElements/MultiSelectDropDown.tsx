@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import { FormikProps } from 'formik'
 import { MultiSelect } from 'react-native-element-dropdown'
@@ -22,14 +22,9 @@ const MultiSelectDropdown = ({
   options,
   imageName,
 }: DropdownProps) => {
-  const [isSelected, setIsSelected] = useState(false)
-
   const handleChange = (item: any) => {
     if (item) {
       formik.setFieldValue(name, item)
-      setIsSelected(true)
-    } else {
-      setIsSelected(false)
     }
   }
 
@@ -49,7 +44,6 @@ const MultiSelectDropdown = ({
           backgroundColor: theme.colors.primary,
         }}
         selectedTextStyle={{ color: 'white' }}
-        visibleSelectedItem={false}
         onChange={handleChange}
         style={[
           formik.touched[name] && formik.errors[name]
@@ -67,12 +61,6 @@ const MultiSelectDropdown = ({
           </View>
         )}
       />
-
-      {/* {formik.values[name].map((job) => (
-        <View key={job.value} style={styles.selectedBox}>
-          <Text style={styles.selectedBoxText}>{job.value}</Text>
-        </View>
-      ))} */}
 
       {formik.touched[name] && formik.errors[name] ? (
         <Text style={styles.errorText}>{String(formik.errors[name])}</Text>
