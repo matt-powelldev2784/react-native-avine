@@ -90,6 +90,11 @@ const AddRoundForm = () => {
         {/*********************  Step 2 ***************************/}
         {activeStep === 1 ? (
           <>
+            <Text style={styles.addJobText}>
+              Add jobs to {formik.values.roundName} round or click skip this
+              step to add jobs later. You can select a single job or multiple
+              jobs using the drop down menu.
+            </Text>
             <MultiSelectDropdown
               formik={formik}
               name="jobs"
@@ -170,6 +175,11 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  addJobText: {
+    fontSize: 16,
+    color: theme.colors.primary,
+    marginBottom: 32,
   },
 })
 
