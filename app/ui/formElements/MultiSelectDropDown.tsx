@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import { FormikProps } from 'formik'
-import { Dropdown as DropdownCustom } from 'react-native-element-dropdown'
+import { MultiSelect } from 'react-native-element-dropdown'
 import { inputIcons } from './inputIcons'
 import theme from '../../utils/theme/theme'
 
@@ -14,7 +14,7 @@ interface DropdownProps {
   imageName: keyof typeof inputIcons
 }
 
-const Dropdown = ({
+const MultiSelectDropdown = ({
   formik,
   name,
   placeholder,
@@ -22,9 +22,14 @@ const Dropdown = ({
   options,
   imageName,
 }: DropdownProps) => {
+  const [isSelected, setIsSelected] = useState(false)
+
   const handleChange = (item: any) => {
     if (item) {
-      formik.setFieldValue(name, item.value)
+      formik.setFieldValue(name, item)
+      setIsSelected(true)
+    } else {
+      setIsSelected(false)
     }
   }
 
@@ -33,20 +38,41 @@ const Dropdown = ({
       <Image source={inputIcons[imageName]} style={styles.image} />
       <Text style={styles.label}>{title.toUpperCase()}</Text>
 
-      <DropdownCustom
+      <MultiSelect
         data={options}
-        labelField={'value'}
-        valueField={'label'}
+        labelField="value"
+        valueField="label"
         value={formik.values[name]}
         placeholder={placeholder}
         placeholderStyle={styles.placeholder}
+        selectedStyle={{
+          backgroundColor: theme.colors.primary,
+        }}
+        selectedTextStyle={{ color: 'white' }}
+        visibleSelectedItem={false}
         onChange={handleChange}
         style={[
           formik.touched[name] && formik.errors[name]
             ? styles.errorInput
             : styles.input,
         ]}
+        renderItem={(item, selected) => (
+          <View
+            key={item.label}
+            style={selected ? styles.selectedItem : styles.item}
+          >
+            <Text style={selected ? styles.selectedItemText : null}>
+              {item.value}
+            </Text>
+          </View>
+        )}
       />
+
+      {/* {formik.values[name].map((job) => (
+        <View key={job.value} style={styles.selectedBox}>
+          <Text style={styles.selectedBoxText}>{job.value}</Text>
+        </View>
+      ))} */}
 
       {formik.touched[name] && formik.errors[name] ? (
         <Text style={styles.errorText}>{String(formik.errors[name])}</Text>
@@ -91,6 +117,29 @@ const styles = StyleSheet.create({
     zIndex: 0,
     backgroundColor: 'white',
   },
+  item: {
+    backgroundColor: 'white',
+    height: 35,
+    fontSize: 18,
+    paddingLeft: 36,
+    justifyContent: 'center',
+  },
+  selectedItem: {
+    backgroundColor: theme.colors.primary,
+    height: 35,
+    fontSize: 18,
+    paddingLeft: 36,
+    justifyContent: 'center',
+  },
+  selectedItemText: {
+    color: 'white',
+  },
+  selectedBox: {
+    backgroundColor: theme.colors.primary,
+  },
+  selectedBoxText: {
+    color: 'white',
+  },
   placeholder: {
     color: Platform.OS === 'web' ? '#828585' : '#bfbfbf',
   },
@@ -121,4 +170,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Dropdown
+export default MultiSelectDropdown

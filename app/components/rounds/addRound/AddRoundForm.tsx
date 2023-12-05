@@ -9,6 +9,7 @@ import {
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
+import MultiSelectDropdown from '../../../ui/formElements/MultiSelectDropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
 import { useNavigation } from '@react-navigation/native'
@@ -24,7 +25,7 @@ interface JobOption {
 
 const AddRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const [activeStep, setActiveStep] = useState(0)
+  const [activeStep, setActiveStep] = useState(1)
   const [userJobs, setUserJobs] = useState<JobOption[]>([])
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
@@ -33,8 +34,8 @@ const AddRoundForm = () => {
     const fetchData = async () => {
       const data = await getUserJobsFromDb()
       const jobOptions = data?.map((job) => ({
-        label: job.jobName,
-        value: job.id,
+        label: job.id,
+        value: job.jobName,
       }))
       if (jobOptions) {
         setUserJobs(jobOptions)
@@ -89,10 +90,10 @@ const AddRoundForm = () => {
         {/*********************  Step 2 ***************************/}
         {activeStep === 1 ? (
           <>
-            <Dropdown
+            <MultiSelectDropdown
               formik={formik}
-              name="Add Job"
-              placeholder="Select job to add..."
+              name="jobs"
+              placeholder="Select jobs to add..."
               title="Add job"
               options={userJobs}
               imageName={'wiper'}
@@ -113,9 +114,9 @@ const AddRoundForm = () => {
             <TouchableOpacity
               onPress={() => {
                 formik.handleSubmit()
-                if (formik.isValid) {
-                  navigation.navigate('Jobs', { refresh: true })
-                }
+                // if (formik.isValid) {
+                //   navigation.navigate('Jobs', { refresh: true })
+                // }
               }}
               style={styles.button}
             >
