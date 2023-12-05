@@ -9,9 +9,10 @@ import theme from '../../utils/theme/theme'
 interface ScreenMenuProps {
   title: string
   navigateTo?: keyof RootStackParamList
+  buttonText: string
 }
 
-const ScreenMenu = ({ title, navigateTo }: ScreenMenuProps) => {
+const ScreenMenu = ({ title, navigateTo, buttonText }: ScreenMenuProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { isLargeWeb } = useDeviceType()
 
@@ -28,13 +29,13 @@ const ScreenMenu = ({ title, navigateTo }: ScreenMenuProps) => {
       {navigateTo ? (
         <TouchableOpacity
           style={styles.button}
-          onPress={() => (navigateTo ? navigation.navigate('AddJob') : null)}
+          onPress={() => (navigateTo ? navigation.navigate(navigateTo) : null)}
         >
           <Image
             source={require('../../../assets/plus.png')}
             style={{ width: 13, height: 13 }}
           />
-          <Text style={styles.buttonText}>Add Job</Text>
+          <Text style={styles.buttonText}>{buttonText}</Text>
         </TouchableOpacity>
       ) : null}
     </View>

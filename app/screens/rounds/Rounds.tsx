@@ -5,7 +5,11 @@ const Rounds = () => {
   return (
     <>
       <Dashboard>
-        <ScreenMenu title={'Rounds'} navigateTo={'Rounds'} />
+        <ScreenMenu
+          title={'Rounds'}
+          navigateTo={'AddRound'}
+          buttonText="Add Round"
+        />
         <RoundList />
       </Dashboard>
     </>
