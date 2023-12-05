@@ -1,15 +1,15 @@
 import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import React from 'react'
-import { RoundTS } from '../../../../types/Round'
-import theme from '../../../utils/theme/theme'
+import { RoundWithSummaryT } from '../../../../../types/RoundT'
+import theme from '../../../../utils/theme/theme'
 
 const RoundCard = ({
   name,
-  place,
+  location,
   numOfJobs,
   roundTime,
   frequency,
-}: RoundTS) => {
+}: RoundWithSummaryT) => {
   return (
     <View style={styles.card}>
       <View style={styles.shortNameContainer}>
@@ -22,7 +22,7 @@ const RoundCard = ({
           {name}
         </Text>
         <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-          Place: {place}
+          Location: {location}
         </Text>
         <View>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
@@ -43,7 +43,7 @@ const RoundCard = ({
           </Text>
         </View>
         <Image
-          source={require('../../../../assets/edit.png')}
+          source={require('../../../../../assets/pen.png')}
           style={{ width: 25, height: 25 }}
         />
       </View>

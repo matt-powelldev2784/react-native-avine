@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   TouchableOpacity,
   StyleSheet,
@@ -9,28 +9,41 @@ import {
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
+import MultiSelectDropdown from '../../../ui/formElements/MultiSelectDropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
-import { useRoute } from '@react-navigation/native'
-import { RouteProp } from '@react-navigation/native'
-import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../utils/theme/theme'
+import { getUserJobsFromDb } from '../../../db/jobs/getUserJobsFromDb'
 
-type EditJobFormRouteProp = RouteProp<RootStackParamList, 'EditJob'>
+interface JobOption {
+  label: string
+  value: string
+}
 
-const EditJobForm = () => {
+const AddRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const route = useRoute<EditJobFormRouteProp>()
-  const [activeStep, setActiveStep] = useState(0)
-
-  const jobId = route?.params?.jobId ? route?.params?.jobId : ''
-  const formik = useFormikSteps({
-    activeStep,
-    jobId,
-  })
+  const [activeStep, setActiveStep] = useState(1)
+  const [userJobs, setUserJobs] = useState<JobOption[]>([])
+  const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getUserJobsFromDb()
+      const jobOptions = data?.map((job) => ({
+        label: job.id,
+        value: job.jobName,
+      }))
+      if (jobOptions) {
+        setUserJobs(jobOptions)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <ScrollView
@@ -45,80 +58,23 @@ const EditJobForm = () => {
           <>
             <InputField
               formik={formik}
-              name="jobName"
-              placeholder="Job Name"
-              title="Job Name"
-              imageName={'wiper'}
+              name="roundName"
+              placeholder="Round Name"
+              title="Round Name"
+              imageName={'round'}
             />
             <InputField
               formik={formik}
-              name="address"
-              placeholder="Address"
-              title="Job Address"
+              name="location"
+              placeholder="Location"
+              title="Location"
               imageName={'location'}
-            />
-            <InputField
-              formik={formik}
-              name="postcode"
-              placeholder="Post Code"
-              title="Post Code"
-              imageName={'locationCircle'}
-            />
-          </>
-        ) : null}
-
-        {/*********************  Step 2 ***************************/}
-        {activeStep === 1 ? (
-          <>
-            <InputField
-              formik={formik}
-              name="contactName"
-              placeholder="Contact Name"
-              title="Contact Name"
-              imageName={'person'}
-            />
-            <InputField
-              formik={formik}
-              name="contactTel"
-              placeholder="Contact Telephone Number"
-              title="Contact Telephone Number"
-              numericInput={true}
-              imageName={'tel'}
-            />
-          </>
-        ) : null}
-
-        {/*********************  Step 3 ***************************/}
-        {activeStep === 2 ? (
-          <>
-            <InputField
-              formik={formik}
-              name="jobType"
-              placeholder="Job Type e.g Front Only"
-              title="Job Type"
-              imageName={'diamond'}
-            />
-            <InputField
-              formik={formik}
-              name="time"
-              placeholder="Estimated Job Time In Hours e.g 1.5"
-              title="Estimated Job Time"
-              numericInput={true}
-              imageName={'clock'}
-            />
-            <InputField
-              formik={formik}
-              name="price"
-              placeholder="Price"
-              title="Price"
-              numericInput={true}
-              imageName={'poundSign'}
             />
             <Dropdown
               formik={formik}
               name="frequency"
-              placeholder="Cleaning Frequency"
-              title="Cleaning Frequency"
+              placeholder="Round Frequency"
+              title="Round Frequency"
               options={[
                 { label: 'Daily', value: 'Daily' },
                 { label: 'Weekly', value: 'Weekly' },
@@ -128,19 +84,25 @@ const EditJobForm = () => {
               ]}
               imageName={'calender'}
             />
-            <InputField
+          </>
+        ) : null}
+
+        {/*********************  Step 2 ***************************/}
+        {activeStep === 1 ? (
+          <>
+            <MultiSelectDropdown
               formik={formik}
-              name="notes"
-              placeholder="Notes"
-              title="Notes"
-              numericInput={true}
-              imageName={'notes'}
+              name="jobs"
+              placeholder="Select jobs to add..."
+              title="Add job"
+              options={userJobs}
+              imageName={'wiper'}
             />
           </>
         ) : null}
 
         <View style={styles.buttonContainer}>
-          {activeStep < 2 ? (
+          {activeStep < 1 ? (
             <>
               <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
                 <Text style={styles.buttonText}>Next</Text>
@@ -148,19 +110,17 @@ const EditJobForm = () => {
             </>
           ) : null}
 
-          {activeStep === 2 ? (
+          {activeStep === 1 ? (
             <TouchableOpacity
               onPress={() => {
                 formik.handleSubmit()
-
-                if (formik.isValid) {
-                  setActiveStep(0)
-                  navigation.navigate('Jobs', { refresh: true })
-                }
+                // if (formik.isValid) {
+                //   navigation.navigate('Jobs', { refresh: true })
+                // }
               }}
               style={styles.button}
             >
-              <Text style={styles.buttonText}>Update Job</Text>
+              <Text style={styles.buttonText}>Add Round</Text>
             </TouchableOpacity>
           ) : null}
         </View>
@@ -213,4 +173,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default EditJobForm
+export default AddRoundForm
