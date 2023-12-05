@@ -5,7 +5,7 @@ import { addRoundToDb } from '../../../../db/rounds/addRoundToDb'
 export const stepOneSchema = Yup.object().shape({
   roundName: Yup.string().required('Round Name is required'),
   location: Yup.string().required('Location is required'),
-  frequency: Yup.string().required('Post Code is required'),
+  frequency: Yup.string().required('Frequency is required'),
 })
 
 export const stepTwoSchema = Yup.object().shape({
