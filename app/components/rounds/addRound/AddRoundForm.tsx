@@ -91,9 +91,12 @@ const AddRoundForm = () => {
         {activeStep === 1 ? (
           <>
             <Text style={styles.addJobText}>
-              Add jobs to {formik.values.roundName} round or click skip this
-              step to add jobs later. You can select a single job or multiple
-              jobs using the drop down menu.
+              Add jobs to{' '}
+              <span style={{ fontWeight: 'bold' }}>
+                {formik.values.roundName}
+              </span>{' '}
+              round or click skip this step to add jobs later. You can select a
+              single job or multiple jobs using the drop down menu.
             </Text>
             <MultiSelectDropdown
               formik={formik}
