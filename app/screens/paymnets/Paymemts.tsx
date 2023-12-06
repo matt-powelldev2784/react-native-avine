@@ -1,12 +1,17 @@
-import { Text } from 'react-native'
 import React from 'react'
-import { Dashboard } from '../../components'
+import { Dashboard, ScreenMenu } from '../../components'
+import theme from '../../utils/theme/theme'
 
 const Payments = () => {
   return (
     <>
       <Dashboard>
-        <Text>Payments</Text>
+        <ScreenMenu
+          title={'Payments'}
+          navigateTo={'AddRound'}
+          buttonText="Add Payment"
+          bgColor={theme.colors.paymentPrimary}
+        />
       </Dashboard>
     </>
   )

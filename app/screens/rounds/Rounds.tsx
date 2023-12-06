@@ -1,5 +1,6 @@
 import React from 'react'
 import { Dashboard, RoundList, ScreenMenu } from '../../components'
+import theme from '../../utils/theme/theme'
 
 const Rounds = () => {
   return (
@@ -9,6 +10,7 @@ const Rounds = () => {
           title={'Rounds'}
           navigateTo={'AddRound'}
           buttonText="Add Round"
+          bgColor={theme.colors.roundPrimary}
         />
         <RoundList />
       </Dashboard>
