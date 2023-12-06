@@ -17,6 +17,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../utils/theme/theme'
 import { useFetchJobs } from './hooks/useFetchJobs'
+import { useDeviceType } from '../../../utils/deviceTypes'
 
 const AddRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -24,6 +25,14 @@ const AddRoundForm = () => {
   const userJobs = useFetchJobs()
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
+  const { isLargeWeb } = useDeviceType()
+
+  const handleStepBack = () => {
+    if (activeStep === 0) {
+      return
+    }
+    setActiveStep((prev) => prev - 1)
+  }
 
   return (
     <ScrollView
@@ -71,12 +80,13 @@ const AddRoundForm = () => {
         {activeStep === 1 ? (
           <>
             <Text style={styles.addJobText}>
-              Add jobs to{' '}
-              <span style={{ fontWeight: 'bold' }}>
-                {formik.values.roundName}
-              </span>{' '}
-              round or click skip this step to add jobs later. You can select a
-              single job or multiple jobs using the drop down menu.
+              Add jobs to
+              <Text style={{ fontWeight: 'bold' }}>
+                &nbsp;{formik.values.roundName}&nbsp;
+              </Text>
+              round by using drop down menu to select a single or multiple jobs.
+              You can skip this step by clicking &quot;Add Round&quot; and add
+              your jobs later.
             </Text>
             <MultiSelectDropdown
               formik={formik}
@@ -91,25 +101,39 @@ const AddRoundForm = () => {
 
         <View style={styles.buttonContainer}>
           {activeStep < 1 ? (
-            <>
-              <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
-                <Text style={styles.buttonText}>Next</Text>
-              </TouchableOpacity>
-            </>
+            <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
+              <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
           ) : null}
 
           {activeStep === 1 ? (
-            <TouchableOpacity
-              onPress={() => {
-                formik.handleSubmit()
-                if (formik.isValid) {
-                  navigation.navigate('Rounds', { refresh: true })
-                }
-              }}
-              style={styles.button}
+            <View
+              style={[
+                styles.buttonContainer,
+                isLargeWeb
+                  ? { flexDirection: 'row' }
+                  : { flexDirection: 'column' },
+              ]}
             >
-              <Text style={styles.buttonText}>Add Round</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={handleStepBack}
+                style={styles.buttonSecondary}
+              >
+                <Text style={styles.buttonText}>Go Back</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  formik.handleSubmit()
+                  if (formik.isValid) {
+                    navigation.navigate('Rounds', { refresh: true })
+                  }
+                }}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Add Round</Text>
+              </TouchableOpacity>
+            </View>
           ) : null}
         </View>
       </View>
@@ -142,12 +166,23 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
+    flexDirection: 'column',
+    width: '100%',
     maxWidth: 600,
+    gap: 8,
   },
   button: {
     alignItems: 'center',
     backgroundColor: theme.colors.primary,
+    padding: 10,
+    paddingHorizontal: 32,
+    borderRadius: 8,
+    width: '100%',
+    maxWidth: 270,
+  },
+  buttonSecondary: {
+    alignItems: 'center',
+    backgroundColor: theme.colors.buttonSecondary,
     padding: 10,
     paddingHorizontal: 32,
     borderRadius: 8,
