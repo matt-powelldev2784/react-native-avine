@@ -18,7 +18,7 @@ import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigat
 import theme from '../../../utils/theme/theme'
 import { useFetchJobs } from './hooks/useFetchJobs'
 import { useDeviceType } from '../../../utils/deviceTypes'
-import { useFormReset } from '../../../utils/useFormReset'
+import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 
 const AddRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -27,7 +27,7 @@ const AddRoundForm = () => {
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()
-  useFormReset(formik, setActiveStep)
+  useFormResetOnBlur(formik, setActiveStep)
 
   const handleStepBack = () => {
     if (activeStep === 0) {

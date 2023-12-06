@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../screens/stackNavigator/StackNavigator'
 
-export const useFormReset = (
+export const useFormResetOnBlur = (
   formik: any,
   setActiveStep: (value: React.SetStateAction<number>) => void,
 ) => {
