@@ -4,37 +4,44 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 import { useDeviceType } from '../../utils/deviceTypes'
-import theme from '../../utils/theme/theme'
 
 interface ScreenMenuProps {
   title: string
   navigateTo?: keyof RootStackParamList
+  buttonText?: string
+  bgColor: string
 }
 
-const ScreenMenu = ({ title, navigateTo }: ScreenMenuProps) => {
+const ScreenMenu = ({
+  title,
+  navigateTo,
+  buttonText,
+  bgColor,
+}: ScreenMenuProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { isLargeWeb } = useDeviceType()
 
   return (
     <View
-      style={
+      style={[
         isLargeWeb
           ? styles.menuContianerLargeWeb
-          : styles.menuContianerSmallScreen
-      }
+          : styles.menuContianerSmallScreen,
+        { backgroundColor: bgColor },
+      ]}
     >
       <Text style={styles.pageTitle}>{title}</Text>
 
       {navigateTo ? (
         <TouchableOpacity
           style={styles.button}
-          onPress={() => (navigateTo ? navigation.navigate('AddJob') : null)}
+          onPress={() => (navigateTo ? navigation.navigate(navigateTo) : null)}
         >
           <Image
             source={require('../../../assets/plus.png')}
             style={{ width: 13, height: 13 }}
           />
-          <Text style={styles.buttonText}>Add Job</Text>
+          <Text style={styles.buttonText}>{buttonText}</Text>
         </TouchableOpacity>
       ) : null}
     </View>
@@ -43,7 +50,6 @@ const ScreenMenu = ({ title, navigateTo }: ScreenMenuProps) => {
 
 const styles = StyleSheet.create({
   menuContianerSmallScreen: {
-    backgroundColor: theme.colors.jobPrimary,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -52,7 +58,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   menuContianerLargeWeb: {
-    backgroundColor: theme.colors.jobPrimary,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',

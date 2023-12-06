@@ -21,7 +21,7 @@ export type RootStackParamList = {
   SplashScreen: undefined
 
   //rounds
-  Rounds: undefined
+  Rounds: { refresh?: boolean } | undefined
   AddRound: undefined
 
   //payments

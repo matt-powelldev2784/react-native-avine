@@ -30,7 +30,7 @@ const useFormikSteps = (activeStep: number) => {
     },
     onSubmit: (values) => {
       console.log(values)
-      // addRoundToDb(values)
+      addRoundToDb(values)
     },
     validationSchema,
   })

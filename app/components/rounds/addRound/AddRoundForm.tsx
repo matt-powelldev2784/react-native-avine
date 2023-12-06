@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   TouchableOpacity,
   StyleSheet,
@@ -16,34 +16,23 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../utils/theme/theme'
-import { getUserJobsFromDb } from '../../../db/jobs/getUserJobsFromDb'
-
-interface JobOption {
-  label: string
-  value: string
-}
+import { useFetchJobs } from './hooks/useFetchJobs'
+import { useDeviceType } from '../../../utils/deviceTypes'
 
 const AddRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const [activeStep, setActiveStep] = useState(1)
-  const [userJobs, setUserJobs] = useState<JobOption[]>([])
+  const [activeStep, setActiveStep] = useState(0)
+  const userJobs = useFetchJobs()
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
+  const { isLargeWeb } = useDeviceType()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getUserJobsFromDb()
-      const jobOptions = data?.map((job) => ({
-        label: job.id,
-        value: job.jobName,
-      }))
-      if (jobOptions) {
-        setUserJobs(jobOptions)
-      }
+  const handleStepBack = () => {
+    if (activeStep === 0) {
+      return
     }
-
-    fetchData()
-  }, [])
+    setActiveStep((prev) => prev - 1)
+  }
 
   return (
     <ScrollView
@@ -90,6 +79,15 @@ const AddRoundForm = () => {
         {/*********************  Step 2 ***************************/}
         {activeStep === 1 ? (
           <>
+            <Text style={styles.addJobText}>
+              Add jobs to
+              <Text style={{ fontWeight: 'bold' }}>
+                &nbsp;{formik.values.roundName}&nbsp;
+              </Text>
+              round by using drop down menu to select a single or multiple jobs.
+              You can skip this step by clicking &quot;Add Round&quot; and add
+              your jobs later.
+            </Text>
             <MultiSelectDropdown
               formik={formik}
               name="jobs"
@@ -103,25 +101,39 @@ const AddRoundForm = () => {
 
         <View style={styles.buttonContainer}>
           {activeStep < 1 ? (
-            <>
-              <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
-                <Text style={styles.buttonText}>Next</Text>
-              </TouchableOpacity>
-            </>
+            <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
+              <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
           ) : null}
 
           {activeStep === 1 ? (
-            <TouchableOpacity
-              onPress={() => {
-                formik.handleSubmit()
-                // if (formik.isValid) {
-                //   navigation.navigate('Jobs', { refresh: true })
-                // }
-              }}
-              style={styles.button}
+            <View
+              style={[
+                styles.buttonContainer,
+                isLargeWeb
+                  ? { flexDirection: 'row' }
+                  : { flexDirection: 'column' },
+              ]}
             >
-              <Text style={styles.buttonText}>Add Round</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={handleStepBack}
+                style={styles.buttonSecondary}
+              >
+                <Text style={styles.buttonText}>Go Back</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  formik.handleSubmit()
+                  if (formik.isValid) {
+                    navigation.navigate('Rounds', { refresh: true })
+                  }
+                }}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Add Round</Text>
+              </TouchableOpacity>
+            </View>
           ) : null}
         </View>
       </View>
@@ -154,8 +166,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
+    flexDirection: 'column',
+    width: '100%',
     maxWidth: 600,
+    gap: 8,
   },
   button: {
     alignItems: 'center',
@@ -166,10 +180,24 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 270,
   },
+  buttonSecondary: {
+    alignItems: 'center',
+    backgroundColor: theme.colors.buttonSecondary,
+    padding: 10,
+    paddingHorizontal: 32,
+    borderRadius: 8,
+    width: '100%',
+    maxWidth: 270,
+  },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  addJobText: {
+    fontSize: 16,
+    color: theme.colors.primary,
+    marginBottom: 32,
   },
 })
 

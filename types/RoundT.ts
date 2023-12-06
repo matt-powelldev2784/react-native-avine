@@ -10,7 +10,7 @@ export interface RoundWithSummaryT {
 
 export interface RoundDbT {
   id?: string
-  name: string
+  roundName: string
   location: string
   frequency: string
   jobs: string[]
