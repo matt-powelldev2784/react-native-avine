@@ -25,7 +25,7 @@ interface JobOption {
 
 const AddRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const [activeStep, setActiveStep] = useState(1)
+  const [activeStep, setActiveStep] = useState(0)
   const [userJobs, setUserJobs] = useState<JobOption[]>([])
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
@@ -119,9 +119,9 @@ const AddRoundForm = () => {
             <TouchableOpacity
               onPress={() => {
                 formik.handleSubmit()
-                // if (formik.isValid) {
-                //   navigation.navigate('Jobs', { refresh: true })
-                // }
+                if (formik.isValid) {
+                  navigation.navigate('Rounds', { refresh: true })
+                }
               }}
               style={styles.button}
             >
