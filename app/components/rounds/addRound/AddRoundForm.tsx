@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   TouchableOpacity,
   StyleSheet,
@@ -16,34 +16,14 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../utils/theme/theme'
-import { getUserJobsFromDb } from '../../../db/jobs/getUserJobsFromDb'
-
-interface JobOption {
-  label: string
-  value: string
-}
+import { useFetchJobs } from './hooks/useFetchJobs'
 
 const AddRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [activeStep, setActiveStep] = useState(0)
-  const [userJobs, setUserJobs] = useState<JobOption[]>([])
+  const userJobs = useFetchJobs()
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getUserJobsFromDb()
-      const jobOptions = data?.map((job) => ({
-        label: job.id,
-        value: job.jobName,
-      }))
-      if (jobOptions) {
-        setUserJobs(jobOptions)
-      }
-    }
-
-    fetchData()
-  }, [])
 
   return (
     <ScrollView
