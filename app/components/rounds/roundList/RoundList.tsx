@@ -1,12 +1,30 @@
 import { View, FlatList, StyleSheet, Platform } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import RoundCard from './roundCard/RoudnCard'
 import { dummyRoundData } from './dummyRoundData/dummyRoundData'
+import { getRoundsFromDb } from '../../../db/rounds/getRoundsFromDb'
+import { RoundDbT } from '../../../../types/RoundT'
 
 const RoundList = () => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [roundData, setRoundData] = useState<RoundDbT[] | null>(null)
+
   const RoundCards = dummyRoundData.map((round) => {
     return <RoundCard {...round} key={round.id} />
   })
+
+  console.log('roundData', roundData)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true)
+      const data = await getRoundsFromDb()
+      setIsLoading(false)
+      setRoundData(data)
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <View style={styles.list}>

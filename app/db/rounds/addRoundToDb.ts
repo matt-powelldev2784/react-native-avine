@@ -25,14 +25,3 @@ export const addRoundToDb = async (roundData: RoundDbT) => {
 
   console.log('New round added with ID:', roundDoc.id)
 }
-
-// // Example usage:
-// // Assuming you have an array of job IDs and other round details
-// const roundData: RoundDbT = {
-//   roundName: 'Morning Round',
-//   location: 'Kingswood',
-//   frequency: 'Daily',
-//   jobs: ['QnjcwQZIj8409ljfjT2K', 'anotherJobId'], // Replace with actual job IDs
-// }
-
-// addRoundToDb(roundData)
