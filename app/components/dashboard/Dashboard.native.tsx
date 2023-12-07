@@ -20,9 +20,7 @@ const Dashboard = ({ children }: DashboardProps) => {
       {/* -------------------------- Header --------------------------  */}
 
       <View style={styles.headerNative}>
-        <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-          <PlanMeLogo width={150} height={40} />
-        </TouchableOpacity>
+        <PlanMeLogo width={150} height={40} />
 
         <TouchableOpacity onPress={() => navigation.navigate('SignOut')}>
           <Image

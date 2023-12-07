@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
   Payments,
@@ -11,8 +11,6 @@ import {
   AddRound,
 } from '..'
 import { useAuth } from '../../components/auth/AuthProvider'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { useNavigation } from '@react-navigation/native'
 
 export type RootStackParamList = {
   //auth
@@ -37,21 +35,10 @@ const Stack = createNativeStackNavigator<RootStackParamList>()
 
 const StackNavigator = () => {
   const { userInfo } = useAuth()
-  const [user, setUser] = useState(userInfo)
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-
-  useEffect(() => {
-    setUser(userInfo)
-    if (userInfo) {
-      setTimeout(() => navigation.navigate('AddRound'), 100)
-    } else {
-      navigation.navigate('SignIn')
-    }
-  }, [userInfo, navigation])
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {user ? (
+      {userInfo ? (
         <>
           {/* --------------------------  Job Screens  ---------------------- */}
           <Stack.Screen name="Jobs" component={Jobs} />
@@ -66,7 +53,6 @@ const StackNavigator = () => {
           <Stack.Screen name="Payments" component={Payments} />
 
           {/* --------------------------  Auth Screens Screens  ------------------- */}
-          <Stack.Screen name="SignIn" component={SignInScreen} />
           <Stack.Screen name="SignOut" component={SignOutScreen} />
         </>
       ) : (

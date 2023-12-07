@@ -55,6 +55,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       const credential = GoogleAuthProvider.credential(id_token)
       await signInWithCredential(auth, credential)
       await addUserToDb()
+    } else {
+      await AsyncStorage.removeItem('@user')
     }
   }, [response])
 

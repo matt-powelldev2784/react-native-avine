@@ -48,9 +48,7 @@ const Dashboard = ({ children }: DashboardProps) => {
       {isLargeWeb ? (
         <View style={styles.headerLargeScreen}>
           <View style={styles.logoContainerLargeScreen}>
-            <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-              <PlanMeLogo width={200} height={50} />
-            </TouchableOpacity>
+            <PlanMeLogo width={200} height={50} />
           </View>
 
           <NavBar />
