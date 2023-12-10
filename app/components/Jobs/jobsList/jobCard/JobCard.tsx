@@ -67,7 +67,7 @@ const JobCard = ({
             Time: {time} hrs
           </Text>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            Price: {price}
+            Price: £{price}
           </Text>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Freq: {frequency}
@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
   jobShortNameContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 10,
     width: 28,
@@ -154,6 +155,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     padding: 2,
+    width: '100%',
   },
   leftContainer: {
     flex: 1,

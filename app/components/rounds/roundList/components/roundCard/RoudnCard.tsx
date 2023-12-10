@@ -38,25 +38,29 @@ const RoundCard = ({ roundName, location, frequency, jobs }: RoundWithJobT) => {
       </View>
 
       <View style={styles.leftContainer}>
-        <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
-          {roundName}
-        </Text>
-        <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-          Location: {location}
-        </Text>
+        <View>
+          <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
+            {roundName}
+          </Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+            Location: {location}
+          </Text>
+        </View>
+
         <View>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            Round Time: {roundTime}
+            Round Time: {roundTime} hrs
+          </Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+            Total Price: £{totalPrice}
           </Text>
         </View>
       </View>
+
       <View style={styles.rightContainer}>
         <View style={styles.rightText}>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Jobs: {numOfJobs}
-          </Text>
-          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            Total Price: £{totalPrice}
           </Text>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Freq: {frequency}
@@ -99,6 +103,7 @@ const styles = StyleSheet.create({
   jobShortNameContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 10,
     width: 28,
@@ -111,6 +116,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     padding: 2,
+    width: '100%',
   },
   leftContainer: {
     flex: 1,
