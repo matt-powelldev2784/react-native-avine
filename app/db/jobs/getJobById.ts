@@ -1,6 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { JobWithIdT } from '../../../types/JobT'
+import { JobWithIdT } from '../../types/JobT'
 
 export const getJobById = async (jobId: string): Promise<JobWithIdT | null> => {
   if (auth.currentUser === null) {

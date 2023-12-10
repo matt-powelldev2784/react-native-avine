@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import { RoundWithJobT } from '../../../../../../types/RoundT'
+import { RoundWithJobT } from '../../../../../types/RoundT'
 import theme from '../../../../../utils/theme/theme'
 import { useDeviceType } from '../../../../../utils/deviceTypes'
 import { useNavigation } from '@react-navigation/native'

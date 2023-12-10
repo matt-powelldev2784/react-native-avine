@@ -1,6 +1,6 @@
 import { doc, updateDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { JobT } from '../../../types/JobT'
+import { JobT } from '../../types/JobT'
 
 interface UpdateJob extends JobT {
   [key: string]: any

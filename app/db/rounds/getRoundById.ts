@@ -1,6 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { RoundWithJobIdsT } from '../../../types/RoundT'
+import { RoundWithJobIdsT } from '../../types/RoundT'
 
 export const getRoundById = async (
   roundId: string,

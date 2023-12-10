@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import { JobWithIdT } from '../../../../../types/JobT'
+import { JobWithIdT } from '../../../../types/JobT'
 import { useDeviceType } from '../../../../utils/deviceTypes'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'

@@ -1,7 +1,7 @@
 import { doc, collection, getDocs, query } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { getUserJobsFromDb } from '../jobs/getUserJobsFromDb'
-import { RoundWithJobT } from '../../../types/RoundT'
+import { RoundWithJobT } from '../../types/RoundT'
 
 export const getRoundsAndJobsFromDb = async (): Promise<RoundWithJobT[]> => {
   if (auth.currentUser === null) {
