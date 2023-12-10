@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: theme.colors.primary,
     marginBottom: 32,
+    textAlign: 'center',
   },
 })
 
