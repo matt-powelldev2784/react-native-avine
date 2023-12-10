@@ -1,46 +1,35 @@
-import { doc, getDoc, collection, getDocs } from 'firebase/firestore'
+import { doc, collection, getDocs, query } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { DocumentData } from '@google-cloud/firestore'
+import { getUserJobsFromDb } from '../jobs/getUserJobsFromDb'
+import { RoundWithJobT } from '../../../types/RoundT'
 
-type Round = {
-  roundData: DocumentData
-  jobs: DocumentData[]
-}
-
-const processJobsData = async (userDoc: any, roundData: any) => {
-  const jobs = []
-
-  for (const job of roundData.jobs) {
-    const jobDocRef = doc(userDoc, 'jobs', job.id)
-    const jobDoc = await getDoc(jobDocRef)
-    const jobData = jobDoc.data()
-    if (jobData) {
-      jobs.push(jobData)
-    }
-  }
-  return jobs
-}
-
-export const getRoundsFromDb = async (): Promise<Round[]> => {
+export const getRoundsAndJobsFromDb = async (): Promise<RoundWithJobT[]> => {
   if (auth.currentUser === null) {
     return []
   }
-  const collatedRoundData: Round[] = []
 
-  const userDoc = doc(db, 'users', auth.currentUser.uid)
-  const roundsCollection = collection(userDoc, 'rounds')
-  const roundDocsSnapshot = await getDocs(roundsCollection)
+  try {
+    const jobData = await getUserJobsFromDb()
 
-  for (const roundDoc of roundDocsSnapshot.docs) {
-    const roundData = roundDoc.data()
-    const jobs = await processJobsData(userDoc, roundData)
-    const round: Round = {
-      roundData: roundData,
-      jobs: jobs,
-    }
-    collatedRoundData.push(round)
+    const userDoc = doc(db, 'users', auth.currentUser.uid)
+    const roundsCollection = collection(userDoc, 'rounds')
+    const roundsQuery = query(roundsCollection)
+    const roundsSnapshot = await getDocs(roundsQuery)
+
+    const roundsData: RoundWithJobT[] = roundsSnapshot.docs.map((round) => ({
+      id: round.id,
+      roundName: round.data().roundName,
+      location: round.data().location,
+      frequency: round.data().frequency,
+      jobs: jobData?.filter((job) => job.linkedRounds.includes(round.id)),
+    }))
+
+    roundsData.sort((a, b) => a.roundName.localeCompare(b.roundName))
+
+    console.log('Rounds retrieved:', roundsData)
+    return roundsData
+  } catch (error) {
+    console.error('An error occurred:', error)
+    throw new Error('An error occurred while retrieving rounds.')
   }
-
-  console.log('Rounds retrieved:', collatedRoundData)
-  return collatedRoundData
 }

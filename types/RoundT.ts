@@ -1,3 +1,5 @@
+import { JobWithIdT } from './JobT'
+
 export interface RoundWithSummaryT {
   id: string
   name: string
@@ -15,9 +17,16 @@ export interface RoundDbT {
   frequency: string
 }
 
-export interface RoundWithJobsT {
+export interface RoundWithJobIdsT {
   roundName: string
   location: string
   frequency: string
-  jobs: string[]
+  jobs: string[] | undefined | null
+}
+
+export interface RoundWithJobT {
+  roundName: string
+  location: string
+  frequency: string
+  jobs: JobWithIdT[] | undefined | null
 }

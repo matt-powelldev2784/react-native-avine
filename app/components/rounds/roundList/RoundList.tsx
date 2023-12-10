@@ -2,7 +2,7 @@ import { View, FlatList, StyleSheet, Platform } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import RoundCard from './roundCard/RoudnCard'
 import { dummyRoundData } from './dummyRoundData/dummyRoundData'
-import { getRoundsFromDb } from '../../../db/rounds/getRoundsFromDb'
+import { getRoundsAndJobsFromDb } from '../../../db/rounds/getRoundsFromDb'
 import { RoundDbT } from '../../../../types/RoundT'
 
 const RoundList = () => {
@@ -14,11 +14,12 @@ const RoundList = () => {
   })
 
   console.log('roundData', roundData)
+  console.log('isLoading', isLoading)
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
-      const data = await getRoundsFromDb()
+      const data = await getRoundsAndJobsFromDb()
       setIsLoading(false)
       setRoundData(data)
     }

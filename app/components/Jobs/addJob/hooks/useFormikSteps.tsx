@@ -53,6 +53,7 @@ const useFormikSteps = (activeStep: number) => {
       contactName: '',
       contactTel: 0,
       notes: '',
+      linkedRounds: [],
     },
     onSubmit: (values) => {
       console.log(values)
