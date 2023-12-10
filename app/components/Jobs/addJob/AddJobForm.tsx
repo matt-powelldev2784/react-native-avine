@@ -16,6 +16,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../utils/theme/theme'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
+import { freqencyArray } from '../../../utils/freqencyArray'
 
 const AddJobForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -111,16 +112,7 @@ const AddJobForm = () => {
               name="frequency"
               placeholder="Cleaning Frequency"
               title="Cleaning Frequency"
-              options={[
-                { label: 'Daily', value: 'Daily' },
-                { label: 'Weekly', value: 'Weekly' },
-                { label: 'Bi-Weekly', value: 'Bi-Weekly' },
-                { label: 'Monthly', value: 'Monthly' },
-                { label: '2 Monthly', value: '2 Monthly' },
-                { label: '3 Monthly', value: '3 Monthly' },
-                { label: '6 Monthly', value: '6 Monthly' },
-                { label: 'Yearly', value: 'Yearly' },
-              ]}
+              options={freqencyArray}
               imageName={'calender'}
             />
             <InputField

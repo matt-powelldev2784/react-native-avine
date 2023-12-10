@@ -21,6 +21,7 @@ import { useDeviceType } from '../../../utils/deviceTypes'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
+import { freqencyArray } from '../../../utils/freqencyArray'
 
 type EditRoundFormRouteProp = RouteProp<RootStackParamList, 'EditRound'>
 
@@ -76,16 +77,7 @@ const EditRoundForm = () => {
               name="frequency"
               placeholder="Round Frequency"
               title="Round Frequency"
-              options={[
-                { label: 'Daily', value: 'Daily' },
-                { label: 'Weekly', value: 'Weekly' },
-                { label: 'Bi-Weekly', value: 'Bi-Weekly' },
-                { label: 'Monthly', value: 'Monthly' },
-                { label: '2 Monthly', value: '2 Monthly' },
-                { label: '3 Monthly', value: '3 Monthly' },
-                { label: '6 Monthly', value: '6 Monthly' },
-                { label: 'Yearly', value: 'Yearly' },
-              ]}
+              options={freqencyArray}
               imageName={'calender'}
             />
           </>
