@@ -1,6 +1,6 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { addRoundToDb } from '../../../../db/rounds/addRoundToDb'
+import { updateRoundInDb } from '../../../../db/rounds/updateRoundInDb'
 import { useEffect, useState } from 'react'
 import { RoundWithJobIdsT } from '../../../../../types/RoundT'
 import { getRoundById } from '../../../../db/rounds/getRoundById'
@@ -21,20 +21,25 @@ interface useFormikStepsInterface {
   roundId: string
 }
 
+interface roundData extends RoundWithJobIdsT {
+  currentRelatedJobs: string[]
+}
+
 const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
-  const [roundData, setRoundData] = useState<RoundWithJobIdsT>({
+  const [roundData, setRoundData] = useState<roundData>({
     id: '',
     roundName: '',
     location: '',
     frequency: '',
     jobs: [],
+    currentRelatedJobs: [],
   })
 
   let validationSchema
 
   useEffect(() => {
     const fetchData = async () => {
-      const rounds = await getRoundById(roundId)
+      const round = await getRoundById(roundId)
       const jobs = await getUserJobsFromDb()
       const relatedJobs = jobs
         ?.map((job) => {
@@ -44,11 +49,11 @@ const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
         })
         .filter((job) => job !== undefined) as string[]
 
-      if (rounds) {
+      if (round) {
         setRoundData((prev) => {
           return {
             ...prev,
-            ...rounds,
+            ...round,
           }
         })
       }
@@ -58,6 +63,7 @@ const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
           return {
             ...prev,
             jobs: relatedJobs,
+            currentRelatedJobs: relatedJobs,
           }
         })
       }
@@ -78,7 +84,7 @@ const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
     initialValues: roundData,
     onSubmit: (values) => {
       console.log(values)
-      addRoundToDb(values)
+      updateRoundInDb(values)
     },
     validationSchema,
     enableReinitialize: true,

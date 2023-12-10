@@ -16,7 +16,10 @@ export const getRoundById = async (
   try {
     const roundDoc = await getDoc(roundDocRef)
     if (roundDoc.exists()) {
-      const roundData = roundDoc.data() as RoundWithJobIdsT
+      const roundData = {
+        id: roundDoc.id,
+        ...roundDoc.data(),
+      } as RoundWithJobIdsT
       console.log('Round data:', roundData)
       return roundData
     } else {
