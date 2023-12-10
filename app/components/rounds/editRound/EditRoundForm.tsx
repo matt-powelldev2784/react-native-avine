@@ -19,12 +19,22 @@ import theme from '../../../utils/theme/theme'
 import { useFetchJobs } from './hooks/useFetchJobs'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
+import { useRoute } from '@react-navigation/native'
+import { RouteProp } from '@react-navigation/native'
+
+type EditRoundFormRouteProp = RouteProp<RootStackParamList, 'EditRound'>
 
 const EditRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const route = useRoute<EditRoundFormRouteProp>()
   const [activeStep, setActiveStep] = useState(0)
+
   const userJobs = useFetchJobs()
-  const formik = useFormikSteps(activeStep)
+  const roundId = route?.params?.roundId ? route?.params?.roundId : ''
+  const formik = useFormikSteps({
+    activeStep,
+    roundId,
+  })
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
@@ -82,13 +92,11 @@ const EditRoundForm = () => {
         {activeStep === 1 ? (
           <>
             <Text style={styles.addJobText}>
-              Add jobs to
+              Add or remove jobs from
               <Text style={{ fontWeight: 'bold' }}>
                 &nbsp;{formik.values.roundName}&nbsp;
               </Text>
-              round by using drop down menu to select a single or multiple jobs.
-              You can skip this step by clicking &quot;Add Round&quot; and add
-              your jobs later.
+              round by using drop down menu to select or deselect jobs.
             </Text>
             <MultiSelectDropdown
               formik={formik}
@@ -200,6 +208,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: theme.colors.primary,
     marginBottom: 32,
+    textAlign: 'center',
   },
 })
 

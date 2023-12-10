@@ -1,10 +1,10 @@
 import { doc, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { RoundDbT } from '../../../types/RoundT'
+import { RoundWithJobIdsT } from '../../../types/RoundT'
 
 export const getRoundById = async (
   roundId: string,
-): Promise<RoundDbT | null> => {
+): Promise<RoundWithJobIdsT | null> => {
   if (auth.currentUser === null) {
     console.log('No user signed in')
     return null
@@ -16,7 +16,7 @@ export const getRoundById = async (
   try {
     const roundDoc = await getDoc(roundDocRef)
     if (roundDoc.exists()) {
-      const roundData = roundDoc.data() as RoundDbT
+      const roundData = roundDoc.data() as RoundWithJobIdsT
       console.log('Round data:', roundData)
       return roundData
     } else {

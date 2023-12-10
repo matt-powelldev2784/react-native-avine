@@ -9,9 +9,9 @@ import {
   arrayRemove,
 } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { RoundWithJobsT } from '../../../types/RoundT'
+import { AddRoundWithJobIdT } from '../../../types/RoundT'
 
-export const addRoundToDb = async (roundData: RoundWithJobsT) => {
+export const addRoundToDb = async (roundData: AddRoundWithJobIdT) => {
   if (auth.currentUser === null) {
     return
   }
@@ -30,11 +30,13 @@ export const addRoundToDb = async (roundData: RoundWithJobsT) => {
     const linkedJobIds = roundData.jobs
 
     //add round id to each job to provide relationship
-    for (const jobId of linkedJobIds) {
-      const jobDocRef = doc(db, 'users', auth.currentUser.uid, 'jobs', jobId)
-      await updateDoc(jobDocRef, {
-        linkedRounds: arrayUnion(roundDoc.id),
-      })
+    if (linkedJobIds) {
+      for (const jobId of linkedJobIds) {
+        const jobDocRef = doc(db, 'users', auth.currentUser.uid, 'jobs', jobId)
+        await updateDoc(jobDocRef, {
+          linkedRounds: arrayUnion(roundDoc.id),
+        })
+      }
     }
 
     console.log('New round added with ID:', roundDoc.id)
@@ -44,6 +46,7 @@ export const addRoundToDb = async (roundData: RoundWithJobsT) => {
 
     return round
   } catch (error) {
+    // remove round document if error occurs
     if (roundDoc) {
       await deleteDoc(roundDoc)
       console.log('Round document deleted due to an error:', roundDoc.id)
@@ -51,12 +54,15 @@ export const addRoundToDb = async (roundData: RoundWithJobsT) => {
 
     //remove round id from each job to remove relationship
     const linkedJobIds = roundData.jobs
-    for (const jobId of linkedJobIds) {
-      const jobDocRef = doc(db, 'users', auth.currentUser.uid, 'jobs', jobId)
-      if (jobDocRef) {
-        await updateDoc(jobDocRef, {
-          linkedRounds: arrayRemove(roundDoc.id),
-        })
+
+    if (linkedJobIds) {
+      for (const jobId of linkedJobIds) {
+        const jobDocRef = doc(db, 'users', auth.currentUser.uid, 'jobs', jobId)
+        if (jobDocRef) {
+          await updateDoc(jobDocRef, {
+            linkedRounds: arrayRemove(roundDoc.id),
+          })
+        }
       }
     }
     console.error('Error adding round:', error)
