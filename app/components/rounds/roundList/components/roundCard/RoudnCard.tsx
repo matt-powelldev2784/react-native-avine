@@ -1,11 +1,23 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
 import { RoundWithJobT } from '../../../../../../types/RoundT'
 import theme from '../../../../../utils/theme/theme'
 import { useDeviceType } from '../../../../../utils/deviceTypes'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../../../screens/stackNavigator/StackNavigator'
+import { ConfirmModal } from '../../../../../ui'
 
-const RoundCard = ({ roundName, location, frequency, jobs }: RoundWithJobT) => {
+const RoundCard = ({
+  id,
+  roundName,
+  location,
+  frequency,
+  jobs,
+}: RoundWithJobT) => {
   const { isLargeWeb } = useDeviceType()
+  const [modalVisible, setModalVisible] = useState(false)
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
   const roundTime = jobs?.reduce((acc, job) => {
     return acc + Number(job.time)
@@ -25,16 +37,18 @@ const RoundCard = ({ roundName, location, frequency, jobs }: RoundWithJobT) => {
     <View style={isLargeWeb ? styles.cardLargeWeb : styles.cardSmallScreen}>
       <View style={styles.jobShortNameContainer}>
         <Text style={styles.jobShortNameText}>
-          <Text style={styles.jobShortNameText}>
-            {roundShortName.slice(0, 1).toUpperCase()}
-          </Text>
+          {roundShortName.slice(0, 1).toUpperCase()}
+        </Text>
+        {roundShortName.length > 1 && (
           <Text style={styles.jobShortNameText}>
             {roundShortName.slice(1, 2).toUpperCase()}
           </Text>
+        )}
+        {roundShortName.length > 2 && (
           <Text style={styles.jobShortNameText}>
-            {roundShortName.slice(2, 3).toUpperCase()}
+            {roundShortName.slice(1, 2).toUpperCase()}
           </Text>
-        </Text>
+        )}
       </View>
 
       <View style={styles.leftContainer}>
@@ -52,7 +66,7 @@ const RoundCard = ({ roundName, location, frequency, jobs }: RoundWithJobT) => {
             Round Time: {roundTime} hrs
           </Text>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            Total Price: £{totalPrice}
+            Round Value: £{totalPrice}
           </Text>
         </View>
       </View>
@@ -63,14 +77,57 @@ const RoundCard = ({ roundName, location, frequency, jobs }: RoundWithJobT) => {
             Jobs: {numOfJobs}
           </Text>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            Freq: {frequency}
+            {frequency}
           </Text>
         </View>
-        <Image
-          source={require('../../../../../../assets/pen.png')}
-          style={{ width: 25, height: 25 }}
-        />
+
+        <View style={styles.buttons}>
+          <TouchableOpacity
+            onPress={() => {
+              // navigation.navigate('EditJob', { jobId: id })
+            }}
+          >
+            <Image
+              source={require('../../../../../../assets/plus_circle.png')}
+              style={{ width: 35, height: 35 }}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              // navigation.navigate('EditJob', { jobId: id })
+            }}
+          >
+            <Image
+              source={require('../../../../../../assets/pen.png')}
+              style={{ width: 35, height: 35 }}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              setModalVisible(true)
+            }}
+          >
+            <Image
+              source={require('../../../../../../assets/bin.png')}
+              style={{ width: 35, height: 35 }}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
+
+      <ConfirmModal
+        modalText={`Are you sure you want to delete ${roundName}`}
+        onConfirm={async () => {
+          // const deletedJob = await deleteJobById(id)
+          // if (deletedJob) {
+          //   navigation.navigate('Jobs', { refresh: true })
+          // }
+        }}
+        onCancel={() => setModalVisible(false)}
+        visible={modalVisible}
+      />
     </View>
   )
 }
@@ -85,7 +142,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: theme.colors.primary,
-    height: 110,
+    height: 130,
     overflow: 'hidden',
     width: '100%',
   },
@@ -96,7 +153,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: theme.colors.primary,
-    height: 110,
+    height: 130,
     overflow: 'hidden',
     width: '100%',
   },
@@ -115,8 +172,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    padding: 2,
-    width: '100%',
+    width: 28,
   },
   leftContainer: {
     flex: 1,
@@ -140,9 +196,14 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   text: {
-    fontSize: 14,
+    fontSize: 16,
     color: 'black',
     marginBottom: 0,
+  },
+  buttons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
 })
 

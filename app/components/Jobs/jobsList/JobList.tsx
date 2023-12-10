@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   largeWebCards: {
     display: 'grid' as any,
-    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' as any,
+    gridTemplateColumns: 'repeat(auto-fill, minmax(330px, 1fr))' as any,
     width: '100vw' as any,
     justifyItems: 'center',
     alignItems: 'center',
