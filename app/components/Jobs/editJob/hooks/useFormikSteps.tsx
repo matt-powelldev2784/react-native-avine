@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { updateJobInDb } from '../../../../db/jobs/updateJobIDb'
 import { getJobById } from '../../../../db/jobs/getJobById'
-import { JobWithIdT } from '../../../../../types/JobT'
+import { JobWithIdT } from '../../../../types/JobT'
 
 export const stepOneSchema = Yup.object().shape({
   jobName: Yup.string().required('Name is required'),

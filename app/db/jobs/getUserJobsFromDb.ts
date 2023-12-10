@@ -1,6 +1,6 @@
 import { doc, collection, getDocs, query } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { JobWithIdT } from '../../../types/JobT'
+import { JobWithIdT } from '../../types/JobT'
 
 export const getUserJobsFromDb = async () => {
   if (auth.currentUser === null) {

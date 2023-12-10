@@ -13,6 +13,7 @@ import Payments from './paymnets/Paymemts'
 //rounds
 import Rounds from './rounds/Rounds'
 import AddRound from './rounds/AddRound'
+import EditRound from './rounds/EditRound'
 
 //others
 import SplashScreen from './auth/SplashScreen'
@@ -23,6 +24,7 @@ export {
   EditJob,
   Rounds,
   AddRound,
+  EditRound,
   Payments,
   SplashScreen,
   SignInScreen,
