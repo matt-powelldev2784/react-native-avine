@@ -143,7 +143,7 @@ const EditRoundForm = () => {
                 }}
                 style={styles.button}
               >
-                <Text style={styles.buttonText}>Add Round</Text>
+                <Text style={styles.buttonText}>Update Round</Text>
               </TouchableOpacity>
             </View>
           ) : null}
