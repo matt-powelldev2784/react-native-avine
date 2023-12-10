@@ -96,7 +96,7 @@ const RoundCard = ({
 
           <TouchableOpacity
             onPress={() => {
-              // navigation.navigate('EditJob', { jobId: id })
+              navigation.navigate('EditRound', { roundId: id })
             }}
           >
             <Image

@@ -8,6 +8,7 @@ import EditJobForm from './Jobs/editJob/EditJobForm'
 //rounds
 import RoundList from './rounds/roundList/RoundList'
 import AddRoundForm from './rounds/addRound/AddRoundForm'
+import EditRoundForm from './rounds/editRound/EditRoundForm'
 
 //otheres
 import ScreenMenu from './screenMenu/ScreenMenu'
@@ -19,6 +20,7 @@ export {
   EditJobForm,
   RoundList,
   AddRoundForm,
+  EditRoundForm,
   ScreenMenu,
   PlanMeLogo,
   Dashboard,

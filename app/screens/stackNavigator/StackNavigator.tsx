@@ -9,6 +9,7 @@ import {
   AddJob,
   EditJob,
   AddRound,
+  EditRound,
 } from '..'
 import { useAuth } from '../../components/auth/AuthProvider'
 
@@ -21,6 +22,7 @@ export type RootStackParamList = {
   //rounds
   Rounds: { refresh?: boolean } | undefined
   AddRound: undefined
+  EditRound: { roundId: string } | undefined
 
   //payments
   Payments: undefined
@@ -43,6 +45,7 @@ const StackNavigator = () => {
           {/* --------------------------  Round Screens  ------------------------- */}
           <Stack.Screen name="Rounds" component={Rounds} />
           <Stack.Screen name="AddRound" component={AddRound} />
+          <Stack.Screen name="EditRound" component={EditRound} />
 
           {/* --------------------------  Job Screens  ---------------------- */}
           <Stack.Screen name="Jobs" component={Jobs} />
