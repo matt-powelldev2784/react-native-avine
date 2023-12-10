@@ -43,6 +43,7 @@ const JobCard = ({
           </Text>
         </Text>
       </View>
+
       <View style={styles.leftContainer}>
         <View style={styles.leftInfo}>
           <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
@@ -143,8 +144,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 10,
-    width: 25,
-    padding: 4,
+    width: 28,
     height: '100%',
     backgroundColor: theme.colors.primary,
   },
@@ -153,6 +153,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
+    padding: 2,
   },
   leftContainer: {
     flex: 1,

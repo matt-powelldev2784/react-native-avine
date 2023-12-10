@@ -18,6 +18,7 @@ export interface RoundDbT {
 }
 
 export interface RoundWithJobIdsT {
+  id?: string
   roundName: string
   location: string
   frequency: string
@@ -25,6 +26,7 @@ export interface RoundWithJobIdsT {
 }
 
 export interface RoundWithJobT {
+  id?: string
   roundName: string
   location: string
   frequency: string

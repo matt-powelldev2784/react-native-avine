@@ -1,20 +1,17 @@
-import { View, FlatList, StyleSheet, Platform } from 'react-native'
+import { View, FlatList, StyleSheet } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import RoundCard from './roundCard/RoudnCard'
-import { dummyRoundData } from './dummyRoundData/dummyRoundData'
+import RoundCard from './components/roundCard/RoudnCard'
 import { getRoundsAndJobsFromDb } from '../../../db/rounds/getRoundsFromDb'
-import { RoundDbT } from '../../../../types/RoundT'
+import { RoundWithJobT } from '../../../../types/RoundT'
+import { Loading } from '../../../ui/'
+import ErrorNoData from './components/errorData/ErrorNoData'
+import { useDeviceType } from '../../../utils/deviceTypes'
+import theme from '../../../utils/theme/theme'
 
 const RoundList = () => {
   const [isLoading, setIsLoading] = useState(true)
-  const [roundData, setRoundData] = useState<RoundDbT[] | null>(null)
-
-  const RoundCards = dummyRoundData.map((round) => {
-    return <RoundCard {...round} key={round.id} />
-  })
-
-  console.log('roundData', roundData)
-  console.log('isLoading', isLoading)
+  const [roundData, setRoundData] = useState<RoundWithJobT[] | null>(null)
+  const { isSmallWeb, isLargeWeb, isNative } = useDeviceType()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,16 +24,33 @@ const RoundList = () => {
     fetchData()
   }, [])
 
+  if (isLoading) {
+    return <Loading loadingText={'Loading rounds list...'} />
+  }
+
+  if (!roundData || roundData.length === 0) {
+    return <ErrorNoData />
+  }
+  const RoundCards = roundData?.map((round) => {
+    return <RoundCard {...round} key={round.id} />
+  })
+
   return (
-    <View style={styles.list}>
-      {Platform.OS === 'web' ? RoundCards : null}
-      {Platform.OS === 'web' ? <View style={styles.whiteSpace} /> : null}
-      {Platform.OS !== 'web' ? (
+    <View style={styles.listContainer}>
+      {roundData && isLargeWeb ? (
+        <View style={styles.largeWebCards}>{RoundCards}</View>
+      ) : null}
+      {roundData && isSmallWeb ? (
+        <View style={styles.smallDeviceCards}>{RoundCards}</View>
+      ) : null}
+
+      {roundData && isNative ? (
         <FlatList
-          style={{ width: '95%' }}
-          data={dummyRoundData}
+          style={styles.smallDeviceCards}
+          data={roundData}
           renderItem={({ item }) => <RoundCard {...item} />}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id || ''}
+          ListFooterComponent={<View style={styles.flatlistFooter} />}
         />
       ) : null}
     </View>
@@ -44,17 +58,48 @@ const RoundList = () => {
 }
 
 const styles = StyleSheet.create({
-  list: {
+  listContainer: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'flex-start',
     width: '100%',
+    backgroundColor: 'white',
   },
-  whiteSpace: {
-    display: 'flex',
-    height: 100,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'white',
+  largeWebCards: {
+    display: 'grid' as any,
+    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' as any,
+    width: '100vw' as any,
+    justifyItems: 'center',
+    alignItems: 'center',
+    gap: 20,
+    padding: 20,
+  },
+  smallDeviceCards: {
+    width: '100%',
+    paddingTop: 10,
+    paddingBottom: 70,
+    paddingHorizontal: '2.5%',
+  },
+  flatlistFooter: {
+    height: 20,
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    paddingVertical: 8,
+    paddingHorizontal: 32,
+    backgroundColor: theme.colors.primary,
+    borderRadius: 8,
+    width: '100%',
+    maxWidth: 270,
+    margin: 8,
+    gap: 4,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 })
 
