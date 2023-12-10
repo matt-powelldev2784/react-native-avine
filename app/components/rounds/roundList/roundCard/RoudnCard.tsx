@@ -1,25 +1,34 @@
 import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import React from 'react'
-import { RoundWithSummaryT } from '../../../../../types/RoundT'
+import { RoundWithJobT } from '../../../../../types/RoundT'
 import theme from '../../../../utils/theme/theme'
 
-const RoundCard = ({
-  name,
-  location,
-  numOfJobs,
-  roundTime,
-  frequency,
-}: RoundWithSummaryT) => {
+const RoundCard = ({ roundName, location, frequency, jobs }: RoundWithJobT) => {
+  const roundTime = jobs?.reduce((acc, job) => {
+    return acc + Number(job.time)
+  }, 0)
+  const numOfJobs = jobs?.length
+  const totalPrice = jobs?.reduce((acc, job) => {
+    return acc + Number(job.price)
+  }, 0)
+
   return (
     <View style={styles.card}>
       <View style={styles.shortNameContainer}>
-        <Text style={styles.shortName}>{name.slice(0, 1).toUpperCase()}</Text>
-        <Text style={styles.shortName}>{name.slice(1, 2).toUpperCase()}</Text>
-        <Text style={styles.shortName}>{name.slice(2, 3).toUpperCase()}</Text>
+        <Text style={styles.shortName}>
+          {roundName.slice(0, 1).toUpperCase()}
+        </Text>
+        <Text style={styles.shortName}>
+          {roundName.slice(1, 2).toUpperCase()}
+        </Text>
+        <Text style={styles.shortName}>
+          {roundName.slice(2, 3).toUpperCase()}
+        </Text>
       </View>
+
       <View style={styles.leftContainer}>
         <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
-          {name}
+          {roundName}
         </Text>
         <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
           Location: {location}
@@ -36,7 +45,7 @@ const RoundCard = ({
             Jobs: {numOfJobs}
           </Text>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            Total Price: £{numOfJobs}
+            Total Price: £{totalPrice}
           </Text>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Freq: {frequency}

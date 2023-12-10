@@ -1,15 +1,14 @@
 import { View, FlatList, StyleSheet, Platform } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import RoundCard from './roundCard/RoudnCard'
-import { dummyRoundData } from './dummyRoundData/dummyRoundData'
 import { getRoundsAndJobsFromDb } from '../../../db/rounds/getRoundsFromDb'
-import { RoundDbT } from '../../../../types/RoundT'
+import { RoundWithJobT } from '../../../../types/RoundT'
 
 const RoundList = () => {
   const [isLoading, setIsLoading] = useState(true)
-  const [roundData, setRoundData] = useState<RoundDbT[] | null>(null)
+  const [roundData, setRoundData] = useState<RoundWithJobT[] | null>(null)
 
-  const RoundCards = dummyRoundData.map((round) => {
+  const RoundCards = roundData?.map((round) => {
     return <RoundCard {...round} key={round.id} />
   })
 
@@ -34,9 +33,9 @@ const RoundList = () => {
       {Platform.OS !== 'web' ? (
         <FlatList
           style={{ width: '95%' }}
-          data={dummyRoundData}
+          data={roundData}
           renderItem={({ item }) => <RoundCard {...item} />}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item?.id || ''}
         />
       ) : null}
     </View>
