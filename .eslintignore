@@ -4,3 +4,4 @@ web-build/
 node_modules/
 metro.config.js
 webpack.config.js
+functions/

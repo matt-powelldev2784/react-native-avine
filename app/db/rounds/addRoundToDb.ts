@@ -1,38 +1,64 @@
-import { doc, setDoc, collection, DocumentReference } from 'firebase/firestore'
+import {
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  updateDoc,
+  arrayUnion,
+  deleteDoc,
+  arrayRemove,
+} from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { RoundDbT } from '../../../types/RoundT' // You should define this type according to your needs
+import { RoundWithJobsT } from '../../../types/RoundT'
 
-export const addRoundToDb = async (roundData: RoundDbT) => {
+export const addRoundToDb = async (roundData: RoundWithJobsT) => {
   if (auth.currentUser === null) {
     return
   }
 
   const userDoc = doc(db, 'users', auth.currentUser.uid)
-
   const roundsCollection = collection(userDoc, 'rounds')
   const roundDoc = doc(roundsCollection)
 
-  // Convert job IDs to document references
-  const jobRefs: DocumentReference[] = roundData.jobs.map((jobId) =>
-    doc(db, 'jobs', jobId),
-  )
+  try {
+    await setDoc(roundDoc, {
+      roundName: roundData.roundName,
+      location: roundData.location,
+      frequency: roundData.frequency,
+    })
 
-  // Add the round with job references to the database
-  await setDoc(roundDoc, {
-    ...roundData,
-    jobs: jobRefs,
-  })
+    const linkedJobIds = roundData.jobs
 
-  console.log('New round added with ID:', roundDoc.id)
+    //add round id to each job to provide relationship
+    for (const jobId of linkedJobIds) {
+      const jobDocRef = doc(db, 'users', auth.currentUser.uid, 'jobs', jobId)
+      await updateDoc(jobDocRef, {
+        linkedRounds: arrayUnion(roundDoc.id),
+      })
+    }
+
+    console.log('New round added with ID:', roundDoc.id)
+
+    const roundSnapshot = await getDoc(roundDoc)
+    const round = roundSnapshot.data()
+
+    return round
+  } catch (error) {
+    if (roundDoc) {
+      await deleteDoc(roundDoc)
+      console.log('Round document deleted due to an error:', roundDoc.id)
+    }
+
+    //remove round id from each job to remove relationship
+    const linkedJobIds = roundData.jobs
+    for (const jobId of linkedJobIds) {
+      const jobDocRef = doc(db, 'users', auth.currentUser.uid, 'jobs', jobId)
+      if (jobDocRef) {
+        await updateDoc(jobDocRef, {
+          linkedRounds: arrayRemove(roundDoc.id),
+        })
+      }
+    }
+    console.error('Error adding round:', error)
+  }
 }
-
-// // Example usage:
-// // Assuming you have an array of job IDs and other round details
-// const roundData: RoundDbT = {
-//   roundName: 'Morning Round',
-//   location: 'Kingswood',
-//   frequency: 'Daily',
-//   jobs: ['QnjcwQZIj8409ljfjT2K', 'anotherJobId'], // Replace with actual job IDs
-// }
-
-// addRoundToDb(roundData)
