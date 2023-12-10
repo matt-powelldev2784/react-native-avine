@@ -82,9 +82,9 @@ const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
 
   const formik = useFormik({
     initialValues: roundData,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log(values)
-      updateRoundInDb(values)
+      await updateRoundInDb(values)
     },
     validationSchema,
     enableReinitialize: true,

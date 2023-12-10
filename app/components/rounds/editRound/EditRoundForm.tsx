@@ -136,7 +136,9 @@ const EditRoundForm = () => {
                 onPress={() => {
                   formik.handleSubmit()
                   if (formik.isValid) {
-                    navigation.navigate('Rounds', { refresh: true })
+                    setTimeout(() => {
+                      navigation.navigate('Rounds', { refresh: true })
+                    }, 500)
                   }
                 }}
                 style={styles.button}
