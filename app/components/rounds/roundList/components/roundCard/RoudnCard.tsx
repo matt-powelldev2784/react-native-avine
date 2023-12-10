@@ -15,17 +15,25 @@ const RoundCard = ({ roundName, location, frequency, jobs }: RoundWithJobT) => {
     return acc + Number(job.price)
   }, 0)
 
+  const roundShortName = roundName
+    .split(' ')
+    .map((word): string => word[0])
+    .join('')
+    .substring(0, 3)
+
   return (
     <View style={isLargeWeb ? styles.cardLargeWeb : styles.cardSmallScreen}>
-      <View style={styles.shortNameContainer}>
-        <Text style={styles.shortName}>
-          {roundName.slice(0, 1).toUpperCase()}
-        </Text>
-        <Text style={styles.shortName}>
-          {roundName.slice(1, 2).toUpperCase()}
-        </Text>
-        <Text style={styles.shortName}>
-          {roundName.slice(2, 3).toUpperCase()}
+      <View style={styles.jobShortNameContainer}>
+        <Text style={styles.jobShortNameText}>
+          <Text style={styles.jobShortNameText}>
+            {roundShortName.slice(0, 1).toUpperCase()}
+          </Text>
+          <Text style={styles.jobShortNameText}>
+            {roundShortName.slice(1, 2).toUpperCase()}
+          </Text>
+          <Text style={styles.jobShortNameText}>
+            {roundShortName.slice(2, 3).toUpperCase()}
+          </Text>
         </Text>
       </View>
 
@@ -88,20 +96,21 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     width: '100%',
   },
-  shortNameContainer: {
+  jobShortNameContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 10,
-    width: 30,
+    width: 28,
     height: '100%',
     backgroundColor: theme.colors.primary,
   },
-  shortName: {
-    color: 'white',
+  jobShortNameText: {
+    color: theme.colors.secondary,
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
+    padding: 2,
   },
   leftContainer: {
     flex: 1,
