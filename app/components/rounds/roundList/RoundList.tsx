@@ -1,19 +1,14 @@
 import { View, FlatList, StyleSheet, Platform } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import RoundCard from './roundCard/RoudnCard'
+import RoundCard from './components/roundCard/RoudnCard'
 import { getRoundsAndJobsFromDb } from '../../../db/rounds/getRoundsFromDb'
 import { RoundWithJobT } from '../../../../types/RoundT'
+import { Loading } from '../../../ui/'
+import ErrorNoData from './components/errorData/ErrorNoData'
 
 const RoundList = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [roundData, setRoundData] = useState<RoundWithJobT[] | null>(null)
-
-  const RoundCards = roundData?.map((round) => {
-    return <RoundCard {...round} key={round.id} />
-  })
-
-  console.log('roundData', roundData)
-  console.log('isLoading', isLoading)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +20,20 @@ const RoundList = () => {
 
     fetchData()
   }, [])
+
+  if (isLoading) {
+    return <Loading loadingText={'Loading rounds list...'} />
+  }
+
+  if (!roundData || roundData.length === 0) {
+    return <ErrorNoData />
+  }
+  const RoundCards = roundData?.map((round) => {
+    return <RoundCard {...round} key={round.id} />
+  })
+
+  console.log('roundData', roundData)
+  console.log('isLoading', isLoading)
 
   return (
     <View style={styles.list}>

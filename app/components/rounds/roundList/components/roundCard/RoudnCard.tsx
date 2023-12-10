@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import React from 'react'
-import { RoundWithJobT } from '../../../../../types/RoundT'
-import theme from '../../../../utils/theme/theme'
+import { RoundWithJobT } from '../../../../../../types/RoundT'
+import theme from '../../../../../utils/theme/theme'
 
 const RoundCard = ({ roundName, location, frequency, jobs }: RoundWithJobT) => {
   const roundTime = jobs?.reduce((acc, job) => {
@@ -52,7 +52,7 @@ const RoundCard = ({ roundName, location, frequency, jobs }: RoundWithJobT) => {
           </Text>
         </View>
         <Image
-          source={require('../../../../../assets/pen.png')}
+          source={require('../../../../../../assets/pen.png')}
           style={{ width: 25, height: 25 }}
         />
       </View>
