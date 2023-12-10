@@ -19,6 +19,7 @@ import theme from '../../../utils/theme/theme'
 import { useFetchJobs } from './hooks/useFetchJobs'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
+import { freqencyArray } from '../../../utils/freqencyArray'
 
 const AddRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -66,16 +67,7 @@ const AddRoundForm = () => {
               name="frequency"
               placeholder="Round Frequency"
               title="Round Frequency"
-              options={[
-                { label: 'Daily', value: 'Daily' },
-                { label: 'Weekly', value: 'Weekly' },
-                { label: 'Bi-Weekly', value: 'Bi-Weekly' },
-                { label: 'Monthly', value: 'Monthly' },
-                { label: '2 Monthly', value: '2 Monthly' },
-                { label: '3 Monthly', value: '3 Monthly' },
-                { label: '6 Monthly', value: '6 Monthly' },
-                { label: 'Yearly', value: 'Yearly' },
-              ]}
+              options={freqencyArray}
               imageName={'calender'}
             />
           </>
