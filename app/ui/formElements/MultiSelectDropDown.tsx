@@ -50,16 +50,18 @@ const MultiSelectDropdown = ({
             ? styles.errorInput
             : styles.input,
         ]}
-        renderItem={(item, selected) => (
-          <View
-            key={item.label}
-            style={selected ? styles.selectedItem : styles.item}
-          >
-            <Text style={selected ? styles.selectedItemText : null}>
-              {item.value}
-            </Text>
-          </View>
-        )}
+        renderItem={(item, selected) => {
+          return (
+            <View
+              key={item.label}
+              style={selected ? styles.selectedItem : styles.item}
+            >
+              <Text style={selected ? styles.selectedItemText : null}>
+                {item.value}
+              </Text>
+            </View>
+          )
+        }}
       />
 
       {formik.touched[name] && formik.errors[name] ? (

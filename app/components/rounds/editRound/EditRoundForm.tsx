@@ -101,7 +101,7 @@ const EditRoundForm = () => {
             <MultiSelectDropdown
               formik={formik}
               name="jobs"
-              placeholder="Select jobs to add..."
+              placeholder="Select jobs to add or remove..."
               title="Add job"
               options={userJobs}
               imageName={'wiper'}
