@@ -15,7 +15,7 @@ export interface RoundDbT {
   frequency: string
 }
 
-export interface AddRoundT {
+export interface RoundWithJobsT {
   roundName: string
   location: string
   frequency: string

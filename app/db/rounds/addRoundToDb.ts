@@ -9,9 +9,9 @@ import {
   arrayRemove,
 } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { AddRoundT } from '../../../types/RoundT' // You should define this type according to your needs
+import { RoundWithJobsT } from '../../../types/RoundT'
 
-export const addRoundToDb = async (roundData: AddRoundT) => {
+export const addRoundToDb = async (roundData: RoundWithJobsT) => {
   if (auth.currentUser === null) {
     return
   }
