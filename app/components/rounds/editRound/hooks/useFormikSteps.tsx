@@ -2,7 +2,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { updateRoundInDb } from '../../../../db/rounds/updateRoundInDb'
 import { useEffect, useState } from 'react'
-import { RoundWithJobIdsT } from '../../../../types/RoundT'
+import { RoundWithIdT } from '../../../../types/RoundT'
 import { getRoundById } from '../../../../db/rounds/getRoundById'
 import { getUserJobsFromDb } from '../../../../db/jobs/getUserJobsFromDb'
 
@@ -21,7 +21,7 @@ interface useFormikStepsInterface {
   roundId: string
 }
 
-interface roundData extends RoundWithJobIdsT {
+interface roundData extends RoundWithIdT {
   currentRelatedJobs: string[]
 }
 

@@ -6,9 +6,9 @@ import {
   arrayRemove,
 } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { RoundWithJobIdsT } from '../../types/RoundT'
+import { RoundWithIdT } from '../../types/RoundT'
 
-interface roundData extends RoundWithJobIdsT {
+interface roundData extends RoundWithIdT {
   currentRelatedJobs: string[]
 }
 
