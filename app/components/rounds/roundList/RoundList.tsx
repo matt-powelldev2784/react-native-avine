@@ -6,9 +6,11 @@ import { RoundWithJobT } from '../../../../types/RoundT'
 import { Loading } from '../../../ui/'
 import ErrorNoData from './components/errorData/ErrorNoData'
 import { useDeviceType } from '../../../utils/deviceTypes'
+import { useRoute } from '@react-navigation/native'
 import theme from '../../../utils/theme/theme'
 
 const RoundList = () => {
+  const route = useRoute()
   const [isLoading, setIsLoading] = useState(true)
   const [roundData, setRoundData] = useState<RoundWithJobT[] | null>(null)
   const { isSmallWeb, isLargeWeb, isNative } = useDeviceType()
@@ -22,7 +24,7 @@ const RoundList = () => {
     }
 
     fetchData()
-  }, [])
+  }, [route])
 
   if (isLoading) {
     return <Loading loadingText={'Loading rounds list...'} />
@@ -49,7 +51,7 @@ const RoundList = () => {
           style={styles.smallDeviceCards}
           data={roundData}
           renderItem={({ item }) => <RoundCard {...item} />}
-          keyExtractor={(item) => item.id || ''}
+          keyExtractor={(item) => item.id}
           ListFooterComponent={<View style={styles.flatlistFooter} />}
         />
       ) : null}
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
   },
   largeWebCards: {
     display: 'grid' as any,
-    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' as any,
+    gridTemplateColumns: 'repeat(auto-fill, minmax(330px, 1fr))' as any,
     width: '100vw' as any,
     justifyItems: 'center',
     alignItems: 'center',

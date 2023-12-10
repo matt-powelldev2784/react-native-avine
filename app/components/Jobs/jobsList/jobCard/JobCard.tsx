@@ -32,16 +32,18 @@ const JobCard = ({
     <View style={isLargeWeb ? styles.cardLargeWeb : styles.cardSmallScreen}>
       <View style={styles.jobShortNameContainer}>
         <Text style={styles.jobShortNameText}>
-          <Text style={styles.jobShortNameText}>
-            {jobShortName.slice(0, 1).toUpperCase()}
-          </Text>
+          {jobShortName.slice(0, 1).toUpperCase()}
+        </Text>
+        {jobShortName.length > 1 && (
           <Text style={styles.jobShortNameText}>
             {jobShortName.slice(1, 2).toUpperCase()}
           </Text>
+        )}
+        {jobShortName.length > 1 && (
           <Text style={styles.jobShortNameText}>
             {jobShortName.slice(2, 3).toUpperCase()}
           </Text>
-        </Text>
+        )}
       </View>
 
       <View style={styles.leftContainer}>
@@ -67,10 +69,10 @@ const JobCard = ({
             Time: {time} hrs
           </Text>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            Price: {price}
+            Price: £{price}
           </Text>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            Freq: {frequency}
+            {frequency}
           </Text>
         </View>
 
@@ -124,7 +126,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: theme.colors.primary,
-    height: 110,
+    height: 130,
     overflow: 'hidden',
     width: '100%',
   },
@@ -135,13 +137,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: theme.colors.primary,
-    height: 110,
+    height: 130,
     overflow: 'hidden',
     width: '100%',
   },
   jobShortNameContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 10,
     width: 28,
@@ -153,7 +156,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    padding: 2,
+    width: 28,
   },
   leftContainer: {
     flex: 1,
@@ -182,7 +185,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   text: {
-    fontSize: 14,
+    fontSize: 16,
     color: 'black',
     marginBottom: 0,
   },
