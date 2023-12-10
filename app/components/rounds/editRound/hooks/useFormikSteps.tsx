@@ -30,8 +30,6 @@ const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
     jobs: [],
   })
 
-  console.log('roundData', roundData)
-
   let validationSchema
 
   useEffect(() => {
@@ -63,7 +61,6 @@ const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
           }
         })
       }
-      console.log('relatedJobs', relatedJobs)
     }
 
     if (roundId) {
