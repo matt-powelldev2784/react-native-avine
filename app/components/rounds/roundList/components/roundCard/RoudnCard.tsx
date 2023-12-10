@@ -1,9 +1,12 @@
-import { View, Text, StyleSheet, Image, Platform } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import { RoundWithJobT } from '../../../../../../types/RoundT'
 import theme from '../../../../../utils/theme/theme'
+import { useDeviceType } from '../../../../../utils/deviceTypes'
 
 const RoundCard = ({ roundName, location, frequency, jobs }: RoundWithJobT) => {
+  const { isLargeWeb } = useDeviceType()
+
   const roundTime = jobs?.reduce((acc, job) => {
     return acc + Number(job.time)
   }, 0)
@@ -13,7 +16,7 @@ const RoundCard = ({ roundName, location, frequency, jobs }: RoundWithJobT) => {
   }, 0)
 
   return (
-    <View style={styles.card}>
+    <View style={isLargeWeb ? styles.cardLargeWeb : styles.cardSmallScreen}>
       <View style={styles.shortNameContainer}>
         <Text style={styles.shortName}>
           {roundName.slice(0, 1).toUpperCase()}
@@ -61,23 +64,29 @@ const RoundCard = ({ roundName, location, frequency, jobs }: RoundWithJobT) => {
 }
 
 const styles = StyleSheet.create({
-  pageTitle: {
-    fontSize: 20,
-    color: theme.colors.primary,
-    marginVertical: 10,
-    fontWeight: 'bold',
-  },
-  card: {
+  cardSmallScreen: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    backgroundColor: '#fff',
     borderRadius: 12,
-    marginBottom: 4,
+    marginBottom: 8,
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: theme.colors.primary,
-    height: 100,
+    height: 110,
     overflow: 'hidden',
-    width: Platform.OS === 'web' ? '95%' : '100%',
+    width: '100%',
+  },
+  cardLargeWeb: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: theme.colors.primary,
+    height: 110,
+    overflow: 'hidden',
+    width: '100%',
   },
   shortNameContainer: {
     flexDirection: 'column',
