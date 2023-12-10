@@ -49,7 +49,7 @@ const RoundList = () => {
           style={styles.smallDeviceCards}
           data={roundData}
           renderItem={({ item }) => <RoundCard {...item} />}
-          keyExtractor={(item) => item.id || ''}
+          keyExtractor={(item) => item.id}
           ListFooterComponent={<View style={styles.flatlistFooter} />}
         />
       ) : null}

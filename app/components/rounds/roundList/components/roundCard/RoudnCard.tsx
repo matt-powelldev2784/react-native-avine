@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../../screens/stackNavigator/StackNavigator'
 import { ConfirmModal } from '../../../../../ui'
+import { deleteRoundById } from '../../../../../db/rounds/deleteRoundById'
 
 const RoundCard = ({
   id,
@@ -120,10 +121,11 @@ const RoundCard = ({
       <ConfirmModal
         modalText={`Are you sure you want to delete ${roundName}`}
         onConfirm={async () => {
-          // const deletedJob = await deleteJobById(id)
-          // if (deletedJob) {
-          //   navigation.navigate('Jobs', { refresh: true })
-          // }
+          const deletedRound = await deleteRoundById(id)
+          if (deletedRound) {
+            navigation.navigate('Rounds', { refresh: true })
+            setModalVisible(false)
+          }
         }}
         onCancel={() => setModalVisible(false)}
         visible={modalVisible}
