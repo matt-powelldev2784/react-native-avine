@@ -8,7 +8,7 @@ import AddJob from './jobs/AddJob'
 import EditJob from './jobs/EditJob'
 
 //payments
-import Payments from './paymnets/Paymemts'
+import Payments from './planner/Planner'
 
 //rounds
 import Rounds from './rounds/Rounds'

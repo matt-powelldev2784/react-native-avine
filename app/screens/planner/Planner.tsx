@@ -2,19 +2,19 @@ import React from 'react'
 import { Dashboard, ScreenMenu } from '../../components'
 import theme from '../../utils/theme/theme'
 
-const Payments = () => {
+const Planner = () => {
   return (
     <>
       <Dashboard>
         <ScreenMenu
-          title={'Payments'}
-          navigateTo={'AddRound'}
-          buttonText="Add Payment"
-          bgColor={theme.colors.paymentPrimary}
+          title={'Planner'}
+          // navigateTo={'AddRound'}
+          // buttonText="Add Payment"
+          bgColor={theme.colors.plannerPrimary}
         />
       </Dashboard>
     </>
   )
 }
 
-export default Payments
+export default Planner

@@ -6,7 +6,7 @@ const theme = {
     formFlowSecondary: '#f1f2f2',
     jobPrimary: '#aa337b',
     roundPrimary: '#00b4e1',
-    paymentPrimary: '#FF593E',
+    plannerPrimary: '#FF593E',
   },
 }
 
