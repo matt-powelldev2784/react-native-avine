@@ -8,7 +8,7 @@ import AddJob from './jobs/AddJob'
 import EditJob from './jobs/EditJob'
 
 //payments
-import Payments from './planner/Planner'
+import Planner from './planner/Planner'
 
 //rounds
 import Rounds from './rounds/Rounds'
@@ -25,7 +25,7 @@ export {
   Rounds,
   AddRound,
   EditRound,
-  Payments,
+  Planner,
   SplashScreen,
   SignInScreen,
   SignOutScreen,

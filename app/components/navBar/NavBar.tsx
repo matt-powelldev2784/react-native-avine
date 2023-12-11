@@ -63,7 +63,7 @@ const NavBar = () => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Payments')}
+        onPress={() => navigation.navigate('Planner')}
       >
         <Image
           source={require('../../../assets/calendar_white.png')}

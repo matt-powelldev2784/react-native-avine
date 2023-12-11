@@ -20,6 +20,7 @@
     "@react-navigation/native-stack": "^6.9.15",
     "@react-navigation/stack": "^6.3.19",
     "@types/react": "~18.0.27",
+    "date-fns": "^2.30.0",
     "expo": "^49.0.21",
     "expo-application": "~5.3.0",
     "expo-auth-session": "~5.0.2",

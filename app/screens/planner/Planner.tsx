@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dashboard, ScreenMenu } from '../../components'
+import { Dashboard, ScreenMenu, WeekPlanner } from '../../components'
 import theme from '../../utils/theme/theme'
 
 const Planner = () => {
@@ -12,6 +12,7 @@ const Planner = () => {
           // buttonText="Add Payment"
           bgColor={theme.colors.plannerPrimary}
         />
+        <WeekPlanner />
       </Dashboard>
     </>
   )
