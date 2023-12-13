@@ -1,46 +1,44 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
 import {
-  addDays,
   eachDayOfInterval,
-  eachWeekOfInterval,
   format,
-  subDays,
+  startOfWeek,
+  endOfWeek,
+  addDays,
 } from 'date-fns'
 import theme from '../../utils/theme/theme'
 
-const weeksToDisplay = eachWeekOfInterval(
-  {
-    start: subDays(new Date(), 64),
-    end: addDays(new Date(), 364),
-  },
-  { weekStartsOn: 1 },
-).reduce((acc: Date[][], cur) => {
-  const allDays = eachDayOfInterval({ start: cur, end: addDays(cur, 6) })
-
-  acc.push(allDays)
-  return acc
-}, [])
+const getWeek = (date: Date) => {
+  const start = startOfWeek(date, { weekStartsOn: 1 })
+  const end = endOfWeek(date, { weekStartsOn: 1 })
+  return [eachDayOfInterval({ start, end })]
+}
 
 const WeekPlanner = () => {
-  const weekCalander = weeksToDisplay.map((week) => {
-    const weekStartMonth = format(week[0], 'MMMM')
-    const weekEndMonth = format(week[week.length - 1], 'MMMM')
-    const monthString =
-      weekStartMonth === weekEndMonth
-        ? weekStartMonth
-        : `${weekStartMonth} / ${weekEndMonth}`
+  const [displayDate, setDisplayDate] = useState(new Date())
+  const weekToDisplay = getWeek(displayDate)
+
+  const weekCalander = weekToDisplay.map((week) => {
+    const month = format(week[0], 'MMMM')
+    const year = format(week[0], 'yyyy')
 
     return (
       <View style={styles.datePickerWrapper} key={week[0].toString()}>
         <View style={styles.monthAndWeekContainer}>
-          <Text style={styles.monthName}>{monthString}</Text>
+          <Text style={styles.monthName}>
+            {month} {year}
+          </Text>
 
           <View style={styles.dayWrapper}>
-            <Image
-              source={require('../../../assets/left_arrow.png')}
-              style={{ width: 25, height: 25 }}
-            />
+            <TouchableOpacity
+              onPress={() => setDisplayDate(addDays(displayDate, -7))}
+            >
+              <Image
+                source={require('../../../assets/left_arrow.png')}
+                style={{ width: 25, height: 25 }}
+              />
+            </TouchableOpacity>
 
             {week.map((day) => {
               const weekDay = format(day, 'EEEEEE')
@@ -57,10 +55,14 @@ const WeekPlanner = () => {
               )
             })}
 
-            <Image
-              source={require('../../../assets/right_arrow.png')}
-              style={{ width: 25, height: 25 }}
-            />
+            <TouchableOpacity
+              onPress={() => setDisplayDate(addDays(displayDate, 7))}
+            >
+              <Image
+                source={require('../../../assets/right_arrow.png')}
+                style={{ width: 25, height: 25 }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     backgroundColor: theme.colors.formFlowSecondary,
-    paddingBottom: 8,
+    paddingBottom: 4,
     marginBottom: 100,
     paddingHorizontal: 8,
   },
@@ -91,6 +93,7 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     fontWeight: 'bold',
     fontSize: 20,
+    marginVertical: 4,
   },
   dayWrapper: {
     flexDirection: 'row',
