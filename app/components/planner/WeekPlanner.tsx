@@ -34,11 +34,15 @@ const WeekPlanner = () => {
 
           <View style={styles.dayWrapper}>
             <TouchableOpacity
-              onPress={() => setDisplayWeek(addDays(displayWeek, -7))}
+              onPress={() => {
+                const newWeek = addDays(displayWeek, -7)
+                setDisplayWeek(newWeek)
+                setSelectedDay(startOfWeek(newWeek, { weekStartsOn: 1 }))
+              }}
             >
               <Image
                 source={require('../../../assets/left_arrow.png')}
-                style={{ width: 25, height: 25 }}
+                style={{ width: 25, height: 25, marginRight: 4 }}
               />
             </TouchableOpacity>
 
@@ -87,11 +91,15 @@ const WeekPlanner = () => {
             })}
 
             <TouchableOpacity
-              onPress={() => setDisplayWeek(addDays(displayWeek, 7))}
+              onPress={() => {
+                const newWeek = addDays(displayWeek, 7)
+                setDisplayWeek(newWeek)
+                setSelectedDay(startOfWeek(newWeek, { weekStartsOn: 1 }))
+              }}
             >
               <Image
                 source={require('../../../assets/right_arrow.png')}
-                style={{ width: 25, height: 25 }}
+                style={{ width: 25, height: 25, marginLeft: 4 }}
               />
             </TouchableOpacity>
           </View>
