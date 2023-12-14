@@ -47,13 +47,16 @@ const WeekPlanner = () => {
               const weekDay = format(day, 'EEEEEE')
 
               return (
-                <View
+                <TouchableOpacity
                   style={
                     day.getDate() === selectedDay.getDate()
                       ? styles.dayContainerSelected
                       : styles.dayContainer
                   }
                   key={day.toString()}
+                  onPress={() => {
+                    setSelectedDay(day)
+                  }}
                 >
                   <Text
                     style={
@@ -79,7 +82,7 @@ const WeekPlanner = () => {
                     source={require('../../../assets/dot.png')}
                     style={{ width: 7, height: 7, marginVertical: 2 }}
                   />
-                </View>
+                </TouchableOpacity>
               )
             })}
 
