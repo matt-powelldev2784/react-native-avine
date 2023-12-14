@@ -17,8 +17,10 @@ const getWeek = (date: Date) => {
 
 const WeekPlanner = () => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
+  const [selectedDay, setSelectedDay] = useState(new Date())
   const weekToDisplay = getWeek(displayWeek)
 
+  //map week to display - inside this loop is another loop which maps the days of the week
   const weekCalander = weekToDisplay.map((week) => {
     const month = format(week[0], 'MMMM')
     const year = format(week[0], 'yyyy')
@@ -40,16 +42,42 @@ const WeekPlanner = () => {
               />
             </TouchableOpacity>
 
+            {/* map days of the week */}
             {week.map((day) => {
               const weekDay = format(day, 'EEEEEE')
 
               return (
-                <View style={styles.dayContainer} key={day.toString()}>
-                  <Text>{weekDay}</Text>
-                  <Text>{day.getDate()}</Text>
+                <View
+                  style={
+                    day.getDate() === selectedDay.getDate()
+                      ? styles.dayContainerSelected
+                      : styles.dayContainer
+                  }
+                  key={day.toString()}
+                >
+                  <Text
+                    style={
+                      day.getDate() === selectedDay.getDate()
+                        ? styles.dayTextSelected
+                        : null
+                    }
+                  >
+                    {weekDay}
+                  </Text>
+
+                  <Text
+                    style={
+                      day.getDate() === selectedDay.getDate()
+                        ? styles.dayTextSelected
+                        : null
+                    }
+                  >
+                    {day.getDate()}
+                  </Text>
+
                   <Image
                     source={require('../../../assets/dot.png')}
-                    style={{ width: 5, height: 5, marginVertical: 2 }}
+                    style={{ width: 7, height: 7, marginVertical: 2 }}
                   />
                 </View>
               )
@@ -110,11 +138,15 @@ const styles = StyleSheet.create({
   },
   dayContainerSelected: {
     alignItems: 'center',
-    backgroundColor: theme.colors.plannerPrimary,
+    backgroundColor: theme.colors.primary,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 8,
     width: 40,
+  },
+  dayTextSelected: {
+    color: theme.colors.formFlowSecondary,
+    fontWeight: 'bold',
   },
 })
 
