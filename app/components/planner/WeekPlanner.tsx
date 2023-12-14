@@ -16,8 +16,8 @@ const getWeek = (date: Date) => {
 }
 
 const WeekPlanner = () => {
-  const [displayDate, setDisplayDate] = useState(new Date())
-  const weekToDisplay = getWeek(displayDate)
+  const [displayWeek, setDisplayWeek] = useState(new Date())
+  const weekToDisplay = getWeek(displayWeek)
 
   const weekCalander = weekToDisplay.map((week) => {
     const month = format(week[0], 'MMMM')
@@ -32,7 +32,7 @@ const WeekPlanner = () => {
 
           <View style={styles.dayWrapper}>
             <TouchableOpacity
-              onPress={() => setDisplayDate(addDays(displayDate, -7))}
+              onPress={() => setDisplayWeek(addDays(displayWeek, -7))}
             >
               <Image
                 source={require('../../../assets/left_arrow.png')}
@@ -56,7 +56,7 @@ const WeekPlanner = () => {
             })}
 
             <TouchableOpacity
-              onPress={() => setDisplayDate(addDays(displayDate, 7))}
+              onPress={() => setDisplayWeek(addDays(displayWeek, 7))}
             >
               <Image
                 source={require('../../../assets/right_arrow.png')}
