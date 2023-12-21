@@ -1,13 +1,13 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { addRoundToDb } from '../../../../db/rounds/addRoundToDb'
+import { scheduleRoundToDb } from '../../../../db/planner/schdeuleRoundToDb'
 
 export const stepOneSchema = Yup.object().shape({
   roundId: Yup.string().required('Round Name is required'),
 })
 
 export const stepTwoSchema = Yup.object().shape({
-  date: Yup.string().required('Date is required'),
+  date: Yup.string().required('Date is required').length(10),
 })
 
 const useFormikSteps = (activeStep: number) => {
@@ -26,12 +26,11 @@ const useFormikSteps = (activeStep: number) => {
     },
     onSubmit: (values) => {
       console.log(values)
-      // addRoundToDb(values)
+      scheduleRoundToDb(values)
     },
     validationSchema,
   })
 
-  console.log('formik.values', formik.values)
   return formik
 }
 

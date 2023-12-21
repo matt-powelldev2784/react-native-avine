@@ -27,9 +27,7 @@ const ScheduleRoundForm = () => {
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()
-  useFormResetOnBlur(formik, setActiveStep)
-
-  console.log('userRounds', userRounds)
+  //useFormResetOnBlur(formik, setActiveStep)
 
   const handleStepBack = () => {
     if (activeStep === 0) {
@@ -96,10 +94,10 @@ const ScheduleRoundForm = () => {
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={() => {
+                onPress={async () => {
                   formik.handleSubmit()
                   if (formik.isValid) {
-                    navigation.navigate('Rounds', { refresh: true })
+                    navigation.navigate('Planner', { refresh: true })
                   }
                 }}
                 style={styles.button}

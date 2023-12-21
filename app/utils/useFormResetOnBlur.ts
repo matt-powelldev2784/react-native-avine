@@ -11,7 +11,6 @@ export const useFormResetOnBlur = (
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('blur', () => {
-      // Reset the state here
       setActiveStep(0)
       formik.resetForm()
     })
