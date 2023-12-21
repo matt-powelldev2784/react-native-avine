@@ -15,7 +15,11 @@ const getWeek = (date: Date) => {
   return [eachDayOfInterval({ start, end })]
 }
 
-const WeekPlanner = () => {
+interface WeekPlannerProps {
+  onDaySelect?: (day: Date) => void
+}
+
+const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
   const weekToDisplay = getWeek(displayWeek)
@@ -38,6 +42,7 @@ const WeekPlanner = () => {
                 const newWeek = addDays(displayWeek, -7)
                 setDisplayWeek(newWeek)
                 setSelectedDay(startOfWeek(newWeek, { weekStartsOn: 1 }))
+                onDaySelect ? onDaySelect(selectedDay) : null
               }}
             >
               <Image
@@ -45,7 +50,6 @@ const WeekPlanner = () => {
                 style={{ width: 25, height: 25, marginRight: 4 }}
               />
             </TouchableOpacity>
-
             {/* map days of the week */}
             {week.map((day) => {
               const weekDay = format(day, 'EEEEEE')
@@ -60,6 +64,7 @@ const WeekPlanner = () => {
                   key={day.toString()}
                   onPress={() => {
                     setSelectedDay(day)
+                    onDaySelect ? onDaySelect(selectedDay) : null
                   }}
                 >
                   <Text
@@ -95,6 +100,7 @@ const WeekPlanner = () => {
                 const newWeek = addDays(displayWeek, 7)
                 setDisplayWeek(newWeek)
                 setSelectedDay(startOfWeek(newWeek, { weekStartsOn: 1 }))
+                onDaySelect ? onDaySelect(selectedDay) : null
               }}
             >
               <Image
