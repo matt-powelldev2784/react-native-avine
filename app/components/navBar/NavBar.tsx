@@ -63,13 +63,13 @@ const NavBar = () => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Payments')}
+        onPress={() => navigation.navigate('Planner')}
       >
         <Image
-          source={require('../../../assets/pay.png')}
+          source={require('../../../assets/calendar_white.png')}
           style={{ width: 25, height: 25 }}
         />
-        <Text style={styles.buttonText}>PAYMENTS</Text>
+        <Text style={styles.buttonText}>PLANNER</Text>
       </TouchableOpacity>
 
       {isLargeWeb && (

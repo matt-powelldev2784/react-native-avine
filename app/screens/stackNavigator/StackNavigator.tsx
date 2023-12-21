@@ -1,7 +1,7 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
-  Payments,
+  Planner,
   Rounds,
   Jobs,
   SignInScreen,
@@ -25,7 +25,7 @@ export type RootStackParamList = {
   EditRound: { roundId: string } | undefined
 
   //payments
-  Payments: undefined
+  Planner: undefined
 
   //jobs
   Jobs: { refresh?: boolean } | undefined
@@ -42,6 +42,9 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
+          {/* --------------------------  Planner Screens  -------------------------- */}
+          <Stack.Screen name="Planner" component={Planner} />
+
           {/* --------------------------  Round Screens  ------------------------- */}
           <Stack.Screen name="Rounds" component={Rounds} />
           <Stack.Screen name="AddRound" component={AddRound} />
@@ -51,9 +54,6 @@ const StackNavigator = () => {
           <Stack.Screen name="Jobs" component={Jobs} />
           <Stack.Screen name="AddJob" component={AddJob} />
           <Stack.Screen name="EditJob" component={EditJob} />
-
-          {/* --------------------------  Round Screens  -------------------------- */}
-          <Stack.Screen name="Payments" component={Payments} />
 
           {/* --------------------------  Auth Screens Screens  ------------------- */}
           <Stack.Screen name="SignOut" component={SignOutScreen} />

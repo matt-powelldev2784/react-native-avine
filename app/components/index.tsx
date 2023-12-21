@@ -10,6 +10,9 @@ import RoundList from './rounds/roundList/RoundList'
 import AddRoundForm from './rounds/addRound/AddRoundForm'
 import EditRoundForm from './rounds/editRound/EditRoundForm'
 
+//planner
+import WeekPlanner from './planner/WeekPlanner'
+
 //otheres
 import ScreenMenu from './screenMenu/ScreenMenu'
 import PlanMeLogo from './PlanMeLogo/PlanMeLogo'
@@ -21,6 +24,7 @@ export {
   RoundList,
   AddRoundForm,
   EditRoundForm,
+  WeekPlanner,
   ScreenMenu,
   PlanMeLogo,
   Dashboard,
