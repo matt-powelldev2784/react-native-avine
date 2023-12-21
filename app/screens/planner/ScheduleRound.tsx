@@ -2,12 +2,12 @@ import React from 'react'
 import { Dashboard, ScreenMenu, WeekPlanner } from '../../components'
 import theme from '../../utils/theme/theme'
 
-const Planner = () => {
+const ScheduleRound = () => {
   return (
     <>
       <Dashboard>
         <ScreenMenu
-          title={'Planner'}
+          title={'Schedule Round'}
           // navigateTo={'AddRound'}
           // buttonText="Add Payment"
           bgColor={theme.colors.plannerPrimary}
@@ -18,4 +18,4 @@ const Planner = () => {
   )
 }
 
-export default Planner
+export default ScheduleRound

@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     backgroundColor: theme.colors.formFlowSecondary,
     paddingBottom: 4,
-    marginBottom: 100,
     paddingHorizontal: 8,
   },
   monthAndWeekContainer: {
