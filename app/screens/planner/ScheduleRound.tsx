@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dashboard, ScreenMenu, WeekPlanner } from '../../components'
+import { Dashboard, ScreenMenu, ScheduleRoundForm } from '../../components'
 import theme from '../../utils/theme/theme'
 
 const ScheduleRound = () => {
@@ -12,7 +12,7 @@ const ScheduleRound = () => {
           // buttonText="Add Payment"
           bgColor={theme.colors.plannerPrimary}
         />
-        <WeekPlanner />
+        <ScheduleRoundForm />
       </Dashboard>
     </>
   )

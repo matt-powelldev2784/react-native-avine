@@ -7,7 +7,7 @@ import {
   endOfWeek,
   addDays,
 } from 'date-fns'
-import theme from '../../utils/theme/theme'
+import theme from '../../../utils/theme/theme'
 
 const getWeek = (date: Date) => {
   const start = startOfWeek(date, { weekStartsOn: 1 })
@@ -41,7 +41,7 @@ const WeekPlanner = () => {
               }}
             >
               <Image
-                source={require('../../../assets/left_arrow.png')}
+                source={require('../../../../assets/left_arrow.png')}
                 style={{ width: 25, height: 25, marginRight: 4 }}
               />
             </TouchableOpacity>
@@ -83,7 +83,7 @@ const WeekPlanner = () => {
                   </Text>
 
                   <Image
-                    source={require('../../../assets/dot.png')}
+                    source={require('../../../../assets/dot.png')}
                     style={{ width: 7, height: 7, marginVertical: 2 }}
                   />
                 </TouchableOpacity>
@@ -98,7 +98,7 @@ const WeekPlanner = () => {
               }}
             >
               <Image
-                source={require('../../../assets/right_arrow.png')}
+                source={require('../../../../assets/right_arrow.png')}
                 style={{ width: 25, height: 25, marginLeft: 4 }}
               />
             </TouchableOpacity>

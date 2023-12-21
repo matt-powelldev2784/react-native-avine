@@ -11,7 +11,8 @@ import AddRoundForm from './rounds/addRound/AddRoundForm'
 import EditRoundForm from './rounds/editRound/EditRoundForm'
 
 //planner
-import WeekPlanner from './planner/WeekPlanner'
+import WeekPlanner from './planner/weekPlanner/WeekPlanner'
+import ScheduleRoundForm from './planner/scheduleRoundForm/ScheduleRoundForm'
 
 //otheres
 import ScreenMenu from './screenMenu/ScreenMenu'
@@ -25,6 +26,7 @@ export {
   AddRoundForm,
   EditRoundForm,
   WeekPlanner,
+  ScheduleRoundForm,
   ScreenMenu,
   PlanMeLogo,
   Dashboard,
