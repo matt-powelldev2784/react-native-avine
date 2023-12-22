@@ -1,4 +1,4 @@
-import { doc, collection, addDoc } from 'firebase/firestore'
+import { doc, updateDoc, arrayUnion } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { PlanT } from '../../types/PlanT'
 
@@ -6,8 +6,6 @@ export const scheduleRoundToDb = async (planInfo: PlanT) => {
   if (auth.currentUser === null) {
     return
   }
-
-  console.log(' planInfo.roundId,', planInfo.roundId)
 
   try {
     const roundDoc = doc(
@@ -18,16 +16,12 @@ export const scheduleRoundToDb = async (planInfo: PlanT) => {
       planInfo.roundId,
     )
 
-    const scheduledDatesCollection = collection(roundDoc, 'scheduledDates')
-
-    const newRoundRef = await addDoc(scheduledDatesCollection, {
-      date: planInfo.date,
+    await updateDoc(roundDoc, {
+      scheduledDates: arrayUnion(planInfo.date),
     })
 
-    console.log('New round added with ID:', newRoundRef.id)
-
-    return newRoundRef
+    console.log('Date added to round document:', planInfo.date)
   } catch (error) {
-    console.error('Error adding round:', error)
+    console.error('Error adding date to round:', error)
   }
 }
