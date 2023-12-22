@@ -24,4 +24,5 @@ export interface RoundNoJobsT {
   roundName: string
   location: string
   frequency: string
+  scheduledDates: string[]
 }
