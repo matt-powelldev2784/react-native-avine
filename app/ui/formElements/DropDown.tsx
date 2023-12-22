@@ -35,8 +35,8 @@ const Dropdown = ({
 
       <DropdownCustom
         data={options}
-        labelField={'value'}
-        valueField={'label'}
+        labelField={'label'}
+        valueField={'value'}
         value={formik.values[name]}
         placeholder={placeholder}
         placeholderStyle={styles.placeholder}

@@ -7,7 +7,7 @@ import {
   endOfWeek,
   addDays,
 } from 'date-fns'
-import theme from '../../utils/theme/theme'
+import theme from '../../../utils/theme/theme'
 
 const getWeek = (date: Date) => {
   const start = startOfWeek(date, { weekStartsOn: 1 })
@@ -15,7 +15,11 @@ const getWeek = (date: Date) => {
   return [eachDayOfInterval({ start, end })]
 }
 
-const WeekPlanner = () => {
+interface WeekPlannerProps {
+  onDaySelect?: (day: Date) => void
+}
+
+const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
   const weekToDisplay = getWeek(displayWeek)
@@ -38,14 +42,14 @@ const WeekPlanner = () => {
                 const newWeek = addDays(displayWeek, -7)
                 setDisplayWeek(newWeek)
                 setSelectedDay(startOfWeek(newWeek, { weekStartsOn: 1 }))
+                onDaySelect ? onDaySelect(selectedDay) : null
               }}
             >
               <Image
-                source={require('../../../assets/left_arrow.png')}
+                source={require('../../../../assets/left_arrow.png')}
                 style={{ width: 25, height: 25, marginRight: 4 }}
               />
             </TouchableOpacity>
-
             {/* map days of the week */}
             {week.map((day) => {
               const weekDay = format(day, 'EEEEEE')
@@ -60,6 +64,7 @@ const WeekPlanner = () => {
                   key={day.toString()}
                   onPress={() => {
                     setSelectedDay(day)
+                    onDaySelect ? onDaySelect(selectedDay) : null
                   }}
                 >
                   <Text
@@ -83,7 +88,7 @@ const WeekPlanner = () => {
                   </Text>
 
                   <Image
-                    source={require('../../../assets/dot.png')}
+                    source={require('../../../../assets/dot.png')}
                     style={{ width: 7, height: 7, marginVertical: 2 }}
                   />
                 </TouchableOpacity>
@@ -95,10 +100,11 @@ const WeekPlanner = () => {
                 const newWeek = addDays(displayWeek, 7)
                 setDisplayWeek(newWeek)
                 setSelectedDay(startOfWeek(newWeek, { weekStartsOn: 1 }))
+                onDaySelect ? onDaySelect(selectedDay) : null
               }}
             >
               <Image
-                source={require('../../../assets/right_arrow.png')}
+                source={require('../../../../assets/right_arrow.png')}
                 style={{ width: 25, height: 25, marginLeft: 4 }}
               />
             </TouchableOpacity>
@@ -120,7 +126,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     backgroundColor: theme.colors.formFlowSecondary,
     paddingBottom: 4,
-    marginBottom: 100,
     paddingHorizontal: 8,
   },
   monthAndWeekContainer: {

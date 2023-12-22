@@ -8,8 +8,8 @@ const Planner = () => {
       <Dashboard>
         <ScreenMenu
           title={'Planner'}
-          // navigateTo={'AddRound'}
-          // buttonText="Add Payment"
+          navigateTo={'ScheduleRound'}
+          buttonText="Schedule Round"
           bgColor={theme.colors.plannerPrimary}
         />
         <WeekPlanner />
