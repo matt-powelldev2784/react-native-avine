@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Platform,
+} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import {
   eachDayOfInterval,
@@ -159,7 +166,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 8,
-    width: 40,
+    width: Platform.OS === 'web' ? 36 : 40,
   },
   dayContainerSelected: {
     alignItems: 'center',
@@ -167,7 +174,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 8,
-    width: 40,
+    width: Platform.OS === 'web' ? 36 : 40,
   },
   dayTextSelected: {
     color: theme.colors.formFlowSecondary,
