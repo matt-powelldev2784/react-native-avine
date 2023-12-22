@@ -16,7 +16,6 @@ import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigat
 import theme from '../../../utils/theme/theme'
 import { useFetchRounds } from './hooks/useFetchRounds'
 import { useDeviceType } from '../../../utils/deviceTypes'
-import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import WeekPlanner from '../weekPlanner/WeekPlanner'
 import { formatDateForDb } from '../../../utils/formatDateForDb'
 

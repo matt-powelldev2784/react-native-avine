@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   eachDayOfInterval,
   format,
@@ -8,6 +8,8 @@ import {
   addDays,
 } from 'date-fns'
 import theme from '../../../utils/theme/theme'
+import { queryRoundsOnDate } from '../../../db/planner/queryRoundsOnDate'
+import { formatDateForDb } from '../../../utils/formatDateForDb'
 
 const getWeek = (date: Date) => {
   const start = startOfWeek(date, { weekStartsOn: 1 })
@@ -23,6 +25,13 @@ const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
   const weekToDisplay = getWeek(displayWeek)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await queryRoundsOnDate(formatDateForDb(selectedDay))
+    }
+    fetchData()
+  }, [selectedDay])
 
   //map week to display - inside this loop is another loop which maps the days of the week
   const weekCalander = weekToDisplay.map((week) => {
