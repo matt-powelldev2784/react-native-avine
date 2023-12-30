@@ -17,6 +17,7 @@ import {
 import theme from '../../../utils/theme/theme'
 import { queryRoundsOnDate } from '../../../db/planner/queryRoundsOnDate'
 import { formatDateForDb } from '../../../utils/formatDateForDb'
+import { RoundNoJobsT } from '../../../types/RoundT'
 
 const getWeek = (date: Date) => {
   const start = startOfWeek(date, { weekStartsOn: 1 })
@@ -31,11 +32,20 @@ interface WeekPlannerProps {
 const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
+  const [roundsOnDate, setRoundsOnDate] = useState<RoundNoJobsT | []>([])
   const weekToDisplay = getWeek(displayWeek)
+
+  console.log('roundsOnDate', roundsOnDate)
 
   useEffect(() => {
     const fetchData = async () => {
-      await queryRoundsOnDate(formatDateForDb(selectedDay))
+      const roundsToDisplay = (await queryRoundsOnDate(
+        formatDateForDb(selectedDay),
+      )) as RoundNoJobsT | []
+
+      if (roundsToDisplay) {
+        setRoundsOnDate(roundsToDisplay)
+      }
     }
     fetchData()
   }, [selectedDay])
