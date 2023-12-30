@@ -1,23 +1,10 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import {
-  eachDayOfInterval,
-  format,
-  startOfWeek,
-  endOfWeek,
-  addDays,
-} from 'date-fns'
 import theme from '../../../utils/theme/theme'
 import { queryRoundsOnDate } from '../../../db/planner/queryRoundsOnDate'
 import { formatDateForDb } from '../../../utils/formatDateForDb'
 import { RoundNoJobsT } from '../../../types/RoundT'
-import DaySelector from './components/DaySelector'
-
-const getWeek = (date: Date) => {
-  const start = startOfWeek(date, { weekStartsOn: 1 })
-  const end = endOfWeek(date, { weekStartsOn: 1 })
-  return [eachDayOfInterval({ start, end })]
-}
+import WeekCalender from './components/WeekCalender'
 
 interface WeekPlannerProps {
   onDaySelect?: (day: Date) => void
@@ -27,7 +14,6 @@ const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
   const [roundsOnDate, setRoundsOnDate] = useState<RoundNoJobsT | []>([])
-  const weekToDisplay = getWeek(displayWeek)
 
   console.log('roundsOnDate', roundsOnDate)
 
@@ -44,70 +30,20 @@ const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
     fetchData()
   }, [selectedDay])
 
-  const handleMoveToPrevWeek = () => {
-    const newWeek = addDays(displayWeek, -7)
-    const newday = startOfWeek(newWeek, { weekStartsOn: 1 })
-    setDisplayWeek(newWeek)
-    setSelectedDay(newday)
-    onDaySelect ? onDaySelect(newday) : null
-  }
-
-  const handleMoveToNextWeek = () => {
-    const newWeek = addDays(displayWeek, 7)
-    const newday = startOfWeek(newWeek, { weekStartsOn: 1 })
-    setDisplayWeek(newWeek)
-    setSelectedDay(newday)
-    onDaySelect ? onDaySelect(newday) : null
-  }
-
-  //map week to display - inside this loop is another loop which maps the days of the week
-  const weekCalander = weekToDisplay.map((week) => {
-    const month = format(week[0], 'MMMM')
-    const year = format(week[0], 'yyyy')
-
-    return (
-      <View style={styles.datePickerWrapper} key={week[0].toString()}>
-        <View style={styles.monthAndWeekContainer}>
-          <Text style={styles.monthName}>
-            {month} {year}
-          </Text>
-
-          {/* ---------------------- move to prev week button ----------------------- */}
-          <View style={styles.dayWrapper}>
-            <TouchableOpacity onPress={handleMoveToPrevWeek}>
-              <Image
-                source={require('../../../../assets/left_arrow.png')}
-                style={{ width: 25, height: 25, marginRight: 4 }}
-              />
-            </TouchableOpacity>
-
-            {/* ---------------------- map days of the week ----------------------- */}
-            {week.map((day) => {
-              return (
-                <DaySelector
-                  key={day.toString()}
-                  selectedDay={selectedDay}
-                  day={day}
-                  setSelectedDay={setSelectedDay}
-                  onDaySelect={onDaySelect}
-                />
-              )
-            })}
-
-            {/* ---------------------- move to next week button ----------------------- */}
-            <TouchableOpacity onPress={handleMoveToNextWeek}>
-              <Image
-                source={require('../../../../assets/right_arrow.png')}
-                style={{ width: 25, height: 25, marginLeft: 4 }}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
+  return (
+    <View style={styles.conatiner}>
+      <WeekCalender
+        displayWeek={displayWeek}
+        setDisplayWeek={setDisplayWeek}
+        setSelectedDay={setSelectedDay}
+        selectedDay={selectedDay}
+        onDaySelect={onDaySelect}
+      />
+      <View>
+        <Text>Test</Text>
       </View>
-    )
-  })
-
-  return <View style={styles.conatiner}>{weekCalander}</View>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
