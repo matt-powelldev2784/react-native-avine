@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import theme from '../../../utils/theme/theme'
 import { queryRoundsOnDate } from '../../../db/planner/queryRoundsOnDate'
 import { formatDateForDb } from '../../../utils/formatDateForDb'
 import { RoundNoJobsT } from '../../../types/RoundT'
@@ -48,30 +47,6 @@ const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
 
 const styles = StyleSheet.create({
   conatiner: {
-    width: '100%',
-  },
-  datePickerWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    backgroundColor: theme.colors.formFlowSecondary,
-    paddingBottom: 4,
-    paddingHorizontal: 8,
-  },
-  monthAndWeekContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '100%',
-  },
-  monthName: {
-    color: theme.colors.primary,
-    fontWeight: 'bold',
-    fontSize: 20,
-    marginVertical: 4,
-  },
-  dayWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
     width: '100%',
   },
 })
