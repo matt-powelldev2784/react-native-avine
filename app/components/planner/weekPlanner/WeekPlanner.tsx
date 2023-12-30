@@ -50,6 +50,22 @@ const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
     fetchData()
   }, [selectedDay])
 
+  const handleMoveToPrevWeek = () => {
+    const newWeek = addDays(displayWeek, -7)
+    const newday = startOfWeek(newWeek, { weekStartsOn: 1 })
+    setDisplayWeek(newWeek)
+    setSelectedDay(newday)
+    onDaySelect ? onDaySelect(newday) : null
+  }
+
+  const handleMoveToNextWeek = () => {
+    const newWeek = addDays(displayWeek, 7)
+    const newday = startOfWeek(newWeek, { weekStartsOn: 1 })
+    setDisplayWeek(newWeek)
+    setSelectedDay(newday)
+    onDaySelect ? onDaySelect(newday) : null
+  }
+
   //map week to display - inside this loop is another loop which maps the days of the week
   const weekCalander = weekToDisplay.map((week) => {
     const month = format(week[0], 'MMMM')
@@ -63,14 +79,7 @@ const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
           </Text>
 
           <View style={styles.dayWrapper}>
-            <TouchableOpacity
-              onPress={() => {
-                const newWeek = addDays(displayWeek, -7)
-                setDisplayWeek(newWeek)
-                setSelectedDay(startOfWeek(newWeek, { weekStartsOn: 1 }))
-                onDaySelect ? onDaySelect(selectedDay) : null
-              }}
-            >
+            <TouchableOpacity onPress={handleMoveToPrevWeek}>
               <Image
                 source={require('../../../../assets/left_arrow.png')}
                 style={{ width: 25, height: 25, marginRight: 4 }}
@@ -90,7 +99,7 @@ const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
                   key={day.toString()}
                   onPress={() => {
                     setSelectedDay(day)
-                    onDaySelect ? onDaySelect(selectedDay) : null
+                    onDaySelect ? onDaySelect(day) : null
                   }}
                 >
                   <Text
@@ -120,15 +129,7 @@ const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
                 </TouchableOpacity>
               )
             })}
-
-            <TouchableOpacity
-              onPress={() => {
-                const newWeek = addDays(displayWeek, 7)
-                setDisplayWeek(newWeek)
-                setSelectedDay(startOfWeek(newWeek, { weekStartsOn: 1 }))
-                onDaySelect ? onDaySelect(selectedDay) : null
-              }}
-            >
+            <TouchableOpacity onPress={handleMoveToNextWeek}>
               <Image
                 source={require('../../../../assets/right_arrow.png')}
                 style={{ width: 25, height: 25, marginLeft: 4 }}
