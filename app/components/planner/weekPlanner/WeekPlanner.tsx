@@ -12,21 +12,20 @@ interface WeekPlannerProps {
 const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
-  const [roundsOnDate, setRoundsOnDate] = useState<RoundNoJobsT | []>([])
+  const [roundsOnDate, setRoundsOnDate] = useState<RoundNoJobsT[] | []>([])
 
   console.log('roundsOnDate', roundsOnDate)
 
   useEffect(() => {
-    const fetchData = async () => {
-      const roundsToDisplay = (await queryRoundsOnDate(
-        formatDateForDb(selectedDay),
-      )) as RoundNoJobsT | []
+    const setScheduledRounds = async () => {
+      const selectedDayForDb = formatDateForDb(selectedDay)
+      const scheduledRounds = await queryRoundsOnDate(selectedDayForDb)
 
-      if (roundsToDisplay) {
-        setRoundsOnDate(roundsToDisplay)
+      if (scheduledRounds) {
+        setRoundsOnDate(scheduledRounds)
       }
     }
-    fetchData()
+    setScheduledRounds()
   }, [selectedDay])
 
   return (
