@@ -26,3 +26,12 @@ export interface RoundNoJobsT {
   frequency: string
   scheduledDates: string[]
 }
+
+export interface RoundWithRelatedJobsT {
+  id: string
+  roundName: string
+  location: string
+  frequency: string
+  scheduledDates: string[]
+  relatedJobs: JobWithIdT[] | undefined | null | []
+}

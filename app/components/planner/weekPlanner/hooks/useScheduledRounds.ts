@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { queryRoundsOnDate } from '../../../../db/planner/queryRoundsOnDate'
 import { formatDateForDb } from '../../../../utils/formatDateForDb'
-import { RoundNoJobsT } from '../../../../types/RoundT'
+import { RoundWithRelatedJobsT } from '../../../../types/RoundT'
 
-type ScheduledRounds = RoundNoJobsT[] | []
+type ScheduledRounds = RoundWithRelatedJobsT[] | []
 
 export const useScheduledRounds = (selectedDay: Date): ScheduledRounds => {
   const [scheduledRounds, setScheduledRounds] = useState<ScheduledRounds>([])
