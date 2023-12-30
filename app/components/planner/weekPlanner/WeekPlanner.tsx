@@ -1,9 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { queryRoundsOnDate } from '../../../db/planner/queryRoundsOnDate'
-import { formatDateForDb } from '../../../utils/formatDateForDb'
-import { RoundNoJobsT } from '../../../types/RoundT'
+import React, { useState } from 'react'
 import WeekCalender from './components/WeekCalender'
+import { useScheduledRounds } from './hooks/useScheduledRounds'
 
 interface WeekPlannerProps {
   onDaySelect?: (day: Date) => void
@@ -12,21 +10,9 @@ interface WeekPlannerProps {
 const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
-  const [roundsOnDate, setRoundsOnDate] = useState<RoundNoJobsT[] | []>([])
+  const scheduledRounds = useScheduledRounds(selectedDay)
 
-  console.log('roundsOnDate', roundsOnDate)
-
-  useEffect(() => {
-    const setScheduledRounds = async () => {
-      const selectedDayForDb = formatDateForDb(selectedDay)
-      const scheduledRounds = await queryRoundsOnDate(selectedDayForDb)
-
-      if (scheduledRounds) {
-        setRoundsOnDate(scheduledRounds)
-      }
-    }
-    setScheduledRounds()
-  }, [selectedDay])
+  console.log('scheduledRounds', scheduledRounds)
 
   return (
     <View style={styles.conatiner}>
