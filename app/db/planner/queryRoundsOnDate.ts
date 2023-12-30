@@ -18,7 +18,7 @@ export const queryRoundsOnDate = async (date: string) => {
     for (const doc of querySnapshot.docs) {
       const round = doc.data() as RoundNoJobsT
       const relatedJobs = await queryJobsForSpecificRound(doc.id)
-      const roundWithRelatedJobs = { ...round, relatedJobs }
+      const roundWithRelatedJobs = { ...round, relatedJobs, id: doc.id }
       rounds.push(roundWithRelatedJobs)
     }
 
