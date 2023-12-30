@@ -45,8 +45,8 @@ const StackNavigator = () => {
       {userInfo ? (
         <>
           {/* --------------------------  Planner Screens  -------------------------- */}
-          <Stack.Screen name="ScheduleRound" component={ScheduleRound} />
           <Stack.Screen name="Planner" component={Planner} />
+          <Stack.Screen name="ScheduleRound" component={ScheduleRound} />
 
           {/* --------------------------  Round Screens  ------------------------- */}
           <Stack.Screen name="Rounds" component={Rounds} />
