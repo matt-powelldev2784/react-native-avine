@@ -15,7 +15,8 @@ export const queryJobsForSpecificRound = async (roundId: string) => {
 
     const jobs: JobWithIdT[] = []
     querySnapshot.forEach((job) => {
-      jobs.push(job.data() as JobWithIdT)
+      const jobWithId = { ...job.data(), id: job.id }
+      jobs.push(jobWithId as JobWithIdT)
     })
 
     console.log('Rounds related to specific round:', jobs)

@@ -1,6 +1,6 @@
 import { collection, query, where, getDocs } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { RoundNoJobsT } from '../../types/RoundT'
+import { RoundNoJobsT, RoundWithRelatedJobsT } from '../../types/RoundT'
 import { queryJobsForSpecificRound } from '../jobs/queryJobsForSpecificRound'
 
 export const queryRoundsOnDate = async (date: string) => {
@@ -14,11 +14,11 @@ export const queryRoundsOnDate = async (date: string) => {
 
     const querySnapshot = await getDocs(q)
 
-    const rounds: RoundNoJobsT[] = []
+    const rounds: RoundWithRelatedJobsT[] = []
     for (const doc of querySnapshot.docs) {
       const round = doc.data() as RoundNoJobsT
       const relatedJobs = await queryJobsForSpecificRound(doc.id)
-      const roundWithRelatedJobs = { ...round, relatedJobs }
+      const roundWithRelatedJobs = { ...round, relatedJobs, id: doc.id }
       rounds.push(roundWithRelatedJobs)
     }
 
