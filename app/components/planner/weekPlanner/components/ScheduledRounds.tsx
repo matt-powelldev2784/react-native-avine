@@ -11,11 +11,30 @@ const ScheduledRounds = ({ selectedDay }: ScheduledRoundsProps) => {
   const scheduledRounds = useScheduledRounds(selectedDay)
 
   return scheduledRounds.map((round) => {
+    const totalRoundtTime = round?.relatedJobs?.reduce(
+      (totalTime, job) => totalTime + parseFloat(job.time),
+      0,
+    )
+
     return (
       <View key={round.id} style={styles.roundConatiner}>
         {/* ---------------------- Round Title ----------------------- */}
-        <View style={styles.roundShortNameContainer}>
-          <Text style={styles.roundShortNameText}>{round.roundName}</Text>
+        <View style={styles.roundTitleContainer}>
+          <Text
+            style={styles.roundTitleText}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {round.roundName}
+          </Text>
+
+          <Text
+            style={styles.roundTimeText}
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          >
+            Round Time {totalRoundtTime} hrs
+          </Text>
         </View>
 
         {/* ---------------------- Jobs List ----------------------- */}
@@ -69,21 +88,30 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginHorizontal: 8,
   },
-  roundShortNameContainer: {
-    flexDirection: 'column',
-    justifyContent: 'center',
+  roundTitleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    paddingHorizontal: 12,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 10,
     width: '100%',
     height: 28,
     backgroundColor: theme.colors.primary,
   },
-  roundShortNameText: {
+  roundTitleText: {
     color: theme.colors.secondary,
     fontSize: 20,
     fontWeight: 'bold',
-    textAlign: 'center',
+    width: '75%',
+  },
+  roundTimeText: {
+    color: theme.colors.secondary,
+    borderRaadiusBottomLeft: 20,
+    borderRadiusBottomRight: 12,
+    fontSize: 10,
+    width: '25%',
+    textAlign: 'right',
   },
   jobsList: {
     marginVertical: 4,
@@ -122,10 +150,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'center',
     backgroundColor: theme.colors.primary,
+    minWidth: 110,
   },
   text: {
     color: theme.colors.secondary,
-    fontSize: 16,
+    fontSize: 14,
     marginHorizontal: 8,
   },
 })
