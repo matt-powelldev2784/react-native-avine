@@ -1,8 +1,7 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import WeekCalender from './components/WeekCalender'
-import { useScheduledRounds } from './hooks/useScheduledRounds'
-import theme from '../../../utils/theme/theme'
+import ScheduledRounds from './components/ScheduledRounds'
 
 interface WeekPlannerProps {
   onDaySelect?: (day: Date) => void
@@ -11,19 +10,6 @@ interface WeekPlannerProps {
 const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
-  const scheduledRounds = useScheduledRounds(selectedDay)
-
-  console.log('scheduledRounds', scheduledRounds)
-
-  const scheduledRundsJsx = scheduledRounds.map((round) => {
-    const relatedJobs = round.relatedJobs
-    console.log('relatedJobs', relatedJobs)
-    return (
-      <Text style={{ backgroundColor: theme.colors.primary }} key={round.id}>
-        {round.id}
-      </Text>
-    )
-  })
 
   return (
     <View style={styles.conatiner}>
@@ -35,9 +21,7 @@ const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
         onDaySelect={onDaySelect}
       />
       <View>
-        {scheduledRounds ? scheduledRundsJsx : null}
-
-        <Text>Test</Text>
+        <ScheduledRounds selectedDay={selectedDay} />
       </View>
     </View>
   )
