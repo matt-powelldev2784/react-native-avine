@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import { useScheduledRounds } from '../hooks/useScheduledRounds'
 import theme from '../../../../utils/theme/theme'
@@ -24,8 +24,11 @@ const ScheduledRounds = ({ selectedDay }: ScheduledRoundsProps) => {
             const height = Number(job.time) * 10 + 30
             return (
               <View key={job.id} style={[{ height: height }, styles.jobItem]}>
-                <View style={styles.jobShortNameContainer}>
-                  <Text style={styles.jobShortNameText}>1</Text>
+                <View style={styles.completeContainer}>
+                  <Image
+                    source={require('../../../../../assets/cross_white.png')}
+                    style={{ width: 10, height: 10 }}
+                  />
                 </View>
 
                 <View style={styles.leftContainer}>
@@ -92,25 +95,22 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderWidth: 2,
-    borderStyle: 'solid',
-    borderColor: theme.colors.primary,
+    backgroundColor: theme.colors.primary,
   },
-  jobShortNameContainer: {
+  completeContainer: {
     borderRadiusTopLeft: 8,
     borderRadiusBottomLeft: 10,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 28,
-    backgroundColor: theme.colors.primary,
+    width: 30,
+    backgroundColor: theme.colors.plannerPrimary,
   },
-  jobShortNameText: {
+  completeText: {
     color: theme.colors.secondary,
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 10,
     textAlign: 'center',
-    width: 28,
+    width: 60,
   },
   leftContainer: {
     flex: 1,
@@ -124,11 +124,11 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
   },
   jobName: {
-    color: theme.colors.primary,
+    color: theme.colors.secondary,
     fontSize: 16,
     height: 24,
     marginTop: 4,
-    marginLeft: 4,
+    marginLeft: 8,
   },
   text: {
     fontSize: 14,
