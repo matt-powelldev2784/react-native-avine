@@ -21,7 +21,7 @@ const ScheduledRounds = ({ selectedDay }: ScheduledRoundsProps) => {
         {/* ---------------------- Jobs List ----------------------- */}
         <View style={styles.jobsList}>
           {round?.relatedJobs?.map((job) => {
-            const height = Number(job.time) * 10 + 30
+            const height = Number(job.time) * 10 + 24
             return (
               <View key={job.id} style={[{ height: height }, styles.jobItem]}>
                 <View style={styles.completeContainer}>
@@ -33,7 +33,7 @@ const ScheduledRounds = ({ selectedDay }: ScheduledRoundsProps) => {
 
                 <View style={styles.leftContainer}>
                   <Text
-                    style={styles.jobName}
+                    style={styles.text}
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
@@ -114,28 +114,19 @@ const styles = StyleSheet.create({
   },
   leftContainer: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     flexGrow: 2,
   },
   rightContainer: {
     flex: 1,
     alignItems: 'flex-end',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     backgroundColor: theme.colors.primary,
   },
-  jobName: {
+  text: {
     color: theme.colors.secondary,
     fontSize: 16,
-    height: 24,
-    marginTop: 4,
-    marginLeft: 8,
-  },
-  text: {
-    fontSize: 14,
-    marginBottom: 0,
-    marginTop: 4,
-    marginRight: 8,
-    color: theme.colors.secondary,
+    marginHorizontal: 8,
   },
 })
 
