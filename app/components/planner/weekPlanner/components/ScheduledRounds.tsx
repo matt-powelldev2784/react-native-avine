@@ -25,15 +25,7 @@ const ScheduledRounds = ({ selectedDay }: ScheduledRoundsProps) => {
             numberOfLines={1}
             ellipsizeMode="tail"
           >
-            {round.roundName}
-          </Text>
-
-          <Text
-            style={styles.roundTimeText}
-            numberOfLines={2}
-            ellipsizeMode="tail"
-          >
-            Round Time {totalRoundtTime} hrs
+            {round.roundName} {totalRoundtTime} hrs
           </Text>
         </View>
 
@@ -80,30 +72,25 @@ const ScheduledRounds = ({ selectedDay }: ScheduledRoundsProps) => {
 
 const styles = StyleSheet.create({
   roundConatiner: {
-    borderRadius: 12,
-    borderWidth: 1,
-    borderStyle: 'solid',
     borderColor: theme.colors.primary,
     margin: 4,
     marginTop: 8,
     marginHorizontal: 8,
   },
   roundTitleContainer: {
+    borderRadius: 12,
+    marginHorizontal: 4,
+    height: 34,
+    overflow: 'hidden',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 12,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 10,
-    width: '100%',
-    height: 28,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.plannerPrimary,
   },
   roundTitleText: {
     color: theme.colors.secondary,
     fontSize: 20,
     fontWeight: 'bold',
-    width: '75%',
   },
   roundTimeText: {
     color: theme.colors.secondary,
@@ -118,7 +105,7 @@ const styles = StyleSheet.create({
   },
   jobItem: {
     borderRadius: 12,
-    marginVertical: 2,
+    marginBottom: 4,
     marginHorizontal: 4,
     overflow: 'hidden',
     flexDirection: 'row',
