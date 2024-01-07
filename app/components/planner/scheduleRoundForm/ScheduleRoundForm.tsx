@@ -108,11 +108,7 @@ const ScheduleRoundForm = () => {
         </View>
       </View>
 
-      <View
-        style={{
-          height: 70,
-        }}
-      />
+      <View style={styles.footer} />
     </ScrollView>
   )
 }
@@ -186,6 +182,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     textAlign: 'center',
   },
+  footer: { height: 70 },
 })
 
 export default ScheduleRoundForm
