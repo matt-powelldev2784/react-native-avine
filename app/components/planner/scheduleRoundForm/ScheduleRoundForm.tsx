@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 24,
     backgroundColor: 'white',
+    maxWidth: 600,
   },
   weekPlannerWrapper: {
     width: '100%',
