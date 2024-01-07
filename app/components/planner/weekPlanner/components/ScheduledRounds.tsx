@@ -72,10 +72,11 @@ const ScheduledRounds = ({ selectedDay }: ScheduledRoundsProps) => {
 
 const styles = StyleSheet.create({
   roundConatiner: {
-    borderColor: theme.colors.primary,
     margin: 4,
     marginTop: 8,
     marginHorizontal: 8,
+    width: '100%',
+    maxWidth: 700,
   },
   roundTitleContainer: {
     borderRadius: 12,
