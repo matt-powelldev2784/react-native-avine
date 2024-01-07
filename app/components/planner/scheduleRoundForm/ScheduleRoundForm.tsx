@@ -21,7 +21,7 @@ import { formatDateForDb } from '../../../utils/formatDateForDb'
 
 const ScheduleRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const [activeStep, setActiveStep] = useState(1)
+  const [activeStep, setActiveStep] = useState(0)
   const userRounds = useFetchRounds()
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
@@ -103,7 +103,7 @@ const ScheduleRoundForm = () => {
                 }}
                 style={styles.button}
               >
-                <Text style={styles.buttonText}>Update Planner</Text>
+                <Text style={styles.buttonText}>Add Round To Planner</Text>
               </TouchableOpacity>
             </View>
           ) : null}
@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 600,
     gap: 8,
+    marginBottom: 24,
   },
   button: {
     alignItems: 'center',
