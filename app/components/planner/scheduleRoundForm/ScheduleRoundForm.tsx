@@ -107,6 +107,8 @@ const ScheduleRoundForm = () => {
           ) : null}
         </View>
       </View>
+
+      <View style={{ height: 50 }} />
     </ScrollView>
   )
 }
