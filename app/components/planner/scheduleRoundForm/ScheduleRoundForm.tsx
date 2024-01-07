@@ -61,16 +61,30 @@ const ScheduleRoundForm = () => {
         ) : null}
         {/********************* Step 2 Week Planner ***************************/}
         {activeStep === 1 ? (
-          <View style={styles.weekPlannerWrapper}>
-            <WeekPlanner
-              onDaySelect={(day) => {
-                console.log('Selected day: ', day)
-                formik.setFieldValue('date', formatDateForDb(day))
-              }}
-              addFooter={false}
-            />
-          </View>
+          <>
+            <View style={styles.scheduleRoundInfo}>
+              <Text style={styles.scheduleRoundInfoText}>
+                Select the date you wish to add the round and click &quot;Add
+                Round To Planner&quot; button at the bottom.
+              </Text>
+              <Text style={styles.scheduleRoundInfo}>
+                The rounds currenty booked on the date displayed will be shown
+                below
+              </Text>
+            </View>
+
+            <View style={styles.weekPlannerWrapper}>
+              <WeekPlanner
+                onDaySelect={(day) => {
+                  console.log('Selected day: ', day)
+                  formik.setFieldValue('date', formatDateForDb(day))
+                }}
+                addFooter={false}
+              />
+            </View>
+          </>
         ) : null}
+
         {/*********************  Buttons  ***************************/}
         <View style={styles.buttonContainer}>
           {activeStep < 1 ? (
@@ -139,6 +153,19 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     backgroundColor: 'white',
     maxWidth: 600,
+  },
+  scheduleRoundInfo: {
+    fontSize: 15,
+    color: theme.colors.primary,
+    marginBottom: 10,
+    textAlign: 'center',
+    paddingHorizontal: 8,
+  },
+  scheduleRoundInfoText: {
+    fontSize: 15,
+    color: theme.colors.primary,
+    textAlign: 'center',
+    marginBottom: 2,
   },
   weekPlannerWrapper: {
     width: '100%',
