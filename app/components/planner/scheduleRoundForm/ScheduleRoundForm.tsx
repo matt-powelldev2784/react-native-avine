@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   TouchableOpacity,
   StyleSheet,
@@ -28,6 +28,12 @@ const ScheduleRoundForm = () => {
   const { isLargeWeb } = useDeviceType()
   //useFormResetOnBlur(formik, setActiveStep)
 
+  useEffect(() => {
+    if (formik.values.date === '') {
+      formik.setFieldValue('date', formatDateForDb(new Date()))
+    }
+  }, [formik])
+
   const handleStepBack = () => {
     if (activeStep === 0) {
       return
@@ -56,21 +62,13 @@ const ScheduleRoundForm = () => {
             />
           </View>
         ) : null}
-
-        {/*********************  Step 2 ***************************/}
+        {/********************* Step 2 Week Planner ***************************/}
         {activeStep === 1 ? (
           <View style={styles.weekPlannerWrapper}>
-            <WeekPlanner
-              onDaySelect={(day) => {
-                console.log('Selected day: ', day)
-                formik.setFieldValue('date', formatDateForDb(day))
-              }}
-            />
+            <WeekPlanner />
           </View>
         ) : null}
-
         {/*********************  Buttons  ***************************/}
-
         <View style={styles.buttonContainer}>
           {activeStep < 1 ? (
             <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
@@ -96,8 +94,9 @@ const ScheduleRoundForm = () => {
 
               <TouchableOpacity
                 onPress={async () => {
-                  formik.handleSubmit()
                   if (formik.isValid) {
+                    formik.handleSubmit()
+                    console.log('submitted ---------------')
                     navigation.navigate('Planner', { refresh: true })
                   }
                 }}
