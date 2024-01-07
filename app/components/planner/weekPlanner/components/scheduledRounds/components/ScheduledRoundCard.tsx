@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { RoundWithRelatedJobsT } from '../../../../../../types/RoundT'
 import { JobWithIdT } from '../../../../../../types/JobT'
@@ -30,13 +30,10 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
         </View>
 
         {/* ---------------------- Jobs List ----------------------- */}
-        <FlatList
-          data={round.relatedJobs}
-          keyExtractor={(job) => job.id}
-          renderItem={({ item: job }: { item: JobWithIdT }) => {
-            return <ScheduledJobCard job={job} />
-          }}
-        />
+
+        {round?.relatedJobs?.map((job: JobWithIdT) => (
+          <ScheduledJobCard key={job.id} job={job} />
+        ))}
       </View>
     </View>
   )
