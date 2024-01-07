@@ -1,4 +1,4 @@
-import { View, StyleSheet, FlatList } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import { useScheduledRounds } from '../../hooks/useScheduledRounds'
 import { RoundWithRelatedJobsT } from '../../../../../types/RoundT'
@@ -8,24 +8,17 @@ interface ScheduledRoundsProps {
   selectedDay: Date
 }
 
-interface ScheduledRoundCardProps {
-  item: RoundWithRelatedJobsT
-}
-
 const ScheduledRounds = ({ selectedDay }: ScheduledRoundsProps) => {
   const scheduledRounds: RoundWithRelatedJobsT[] =
     useScheduledRounds(selectedDay)
 
   return (
-    <FlatList
-      style={styles.flatListContainer}
-      data={scheduledRounds}
-      keyExtractor={(round) => round.id}
-      renderItem={({ item: round }: ScheduledRoundCardProps) => {
-        return <ScheduledRoundCard round={round} />
-      }}
-      ListFooterComponent={<View style={styles.flatlistFooter} />}
-    />
+    <ScrollView style={styles.flatListContainer}>
+      {scheduledRounds.map((round) => (
+        <ScheduledRoundCard key={round.id} round={round} />
+      ))}
+      <View style={styles.flatlistFooter} />
+    </ScrollView>
   )
 }
 
