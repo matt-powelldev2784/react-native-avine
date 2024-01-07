@@ -10,9 +10,6 @@ import useFormikSteps from './hooks/useFormikSteps'
 import Dropdown from '../../../ui/formElements/DropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../utils/theme/theme'
 import { useFetchRounds } from './hooks/useFetchRounds'
 import { useDeviceType } from '../../../utils/deviceTypes'
@@ -20,7 +17,6 @@ import WeekPlanner from '../weekPlanner/WeekPlanner'
 import { formatDateForDb } from '../../../utils/formatDateForDb'
 
 const ScheduleRoundForm = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [activeStep, setActiveStep] = useState(0)
   const userRounds = useFetchRounds()
   const formik = useFormikSteps(activeStep)
@@ -97,7 +93,6 @@ const ScheduleRoundForm = () => {
                   if (formik.isValid) {
                     formik.handleSubmit()
                     console.log('submitted ---------------')
-                    navigation.navigate('Planner', { refresh: true })
                   }
                 }}
                 style={styles.button}
