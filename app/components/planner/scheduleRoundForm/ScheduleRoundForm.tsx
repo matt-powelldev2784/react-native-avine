@@ -15,6 +15,7 @@ import { useFetchRounds } from './hooks/useFetchRounds'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import WeekPlanner from '../weekPlanner/WeekPlanner'
 import { formatDateForDb } from '../../../utils/formatDateForDb'
+import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 
 const ScheduleRoundForm = () => {
   const [activeStep, setActiveStep] = useState(0)
@@ -22,7 +23,7 @@ const ScheduleRoundForm = () => {
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()
-  //useFormResetOnBlur(formik, setActiveStep)
+  useFormResetOnBlur(formik, setActiveStep)
 
   useEffect(() => {
     if (formik.values.date === '') {
@@ -89,11 +90,8 @@ const ScheduleRoundForm = () => {
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={async () => {
-                  if (formik.isValid) {
-                    formik.handleSubmit()
-                    console.log('submitted ---------------')
-                  }
+                onPress={() => {
+                  formik.handleSubmit()
                 }}
                 style={styles.button}
               >
