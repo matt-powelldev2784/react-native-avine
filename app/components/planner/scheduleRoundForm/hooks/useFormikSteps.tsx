@@ -36,8 +36,6 @@ const useFormikSteps = (activeStep: number) => {
     validationSchema,
   })
 
-  console.log('formik.values', formik.values)
-
   return formik
 }
 
