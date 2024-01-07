@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   TouchableOpacity,
   StyleSheet,
@@ -10,23 +10,26 @@ import useFormikSteps from './hooks/useFormikSteps'
 import Dropdown from '../../../ui/formElements/DropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../utils/theme/theme'
 import { useFetchRounds } from './hooks/useFetchRounds'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import WeekPlanner from '../weekPlanner/WeekPlanner'
 import { formatDateForDb } from '../../../utils/formatDateForDb'
+import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 
 const ScheduleRoundForm = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [activeStep, setActiveStep] = useState(0)
   const userRounds = useFetchRounds()
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()
-  //useFormResetOnBlur(formik, setActiveStep)
+  useFormResetOnBlur(formik, setActiveStep)
+
+  useEffect(() => {
+    if (formik.values.date === '') {
+      formik.setFieldValue('date', formatDateForDb(new Date()))
+    }
+  }, [formik])
 
   const handleStepBack = () => {
     if (activeStep === 0) {
@@ -56,8 +59,7 @@ const ScheduleRoundForm = () => {
             />
           </View>
         ) : null}
-
-        {/*********************  Step 2 ***************************/}
+        {/********************* Step 2 Week Planner ***************************/}
         {activeStep === 1 ? (
           <View style={styles.weekPlannerWrapper}>
             <WeekPlanner
@@ -68,9 +70,7 @@ const ScheduleRoundForm = () => {
             />
           </View>
         ) : null}
-
         {/*********************  Buttons  ***************************/}
-
         <View style={styles.buttonContainer}>
           {activeStep < 1 ? (
             <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
@@ -95,11 +95,8 @@ const ScheduleRoundForm = () => {
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={async () => {
+                onPress={() => {
                   formik.handleSubmit()
-                  if (formik.isValid) {
-                    navigation.navigate('Planner', { refresh: true })
-                  }
                 }}
                 style={styles.button}
               >

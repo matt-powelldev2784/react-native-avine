@@ -14,10 +14,10 @@ const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
   return (
     <View style={styles.conatiner}>
       <WeekCalender
+        selectedDay={selectedDay}
         displayWeek={displayWeek}
         setDisplayWeek={setDisplayWeek}
         setSelectedDay={setSelectedDay}
-        selectedDay={selectedDay}
         onDaySelect={onDaySelect}
       />
       <View style={styles.roundsContainer}>

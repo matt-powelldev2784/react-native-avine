@@ -16,16 +16,11 @@ export const useMoveToNextStep = ({
   }
 
   const moveToNextStep = async () => {
-    const formHasBeenTouched = Object.keys(formik.touched).length > 0
     const formIsValid = Object.keys(formik.errors).length === 0
 
     setFieldsAsTouched()
 
-    if (formHasBeenTouched) {
-      await formik.validateForm()
-    }
-
-    if (formHasBeenTouched && formIsValid) {
+    if (formIsValid) {
       setActiveStep((prev) => prev + 1)
       formik.setTouched({})
     }
