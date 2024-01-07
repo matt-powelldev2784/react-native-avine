@@ -1,89 +1,111 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, FlatList, Platform } from 'react-native'
 import React from 'react'
 import { useScheduledRounds } from '../../hooks/useScheduledRounds'
 import theme from '../../../../../utils/theme/theme'
+import { RoundWithRelatedJobsT } from '../../../../../types/RoundT'
+import { JobWithIdT } from '../../../../../types/JobT'
 
 interface ScheduledRoundsProps {
   selectedDay: Date
 }
 
 const ScheduledRounds = ({ selectedDay }: ScheduledRoundsProps) => {
-  const scheduledRounds = useScheduledRounds(selectedDay)
+  const scheduledRounds: RoundWithRelatedJobsT[] =
+    useScheduledRounds(selectedDay)
 
-  return scheduledRounds.map((round) => {
+  const renderItem = ({ item: round }: { item: RoundWithRelatedJobsT }) => {
     const totalRoundtTime = round?.relatedJobs?.reduce(
-      (totalTime, job) => totalTime + parseFloat(job.time),
+      (totalTime: number, job: JobWithIdT) => totalTime + parseFloat(job.time),
       0,
     )
 
     return (
-      <View key={round.id} style={styles.roundConatiner}>
-        {/* ---------------------- Round Title ----------------------- */}
+      <View key={round.id} style={styles.roundWrapper}>
+        <View key={round.id} style={styles.roundContainer}>
+          {/* ---------------------- Round Title ----------------------- */}
+          <View style={styles.roundTitleContainer}>
+            <Text
+              style={styles.roundTitleText}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {round.roundName} {totalRoundtTime} hrs
+            </Text>
+          </View>
 
-        <View style={styles.roundTitleContainer}>
-          <Text
-            style={styles.roundTitleText}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {round.roundName} {totalRoundtTime} hrs
-          </Text>
-        </View>
+          {/* ---------------------- Jobs List ----------------------- */}
+          <FlatList
+            data={round.relatedJobs}
+            keyExtractor={(job) => job.id}
+            renderItem={({ item: job }: { item: JobWithIdT }) => {
+              const height = Number(job.time) * 60
+              return (
+                <View style={[{ height: height }, styles.jobItem]}>
+                  <View style={styles.completeWrapper}>
+                    <View style={styles.completeContainer}>
+                      <Image
+                        source={require('../../../../../../assets/cross_white.png')}
+                        style={{ width: 12, height: 12 }}
+                      />
+                    </View>
+                  </View>
 
-        {/* ---------------------- Jobs List ----------------------- */}
-        <View style={styles.jobsList}>
-          {round?.relatedJobs?.map((job) => {
-            const height = Number(job.time) * 60
-            return (
-              <View key={job.id} style={[{ height: height }, styles.jobItem]}>
-                <View style={styles.completeWrapper}>
-                  <View style={styles.completeContainer}>
-                    <Image
-                      source={require('../../../../../../assets/cross_white.png')}
-                      style={{ width: 12, height: 12 }}
-                    />
+                  <View style={styles.leftContainer}>
+                    <Text
+                      style={styles.text}
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
+                    >
+                      {job.jobName}
+                    </Text>
+                  </View>
+
+                  <View style={styles.rightContainer}>
+                    <Text
+                      style={styles.text}
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
+                    >
+                      Time: {job.time} hrs
+                    </Text>
                   </View>
                 </View>
-
-                <View style={styles.leftContainer}>
-                  <Text
-                    style={styles.text}
-                    numberOfLines={1}
-                    ellipsizeMode="tail"
-                  >
-                    {job.jobName}
-                  </Text>
-                </View>
-
-                <View style={styles.rightContainer}>
-                  <Text
-                    style={styles.text}
-                    numberOfLines={1}
-                    ellipsizeMode="tail"
-                  >
-                    Time: {job.time} hrs
-                  </Text>
-                </View>
-              </View>
-            )
-          })}
+              )
+            }}
+          />
         </View>
       </View>
     )
-  })
+  }
+
+  return (
+    <FlatList
+      style={styles.flatListContainer}
+      data={scheduledRounds}
+      keyExtractor={(item) => item.id}
+      renderItem={renderItem}
+      ListFooterComponent={<View style={styles.flatlistFooter} />}
+    />
+  )
 }
 
 const styles = StyleSheet.create({
-  roundConatiner: {
-    margin: 4,
+  flatListContainer: {
+    width: '100%',
+  },
+  roundWrapper: {
+    width: '100%',
+    alignItems: 'center',
+  },
+  roundContainer: {
     marginTop: 8,
-    marginHorizontal: 8,
     width: '100%',
     maxWidth: 700,
   },
   roundTitleContainer: {
     borderRadius: 12,
     marginHorizontal: 4,
+    marginBottom: 4,
     height: 34,
     overflow: 'hidden',
     flexDirection: 'row',
@@ -155,6 +177,10 @@ const styles = StyleSheet.create({
     color: theme.colors.secondary,
     fontSize: 14,
     marginHorizontal: 8,
+    minHeight: Platform.OS === 'web' ? 18.5 : 17.5,
+  },
+  flatlistFooter: {
+    height: 250,
   },
 })
 
