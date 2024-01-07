@@ -67,6 +67,7 @@ const ScheduleRoundForm = () => {
                 console.log('Selected day: ', day)
                 formik.setFieldValue('date', formatDateForDb(day))
               }}
+              addFooter={false}
             />
           </View>
         ) : null}
@@ -149,7 +150,6 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 600,
     gap: 8,
-    marginBottom: 24,
   },
   button: {
     alignItems: 'center',

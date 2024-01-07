@@ -6,9 +6,10 @@ import ScheduledRoundCard from './components/ScheduledRoundCard'
 
 interface ScheduledRoundsProps {
   selectedDay: Date
+  addFooter?: boolean
 }
 
-const ScheduledRounds = ({ selectedDay }: ScheduledRoundsProps) => {
+const ScheduledRounds = ({ selectedDay, addFooter }: ScheduledRoundsProps) => {
   const scheduledRounds: RoundWithRelatedJobsT[] =
     useScheduledRounds(selectedDay)
 
@@ -17,7 +18,7 @@ const ScheduledRounds = ({ selectedDay }: ScheduledRoundsProps) => {
       {scheduledRounds.map((round) => (
         <ScheduledRoundCard key={round.id} round={round} />
       ))}
-      <View style={styles.flatlistFooter} />
+      {addFooter ? <View style={styles.flatlistFooter} /> : null}
     </ScrollView>
   )
 }
