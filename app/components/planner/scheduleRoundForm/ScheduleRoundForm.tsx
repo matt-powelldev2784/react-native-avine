@@ -108,7 +108,11 @@ const ScheduleRoundForm = () => {
         </View>
       </View>
 
-      <View style={{ height: 50 }} />
+      <View
+        style={{
+          height: 70,
+        }}
+      />
     </ScrollView>
   )
 }
