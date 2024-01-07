@@ -19,6 +19,7 @@ const ScheduledRounds = ({ selectedDay }: ScheduledRoundsProps) => {
     return (
       <View key={round.id} style={styles.roundConatiner}>
         {/* ---------------------- Round Title ----------------------- */}
+
         <View style={styles.roundTitleContainer}>
           <Text
             style={styles.roundTitleText}
@@ -32,14 +33,16 @@ const ScheduledRounds = ({ selectedDay }: ScheduledRoundsProps) => {
         {/* ---------------------- Jobs List ----------------------- */}
         <View style={styles.jobsList}>
           {round?.relatedJobs?.map((job) => {
-            const height = Number(job.time) * 10 + 24
+            const height = Number(job.time) * 10 + 28
             return (
               <View key={job.id} style={[{ height: height }, styles.jobItem]}>
-                <View style={styles.completeContainer}>
-                  <Image
-                    source={require('../../../../../assets/cross_white.png')}
-                    style={{ width: 10, height: 10 }}
-                  />
+                <View style={styles.completeWrapper}>
+                  <View style={styles.completeContainer}>
+                    <Image
+                      source={require('../../../../../assets/cross_white.png')}
+                      style={{ width: 12, height: 12 }}
+                    />
+                  </View>
                 </View>
 
                 <View style={styles.leftContainer}>
@@ -113,13 +116,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: theme.colors.primary,
   },
+  completeWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   completeContainer: {
     borderRadiusTopLeft: 8,
     borderRadiusBottomLeft: 10,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 30,
+    width: 23,
+    height: 23,
+    borderRadius: 50,
+    marginVerical: 4,
+    marginHorizontal: 8,
     backgroundColor: theme.colors.plannerPrimary,
   },
   completeText: {
