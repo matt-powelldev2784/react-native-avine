@@ -21,7 +21,7 @@ import { formatDateForDb } from '../../../utils/formatDateForDb'
 
 const ScheduleRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const [activeStep, setActiveStep] = useState(0)
+  const [activeStep, setActiveStep] = useState(1)
   const userRounds = useFetchRounds()
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
@@ -45,7 +45,7 @@ const ScheduleRoundForm = () => {
       <View style={styles.formContainer}>
         {/*********************  Step 1 ***************************/}
         {activeStep === 0 ? (
-          <>
+          <View style={styles.dropdownContainer}>
             <Dropdown
               formik={formik}
               name="roundId"
@@ -54,20 +54,22 @@ const ScheduleRoundForm = () => {
               options={userRounds}
               imageName={'round'}
             />
-          </>
+          </View>
         ) : null}
 
         {/*********************  Step 2 ***************************/}
         {activeStep === 1 ? (
-          <>
+          <View style={styles.weekPlannerWrapper}>
             <WeekPlanner
               onDaySelect={(day) => {
                 console.log('Selected day: ', day)
                 formik.setFieldValue('date', formatDateForDb(day))
               }}
             />
-          </>
+          </View>
         ) : null}
+
+        {/*********************  Buttons  ***************************/}
 
         <View style={styles.buttonContainer}>
           {activeStep < 1 ? (
@@ -124,13 +126,22 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   formContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 6,
+    backgroundColor: 'white',
+  },
+  dropdownContainer: {
     width: '90%',
-    maxWidth: 600,
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 24,
     backgroundColor: 'white',
-    paddingBottom: 80,
+  },
+  weekPlannerWrapper: {
+    width: '100%',
+    paddingBottom: 24,
   },
   buttonContainer: {
     display: 'flex',
