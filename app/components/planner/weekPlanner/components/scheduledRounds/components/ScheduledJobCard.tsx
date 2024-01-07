@@ -6,7 +6,7 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
 
@@ -17,12 +17,17 @@ interface ScheduledJobCardProps {
 const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
   const [isComplete, setIsComplete] = useState(false)
   const height = Number(job.time) * 60
+  const lastClick = useRef(Date.now())
 
   const isCompleteStyles = isComplete
     ? styles.isCompleteContainer
     : styles.notCompleteContainer
 
   const handleIsCompetePress = () => {
+    if (Date.now() - lastClick.current < 1000) {
+      return
+    }
+    lastClick.current = Date.now()
     setIsComplete(!isComplete)
   }
 
