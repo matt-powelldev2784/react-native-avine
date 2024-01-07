@@ -3,7 +3,11 @@ import React, { useState } from 'react'
 import WeekCalender from './components/WeekCalender'
 import ScheduledRounds from './components/ScheduledRounds'
 
-const WeekPlanner = () => {
+interface WeekPlannerProps {
+  onDaySelect?: (day: Date) => void
+}
+
+const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
 
@@ -14,6 +18,7 @@ const WeekPlanner = () => {
         displayWeek={displayWeek}
         setDisplayWeek={setDisplayWeek}
         setSelectedDay={setSelectedDay}
+        onDaySelect={onDaySelect}
       />
       <View style={styles.roundsContainer}>
         <ScheduledRounds selectedDay={selectedDay} />

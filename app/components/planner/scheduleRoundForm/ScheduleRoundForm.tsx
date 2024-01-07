@@ -62,7 +62,12 @@ const ScheduleRoundForm = () => {
         {/********************* Step 2 Week Planner ***************************/}
         {activeStep === 1 ? (
           <View style={styles.weekPlannerWrapper}>
-            <WeekPlanner />
+            <WeekPlanner
+              onDaySelect={(day) => {
+                console.log('Selected day: ', day)
+                formik.setFieldValue('date', formatDateForDb(day))
+              }}
+            />
           </View>
         ) : null}
         {/*********************  Buttons  ***************************/}
