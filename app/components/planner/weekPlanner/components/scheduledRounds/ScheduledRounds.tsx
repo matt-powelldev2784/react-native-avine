@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
-import { useScheduledRounds } from '../hooks/useScheduledRounds'
-import theme from '../../../../utils/theme/theme'
+import { useScheduledRounds } from '../../hooks/useScheduledRounds'
+import theme from '../../../../../utils/theme/theme'
 
 interface ScheduledRoundsProps {
   selectedDay: Date
@@ -33,13 +33,13 @@ const ScheduledRounds = ({ selectedDay }: ScheduledRoundsProps) => {
         {/* ---------------------- Jobs List ----------------------- */}
         <View style={styles.jobsList}>
           {round?.relatedJobs?.map((job) => {
-            const height = Number(job.time) * 10 + 28
+            const height = Number(job.time) * 60
             return (
               <View key={job.id} style={[{ height: height }, styles.jobItem]}>
                 <View style={styles.completeWrapper}>
                   <View style={styles.completeContainer}>
                     <Image
-                      source={require('../../../../../assets/cross_white.png')}
+                      source={require('../../../../../../assets/cross_white.png')}
                       style={{ width: 12, height: 12 }}
                     />
                   </View>

@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
-import WeekCalender from './components/WeekCalender'
-import ScheduledRounds from './components/ScheduledRounds'
+import WeekCalender from './components/weekCalender/WeekCalender'
+import ScheduledRounds from './components/scheduledRounds/ScheduledRounds'
 
 interface WeekPlannerProps {
   onDaySelect?: (day: Date) => void

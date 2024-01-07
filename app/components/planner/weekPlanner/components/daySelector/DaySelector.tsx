@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import { format } from 'date-fns'
-import theme from '../../../../utils/theme/theme'
+import theme from '../../../../../utils/theme/theme'
 
 interface DaySelectorProps {
   selectedDay: Date
@@ -46,7 +46,7 @@ const DaySelector = ({
       </Text>
 
       <Image
-        source={require('../../../../../assets/dot.png')}
+        source={require('../../../../../../assets/dot.png')}
         style={{ width: 7, height: 7, marginVertical: 2 }}
       />
     </TouchableOpacity>
