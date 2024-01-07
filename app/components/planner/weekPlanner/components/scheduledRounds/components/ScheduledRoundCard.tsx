@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     width: '100%',
     maxWidth: 700,
+    paddingHorizontal: 6,
   },
   roundTitleContainer: {
     borderRadius: 12,
