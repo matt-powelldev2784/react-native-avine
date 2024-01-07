@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { format, startOfWeek, addDays } from 'date-fns'
 import DaySelector from './DaySelector'
 import theme from '../../../../utils/theme/theme'
