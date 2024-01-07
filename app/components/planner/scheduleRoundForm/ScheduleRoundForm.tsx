@@ -45,7 +45,7 @@ const ScheduleRoundForm = () => {
       <View style={styles.formContainer}>
         {/*********************  Step 1 ***************************/}
         {activeStep === 0 ? (
-          <>
+          <View style={styles.dropdownContainer}>
             <Dropdown
               formik={formik}
               name="roundId"
@@ -54,20 +54,22 @@ const ScheduleRoundForm = () => {
               options={userRounds}
               imageName={'round'}
             />
-          </>
+          </View>
         ) : null}
 
         {/*********************  Step 2 ***************************/}
         {activeStep === 1 ? (
-          <>
+          <View style={styles.weekPlannerWrapper}>
             <WeekPlanner
               onDaySelect={(day) => {
                 console.log('Selected day: ', day)
                 formik.setFieldValue('date', formatDateForDb(day))
               }}
             />
-          </>
+          </View>
         ) : null}
+
+        {/*********************  Buttons  ***************************/}
 
         <View style={styles.buttonContainer}>
           {activeStep < 1 ? (
@@ -101,7 +103,7 @@ const ScheduleRoundForm = () => {
                 }}
                 style={styles.button}
               >
-                <Text style={styles.buttonText}>Update Planner</Text>
+                <Text style={styles.buttonText}>Add Round To Planner</Text>
               </TouchableOpacity>
             </View>
           ) : null}
@@ -124,13 +126,23 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   formContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 6,
+    backgroundColor: 'white',
+  },
+  dropdownContainer: {
     width: '90%',
-    maxWidth: 600,
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 24,
     backgroundColor: 'white',
-    paddingBottom: 80,
+    maxWidth: 600,
+  },
+  weekPlannerWrapper: {
+    width: '100%',
+    paddingBottom: 24,
   },
   buttonContainer: {
     display: 'flex',
@@ -140,6 +152,7 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 600,
     gap: 8,
+    marginBottom: 24,
   },
   button: {
     alignItems: 'center',

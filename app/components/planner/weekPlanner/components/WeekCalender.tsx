@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     width: '100%',
+    maxWidth: 700,
   },
   monthName: {
     color: theme.colors.primary,

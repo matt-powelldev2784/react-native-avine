@@ -20,7 +20,7 @@ const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
         selectedDay={selectedDay}
         onDaySelect={onDaySelect}
       />
-      <View>
+      <View style={styles.roundsContainer}>
         <ScheduledRounds selectedDay={selectedDay} />
       </View>
     </View>
@@ -30,6 +30,10 @@ const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
 const styles = StyleSheet.create({
   conatiner: {
     width: '100%',
+  },
+  roundsContainer: {
+    width: '100%',
+    alignItems: 'center',
   },
 })
 
