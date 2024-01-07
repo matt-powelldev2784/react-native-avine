@@ -1,5 +1,12 @@
-import { View, Text, Image, StyleSheet, Platform } from 'react-native'
-import React from 'react'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Platform,
+  TouchableOpacity,
+} from 'react-native'
+import React, { useState } from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
 
@@ -8,17 +15,36 @@ interface ScheduledJobCardProps {
 }
 
 const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
+  const [isComplete, setIsComplete] = useState(false)
   const height = Number(job.time) * 60
+
+  const isCompleteStyles = isComplete
+    ? styles.isCompleteContainer
+    : styles.notCompleteContainer
+
+  const handleIsCompetePress = () => {
+    setIsComplete(!isComplete)
+  }
 
   return (
     <View style={[{ height: height }, styles.jobItem]}>
       <View style={styles.completeWrapper}>
-        <View style={styles.completeContainer}>
-          <Image
-            source={require('../../../../../../../assets/cross_white.png')}
-            style={{ width: 12, height: 12 }}
-          />
-        </View>
+        <TouchableOpacity
+          style={isCompleteStyles}
+          onPress={handleIsCompetePress}
+        >
+          {isComplete ? (
+            <Image
+              source={require('../../../../../../../assets/tick_white.png')}
+              style={{ width: 12, height: 12 }}
+            />
+          ) : (
+            <Image
+              source={require('../../../../../../../assets/cross_white.png')}
+              style={{ width: 12, height: 12 }}
+            />
+          )}
+        </TouchableOpacity>
       </View>
 
       <View style={styles.leftContainer}>
@@ -53,7 +79,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  completeContainer: {
+  notCompleteContainer: {
     borderRadiusTopLeft: 8,
     borderRadiusBottomLeft: 10,
     flexDirection: 'column',
@@ -65,6 +91,19 @@ const styles = StyleSheet.create({
     marginVerical: 4,
     marginHorizontal: 8,
     backgroundColor: theme.colors.plannerPrimary,
+  },
+  isCompleteContainer: {
+    borderRadiusTopLeft: 8,
+    borderRadiusBottomLeft: 10,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 23,
+    height: 23,
+    borderRadius: 50,
+    marginVerical: 4,
+    marginHorizontal: 8,
+    backgroundColor: 'green',
   },
   completeText: {
     color: theme.colors.secondary,
