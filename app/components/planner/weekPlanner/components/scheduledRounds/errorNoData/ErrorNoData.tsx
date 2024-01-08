@@ -2,8 +2,8 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../../screens/stackNavigator/StackNavigator'
-import theme from '../../../../../utils/theme/theme'
+import { RootStackParamList } from '../../../../../../screens/stackNavigator/StackNavigator'
+import theme from '../../../../../../utils/theme/theme'
 
 const ErrorNoData = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -12,7 +12,7 @@ const ErrorNoData = () => {
     <View style={styles.container}>
       <View style={styles.flexContainer}>
         <Image
-          source={require('../../../../../../assets/calendar_icon_large.png')}
+          source={require('../../../../../../../assets/calendar_icon_large.png')}
           style={{ width: 50, height: 50, marginBottom: 8 }}
         />
 
@@ -27,7 +27,7 @@ const ErrorNoData = () => {
           onPress={() => navigation.navigate('ScheduleRound')}
         >
           <Image
-            source={require('../../../../../../assets/plus.png')}
+            source={require('../../../../../../../assets/plus.png')}
             style={{ width: 13, height: 13 }}
           />
           <Text style={styles.buttonText}>Schedule Round</Text>
