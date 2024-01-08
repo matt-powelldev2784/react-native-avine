@@ -1,13 +1,8 @@
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../../../../utils/theme/theme'
 
 const NoScheduledRounds = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-
   return (
     <View style={styles.container}>
       <View style={styles.flexContainer}>
