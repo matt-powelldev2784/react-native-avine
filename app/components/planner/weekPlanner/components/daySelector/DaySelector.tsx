@@ -31,7 +31,6 @@ const DaySelector = ({
 
   const handleSelectday = () => {
     setSelectedDay(day)
-    console.log('day', day)
     onDaySelect ? onDaySelect(day) : null
   }
 
