@@ -1,8 +1,9 @@
 import { View, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import { useScheduledRounds } from '../../hooks/useScheduledRounds'
-import { RoundWithRelatedJobsT } from '../../../../../types/RoundT'
 import ScheduledRoundCard from './components/ScheduledRoundCard'
+import { Loading } from '../../../../../ui'
+import ErrorNoData from '../errorNoData/ErrorNoData'
 
 interface ScheduledRoundsProps {
   selectedDay: Date
@@ -10,8 +11,15 @@ interface ScheduledRoundsProps {
 }
 
 const ScheduledRounds = ({ selectedDay, addFooter }: ScheduledRoundsProps) => {
-  const scheduledRounds: RoundWithRelatedJobsT[] =
-    useScheduledRounds(selectedDay)
+  const [isLoading, scheduledRounds] = useScheduledRounds(selectedDay)
+
+  if (scheduledRounds.length === 0) {
+    return <ErrorNoData />
+  }
+
+  if (isLoading) {
+    return <Loading loadingText={'Loading scheduled rounds...'} />
+  }
 
   return (
     <ScrollView style={styles.flatListContainer}>
