@@ -21,9 +21,7 @@ export const useScheduledRounds = (
 
       if (rounds) {
         setScheduledRounds(rounds)
-        setTimeout(() => {
-          seIstLoading(false)
-        }, 3000)
+        seIstLoading(false)
       }
     }
     handleScheduledRounds()
