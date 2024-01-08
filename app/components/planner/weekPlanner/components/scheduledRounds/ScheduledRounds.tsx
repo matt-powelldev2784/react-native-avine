@@ -3,7 +3,7 @@ import React from 'react'
 import { useScheduledRounds } from '../../hooks/useScheduledRounds'
 import ScheduledRoundCard from './components/ScheduledRoundCard'
 import { Loading } from '../../../../../ui'
-import ErrorNoData from './errorNoData/ErrorNoData'
+import ErrorNoData from './components/NoScheduledRounds'
 
 interface ScheduledRoundsProps {
   selectedDay: Date

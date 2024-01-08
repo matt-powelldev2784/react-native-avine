@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../../../../utils/theme/theme'
 
-const ErrorNoData = () => {
+const NoScheduledRounds = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
   return (
@@ -17,21 +17,6 @@ const ErrorNoData = () => {
         />
 
         <Text style={styles.primaryText}>No Rounds Scheduled</Text>
-        <Text style={styles.secondaryText}>
-          You currenly have no rounds scheduled on this date. Click the Schedule
-          Round button to add a round.
-        </Text>
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('ScheduleRound')}
-        >
-          <Image
-            source={require('../../../../../../../assets/plus.png')}
-            style={{ width: 13, height: 13 }}
-          />
-          <Text style={styles.buttonText}>Schedule Round</Text>
-        </TouchableOpacity>
       </View>
     </View>
   )
@@ -88,4 +73,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ErrorNoData
+export default NoScheduledRounds
