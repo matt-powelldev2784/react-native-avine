@@ -5,9 +5,12 @@ import {
   Image,
   StyleSheet,
 } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { format } from 'date-fns'
 import theme from '../../../../../utils/theme/theme'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { convertDbDateToPlannerDate } from '../../../../../utils/convertDbDateToPlannerDate'
+import usePlannerDate from './hooks/usePlannerDate'
 
 interface DaySelectorProps {
   selectedDay: Date
@@ -25,11 +28,28 @@ const DaySelector = ({
   const weekDay = format(day, 'EEEEEE')
   const dateToday = day.getDate()
   const selectDate = selectedDay.getDate()
+  usePlannerDate(setSelectedDay)
 
   const handleSelectday = () => {
     setSelectedDay(day)
+    console.log('day', day)
     onDaySelect ? onDaySelect(day) : null
   }
+
+  useEffect(() => {
+    const getPlannerDateFromStorage = async () => {
+      const plannerDate = await AsyncStorage.getItem('@plannerDate')
+
+      if (plannerDate) {
+        const parsedPlannerDate = JSON.parse(plannerDate)
+        const parsedDate = convertDbDateToPlannerDate(parsedPlannerDate)
+
+        setSelectedDay(parsedDate)
+        AsyncStorage.removeItem('@plannerDate')
+      }
+    }
+    getPlannerDateFromStorage()
+  })
 
   return (
     <TouchableOpacity
