@@ -13,10 +13,6 @@ interface ScheduledRoundsProps {
 const ScheduledRounds = ({ selectedDay, addFooter }: ScheduledRoundsProps) => {
   const [isLoading, scheduledRounds] = useScheduledRounds(selectedDay)
 
-  if (scheduledRounds.length === 0) {
-    return <ErrorNoData />
-  }
-
   if (isLoading) {
     return <Loading loadingText={'Loading scheduled rounds...'} />
   }
@@ -26,6 +22,8 @@ const ScheduledRounds = ({ selectedDay, addFooter }: ScheduledRoundsProps) => {
       {scheduledRounds.map((round) => (
         <ScheduledRoundCard key={round.id} round={round} />
       ))}
+      {scheduledRounds.length === 0 ? <ErrorNoData /> : null}
+
       {addFooter ? <View style={styles.flatlistFooter} /> : null}
     </ScrollView>
   )
