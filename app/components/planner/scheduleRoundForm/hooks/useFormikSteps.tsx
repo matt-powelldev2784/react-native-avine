@@ -4,6 +4,7 @@ import { scheduleRoundToDb } from '../../../../db/planner/schdeuleRoundToDb'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const stepOneSchema = Yup.object().shape({
   roundId: Yup.string().required('Round Name is required'),
@@ -32,6 +33,10 @@ const useFormikSteps = (activeStep: number) => {
       console.log(values)
       await scheduleRoundToDb(values)
       navigation.navigate('Planner', { refresh: true })
+      await AsyncStorage.setItem(
+        '@plannerDate',
+        JSON.stringify(formik.values.date),
+      )
     },
     validationSchema,
   })

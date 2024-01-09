@@ -7,7 +7,9 @@ import {
 } from 'react-native'
 import React from 'react'
 import { format } from 'date-fns'
-import theme from '../../../../utils/theme/theme'
+import theme from '../../../../../utils/theme/theme'
+
+import usePlannerDate from './hooks/usePlannerDate'
 
 interface DaySelectorProps {
   selectedDay: Date
@@ -25,6 +27,7 @@ const DaySelector = ({
   const weekDay = format(day, 'EEEEEE')
   const dateToday = day.getDate()
   const selectDate = selectedDay.getDate()
+  usePlannerDate(setSelectedDay)
 
   const handleSelectday = () => {
     setSelectedDay(day)
@@ -46,7 +49,7 @@ const DaySelector = ({
       </Text>
 
       <Image
-        source={require('../../../../../assets/dot.png')}
+        source={require('../../../../../../assets/dot.png')}
         style={{ width: 7, height: 7, marginVertical: 2 }}
       />
     </TouchableOpacity>

@@ -1,15 +1,20 @@
 import { View, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
-import WeekCalender from './components/WeekCalender'
-import ScheduledRounds from './components/ScheduledRounds'
+import WeekCalender from './components/weekCalender/WeekCalender'
+import ScheduledRounds from './components/scheduledRounds/ScheduledRounds'
 
 interface WeekPlannerProps {
   onDaySelect?: (day: Date) => void
+  addFooter?: boolean
 }
 
-const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
+const WeekPlanner = ({ onDaySelect, addFooter }: WeekPlannerProps) => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
+
+  if (addFooter === undefined) {
+    addFooter = true
+  }
 
   return (
     <View style={styles.conatiner}>
@@ -21,7 +26,7 @@ const WeekPlanner = ({ onDaySelect }: WeekPlannerProps) => {
         onDaySelect={onDaySelect}
       />
       <View style={styles.roundsContainer}>
-        <ScheduledRounds selectedDay={selectedDay} />
+        <ScheduledRounds selectedDay={selectedDay} addFooter={addFooter} />
       </View>
     </View>
   )

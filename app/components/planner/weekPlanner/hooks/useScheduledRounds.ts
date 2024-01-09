@@ -5,20 +5,27 @@ import { RoundWithRelatedJobsT } from '../../../../types/RoundT'
 
 type ScheduledRounds = RoundWithRelatedJobsT[] | []
 
-export const useScheduledRounds = (selectedDay: Date): ScheduledRounds => {
+type UseScheduledRoundsReturn = [boolean, ScheduledRounds]
+
+export const useScheduledRounds = (
+  selectedDay: Date,
+): UseScheduledRoundsReturn => {
   const [scheduledRounds, setScheduledRounds] = useState<ScheduledRounds>([])
+  const [isLoading, seIstLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const handleScheduledRounds = async () => {
+      seIstLoading(true)
       const selectedDayForDb = formatDateForDb(selectedDay)
       const rounds = await queryRoundsOnDate(selectedDayForDb)
 
       if (rounds) {
         setScheduledRounds(rounds)
+        seIstLoading(false)
       }
     }
     handleScheduledRounds()
   }, [selectedDay])
 
-  return scheduledRounds
+  return [isLoading, scheduledRounds]
 }
