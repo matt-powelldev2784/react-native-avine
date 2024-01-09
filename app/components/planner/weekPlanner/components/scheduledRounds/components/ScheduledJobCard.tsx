@@ -16,7 +16,7 @@ interface ScheduledJobCardProps {
 
 const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
   const [isComplete, setIsComplete] = useState(false)
-  const height = Number(job.time) * 60
+  const height = Number(job.time) * 20 + 24
   const lastClick = useRef(Date.now())
 
   const isCompleteStyles = isComplete
