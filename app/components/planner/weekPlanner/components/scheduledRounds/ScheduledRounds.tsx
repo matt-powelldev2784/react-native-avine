@@ -1,6 +1,6 @@
 import { View, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
-import { useScheduledRounds } from '../../hooks/useScheduledRounds'
+import { useScheduledRounds } from './hooks/useScheduledRounds'
 import ScheduledRoundCard from './components/ScheduledRoundCard'
 import { Loading } from '../../../../../ui'
 import ErrorNoData from './components/NoScheduledRounds'
