@@ -32,11 +32,11 @@ const useFormikSteps = (activeStep: number) => {
     onSubmit: async (values) => {
       console.log(values)
       await scheduleRoundToDb(values)
-      navigation.navigate('Planner', { refresh: true })
       await AsyncStorage.setItem(
-        '@plannerDate',
+        '@newScheduledRoundDate',
         JSON.stringify(formik.values.date),
       )
+      navigation.navigate('Planner', { refresh: true })
     },
     validationSchema,
   })
