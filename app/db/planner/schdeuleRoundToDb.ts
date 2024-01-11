@@ -45,8 +45,8 @@ export const scheduleRoundToDb = async (planInfo: PlanT) => {
       await updateDoc(jobDoc, {
         [`scheduledDatesInfo.${planInfo.date}`]: {
           date: planInfo.date,
-          complete: false,
-          paid: false,
+          isComplete: false,
+          isPaid: false,
         },
         scheduledDates: arrayUnion(planInfo.date),
       })
