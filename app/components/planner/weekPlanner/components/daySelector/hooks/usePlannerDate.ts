@@ -6,14 +6,14 @@ import { Dispatch, SetStateAction } from 'react'
 const usePlannerDate = (setSelectedDate: Dispatch<SetStateAction<Date>>) => {
   useEffect(() => {
     const getPlannerDateFromStorage = async (): Promise<void> => {
-      const plannerDate = await AsyncStorage.getItem('@plannerDate')
+      const plannerDate = await AsyncStorage.getItem('@newScheduledRoundDate')
 
       if (plannerDate) {
         const parsedPlannerDate = JSON.parse(plannerDate)
         const parsedDate = convertDbDateToPlannerDate(parsedPlannerDate)
 
         setSelectedDate(parsedDate)
-        AsyncStorage.removeItem('@plannerDate')
+        AsyncStorage.removeItem('@newScheduledRoundDate')
       }
     }
     getPlannerDateFromStorage()
