@@ -9,6 +9,7 @@ import {
 import React, { useState, useRef } from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
+import { usePlannerDateFromStorage } from './hooks/usePlannerDateFromStorage'
 
 interface ScheduledJobCardProps {
   job: JobWithIdT
@@ -16,8 +17,11 @@ interface ScheduledJobCardProps {
 
 const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
   const [isComplete, setIsComplete] = useState(false)
+  const plannerDate = usePlannerDateFromStorage()
   const height = Number(job.time) * 20 + 24
   const lastClick = useRef(Date.now())
+
+  console.log('plannerDate', plannerDate)
 
   const isCompleteStyles = isComplete
     ? styles.isCompleteContainer
