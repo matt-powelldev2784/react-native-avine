@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const usePlannerDateFromStorage = () => {
-  const [plannerDate, setPlannerDate] = useState<Date | null>(null)
+  const [plannerDate, setPlannerDate] = useState<string>('')
 
   useEffect(() => {
     const getPlannerDateFromStorage = async (): Promise<void> => {

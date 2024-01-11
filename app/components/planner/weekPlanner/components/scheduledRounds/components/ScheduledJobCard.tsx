@@ -6,22 +6,21 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native'
-import React, { useState, useRef } from 'react'
+import React, { useRef } from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
 import { usePlannerDateFromStorage } from './hooks/usePlannerDateFromStorage'
+import { useIsComplete } from './hooks/useIsComplete'
 
 interface ScheduledJobCardProps {
   job: JobWithIdT
 }
 
 const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
-  const [isComplete, setIsComplete] = useState(false)
   const plannerDate = usePlannerDateFromStorage()
+  const isComplete = useIsComplete({ job, plannerDate })
   const height = Number(job.time) * 20 + 24
   const lastClick = useRef(Date.now())
-
-  console.log('plannerDate', plannerDate)
 
   const isCompleteStyles = isComplete
     ? styles.isCompleteContainer
@@ -32,7 +31,7 @@ const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
       return
     }
     lastClick.current = Date.now()
-    setIsComplete(!isComplete)
+    //setIsComplete(!isComplete)
   }
 
   return (
