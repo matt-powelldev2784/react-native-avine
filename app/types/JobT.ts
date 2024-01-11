@@ -13,5 +13,13 @@ export interface JobT {
 
 export interface JobWithIdT extends JobT {
   id: string
+  scheduledDates: string[]
+  scheduledDatesInfo: {
+    [key: string]: {
+      isPaid: boolean
+      date: string
+      isComplete: boolean
+    }
+  }
   linkedRounds: string[]
 }
