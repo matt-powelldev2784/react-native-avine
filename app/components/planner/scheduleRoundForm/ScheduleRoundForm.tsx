@@ -74,13 +74,7 @@ const ScheduleRoundForm = () => {
             </View>
 
             <View style={styles.weekPlannerWrapper}>
-              <WeekPlanner
-                onDaySelect={(day) => {
-                  console.log('Selected day: ', day)
-                  formik.setFieldValue('date', formatDateForDb(day))
-                }}
-                addFooter={false}
-              />
+              <WeekPlanner addFooter={false} />
             </View>
           </>
         ) : null}

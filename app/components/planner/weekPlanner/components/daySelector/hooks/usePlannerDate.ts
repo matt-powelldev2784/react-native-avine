@@ -1,23 +1,23 @@
-import { useEffect } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { convertDbDateToPlannerDate } from '../../../../../../utils/convertDbDateToPlannerDate'
-import { Dispatch, SetStateAction } from 'react'
+// import { useEffect } from 'react'
+// import AsyncStorage from '@react-native-async-storage/async-storage'
+// import { convertDbDateToPlannerDate } from '../../../../../../utils/convertDbDateToPlannerDate'
+// import { Dispatch, SetStateAction } from 'react'
 
-const usePlannerDate = (setSelectedDate: Dispatch<SetStateAction<Date>>) => {
-  useEffect(() => {
-    const getPlannerDateFromStorage = async (): Promise<void> => {
-      const plannerDate = await AsyncStorage.getItem('@newScheduledRoundDate')
+// const usePlannerDate = (setSelectedDate: Dispatch<SetStateAction<Date>>) => {
+//   useEffect(() => {
+//     const getPlannerDateFromStorage = async (): Promise<void> => {
+//       const plannerDate = await AsyncStorage.getItem('@plannerDate')
 
-      if (plannerDate) {
-        const parsedPlannerDate = JSON.parse(plannerDate)
-        const parsedDate = convertDbDateToPlannerDate(parsedPlannerDate)
+//       if (plannerDate) {
+//         const parsedPlannerDate = JSON.parse(plannerDate)
+//         const parsedDate = convertDbDateToPlannerDate(parsedPlannerDate)
 
-        setSelectedDate(parsedDate)
-        AsyncStorage.removeItem('@newScheduledRoundDate')
-      }
-    }
-    getPlannerDateFromStorage()
-  })
-}
+//         setSelectedDate(parsedDate)
+//         AsyncStorage.removeItem('@plannerDate')
+//       }
+//     }
+//     getPlannerDateFromStorage()
+//   })
+// }
 
-export default usePlannerDate
+// export default usePlannerDate

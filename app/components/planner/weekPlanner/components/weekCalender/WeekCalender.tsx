@@ -4,22 +4,10 @@ import { format, startOfWeek, addDays } from 'date-fns'
 import DaySelector from '../daySelector/DaySelector'
 import theme from '../../../../../utils/theme/theme'
 import { getWeek } from '../../utils/getWeek'
+import { useWeekPlanner } from '../../hooks/WeekPlannerContext'
 
-interface WeekCalenderProps {
-  displayWeek: Date
-  setDisplayWeek: React.Dispatch<React.SetStateAction<Date>>
-  selectedDay: Date
-  setSelectedDay: React.Dispatch<React.SetStateAction<Date>>
-  onDaySelect?: (day: Date) => void
-}
-
-const WeekCalender = ({
-  displayWeek,
-  setDisplayWeek,
-  selectedDay,
-  setSelectedDay,
-  onDaySelect,
-}: WeekCalenderProps) => {
+const WeekCalender = () => {
+  const { displayWeek, setDisplayWeek, setSelectedDay } = useWeekPlanner()
   const weekToDisplay = getWeek(displayWeek)
 
   const handleMoveToPrevWeek = () => {
@@ -27,7 +15,6 @@ const WeekCalender = ({
     const newday = startOfWeek(newWeek, { weekStartsOn: 1 })
     setDisplayWeek(newWeek)
     setSelectedDay(newday)
-    onDaySelect ? onDaySelect(newday) : null
   }
 
   const handleMoveToNextWeek = () => {
@@ -35,7 +22,6 @@ const WeekCalender = ({
     const newday = startOfWeek(newWeek, { weekStartsOn: 1 })
     setDisplayWeek(newWeek)
     setSelectedDay(newday)
-    onDaySelect ? onDaySelect(newday) : null
   }
 
   //map week to display - inside this loop is another loop which maps the days of the week
@@ -61,15 +47,7 @@ const WeekCalender = ({
 
             {/* ---------------------- map days of the week ----------------------- */}
             {week.map((day) => {
-              return (
-                <DaySelector
-                  key={day.toString()}
-                  selectedDay={selectedDay}
-                  day={day}
-                  setSelectedDay={setSelectedDay}
-                  onDaySelect={onDaySelect}
-                />
-              )
+              return <DaySelector key={day.toString()} day={day} />
             })}
 
             {/* ---------------------- move to next week button ----------------------- */}

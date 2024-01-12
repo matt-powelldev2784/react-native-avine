@@ -6,32 +6,38 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native'
-import React, { useRef } from 'react'
+import React from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
-import { usePlannerDateFromStorage } from './hooks/usePlannerDateFromStorage'
+import usePlannerDateFromStorage from '../../../hooks/usePlannerDateFromStorage'
 import { useIsComplete } from './hooks/useIsComplete'
+import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComplete'
 
 interface ScheduledJobCardProps {
   job: JobWithIdT
 }
 
 const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
-  const plannerDate = usePlannerDateFromStorage()
+  const [isLoading, setIsLoading] = React.useState(false)
+  const plannerDate = usePlannerDateFromStorage('@plannerDate')
   const isComplete = useIsComplete({ job, plannerDate })
   const height = Number(job.time) * 20 + 24
-  const lastClick = useRef(Date.now())
 
   const isCompleteStyles = isComplete
     ? styles.isCompleteContainer
     : styles.notCompleteContainer
 
-  const handleIsCompetePress = () => {
-    if (Date.now() - lastClick.current < 1000) {
+  const handleIsCompletePress = async () => {
+    if (isLoading) {
       return
     }
-    lastClick.current = Date.now()
-    //setIsComplete(!isComplete)
+    setIsLoading(true)
+    await toggleJobIsComplete({
+      jobId: job.id,
+      date: plannerDate,
+      isComplete: !isComplete,
+    })
+    setIsLoading(false)
   }
 
   return (
@@ -39,7 +45,7 @@ const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
       <View style={styles.completeWrapper}>
         <TouchableOpacity
           style={isCompleteStyles}
-          onPress={handleIsCompetePress}
+          onPress={handleIsCompletePress}
         >
           {isComplete ? (
             <Image
