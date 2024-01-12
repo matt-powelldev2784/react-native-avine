@@ -9,7 +9,7 @@ import {
 import React from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
-import { usePlannerDateFromStorage } from './hooks/usePlannerDateFromStorage'
+import usePlannerDateFromStorage from '../../../hooks/usePlannerDateFromStorage'
 import { useIsComplete } from './hooks/useIsComplete'
 import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComplete'
 
@@ -19,7 +19,7 @@ interface ScheduledJobCardProps {
 
 const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
   const [isLoading, setIsLoading] = React.useState(false)
-  const plannerDate = usePlannerDateFromStorage()
+  const plannerDate = usePlannerDateFromStorage('@plannerDate')
   const isComplete = useIsComplete({ job, plannerDate })
   const height = Number(job.time) * 20 + 24
 

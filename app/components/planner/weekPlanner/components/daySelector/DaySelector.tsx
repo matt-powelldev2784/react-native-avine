@@ -8,31 +8,22 @@ import {
 import React from 'react'
 import { format } from 'date-fns'
 import theme from '../../../../../utils/theme/theme'
-import usePlannerDate from './hooks/usePlannerDate'
-import { addDbDateToStorage } from '../../../../../utils/addDbDateToStorage'
+import { addPlannerDateToStorage } from '../../../../../utils/addPlannerDateToStorage'
+import { useWeekPlanner } from '../../hooks/WeekPlannerContext'
 
 interface DaySelectorProps {
-  selectedDay: Date
   day: Date
-  setSelectedDay: React.Dispatch<React.SetStateAction<Date>>
-  onDaySelect?: (day: Date) => void
 }
 
-const DaySelector = ({
-  selectedDay,
-  day,
-  setSelectedDay,
-  onDaySelect,
-}: DaySelectorProps) => {
+const DaySelector = ({ day }: DaySelectorProps) => {
+  const { selectedDay, setSelectedDay } = useWeekPlanner()
   const weekDay = format(day, 'EEEEEE')
   const dateToday = day.getDate()
   const selectDate = selectedDay.getDate()
-  usePlannerDate(setSelectedDay)
 
   const handleSelectday = async () => {
     setSelectedDay(day)
-    onDaySelect ? onDaySelect(day) : null
-    await addDbDateToStorage(day)
+    await addPlannerDateToStorage(day, '@plannerDate')
   }
 
   return (

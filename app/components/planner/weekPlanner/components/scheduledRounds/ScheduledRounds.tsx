@@ -4,13 +4,14 @@ import { useScheduledRounds } from './hooks/useScheduledRounds'
 import ScheduledRoundCard from './components/ScheduledRoundCard'
 import { Loading } from '../../../../../ui'
 import ErrorNoData from './components/NoScheduledRounds'
+import { useWeekPlanner } from '../../hooks/WeekPlannerContext'
 
 interface ScheduledRoundsProps {
-  selectedDay: Date
   addFooter?: boolean
 }
 
-const ScheduledRounds = ({ selectedDay, addFooter }: ScheduledRoundsProps) => {
+const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
+  const { selectedDay } = useWeekPlanner()
   const [isLoading, scheduledRounds] = useScheduledRounds(selectedDay)
 
   if (isLoading) {
