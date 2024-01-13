@@ -30,8 +30,6 @@ const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
     : styles.notCompleteContainer
 
   const handleIsCompletePress = async () => {
-    console.log('plannerDate-----------------------------------', plannerDate)
-
     if (isLoading) {
       return
     }
