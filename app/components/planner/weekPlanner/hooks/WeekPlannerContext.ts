@@ -5,6 +5,8 @@ interface WeekPlannerContextType {
   setDisplayWeek: React.Dispatch<React.SetStateAction<Date>>
   selectedDay: Date
   setSelectedDay: React.Dispatch<React.SetStateAction<Date>>
+  refreshData: boolean
+  setRefreshData: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const WeekPlannerContext = createContext<WeekPlannerContextType>({
@@ -12,6 +14,8 @@ export const WeekPlannerContext = createContext<WeekPlannerContextType>({
   setDisplayWeek: () => {},
   selectedDay: new Date(),
   setSelectedDay: () => {},
+  refreshData: false,
+  setRefreshData: () => {},
 })
 
 export const useWeekPlanner = () => useContext(WeekPlannerContext)

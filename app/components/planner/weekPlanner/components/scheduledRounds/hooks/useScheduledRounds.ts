@@ -9,23 +9,25 @@ type UseScheduledRoundsReturn = [boolean, ScheduledRounds]
 
 export const useScheduledRounds = (
   selectedDay: Date,
+  refreshData: boolean,
 ): UseScheduledRoundsReturn => {
   const [scheduledRounds, setScheduledRounds] = useState<ScheduledRounds>([])
-  const [isLoading, seIstLoading] = useState<boolean>(true)
+  const [isError, seIsError] = useState<boolean>(false)
 
   useEffect(() => {
     const handleScheduledRounds = async () => {
-      seIstLoading(true)
+      seIsError(false)
       const selectedDayForDb = formatDateForDb(selectedDay)
       const rounds = await queryRoundsOnDate(selectedDayForDb)
 
       if (rounds) {
         setScheduledRounds(rounds)
-        seIstLoading(false)
+      } else {
+        seIsError(true)
       }
     }
     handleScheduledRounds()
-  }, [selectedDay])
+  }, [selectedDay, refreshData])
 
-  return [isLoading, scheduledRounds]
+  return [isError, scheduledRounds]
 }

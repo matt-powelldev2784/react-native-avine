@@ -1,21 +1,29 @@
 import { View, StyleSheet, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useScheduledRounds } from './hooks/useScheduledRounds'
 import ScheduledRoundCard from './components/ScheduledRoundCard'
-import { Loading } from '../../../../../ui'
-import ErrorNoData from './components/NoScheduledRounds'
+import NoScheduledRounds from './components/NoScheduledRounds'
 import { useWeekPlanner } from '../../hooks/WeekPlannerContext'
-
+import DataError from './components/DataError'
 interface ScheduledRoundsProps {
   addFooter?: boolean
 }
 
 const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
-  const { selectedDay } = useWeekPlanner()
-  const [isLoading, scheduledRounds] = useScheduledRounds(selectedDay)
+  const { selectedDay, refreshData, setRefreshData } = useWeekPlanner()
+  const [isError, scheduledRounds] = useScheduledRounds(
+    selectedDay,
+    refreshData,
+  )
 
-  if (isLoading) {
-    return <Loading loadingText={'Loading scheduled rounds...'} />
+  useEffect(() => {
+    if (refreshData) {
+      setRefreshData(false)
+    }
+  }, [refreshData, setRefreshData])
+
+  if (isError) {
+    return <DataError />
   }
 
   return (
@@ -23,7 +31,7 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
       {scheduledRounds.map((round) => (
         <ScheduledRoundCard key={round.id} round={round} />
       ))}
-      {scheduledRounds.length === 0 ? <ErrorNoData /> : null}
+      {scheduledRounds.length === 0 ? <NoScheduledRounds /> : null}
 
       {addFooter ? <View style={styles.flatlistFooter} /> : null}
     </ScrollView>

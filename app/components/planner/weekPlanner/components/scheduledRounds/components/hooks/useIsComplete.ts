@@ -16,9 +16,7 @@ export const useIsComplete = ({ job, plannerDate }: useIsCompleteProps) => {
 
     if (dates) {
       const isCompleteFromDb = dates[1].isComplete
-      if (isCompleteFromDb) {
-        setIsComplete(true)
-      }
+      setIsComplete(isCompleteFromDb)
     }
   }, [job, plannerDate])
 
