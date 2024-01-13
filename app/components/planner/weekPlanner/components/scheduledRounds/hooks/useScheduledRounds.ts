@@ -9,6 +9,7 @@ type UseScheduledRoundsReturn = [boolean, ScheduledRounds]
 
 export const useScheduledRounds = (
   selectedDay: Date,
+  refreshData: boolean,
 ): UseScheduledRoundsReturn => {
   const [scheduledRounds, setScheduledRounds] = useState<ScheduledRounds>([])
   const [isLoading, seIstLoading] = useState<boolean>(true)
@@ -25,7 +26,7 @@ export const useScheduledRounds = (
       }
     }
     handleScheduledRounds()
-  }, [selectedDay])
+  }, [selectedDay, refreshData])
 
   return [isLoading, scheduledRounds]
 }

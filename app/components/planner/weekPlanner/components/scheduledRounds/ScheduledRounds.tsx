@@ -1,18 +1,26 @@
 import { View, StyleSheet, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useScheduledRounds } from './hooks/useScheduledRounds'
 import ScheduledRoundCard from './components/ScheduledRoundCard'
 import { Loading } from '../../../../../ui'
 import ErrorNoData from './components/NoScheduledRounds'
 import { useWeekPlanner } from '../../hooks/WeekPlannerContext'
-
 interface ScheduledRoundsProps {
   addFooter?: boolean
 }
 
 const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
-  const { selectedDay } = useWeekPlanner()
-  const [isLoading, scheduledRounds] = useScheduledRounds(selectedDay)
+  const { selectedDay, refreshData, setRefreshData } = useWeekPlanner()
+  const [isLoading, scheduledRounds] = useScheduledRounds(
+    selectedDay,
+    refreshData,
+  )
+
+  useEffect(() => {
+    if (refreshData) {
+      setRefreshData(false)
+    }
+  }, [refreshData, setRefreshData])
 
   if (isLoading) {
     return <Loading loadingText={'Loading scheduled rounds...'} />

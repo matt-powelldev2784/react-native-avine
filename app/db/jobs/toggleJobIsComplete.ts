@@ -19,9 +19,15 @@ export const toggleJobIsComplete = async ({
 
   const jobDocRef = doc(db, 'users', auth.currentUser.uid, 'jobs', jobId)
 
+  const scheduledDateDbPath = 'scheduledDatesInfo.' + date + '.isComplete'
+  console.log(
+    'scheduledDateDbPath------------------------------------------------------',
+    scheduledDateDbPath,
+  )
+
   try {
     await updateDoc(jobDocRef, {
-      [`scheduledDatesInfo.${date}.isComplete`]: isComplete,
+      [scheduledDateDbPath]: isComplete,
     })
     console.log('Job updated with ID:', jobId)
   } catch (error) {

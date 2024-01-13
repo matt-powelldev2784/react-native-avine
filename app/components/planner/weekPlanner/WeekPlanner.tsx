@@ -13,6 +13,7 @@ interface WeekPlannerProps {
 const WeekPlanner = ({ addFooter }: WeekPlannerProps) => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
+  const [refreshData, setRefreshData] = useState(false)
 
   useEffect(() => {
     const getScheduledDate = async () => {
@@ -23,6 +24,8 @@ const WeekPlanner = ({ addFooter }: WeekPlannerProps) => {
         setSelectedDay(newScheduledDate)
         setDisplayWeek(newScheduledDate)
         AsyncStorage.removeItem('@newScheduledDate')
+      } else {
+        setSelectedDay(selectedDay)
       }
     }
     getScheduledDate()
@@ -33,6 +36,8 @@ const WeekPlanner = ({ addFooter }: WeekPlannerProps) => {
     setDisplayWeek,
     selectedDay,
     setSelectedDay,
+    refreshData,
+    setRefreshData,
   }
 
   if (addFooter === undefined) {

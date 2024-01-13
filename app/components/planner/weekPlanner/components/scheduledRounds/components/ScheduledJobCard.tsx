@@ -6,19 +6,21 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
 import usePlannerDateFromStorage from '../../../hooks/usePlannerDateFromStorage'
 import { useIsComplete } from './hooks/useIsComplete'
 import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComplete'
+import { useWeekPlanner } from '../../../hooks/WeekPlannerContext'
 
 interface ScheduledJobCardProps {
   job: JobWithIdT
 }
 
 const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
-  const [isLoading, setIsLoading] = React.useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const { setRefreshData } = useWeekPlanner()
   const plannerDate = usePlannerDateFromStorage('@plannerDate')
   const isComplete = useIsComplete({ job, plannerDate })
   const height = Number(job.time) * 20 + 24
@@ -28,6 +30,8 @@ const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
     : styles.notCompleteContainer
 
   const handleIsCompletePress = async () => {
+    console.log('plannerDate-----------------------------------', plannerDate)
+
     if (isLoading) {
       return
     }
@@ -38,6 +42,7 @@ const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
       isComplete: !isComplete,
     })
     setIsLoading(false)
+    setRefreshData(true)
   }
 
   return (
