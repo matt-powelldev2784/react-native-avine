@@ -5,8 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 import { getPlannerDateFromStorage } from '../../../../utils/getPlannerDateFromStorage'
-import { formatDateForDb } from '../../../../utils/formatDateForDb'
-import { addPlannerDateToStorage } from '../../../../utils/addPlannerDateToStorage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const stepOneSchema = Yup.object().shape({
   roundId: Yup.string().required('Round Name is required'),
@@ -35,8 +34,8 @@ const useFormikSteps = (activeStep: number) => {
       const plannerDate = await getPlannerDateFromStorage('@plannerDate')
 
       if (plannerDate) {
-        values.date = formatDateForDb(plannerDate)
-        await addPlannerDateToStorage(plannerDate, '@newScheduledDate')
+        values.date = plannerDate
+        AsyncStorage.setItem('@newScheduledDate', JSON.stringify(plannerDate))
       }
 
       console.log(values)
