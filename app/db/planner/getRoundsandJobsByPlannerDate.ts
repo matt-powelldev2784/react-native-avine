@@ -17,12 +17,14 @@ export const getRoundsandJobsByPlannerDate = async (docId: string) => {
 
     //get planner document
     const plannerDoc = await getDoc(plannerDocRef)
+
     const plannerDocData = plannerDoc.data()
 
     //get schduled jobs from planner document
     //this returns all jobs which are scheduled for a specific date (i.e a small data set)
     //these jobs which relate to rounds are filtered below using the linkedRounds property from the job document
-    const relatedJobData = plannerDocData?.relatedJobs
+    const relatedJobData = plannerDocData?.relatedJobs || []
+
     const relatedJobs = await Promise.all(
       relatedJobData.map(async (jobId: string) => {
         if (auth.currentUser === null) {
@@ -38,13 +40,14 @@ export const getRoundsandJobsByPlannerDate = async (docId: string) => {
         )
         const jobDoc = await getDoc(roundDocRef)
         const jobDocData = jobDoc.data()
+        const jobDocDataWithId = { id: jobDoc.id, ...jobDocData }
 
-        return jobDocData
+        return jobDocDataWithId
       }),
     )
 
     //get round documents
-    const relatedRoundsData = plannerDocData?.relatedRounds
+    const relatedRoundsData = plannerDocData?.relatedRounds || []
     const relatedRounds = await Promise.all(
       relatedRoundsData.map(async (roundId: string) => {
         if (auth.currentUser === null) {
