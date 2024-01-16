@@ -1,6 +1,6 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { scheduleRoundToDb } from '../../../../db/planner/schdeuleRoundToDb'
+import { scheduleRoundToDb_v2 } from '../../../../db/planner/scheduleRoundtoDb_v2'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
@@ -13,7 +13,7 @@ export const stepOneSchema = Yup.object().shape({
 })
 
 export const stepTwoSchema = Yup.object().shape({
-  date: Yup.string().required('Date is required').length(10),
+  date: Yup.string().required('Date is required').length(8),
 })
 
 const useFormikSteps = (activeStep: number) => {
@@ -40,7 +40,7 @@ const useFormikSteps = (activeStep: number) => {
       }
 
       console.log(values)
-      await scheduleRoundToDb(values)
+      await scheduleRoundToDb_v2(values)
 
       navigation.navigate('Planner', { refresh: true })
     },

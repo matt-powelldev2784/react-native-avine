@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { queryRoundsOnDate } from '../../../../../../db/planner/queryRoundsOnDate'
 import { formatDateForDb } from '../../../../../../utils/formatDateForDb'
 import { RoundWithRelatedJobsT } from '../../../../../../types/RoundT'
+import { getRoundsandJobsByPlannerDate } from './../../../../../../db/planner/getRoundsandJobsByPlannerDate'
 
 type ScheduledRounds = RoundWithRelatedJobsT[] | []
 
@@ -18,7 +18,7 @@ export const useScheduledRounds = (
     const handleScheduledRounds = async () => {
       seIsError(false)
       const selectedDayForDb = formatDateForDb(selectedDay)
-      const rounds = await queryRoundsOnDate(selectedDayForDb)
+      const rounds = await getRoundsandJobsByPlannerDate(selectedDayForDb)
 
       if (rounds) {
         setScheduledRounds(rounds)
