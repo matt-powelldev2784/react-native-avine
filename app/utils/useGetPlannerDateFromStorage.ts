@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { convertDbDateToPlannerDate } from './convertDbDateToPlannerDate'
+import { convertDbDateToDateString } from './convertDbDateToDateString'
 import { useEffect, useState } from 'react'
 
 export const useGetPlannerDateFromStorage = async () => {
@@ -14,7 +14,7 @@ export const useGetPlannerDateFromStorage = async () => {
       }
 
       const parsedPlannerDate = JSON.parse(plannerDateFromStorage)
-      const parsedDate = convertDbDateToPlannerDate(parsedPlannerDate)
+      const parsedDate = convertDbDateToDateString(parsedPlannerDate)
 
       setPlannerDate(parsedDate)
     }

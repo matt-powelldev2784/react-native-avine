@@ -5,7 +5,7 @@ import ScheduledRounds from './components/scheduledRounds/ScheduledRounds'
 import { getPlannerDateFromStorage } from '../../../utils/getPlannerDateFromStorage'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { WeekPlannerContext } from './hooks/WeekPlannerContext'
-import { convertDbDateToPlannerDate } from '../../../utils/convertDbDateToPlannerDate'
+import { convertDbDateToDateString } from '../../../utils/convertDbDateToDateString'
 import { formatDateForDb } from '../../../utils/formatDateForDb'
 interface WeekPlannerProps {
   onDaySelect?: (day: Date) => void
@@ -23,9 +23,7 @@ const WeekPlanner = ({ addFooter }: WeekPlannerProps) => {
         await getPlannerDateFromStorage('@newScheduledDate')
 
       if (newScheduledDate) {
-        const dateObject = new Date(
-          convertDbDateToPlannerDate(newScheduledDate),
-        )
+        const dateObject = new Date(convertDbDateToDateString(newScheduledDate))
         setSelectedDay(dateObject)
         setDisplayWeek(dateObject)
         AsyncStorage.removeItem('@newScheduledDate')
