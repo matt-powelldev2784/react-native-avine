@@ -35,7 +35,7 @@ const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
     setIsLoading(true)
     await toggleJobIsComplete({
       jobId: job.id,
-      date: plannerDate,
+      plannerDate: plannerDate,
       isComplete: !isComplete,
     })
     setIsLoading(false)
