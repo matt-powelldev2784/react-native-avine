@@ -26,8 +26,6 @@ const WeekPlanner = ({ addFooter }: WeekPlannerProps) => {
         setSelectedDay(dateObject)
         setDisplayWeek(dateObject)
         AsyncStorage.removeItem('@newScheduledDate')
-      } else {
-        setSelectedDay(selectedDay)
       }
     }
     getScheduledDate()
