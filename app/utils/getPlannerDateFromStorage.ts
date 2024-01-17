@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { convertDbDateToPlannerDate } from './convertDbDateToPlannerDate'
 
 export const getPlannerDateFromStorage = async (key: string) => {
   const plannerDateFromStorage = await AsyncStorage.getItem(key)
@@ -7,7 +6,7 @@ export const getPlannerDateFromStorage = async (key: string) => {
 
   if (plannerDateFromStorage) {
     const parsedPlannerDate = JSON.parse(plannerDateFromStorage)
-    plannerDate = convertDbDateToPlannerDate(parsedPlannerDate)
+    plannerDate = parsedPlannerDate
   }
 
   return plannerDate

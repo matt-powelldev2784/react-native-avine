@@ -1,15 +1,15 @@
-import { doc, updateDoc } from 'firebase/firestore'
+import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 
 interface UpdateJobInDb {
+  plannerDate: string
   jobId: string
-  date: string
   isComplete: boolean
 }
 
 export const toggleJobIsComplete = async ({
   jobId,
-  date,
+  plannerDate,
   isComplete,
 }: UpdateJobInDb) => {
   if (auth.currentUser === null) {
@@ -17,15 +17,26 @@ export const toggleJobIsComplete = async ({
     return
   }
 
-  const jobDocRef = doc(db, 'users', auth.currentUser.uid, 'jobs', jobId)
-
-  const scheduledDateDbPath = 'scheduledDatesInfo.' + date + '.isComplete'
+  const plannerDateDocRef = doc(
+    db,
+    'users',
+    auth.currentUser.uid,
+    'planner',
+    plannerDate,
+  )
 
   try {
-    await updateDoc(jobDocRef, {
-      [scheduledDateDbPath]: isComplete,
-    })
-    console.log('Job updated with ID:', jobId)
+    if (isComplete) {
+      await updateDoc(plannerDateDocRef, {
+        completedJobs: arrayUnion(jobId),
+      })
+      console.log(`Job id ${jobId} set to complete`)
+    } else {
+      await updateDoc(plannerDateDocRef, {
+        completedJobs: arrayRemove(jobId),
+      })
+      console.log(`Job id ${jobId} set to incomplete`)
+    }
   } catch (error) {
     console.error('Error updating job:', error)
   }

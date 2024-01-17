@@ -16,6 +16,8 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
     refreshData,
   )
 
+  console.log('scheduledRounds', scheduledRounds)
+
   useEffect(() => {
     if (refreshData) {
       setRefreshData(false)

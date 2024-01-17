@@ -1,19 +1,18 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { scheduleRoundToDb } from '../../../../db/planner/schdeuleRoundToDb'
+import { scheduleRoundToDb_v2 } from '../../../../db/planner/scheduleRoundtoDb_v2'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 import { getPlannerDateFromStorage } from '../../../../utils/getPlannerDateFromStorage'
-import { formatDateForDb } from '../../../../utils/formatDateForDb'
-import { addPlannerDateToStorage } from '../../../../utils/addPlannerDateToStorage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const stepOneSchema = Yup.object().shape({
   roundId: Yup.string().required('Round Name is required'),
 })
 
 export const stepTwoSchema = Yup.object().shape({
-  date: Yup.string().required('Date is required').length(10),
+  date: Yup.string().required('Date is required').length(8),
 })
 
 const useFormikSteps = (activeStep: number) => {
@@ -35,12 +34,12 @@ const useFormikSteps = (activeStep: number) => {
       const plannerDate = await getPlannerDateFromStorage('@plannerDate')
 
       if (plannerDate) {
-        values.date = formatDateForDb(plannerDate)
-        await addPlannerDateToStorage(plannerDate, '@newScheduledDate')
+        values.date = plannerDate
+        AsyncStorage.setItem('@newScheduledDate', JSON.stringify(plannerDate))
       }
 
       console.log(values)
-      await scheduleRoundToDb(values)
+      await scheduleRoundToDb_v2(values)
 
       navigation.navigate('Planner', { refresh: true })
     },

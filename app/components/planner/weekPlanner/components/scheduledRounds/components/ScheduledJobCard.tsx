@@ -10,7 +10,6 @@ import React, { useState } from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
 import usePlannerDateFromStorage from '../../../hooks/usePlannerDateFromStorage'
-import { useIsComplete } from './hooks/useIsComplete'
 import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComplete'
 import { useWeekPlanner } from '../../../hooks/WeekPlannerContext'
 
@@ -22,7 +21,7 @@ const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const { setRefreshData } = useWeekPlanner()
   const plannerDate = usePlannerDateFromStorage('@plannerDate')
-  const isComplete = useIsComplete({ job, plannerDate })
+  const isComplete = job.isComplete
   const height = Number(job.time) * 20 + 24
 
   const isCompleteStyles = isComplete
@@ -36,7 +35,7 @@ const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
     setIsLoading(true)
     await toggleJobIsComplete({
       jobId: job.id,
-      date: plannerDate,
+      plannerDate: plannerDate,
       isComplete: !isComplete,
     })
     setIsLoading(false)
