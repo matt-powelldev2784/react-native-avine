@@ -2,7 +2,7 @@ import { View, StyleSheet } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import WeekCalender from './components/weekCalender/WeekCalender'
 import ScheduledRounds from './components/scheduledRounds/ScheduledRounds'
-import { getPlannerDateFromStorage } from '../../../utils/getPlannerDateFromStorage'
+import { getItemFromStorage } from '../../../utils/getItemFromStorage'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { WeekPlannerContext } from './hooks/WeekPlannerContext'
 import { convertDbDateToDateString } from '../../../utils/convertDbDateToDateString'
@@ -19,8 +19,7 @@ const WeekPlanner = ({ addFooter }: WeekPlannerProps) => {
 
   useEffect(() => {
     const getScheduledDate = async () => {
-      const newScheduledDate =
-        await getPlannerDateFromStorage('@newScheduledDate')
+      const newScheduledDate = await getItemFromStorage('@newScheduledDate')
 
       if (newScheduledDate) {
         const dateObject = new Date(convertDbDateToDateString(newScheduledDate))

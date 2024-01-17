@@ -5,7 +5,7 @@ const usePlannerDateFromStorage = (key: string) => {
   const [plannerDate, setPlannerDate] = useState<string>('')
 
   useEffect(() => {
-    const getPlannerDateFromStorage = async (): Promise<void> => {
+    const getItemFromStorage = async (): Promise<void> => {
       const plannerDateFromStorage = await AsyncStorage.getItem(key)
 
       if (plannerDateFromStorage) {
@@ -13,7 +13,7 @@ const usePlannerDateFromStorage = (key: string) => {
         setPlannerDate(parsedPlannerDate)
       }
     }
-    getPlannerDateFromStorage()
+    getItemFromStorage()
   }, [key])
 
   return plannerDate
