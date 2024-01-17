@@ -23,6 +23,7 @@ export const getRoundsandJobsByPlannerDate = async (docId: string) => {
     //get schduled jobs from planner document
     //this returns all jobs which are scheduled for a specific date (i.e a small data set)
     //these jobs which relate to rounds are filtered below using the linkedRounds property from the job document
+    const completdJobs = plannerDocData?.completedJobs || []
     const relatedJobData = plannerDocData?.relatedJobs || []
 
     const relatedJobs = await Promise.all(
@@ -30,6 +31,8 @@ export const getRoundsandJobsByPlannerDate = async (docId: string) => {
         if (auth.currentUser === null) {
           return
         }
+
+        const jobIsComplete = completdJobs.includes(jobId)
 
         const roundDocRef = doc(
           db,
@@ -40,7 +43,11 @@ export const getRoundsandJobsByPlannerDate = async (docId: string) => {
         )
         const jobDoc = await getDoc(roundDocRef)
         const jobDocData = jobDoc.data()
-        const jobDocDataWithId = { id: jobDoc.id, ...jobDocData }
+        const jobDocDataWithId = {
+          id: jobDoc.id,
+          isComplete: jobIsComplete,
+          ...jobDocData,
+        }
 
         return jobDocDataWithId
       }),

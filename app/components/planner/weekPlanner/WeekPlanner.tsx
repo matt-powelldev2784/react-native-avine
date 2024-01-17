@@ -16,7 +16,6 @@ const WeekPlanner = ({ addFooter }: WeekPlannerProps) => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
   const [refreshData, setRefreshData] = useState(false)
-  console.log('selectedDay', selectedDay)
 
   useEffect(() => {
     const getScheduledDate = async () => {

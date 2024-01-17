@@ -33,6 +33,7 @@ export const scheduleRoundToDb_v2 = async (planInfo: PlanT) => {
       await setDoc(plannerDocRef, {
         relatedRounds: arrayUnion(planInfo.roundId),
         relatedJobs: [],
+        completedJobs: [],
       })
     }
 
