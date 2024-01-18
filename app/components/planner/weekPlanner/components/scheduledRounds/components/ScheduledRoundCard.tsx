@@ -1,9 +1,12 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { RoundWithRelatedJobsT } from '../../../../../../types/RoundT'
 import { JobWithIdT } from '../../../../../../types/JobT'
 import theme from '../../../../../../utils/theme/theme'
 import ScheduledJobCard from './ScheduledJobCard'
+import { removeScheduledRounFromoDb } from '../../../../../../db/planner/removeScheduledRoundFromDb'
+import usePlannerDateFromStorage from '../../../hooks/usePlannerDateFromStorage'
+import { useWeekPlanner } from '../../../hooks/WeekPlannerContext'
 
 interface ScheduledRoundCardProps {
   round: RoundWithRelatedJobsT
@@ -14,6 +17,16 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
     (totalTime: number, job: JobWithIdT) => totalTime + parseFloat(job.time),
     0,
   )
+  const plannerDate = usePlannerDateFromStorage('@plannerDate')
+  const { setRefreshData } = useWeekPlanner()
+
+  const handleDeleteRound = async () => {
+    await removeScheduledRounFromoDb({
+      roundId: round.id,
+      date: plannerDate,
+    })
+    setRefreshData(true)
+  }
 
   return (
     <View key={round.id} style={styles.roundWrapper}>
@@ -27,6 +40,15 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
           >
             {round.roundName} {totalRoundtTime} hrs
           </Text>
+          <TouchableOpacity
+            onPress={handleDeleteRound}
+            style={{ position: 'absolute', right: 12 }}
+          >
+            <Image
+              source={require('../../../../../../../assets/bin_white.png')}
+              style={{ width: 18, height: 22 }}
+            />
+          </TouchableOpacity>
         </View>
 
         {/* ---------------------- Jobs List ----------------------- */}
