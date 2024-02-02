@@ -29,6 +29,7 @@ const useFormikSteps = (activeStep: number) => {
     initialValues: {
       roundId: '',
       date: '',
+      recurring: true,
     },
     onSubmit: async (values) => {
       const plannerDate = await getItemFromStorage('@plannerDate')
