@@ -11,6 +11,8 @@ import {
 } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { PlanT } from '../../types/PlanT'
+import { getRoundById } from '../rounds/getRoundById'
+import { getRecurringDatesTwoYearsAhead } from '../../utils/getRecurringDates2YearsAhead'
 
 export const scheduleRoundToDb_v2 = async (planInfo: PlanT) => {
   if (auth.currentUser === null) {
@@ -18,13 +20,25 @@ export const scheduleRoundToDb_v2 = async (planInfo: PlanT) => {
   }
 
   if (planInfo.recurring) {
+    const round = await getRoundById(planInfo.roundId)
+    console.log('round', round)
+
     const userDoc = doc(db, 'users', auth.currentUser.uid)
     const recurringRoundsCollection = collection(userDoc, 'recurringRounds')
     const recurringRoundDoc = doc(recurringRoundsCollection)
 
-    await setDoc(recurringRoundDoc, { roundId: 'test' })
+    await setDoc(recurringRoundDoc, {
+      roundId: planInfo.roundId,
+      startDate: planInfo.date,
+      frequency: round?.frequency,
+      recurrringDates: [],
+    })
 
     console.log('Recurring round scheduled')
+    if (!round) {
+      return
+    }
+    getRecurringDatesTwoYearsAhead(planInfo.date, round.frequency)
   }
 
   const plannerDocRef = doc(
