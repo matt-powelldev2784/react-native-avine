@@ -1,6 +1,6 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { scheduleRoundToDb } from '../../../../db/planner/scheduleRoundtoDb'
+import { scheduleRecurringRoundToDb } from '../../../../db/planner/scheduleRecurringRoundToDb'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
@@ -40,7 +40,7 @@ const useFormikSteps = (activeStep: number) => {
       }
 
       console.log(values)
-      await scheduleRoundToDb(values)
+      await scheduleRecurringRoundToDb(values)
 
       navigation.navigate('Planner', { refresh: true })
     },

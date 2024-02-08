@@ -10,9 +10,12 @@ import {
   getDoc,
 } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { PlanT } from '../../types/PlanT'
+interface scheduleRoundToDbT {
+  roundId: string
+  date: string
+}
 
-export const scheduleRoundToDb = async (planInfo: PlanT) => {
+export const scheduleRoundToDb = async (planInfo: scheduleRoundToDbT) => {
   if (auth.currentUser === null) {
     return
   }
