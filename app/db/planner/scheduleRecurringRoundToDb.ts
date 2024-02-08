@@ -48,7 +48,7 @@ export const scheduleRecurringRoundToDb = async (planInfo: planInfoT) => {
       roundId: planInfo.roundId,
       startDate: planInfo.date,
       frequency: round?.frequency,
-      recurrringDates: recurringDates,
+      recurringDates: recurringDates,
     })
 
     console.log('Recurring round info added to db:', planInfo.roundId)

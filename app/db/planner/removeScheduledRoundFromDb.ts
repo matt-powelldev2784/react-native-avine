@@ -15,7 +15,7 @@ interface RemoveScheduledRoundFromDb {
   roundId: string
 }
 
-export const removeScheduledRounFromoDb = async ({
+export const removeScheduledRoundFromoDb = async ({
   date,
   roundId,
 }: RemoveScheduledRoundFromDb) => {

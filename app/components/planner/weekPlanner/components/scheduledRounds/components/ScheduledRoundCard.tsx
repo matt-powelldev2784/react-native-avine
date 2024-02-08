@@ -4,7 +4,7 @@ import { RoundWithRelatedJobsT } from '../../../../../../types/RoundT'
 import { JobWithIdT } from '../../../../../../types/JobT'
 import theme from '../../../../../../utils/theme/theme'
 import ScheduledJobCard from './ScheduledJobCard'
-import { removeScheduledRounFromoDb } from '../../../../../../db/planner/removeScheduledRoundFromDb'
+import { removeScheduledRoundsFromDb } from '../../../../../../db/planner/removeScheduledRoundsFromDb'
 import usePlannerDateFromStorage from '../../../hooks/usePlannerDateFromStorage'
 import { useWeekPlanner } from '../../../hooks/WeekPlannerContext'
 
@@ -21,7 +21,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
   const { setRefreshData } = useWeekPlanner()
 
   const handleDeleteRound = async () => {
-    await removeScheduledRounFromoDb({
+    await removeScheduledRoundsFromDb({
       roundId: round.id,
       date: plannerDate,
     })
