@@ -12,7 +12,7 @@ import {
 import { db, auth } from '../../../firebaseConfig'
 import { PlanT } from '../../types/PlanT'
 
-export const scheduleRoundToDb_v2 = async (planInfo: PlanT) => {
+export const scheduleRoundToDb = async (planInfo: PlanT) => {
   if (auth.currentUser === null) {
     return
   }
