@@ -21,24 +21,31 @@ export const scheduleRoundToDb_v2 = async (planInfo: PlanT) => {
 
   if (planInfo.recurring) {
     const round = await getRoundById(planInfo.roundId)
-    console.log('round', round)
+    if (!round) {
+      return
+    }
 
-    const userDoc = doc(db, 'users', auth.currentUser.uid)
-    const recurringRoundsCollection = collection(userDoc, 'recurringRounds')
-    const recurringRoundDoc = doc(recurringRoundsCollection)
+    const recurringRoundDoc = doc(
+      db,
+      'users',
+      auth.currentUser.uid,
+      'recurringRounds',
+      planInfo?.roundId,
+    )
+
+    const recurringDates = getRecurringDatesTwoYearsAhead(
+      planInfo.date,
+      round.frequency,
+    )
 
     await setDoc(recurringRoundDoc, {
       roundId: planInfo.roundId,
       startDate: planInfo.date,
       frequency: round?.frequency,
-      recurrringDates: [],
+      recurrringDates: recurringDates,
     })
 
     console.log('Recurring round scheduled')
-    if (!round) {
-      return
-    }
-    getRecurringDatesTwoYearsAhead(planInfo.date, round.frequency)
   }
 
   const plannerDocRef = doc(
