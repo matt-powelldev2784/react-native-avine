@@ -85,17 +85,6 @@ const RoundCard = ({
         <View style={styles.buttons}>
           <TouchableOpacity
             onPress={() => {
-              // navigation.navigate('EditJob', { jobId: id })
-            }}
-          >
-            <Image
-              source={require('../../../../../../assets/plus_circle.png')}
-              style={{ width: 35, height: 35 }}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
               navigation.navigate('EditRound', { roundId: id })
             }}
           >
