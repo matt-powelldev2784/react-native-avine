@@ -31,6 +31,7 @@ export const removeScheduledRoundsFromDb = async ({
       await removeScheduledRoundFromoDb({
         roundId: roundId,
         date: date,
+        recurringRound: false,
       })
       console.log(`${roundId} removed from planner collection`)
       return
@@ -47,6 +48,7 @@ export const removeScheduledRoundsFromDb = async ({
       await removeScheduledRoundFromoDb({
         roundId: roundId,
         date: recurringDate,
+        recurringRound: true,
       })
     })
 

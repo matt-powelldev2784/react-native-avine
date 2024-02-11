@@ -21,6 +21,7 @@ export const scheduleRecurringRoundToDb = async (planInfo: planInfoT) => {
       await scheduleRoundToDb({
         roundId: planInfo.roundId,
         date: planInfo.date,
+        recurringRound: false,
       })
       return
     }
@@ -60,7 +61,11 @@ export const scheduleRecurringRoundToDb = async (planInfo: planInfoT) => {
           return
         }
 
-        await scheduleRoundToDb({ roundId: planInfo.roundId, date: date })
+        await scheduleRoundToDb({
+          roundId: planInfo.roundId,
+          date: date,
+          recurringRound: true,
+        })
       }),
     )
 

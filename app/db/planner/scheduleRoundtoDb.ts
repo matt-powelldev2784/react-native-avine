@@ -13,12 +13,15 @@ import { db, auth } from '../../../firebaseConfig'
 interface scheduleRoundToDbT {
   roundId: string
   date: string
+  recurringRound: boolean
 }
 
 export const scheduleRoundToDb = async (planInfo: scheduleRoundToDbT) => {
   if (auth.currentUser === null) {
     return
   }
+
+  const { recurringRound } = planInfo
 
   const plannerDocRef = doc(
     db,
@@ -30,19 +33,31 @@ export const scheduleRoundToDb = async (planInfo: scheduleRoundToDbT) => {
 
   try {
     //add scheduled round to planner document
-    const plannerDoc = await getDoc(plannerDocRef)
+    let plannerDoc = await getDoc(plannerDocRef)
 
     if (!plannerDoc.exists()) {
       await setDoc(plannerDocRef, {
-        relatedRounds: arrayUnion(planInfo.roundId),
+        relatedRounds: [],
         relatedJobs: [],
         completedJobs: [],
+        recurringRounds: [],
+      })
+      plannerDoc = await getDoc(plannerDocRef)
+    }
+
+    if (!plannerDoc.exists()) {
+      throw Error('Error creating planner doc')
+    }
+
+    if (!recurringRound) {
+      await updateDoc(plannerDocRef, {
+        relatedRounds: arrayUnion(planInfo.roundId),
       })
     }
 
-    if (plannerDoc.exists()) {
+    if (recurringRound) {
       await updateDoc(plannerDocRef, {
-        relatedRounds: arrayUnion(planInfo.roundId),
+        recurringRounds: arrayUnion(planInfo.roundId),
       })
     }
 
