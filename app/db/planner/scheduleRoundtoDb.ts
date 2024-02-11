@@ -10,12 +10,18 @@ import {
   getDoc,
 } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { PlanT } from '../../types/PlanT'
+interface scheduleRoundToDbT {
+  roundId: string
+  date: string
+  recurringRound: boolean
+}
 
-export const scheduleRoundToDb_v2 = async (planInfo: PlanT) => {
+export const scheduleRoundToDb = async (planInfo: scheduleRoundToDbT) => {
   if (auth.currentUser === null) {
     return
   }
+
+  const { recurringRound } = planInfo
 
   const plannerDocRef = doc(
     db,
@@ -27,19 +33,31 @@ export const scheduleRoundToDb_v2 = async (planInfo: PlanT) => {
 
   try {
     //add scheduled round to planner document
-    const plannerDoc = await getDoc(plannerDocRef)
+    let plannerDoc = await getDoc(plannerDocRef)
 
     if (!plannerDoc.exists()) {
       await setDoc(plannerDocRef, {
-        relatedRounds: arrayUnion(planInfo.roundId),
+        relatedRounds: [],
         relatedJobs: [],
         completedJobs: [],
+        recurringRounds: [],
+      })
+      plannerDoc = await getDoc(plannerDocRef)
+    }
+
+    if (!plannerDoc.exists()) {
+      throw Error('Error creating planner doc')
+    }
+
+    if (!recurringRound) {
+      await updateDoc(plannerDocRef, {
+        relatedRounds: arrayUnion(planInfo.roundId),
       })
     }
 
-    if (plannerDoc.exists()) {
+    if (recurringRound) {
       await updateDoc(plannerDocRef, {
-        relatedRounds: arrayUnion(planInfo.roundId),
+        recurringRounds: arrayUnion(planInfo.roundId),
       })
     }
 

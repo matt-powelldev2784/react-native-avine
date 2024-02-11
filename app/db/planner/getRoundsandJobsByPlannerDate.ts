@@ -53,8 +53,9 @@ export const getRoundsandJobsByPlannerDate = async (docId: string) => {
       }),
     )
 
-    //get round documents
+    //get realated rounds documents
     const relatedRoundsData = plannerDocData?.relatedRounds || []
+
     const relatedRounds = await Promise.all(
       relatedRoundsData.map(async (roundId: string) => {
         if (auth.currentUser === null) {
@@ -71,6 +72,7 @@ export const getRoundsandJobsByPlannerDate = async (docId: string) => {
         const roundDoc = await getDoc(roundDocRef)
         const roundDocData = {
           id: roundDoc.id,
+          recurringRound: false,
           ...roundDoc.data(),
           relatedJobs: relatedJobs?.filter((job) =>
             job.linkedRounds.includes(roundDoc.id),
@@ -81,9 +83,44 @@ export const getRoundsandJobsByPlannerDate = async (docId: string) => {
       }),
     )
 
-    console.log('Scheduled rounds and related jobs for planner:', relatedRounds)
+    // get recurring round documents
+    const recurringRoundsData = plannerDocData?.recurringRounds || []
 
-    return relatedRounds
+    const recurringRounds = await Promise.all(
+      recurringRoundsData.map(async (roundId: string) => {
+        if (auth.currentUser === null) {
+          return
+        }
+
+        const roundDocRef = doc(
+          db,
+          'users',
+          auth.currentUser.uid,
+          'rounds',
+          roundId,
+        )
+        const roundDoc = await getDoc(roundDocRef)
+        const roundDocData = {
+          id: roundDoc.id,
+          recurringRound: true,
+          ...roundDoc.data(),
+          relatedJobs: relatedJobs?.filter((job) =>
+            job.linkedRounds.includes(roundDoc.id),
+          ),
+        }
+
+        return roundDocData
+      }),
+    )
+
+    const mergredRoundData = [...relatedRounds, ...recurringRounds]
+
+    console.log(
+      'Scheduled rounds and related jobs for planner:',
+      mergredRoundData,
+    )
+
+    return mergredRoundData
   } catch (error) {
     console.error('Error querying scheduled rounds and jobs:', error)
   }

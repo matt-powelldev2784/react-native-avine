@@ -13,11 +13,13 @@ import { db, auth } from '../../../firebaseConfig'
 interface RemoveScheduledRoundFromDb {
   date: string
   roundId: string
+  recurringRound: boolean
 }
 
-export const removeScheduledRounFromoDb = async ({
+export const removeScheduledRoundFromoDb = async ({
   date,
   roundId,
+  recurringRound,
 }: RemoveScheduledRoundFromDb) => {
   if (auth.currentUser === null) {
     return
@@ -29,9 +31,15 @@ export const removeScheduledRounFromoDb = async ({
     //remove scheduled round from planner document
     const plannerDoc = await getDoc(plannerDocRef)
 
-    if (plannerDoc.exists()) {
+    if (plannerDoc.exists() && !recurringRound) {
       await updateDoc(plannerDocRef, {
         relatedRounds: arrayRemove(roundId),
+      })
+    }
+
+    if (plannerDoc.exists() && recurringRound) {
+      await updateDoc(plannerDocRef, {
+        recurringRounds: arrayRemove(roundId),
       })
     }
 
