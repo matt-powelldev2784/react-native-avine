@@ -90,24 +90,31 @@ const ScheduleRoundForm = () => {
                   The {selectedRound?.roundName}&nbsp;
                 </Text>
                 <Text>round is set to be scheduled&nbsp;</Text>
-                <Text style={{ fontWeight: 'bold' }}>{frequencyLabel}.</Text>
+                <Text style={styles.scheduleRoundInfoTextBold}>
+                  {frequencyLabel}.
+                </Text>
               </Text>
 
               <Text style={styles.scheduleRoundInfoText}>
-                Please select &apos;Yes&apos; you want the round to reoccur{' '}
-                <Text style={{ fontWeight: 'bold' }}>{frequencyLabel}.</Text>
+                Select &apos;Yes&apos; you want the round to reoccur{' '}
+                <Text style={styles.scheduleRoundInfoTextBold}>
+                  {frequencyLabel}.
+                </Text>
               </Text>
 
               <Text style={styles.scheduleRoundInfoText}>
-                Otherwise select &apos;No&apos; to schedule the round as a one
-                off.
+                Select &apos;No&apos; to schedule the round as a&nbsp;
+                <Text style={styles.scheduleRoundInfoTextBold}>one off.</Text>
               </Text>
 
               <Text style={styles.scheduleRoundInfoText}>
                 If you wish to change the frequency of the round, click
-                <TouchableOpacity onPress={editRound}>
-                  <Text style={{ fontWeight: 'bold' }}>&nbsp;here&nbsp;</Text>
-                </TouchableOpacity>
+                <Text
+                  onPress={editRound}
+                  style={styles.scheduleRoundInfoTextBold}
+                >
+                  &nbsp;here&nbsp;
+                </Text>
                 to edit the round.
               </Text>
 
@@ -143,7 +150,7 @@ const ScheduleRoundForm = () => {
                 Select the date you wish to add the round and click &quot;Add
                 Round To Planner&quot; button at the bottom.
               </Text>
-              <Text style={styles.scheduleRoundInfo}>
+              <Text style={styles.scheduleRoundInfoText}>
                 The rounds currenty booked on the date displayed will be shown
                 below
               </Text>
@@ -252,6 +259,13 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     textAlign: 'center',
     marginBottom: 2,
+  },
+  scheduleRoundInfoTextBold: {
+    fontSize: 15,
+    color: theme.colors.primary,
+    textAlign: 'center',
+    marginBottom: 2,
+    fontWeight: 'bold',
   },
   weekPlannerWrapper: {
     width: '100%',
