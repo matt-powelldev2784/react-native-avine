@@ -16,14 +16,35 @@ import { useDeviceType } from '../../../utils/deviceTypes'
 import WeekPlanner from '../weekPlanner/WeekPlanner'
 import { formatDateForDb } from '../../../utils/formatDateForDb'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
+import { freqencyArray } from '../../../utils/freqencyArray'
+import { useGetRoundById } from './hooks/useGetRoundById'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 
 const ScheduleRoundForm = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [activeStep, setActiveStep] = useState(0)
   const userRounds = useFetchRounds()
   const formik = useFormikSteps(activeStep)
-  const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
+  const moveToNextStep = useMoveToNextStep({
+    formik,
+    setActiveStep,
+    activeStep,
+  })
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
+  const selectedRound = useGetRoundById(formik.values.roundId)
+  const frequencyLabel = freqencyArray.find(
+    (item) => item.value === selectedRound?.frequency,
+  )?.label
+  const editRound = () => {
+    navigation.navigate('EditRound', {
+      roundId: formik.values.roundId,
+    })
+  }
+
+  console.log('userRounds', userRounds)
 
   useEffect(() => {
     if (formik.values.date === '') {
@@ -46,7 +67,7 @@ const ScheduleRoundForm = () => {
       <FormFlowTitles activeStep={activeStep} />
 
       <View style={styles.formContainer}>
-        {/*********************  Step 1 ***************************/}
+        {/*********************  Step 1 Select Round ***************************/}
         {activeStep === 0 ? (
           <View style={styles.dropdownContainer}>
             <Dropdown
@@ -59,15 +80,77 @@ const ScheduleRoundForm = () => {
             />
           </View>
         ) : null}
-        {/********************* Step 2 Week Planner ***************************/}
+
+        {/********************* Step 2 Select Round Frequency ***************************/}
         {activeStep === 1 ? (
+          <>
+            <View style={styles.scheduleRoundInfo}>
+              <Text style={styles.scheduleRoundInfoText}>
+                <Text style={{ fontWeight: 'bold' }}>
+                  The {selectedRound?.roundName}&nbsp;
+                </Text>
+                <Text>round is set to be scheduled&nbsp;</Text>
+                <Text style={styles.scheduleRoundInfoTextBold}>
+                  {frequencyLabel}.
+                </Text>
+              </Text>
+
+              <Text style={styles.scheduleRoundInfoText}>
+                Select &apos;Yes&apos; you want the round to reoccur{' '}
+                <Text style={styles.scheduleRoundInfoTextBold}>
+                  {frequencyLabel}.
+                </Text>
+              </Text>
+
+              <Text style={styles.scheduleRoundInfoText}>
+                Select &apos;No&apos; to schedule the round as a&nbsp;
+                <Text style={styles.scheduleRoundInfoTextBold}>one off.</Text>
+              </Text>
+
+              <Text style={styles.scheduleRoundInfoText}>
+                If you wish to change the frequency of the round, click
+                <Text
+                  onPress={editRound}
+                  style={styles.scheduleRoundInfoTextBold}
+                >
+                  &nbsp;here&nbsp;
+                </Text>
+                to edit the round.
+              </Text>
+
+              <Text style={styles.scheduleRoundInfoText}>
+                Then return to the planner.
+              </Text>
+            </View>
+
+            <View style={styles.dropdownContainer}>
+              <Dropdown
+                formik={formik}
+                name="recurring"
+                placeholder="Select If Round Is Recurring"
+                title="Add Recurring Round To Planner?"
+                options={[
+                  {
+                    label: `Yes - set ${selectedRound?.roundName} to reoccur ${frequencyLabel}`,
+                    value: true,
+                  },
+                  { label: 'No - set as one off clean', value: false },
+                ]}
+                imageName={'round'}
+              />
+            </View>
+          </>
+        ) : null}
+
+        {/********************* Step 3 Week Planner ***************************/}
+        {activeStep === 2 ? (
           <>
             <View style={styles.scheduleRoundInfo}>
               <Text style={styles.scheduleRoundInfoText}>
                 Select the date you wish to add the round and click &quot;Add
                 Round To Planner&quot; button at the bottom.
               </Text>
-              <Text style={styles.scheduleRoundInfo}>
+              <Text style={styles.scheduleRoundInfoText}>
                 The rounds currenty booked on the date displayed will be shown
                 below
               </Text>
@@ -81,13 +164,28 @@ const ScheduleRoundForm = () => {
 
         {/*********************  Buttons  ***************************/}
         <View style={styles.buttonContainer}>
-          {activeStep < 1 ? (
-            <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
-              <Text style={styles.buttonText}>Next</Text>
-            </TouchableOpacity>
+          {activeStep < 2 ? (
+            <View
+              style={[
+                styles.buttonContainer,
+                isLargeWeb
+                  ? { flexDirection: 'row' }
+                  : { flexDirection: 'column' },
+              ]}
+            >
+              <TouchableOpacity
+                onPress={handleStepBack}
+                style={styles.buttonSecondary}
+              >
+                <Text style={styles.buttonText}>Go Back</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
+                <Text style={styles.buttonText}>Next</Text>
+              </TouchableOpacity>
+            </View>
           ) : null}
 
-          {activeStep === 1 ? (
+          {activeStep === 2 ? (
             <View
               style={[
                 styles.buttonContainer,
@@ -154,12 +252,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
     paddingHorizontal: 8,
+    flex: 1,
   },
   scheduleRoundInfoText: {
     fontSize: 15,
     color: theme.colors.primary,
     textAlign: 'center',
     marginBottom: 2,
+  },
+  scheduleRoundInfoTextBold: {
+    fontSize: 15,
+    color: theme.colors.primary,
+    textAlign: 'center',
+    marginBottom: 2,
+    fontWeight: 'bold',
   },
   weekPlannerWrapper: {
     width: '100%',

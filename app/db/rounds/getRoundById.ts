@@ -20,7 +20,9 @@ export const getRoundById = async (
         id: roundDoc.id,
         ...roundDoc.data(),
       } as RoundWithIdT
+
       console.log('Round data:', roundData)
+
       return roundData
     } else {
       console.log('No such round found')

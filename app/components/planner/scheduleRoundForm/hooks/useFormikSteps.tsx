@@ -11,7 +11,13 @@ export const stepOneSchema = Yup.object().shape({
   roundId: Yup.string().required('Round Name is required'),
 })
 
-export const stepTwoSchema = Yup.object().shape({
+const stepTwoSchema = Yup.object().shape({
+  recurring: Yup.boolean().required(
+    'Select if round is recurring or one-off is required',
+  ),
+})
+
+export const stepThreeSchema = Yup.object().shape({
   date: Yup.string().required('Date is required').length(8),
 })
 
@@ -23,13 +29,16 @@ const useFormikSteps = (activeStep: number) => {
     validationSchema = stepOneSchema
   } else if (activeStep === 1) {
     validationSchema = stepTwoSchema
+  } else if (activeStep === 2) {
+    validationSchema = stepThreeSchema
   }
 
   const formik = useFormik({
     initialValues: {
       roundId: '',
+      roundFrequency: '',
       date: '',
-      recurring: true,
+      recurring: false,
     },
     onSubmit: async (values) => {
       const plannerDate = await getItemFromStorage('@plannerDate')
@@ -46,6 +55,8 @@ const useFormikSteps = (activeStep: number) => {
     },
     validationSchema,
   })
+
+  console.log('formik.values', formik.values)
 
   return formik
 }
