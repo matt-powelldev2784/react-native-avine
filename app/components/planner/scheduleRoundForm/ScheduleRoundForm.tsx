@@ -86,36 +86,21 @@ const ScheduleRoundForm = () => {
           <>
             <View style={styles.scheduleRoundInfo}>
               <Text style={styles.scheduleRoundInfoText}>
-                <Text style={{ fontWeight: 'bold' }}>
-                  The {selectedRound?.roundName}&nbsp;
-                </Text>
-                <Text>round is set to be scheduled&nbsp;</Text>
-                <Text style={styles.scheduleRoundInfoTextBold}>
-                  {frequencyLabel}.
-                </Text>
+                Select one off clean or recurring round.
               </Text>
 
               <Text style={styles.scheduleRoundInfoText}>
-                Select &apos;Yes&apos; you want the round to reoccur{' '}
-                <Text style={styles.scheduleRoundInfoTextBold}>
-                  {frequencyLabel}.
-                </Text>
-              </Text>
-
-              <Text style={styles.scheduleRoundInfoText}>
-                Select &apos;No&apos; to schedule the round as a&nbsp;
-                <Text style={styles.scheduleRoundInfoTextBold}>one off.</Text>
-              </Text>
-
-              <Text style={styles.scheduleRoundInfoText}>
-                If you wish to change the frequency of the round, click
+                If you wish to change the frequency of the recurring round,
+                click
                 <Text
                   onPress={editRound}
                   style={styles.scheduleRoundInfoTextBold}
                 >
                   &nbsp;here&nbsp;
                 </Text>
-                to edit the round.
+                <Text style={styles.scheduleRoundInfoText}>
+                  to edit the {selectedRound?.roundName} round.
+                </Text>
               </Text>
 
               <Text style={styles.scheduleRoundInfoText}>
@@ -127,14 +112,14 @@ const ScheduleRoundForm = () => {
               <Dropdown
                 formik={formik}
                 name="recurring"
-                placeholder="Select If Round Is Recurring"
-                title="Add Recurring Round To Planner?"
+                placeholder="Select One off clean or Recurring Round?"
+                title="One off clean or Recurring Round?"
                 options={[
                   {
-                    label: `Yes - set ${selectedRound?.roundName} to reoccur ${frequencyLabel}`,
+                    label: `${frequencyLabel} recurring round`,
                     value: true,
                   },
-                  { label: 'No - set as one off clean', value: false },
+                  { label: 'One off clean', value: false },
                 ]}
                 imageName={'round'}
               />
