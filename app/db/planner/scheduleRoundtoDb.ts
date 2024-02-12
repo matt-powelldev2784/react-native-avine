@@ -8,6 +8,7 @@ import {
   getDocs,
   setDoc,
   getDoc,
+  arrayRemove,
 } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 interface scheduleRoundToDbT {
@@ -52,12 +53,38 @@ export const scheduleRoundToDb = async (planInfo: scheduleRoundToDbT) => {
     if (!recurringRound) {
       await updateDoc(plannerDocRef, {
         relatedRounds: arrayUnion(planInfo.roundId),
+        recurringRounds: arrayRemove(planInfo.roundId),
+      })
+
+      const recurringRoundDocRef = doc(
+        db,
+        'users',
+        auth.currentUser.uid,
+        'recurringRounds',
+        planInfo.roundId,
+      )
+
+      const recurringRoundDoc = await getDoc(recurringRoundDocRef)
+      if (!recurringRoundDoc.exists()) {
+        throw Error('No recurring round found')
+      }
+
+      const recurringRoundData = recurringRoundDoc.data()
+      if (!recurringRoundData.recurringDates) {
+        throw Error('No recurring dates found')
+      }
+
+      await updateDoc(recurringRoundDocRef, {
+        recurringDates: recurringRoundData.recurringDates.filter(
+          (recurringDate: string) => recurringDate !== planInfo.date,
+        ),
       })
     }
 
     if (recurringRound) {
       await updateDoc(plannerDocRef, {
         recurringRounds: arrayUnion(planInfo.roundId),
+        relatedRounds: arrayRemove(planInfo.roundId),
       })
     }
 

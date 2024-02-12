@@ -33,5 +33,6 @@ export interface RoundWithRelatedJobsT {
   location: string
   frequency: string
   scheduledDates: string[]
+  recurringRound: boolean
   relatedJobs: JobWithIdT[] | undefined | null | []
 }

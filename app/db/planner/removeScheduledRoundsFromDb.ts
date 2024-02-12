@@ -1,15 +1,21 @@
-import { doc, getDoc, deleteDoc } from 'firebase/firestore'
+import { doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { removeScheduledRoundFromoDb } from './removeScheduledRoundFromDb'
 
 interface removeRecurringRoundFromDb {
   date: string
   roundId: string
+  singleEntry: boolean
+  recurringEntry: boolean
+  removeAllRecurringRounds?: boolean
 }
 
 export const removeScheduledRoundsFromDb = async ({
   date,
   roundId,
+  singleEntry,
+  recurringEntry,
+  removeAllRecurringRounds,
 }: removeRecurringRoundFromDb) => {
   if (auth.currentUser === null) {
     return
@@ -24,26 +30,49 @@ export const removeScheduledRoundsFromDb = async ({
   )
 
   try {
-    const recurringRoundDoc = await getDoc(recurringRoundDocRef)
-
-    //if recurring round does not exist, remove single doc from planner and return
-    if (!recurringRoundDoc.exists()) {
+    //if round plan is a single entry, remove single doc from planner and return
+    if (singleEntry) {
       await removeScheduledRoundFromoDb({
         roundId: roundId,
         date: date,
         recurringRound: false,
       })
-      console.log(`${roundId} removed from planner collection`)
+      console.log(`Single entry ${roundId} removed from planner collection`)
       return
     }
 
-    //remove each recurring round from planner and recurring rounds collection
-    const recurringRoundData = recurringRoundDoc.data()
+    //get recurring data from recurringRounds collection
+    const recurringRoundDoc = await getDoc(recurringRoundDocRef)
+    if (!recurringRoundDoc.exists()) {
+      throw Error('No recurring round found')
+    }
 
+    const recurringRoundData = recurringRoundDoc.data()
     if (!recurringRoundData.recurringDates) {
       throw Error('No recurring dates found')
     }
 
+    //if round is recurring entry and but only a single entry should be removed
+    if (recurringEntry && removeAllRecurringRounds === false) {
+      await removeScheduledRoundFromoDb({
+        roundId: roundId,
+        date: date,
+        recurringRound: true,
+      })
+
+      await updateDoc(recurringRoundDocRef, {
+        recurringDates: recurringRoundData.recurringDates.filter(
+          (recurringDate: string) => recurringDate !== date,
+        ),
+      })
+
+      console.log(
+        `Single recurring entry ${roundId} removed from planner collection`,
+      )
+      return
+    }
+
+    //else remove all recurring rounds from planner and recurring rounds collection
     recurringRoundData.recurringDates.map(async (recurringDate: string) => {
       await removeScheduledRoundFromoDb({
         roundId: roundId,
