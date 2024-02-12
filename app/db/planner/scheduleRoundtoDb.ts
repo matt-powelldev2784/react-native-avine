@@ -8,6 +8,7 @@ import {
   getDocs,
   setDoc,
   getDoc,
+  arrayRemove,
 } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 interface scheduleRoundToDbT {
@@ -52,12 +53,14 @@ export const scheduleRoundToDb = async (planInfo: scheduleRoundToDbT) => {
     if (!recurringRound) {
       await updateDoc(plannerDocRef, {
         relatedRounds: arrayUnion(planInfo.roundId),
+        recurringRounds: arrayRemove(planInfo.roundId),
       })
     }
 
     if (recurringRound) {
       await updateDoc(plannerDocRef, {
         recurringRounds: arrayUnion(planInfo.roundId),
+        relatedRounds: arrayRemove(planInfo.roundId),
       })
     }
 

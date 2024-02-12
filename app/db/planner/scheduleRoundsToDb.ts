@@ -10,7 +10,7 @@ interface planInfoT {
   recurring: boolean
 }
 
-export const scheduleRecurringRoundToDb = async (planInfo: planInfoT) => {
+export const scheduleRoundsToDb = async (planInfo: planInfoT) => {
   if (auth.currentUser === null) {
     return
   }
