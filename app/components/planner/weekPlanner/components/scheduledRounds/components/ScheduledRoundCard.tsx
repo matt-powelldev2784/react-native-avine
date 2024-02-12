@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { RoundWithRelatedJobsT } from '../../../../../../types/RoundT'
 import { JobWithIdT } from '../../../../../../types/JobT'
 import theme from '../../../../../../utils/theme/theme'
@@ -7,24 +7,61 @@ import ScheduledJobCard from './ScheduledJobCard'
 import { removeScheduledRoundsFromDb } from '../../../../../../db/planner/removeScheduledRoundsFromDb'
 import usePlannerDateFromStorage from '../../../hooks/usePlannerDateFromStorage'
 import { useWeekPlanner } from '../../../hooks/WeekPlannerContext'
+import { ConfirmModal } from '../../../../../../ui'
 
 interface ScheduledRoundCardProps {
   round: RoundWithRelatedJobsT
 }
 
 const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
+  const [modalVisible, setModalVisible] = useState(false)
   const totalRoundtTime = round?.relatedJobs?.reduce(
     (totalTime: number, job: JobWithIdT) => totalTime + parseFloat(job.time),
     0,
   )
   const plannerDate = usePlannerDateFromStorage('@plannerDate')
   const { setRefreshData } = useWeekPlanner()
+  const { recurringRound } = round
 
-  const handleDeleteRound = async () => {
+  console.log('round', round)
+
+  const handleDeletePress = async () => {
+    if (recurringRound) {
+      setModalVisible(true)
+      return
+    }
     await removeScheduledRoundsFromDb({
       roundId: round.id,
       date: plannerDate,
+      recurringEntry: false,
+      singleEntry: true,
     })
+    setRefreshData(true)
+  }
+
+  const handleDeleteAllRecurringRounds = async () => {
+    await removeScheduledRoundsFromDb({
+      roundId: round.id,
+      date: plannerDate,
+      recurringEntry: true,
+      singleEntry: false,
+    })
+
+    setModalVisible(false)
+    setRefreshData(true)
+  }
+
+  const handleDeleteSingleRecurringRound = async () => {
+    await removeScheduledRoundsFromDb({
+      roundId: round.id,
+      date: plannerDate,
+      recurringEntry: true,
+      singleEntry: false,
+      removeAllRecurringRounds: false,
+    })
+
+    setModalVisible(false)
+    setRefreshData(false)
     setRefreshData(true)
   }
 
@@ -41,7 +78,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
             {round.roundName} {totalRoundtTime} hrs
           </Text>
           <TouchableOpacity
-            onPress={handleDeleteRound}
+            onPress={handleDeletePress}
             style={{ position: 'absolute', right: 12 }}
           >
             <Image
@@ -57,6 +94,15 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
           <ScheduledJobCard key={job.id} job={job} />
         ))}
       </View>
+
+      <ConfirmModal
+        modalText={`Do you want to delete all recurring rounds for ${round.roundName} or just this entry?`}
+        onConfirm={handleDeleteAllRecurringRounds}
+        onCancel={handleDeleteSingleRecurringRound}
+        visible={modalVisible}
+        confirmButtonText={'Delete All'}
+        cancelButtonText={'Delete Single'}
+      />
     </View>
   )
 }

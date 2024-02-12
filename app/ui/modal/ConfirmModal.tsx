@@ -14,6 +14,8 @@ interface ConfirmModalProps {
   onConfirm: () => void
   onCancel: () => void
   modalText: string
+  confirmButtonText?: string
+  cancelButtonText?: string
 }
 
 const ConfirmModal = ({
@@ -21,6 +23,8 @@ const ConfirmModal = ({
   onConfirm,
   onCancel,
   modalText,
+  confirmButtonText,
+  cancelButtonText,
 }: ConfirmModalProps) => {
   return (
     <Modal
@@ -37,13 +41,15 @@ const ConfirmModal = ({
               style={[styles.button, styles.buttonCancel]}
               onPress={onCancel}
             >
-              <Text style={styles.textStyle}>Cancel</Text>
+              <Text style={styles.textStyle}>
+                {cancelButtonText || 'Cancel'}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.button, styles.buttonConfirm]}
               onPress={onConfirm}
             >
-              <Text style={styles.textStyle}>OK</Text>
+              <Text style={styles.textStyle}>{confirmButtonText || 'OK'}</Text>
             </TouchableOpacity>
           </View>
         </View>

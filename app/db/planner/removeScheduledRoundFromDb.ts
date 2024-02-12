@@ -75,7 +75,7 @@ export const removeScheduledRoundFromoDb = async ({
       }),
     )
 
-    console.log(`Round ${roundId} removed from db`)
+    console.log(`Sheduled round ${roundId} removed from db`)
   } catch (error) {
     console.error(`Error removing round ${roundId} from db`, error)
   }
