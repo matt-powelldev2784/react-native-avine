@@ -23,6 +23,7 @@ export const stepThreeSchema = Yup.object().shape({
 
 const useFormikSteps = (activeStep: number) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+
   let validationSchema
 
   if (activeStep === 0) {
@@ -50,6 +51,15 @@ const useFormikSteps = (activeStep: number) => {
 
       console.log(values)
       await scheduleRoundsToDb(values)
+
+      const currentPlannerDate = await getItemFromStorage('@plannerDate')
+
+      if (currentPlannerDate) {
+        AsyncStorage.setItem(
+          '@newScheduledDate',
+          JSON.stringify(currentPlannerDate),
+        )
+      }
 
       navigation.navigate('Planner', { refresh: true })
     },
