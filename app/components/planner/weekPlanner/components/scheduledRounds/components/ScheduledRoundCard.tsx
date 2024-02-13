@@ -8,6 +8,8 @@ import { removeScheduledRoundsFromDb } from '../../../../../../db/planner/remove
 import usePlannerDateFromStorage from '../../../hooks/usePlannerDateFromStorage'
 import { useWeekPlanner } from '../../../hooks/WeekPlannerContext'
 import { ConfirmModal } from '../../../../../../ui'
+import { getItemFromStorage } from '../../../../../../utils/getItemFromStorage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface ScheduledRoundCardProps {
   round: RoundWithRelatedJobsT
@@ -23,8 +25,6 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
   const { setRefreshData } = useWeekPlanner()
   const { recurringRound } = round
 
-  console.log('round', round)
-
   const handleDeletePress = async () => {
     if (recurringRound) {
       setModalVisible(true)
@@ -36,6 +36,13 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
       recurringEntry: false,
       singleEntry: true,
     })
+
+    const currentPlannerDate = await getItemFromStorage('@plannerDate')
+
+    if (currentPlannerDate) {
+      AsyncStorage.setItem('@newScheduledDate', JSON.stringify(plannerDate))
+    }
+
     setRefreshData(true)
   }
 
@@ -46,6 +53,12 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
       recurringEntry: true,
       singleEntry: false,
     })
+
+    const currentPlannerDate = await getItemFromStorage('@plannerDate')
+
+    if (currentPlannerDate) {
+      AsyncStorage.setItem('@newScheduledDate', JSON.stringify(plannerDate))
+    }
 
     setModalVisible(false)
     setRefreshData(true)
@@ -60,8 +73,13 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
       removeAllRecurringRounds: false,
     })
 
+    const currentPlannerDate = await getItemFromStorage('@plannerDate')
+
+    if (currentPlannerDate) {
+      AsyncStorage.setItem('@newScheduledDate', JSON.stringify(plannerDate))
+    }
+
     setModalVisible(false)
-    setRefreshData(false)
     setRefreshData(true)
   }
 
