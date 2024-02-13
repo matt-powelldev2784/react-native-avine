@@ -44,8 +44,6 @@ const ScheduleRoundForm = () => {
     })
   }
 
-  console.log('userRounds', userRounds)
-
   useEffect(() => {
     if (formik.values.date === '') {
       formik.setFieldValue('date', formatDateForDb(new Date()))

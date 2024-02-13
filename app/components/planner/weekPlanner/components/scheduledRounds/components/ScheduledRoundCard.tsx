@@ -40,7 +40,10 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
     const currentPlannerDate = await getItemFromStorage('@plannerDate')
 
     if (currentPlannerDate) {
-      AsyncStorage.setItem('@newScheduledDate', JSON.stringify(plannerDate))
+      AsyncStorage.setItem(
+        '@newScheduledDate',
+        JSON.stringify(currentPlannerDate),
+      )
     }
 
     setRefreshData(true)
@@ -57,7 +60,10 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
     const currentPlannerDate = await getItemFromStorage('@plannerDate')
 
     if (currentPlannerDate) {
-      AsyncStorage.setItem('@newScheduledDate', JSON.stringify(plannerDate))
+      AsyncStorage.setItem(
+        '@newScheduledDate',
+        JSON.stringify(currentPlannerDate),
+      )
     }
 
     setModalVisible(false)
@@ -76,7 +82,10 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
     const currentPlannerDate = await getItemFromStorage('@plannerDate')
 
     if (currentPlannerDate) {
-      AsyncStorage.setItem('@newScheduledDate', JSON.stringify(plannerDate))
+      AsyncStorage.setItem(
+        '@newScheduledDate',
+        JSON.stringify(currentPlannerDate),
+      )
     }
 
     setModalVisible(false)
