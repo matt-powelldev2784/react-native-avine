@@ -108,7 +108,7 @@ export const scheduleRoundToDb = async (planInfo: scheduleRoundToDbT) => {
       }),
     )
 
-    console.log('Schedule round to db:', planInfo.date)
+    console.log(`Scheduled round ${planInfo.roundId} to db on ${planInfo.date}`)
   } catch (error) {
     console.error('Error scheduling round on selected date', error)
   }

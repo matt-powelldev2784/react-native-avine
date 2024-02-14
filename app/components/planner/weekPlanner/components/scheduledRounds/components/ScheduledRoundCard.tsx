@@ -5,7 +5,6 @@ import { JobWithIdT } from '../../../../../../types/JobT'
 import theme from '../../../../../../utils/theme/theme'
 import ScheduledJobCard from './ScheduledJobCard'
 import { removeScheduledRoundsFromDb } from '../../../../../../db/planner/removeScheduledRoundsFromDb'
-import { useWeekPlanner } from '../../../hooks/WeekPlannerContext'
 import { ConfirmModal } from '../../../../../../ui'
 import { getItemFromStorage } from '../../../../../../utils/getItemFromStorage'
 import { useNavigation } from '@react-navigation/native'
@@ -24,7 +23,6 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
     (totalTime: number, job: JobWithIdT) => totalTime + parseFloat(job.time),
     0,
   )
-  const { setRefreshData } = useWeekPlanner()
   const { recurringRound } = round
 
   const handleDeletePress = async () => {
@@ -49,7 +47,6 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
       )
     }
 
-    setRefreshData(true)
     navigation.navigate('Planner', { refresh: true })
   }
 
@@ -71,7 +68,6 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
     }
 
     setModalVisible(false)
-    setRefreshData(true)
     navigation.navigate('Planner', { refresh: true })
   }
 
@@ -94,7 +90,6 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
     }
 
     setModalVisible(false)
-    setRefreshData(true)
     navigation.navigate('Planner', { refresh: true })
   }
 

@@ -36,18 +36,12 @@ export const removeScheduledRoundFromoDb = async ({
     }
 
     if (!recurringRound) {
-      console.log('test !recurringRound')
-      console.log('typeof RoundId', typeof roundId)
-      console.log('date', date)
       await updateDoc(plannerDocRef, {
         relatedRounds: arrayRemove(roundId),
       })
     }
 
     if (recurringRound) {
-      console.log('test recurringRound')
-      console.log('typeof RoundId', typeof roundId)
-      console.log('date', date)
       await updateDoc(plannerDocRef, {
         recurringRounds: arrayRemove(roundId),
       })
