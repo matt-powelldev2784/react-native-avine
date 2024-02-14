@@ -130,8 +130,7 @@ const ScheduleRoundForm = () => {
           <>
             <View style={styles.scheduleRoundInfo}>
               <Text style={styles.scheduleRoundInfoText}>
-                Select the date you wish to add the round and click &quot;Add
-                Round To Planner&quot; button at the bottom.
+                Select date and click &quot;Add Round To Planner&quot; button.
               </Text>
               <Text style={styles.scheduleRoundInfoText}>
                 The rounds currenty booked on the date displayed will be shown

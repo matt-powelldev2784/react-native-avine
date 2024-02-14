@@ -31,13 +31,17 @@ export const removeScheduledRoundFromoDb = async ({
     //remove scheduled round from planner document
     const plannerDoc = await getDoc(plannerDocRef)
 
-    if (plannerDoc.exists() && !recurringRound) {
+    if (!plannerDoc.exists()) {
+      throw 'Document does not exist!'
+    }
+
+    if (!recurringRound) {
       await updateDoc(plannerDocRef, {
         relatedRounds: arrayRemove(roundId),
       })
     }
 
-    if (plannerDoc.exists() && recurringRound) {
+    if (recurringRound) {
       await updateDoc(plannerDocRef, {
         recurringRounds: arrayRemove(roundId),
       })
