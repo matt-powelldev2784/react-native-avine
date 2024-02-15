@@ -13,19 +13,21 @@ import theme from '../../utils/theme/theme'
 interface ConfirmModalProps {
   visible: boolean
   onConfirm: () => void
-  onConfirm2: () => void
+  onConfirm2?: () => void
   onCancel: () => void
   modalText: string
   modalText2?: string
   modalText3?: string
   confirmButtonText?: string
   cancelButtonText?: string
+  onConfirmText2?: string
 }
 
 const ConfirmModal = ({
   visible,
   onConfirm,
   onConfirm2,
+  onConfirmText2,
   onCancel,
   modalText,
   modalText2,
@@ -42,6 +44,7 @@ const ConfirmModal = ({
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
+          {/********************************** Close Button ***********************************/}
           <TouchableOpacity style={styles.closeButton} onPress={onCancel}>
             <Image
               source={require('../../../assets/cross_white.png')}
@@ -49,6 +52,7 @@ const ConfirmModal = ({
             />
           </TouchableOpacity>
 
+          {/********************************** Text ***********************************/}
           <Text style={styles.modalText}>{modalText}</Text>
 
           {modalText2 ? (
@@ -59,15 +63,14 @@ const ConfirmModal = ({
             <Text style={styles.modalText}>{modalText3}</Text>
           ) : null}
 
+          {/* If there is a second confirm button, show it, else show the cancel button */}
           <View style={styles.buttonContainer}>
             {onConfirm2 ? (
               <TouchableOpacity
                 style={[styles.button, styles.buttonCancel]}
                 onPress={onConfirm2}
               >
-                <Text style={styles.textStyle}>
-                  {cancelButtonText || 'Cancel'}
-                </Text>
+                <Text style={styles.textStyle}>{onConfirmText2}</Text>
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
@@ -80,6 +83,7 @@ const ConfirmModal = ({
               </TouchableOpacity>
             )}
 
+            {/********************************** Confirm Button ***********************************/}
             <TouchableOpacity
               style={[styles.button, styles.buttonConfirm]}
               onPress={onConfirm}
