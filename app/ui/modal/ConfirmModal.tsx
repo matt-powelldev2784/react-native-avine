@@ -6,12 +6,14 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
+  Image,
 } from 'react-native'
 import theme from '../../utils/theme/theme'
 
 interface ConfirmModalProps {
   visible: boolean
   onConfirm: () => void
+  onConfirm2: () => void
   onCancel: () => void
   modalText: string
   modalText2?: string
@@ -23,6 +25,7 @@ interface ConfirmModalProps {
 const ConfirmModal = ({
   visible,
   onConfirm,
+  onConfirm2,
   onCancel,
   modalText,
   modalText2,
@@ -39,6 +42,13 @@ const ConfirmModal = ({
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
+          <TouchableOpacity style={styles.closeButton} onPress={onCancel}>
+            <Image
+              source={require('../../../assets/cross_white.png')}
+              style={{ width: 12, height: 12 }}
+            />
+          </TouchableOpacity>
+
           <Text style={styles.modalText}>{modalText}</Text>
 
           {modalText2 ? (
@@ -50,14 +60,26 @@ const ConfirmModal = ({
           ) : null}
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonCancel]}
-              onPress={onCancel}
-            >
-              <Text style={styles.textStyle}>
-                {cancelButtonText || 'Cancel'}
-              </Text>
-            </TouchableOpacity>
+            {onConfirm2 ? (
+              <TouchableOpacity
+                style={[styles.button, styles.buttonCancel]}
+                onPress={onConfirm2}
+              >
+                <Text style={styles.textStyle}>
+                  {cancelButtonText || 'Cancel'}
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={[styles.button, styles.buttonCancel]}
+                onPress={onCancel}
+              >
+                <Text style={styles.textStyle}>
+                  {cancelButtonText || 'Cancel'}
+                </Text>
+              </TouchableOpacity>
+            )}
+
             <TouchableOpacity
               style={[styles.button, styles.buttonConfirm]}
               onPress={onConfirm}
@@ -89,6 +111,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: '#337bae',
     maxWidth: 400,
+    paddingTop: 50,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -108,6 +131,21 @@ const styles = StyleSheet.create({
   },
   buttonConfirm: {
     backgroundColor: '#337bae',
+  },
+  closeButton: {
+    alignItems: 'center',
+    backgroundColor: '#337bae',
+    padding: 8,
+    borderRadius: 8,
+    position: 'absolute',
+    top: 8,
+    right: 8,
+  },
+  closeText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 24,
   },
   textStyle: {
     color: 'white',
