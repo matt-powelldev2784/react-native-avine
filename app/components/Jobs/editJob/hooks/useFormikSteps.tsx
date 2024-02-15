@@ -4,10 +4,14 @@ import * as Yup from 'yup'
 import { updateJobInDb } from '../../../../db/jobs/updateJobIDb'
 import { getJobById } from '../../../../db/jobs/getJobById'
 import { JobWithIdT } from '../../../../types/JobT'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 
 export const stepOneSchema = Yup.object().shape({
   jobName: Yup.string().required('Name is required'),
   address: Yup.string().required('Address is required'),
+  town: Yup.string().required('Town is required'),
   postcode: Yup.string().required('Post Code is required'),
 })
 
@@ -35,10 +39,16 @@ export const stepThreeSchema = Yup.object().shape({
 
 interface useFormikStepsInterface {
   activeStep: number
+  setActiveStep: (step: number) => void
   jobId: string
 }
 
-const useFormikSteps = ({ activeStep, jobId }: useFormikStepsInterface) => {
+const useFormikSteps = ({
+  activeStep,
+  jobId,
+  setActiveStep,
+}: useFormikStepsInterface) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [jobData, setJobData] = useState<JobWithIdT | null | undefined>(null)
 
   let validationSchema
@@ -69,6 +79,7 @@ const useFormikSteps = ({ activeStep, jobId }: useFormikStepsInterface) => {
       id: '',
       jobName: '',
       address: '',
+      town: '',
       postcode: '',
       jobType: '',
       time: '',
@@ -80,6 +91,8 @@ const useFormikSteps = ({ activeStep, jobId }: useFormikStepsInterface) => {
     },
     onSubmit: async (values) => {
       await updateJobInDb({ jobId, jobData: values })
+      setActiveStep(0)
+      navigation.navigate('Jobs', { refresh: true })
     },
     validationSchema,
     enableReinitialize: true,
