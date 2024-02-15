@@ -21,16 +21,20 @@ import { useGetRoundById } from './hooks/useGetRoundById'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
+import { ConfirmModal } from '../../../ui'
 
 const ScheduleRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [activeStep, setActiveStep] = useState(0)
+  const [recurringRoundExistsMessage, setRecurringRoundExistsMessage] =
+    useState(false)
   const userRounds = useFetchRounds()
   const formik = useFormikSteps(activeStep)
   const moveToNextStep = useMoveToNextStep({
     formik,
     setActiveStep,
     activeStep,
+    setRecurringRoundExistsMessage,
   })
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
@@ -83,6 +87,24 @@ const ScheduleRoundForm = () => {
         {activeStep === 1 ? (
           <>
             <View style={styles.scheduleRoundInfo}>
+              {recurringRoundExistsMessage ? (
+                <ConfirmModal
+                  modalText={`A recurring round already exists for ${selectedRound?.roundName}. You may only have one set of recurring entries per round.`}
+                  modalText2={`The current recurring round entries for ${selectedRound?.roundName} will be over written!`}
+                  modalText3={'Do you wish to continue?'}
+                  onConfirm={() => {
+                    setRecurringRoundExistsMessage(false)
+                    setActiveStep((prev) => prev + 1)
+                  }}
+                  onCancel={() => {
+                    setRecurringRoundExistsMessage(false)
+                  }}
+                  cancelButtonText={'Cancel'}
+                  confirmButtonText={'Yes'}
+                  visible={true}
+                />
+              ) : null}
+
               <Text style={styles.scheduleRoundInfoText}>
                 Select one off clean or recurring round.
               </Text>
@@ -245,6 +267,13 @@ const styles = StyleSheet.create({
   scheduleRoundInfoTextBold: {
     fontSize: 15,
     color: theme.colors.primary,
+    textAlign: 'center',
+    marginBottom: 2,
+    fontWeight: 'bold',
+  },
+  scheduleRoundInfoTextRed: {
+    fontSize: 15,
+    color: 'red',
     textAlign: 'center',
     marginBottom: 2,
     fontWeight: 'bold',
