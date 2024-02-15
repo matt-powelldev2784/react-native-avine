@@ -10,13 +10,14 @@ import {
 import { FormikProps } from 'formik'
 import { inputIcons } from './inputIcons'
 import theme from '../../utils/theme/theme'
+import { KeyboardTypeOptions } from 'react-native'
 
 interface InputFieldProps {
   formik: FormikProps<any>
   name: string
   placeholder: string
   title: string
-  numericInput?: boolean
+  keyboardType?: KeyboardTypeOptions
   imageName: keyof typeof inputIcons
 }
 
@@ -25,7 +26,7 @@ const InputField: React.FC<InputFieldProps> = ({
   name,
   placeholder,
   title,
-  numericInput,
+  keyboardType,
   imageName,
 }) => {
   return (
@@ -44,7 +45,7 @@ const InputField: React.FC<InputFieldProps> = ({
             ? styles.errorInput
             : styles.input,
         ]}
-        keyboardType={numericInput ? 'numeric' : 'default'}
+        keyboardType={keyboardType !== undefined ? keyboardType : 'default'}
       />
       {formik.touched[name] && formik.errors[name] ? (
         <Text style={styles.errorText}>{String(formik.errors[name])}</Text>

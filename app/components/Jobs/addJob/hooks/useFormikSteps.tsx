@@ -8,6 +8,7 @@ import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavi
 export const stepOneSchema = Yup.object().shape({
   jobName: Yup.string().required('Name is required'),
   address: Yup.string().required('Address is required'),
+  town: Yup.string().required('Town is required'),
   postcode: Yup.string().required('Post Code is required'),
 })
 
@@ -49,6 +50,7 @@ const useFormikSteps = (activeStep: number) => {
     initialValues: {
       jobName: '',
       address: '',
+      town: '',
       postcode: '',
       jobType: '',
       time: '',

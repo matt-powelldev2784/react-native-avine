@@ -5,6 +5,7 @@ import {
   Text,
   View,
   ScrollView,
+  Platform,
 } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from '../../../ui/formElements/InputField'
@@ -53,7 +54,14 @@ const AddJobForm = () => {
               formik={formik}
               name="address"
               placeholder="Address"
-              title="Job Address"
+              title="Address"
+              imageName={'location'}
+            />
+            <InputField
+              formik={formik}
+              name="town"
+              placeholder="Town"
+              title="Town"
               imageName={'location'}
             />
             <InputField
@@ -81,7 +89,7 @@ const AddJobForm = () => {
               name="contactTel"
               placeholder="Contact Telephone Number"
               title="Contact Telephone Number"
-              numericInput={true}
+              keyboardType={'phone-pad'}
               imageName={'tel'}
             />
           </>
@@ -102,7 +110,7 @@ const AddJobForm = () => {
               name="time"
               placeholder="Estimated Job Time In Hours e.g 1.5"
               title="Estimated Job Time"
-              numericInput={true}
+              keyboardType={Platform.OS === 'web' ? 'default' : 'numeric'}
               imageName={'clock'}
             />
             <InputField
@@ -110,7 +118,7 @@ const AddJobForm = () => {
               name="price"
               placeholder="Price"
               title="Price"
-              numericInput={true}
+              keyboardType={Platform.OS === 'web' ? 'default' : 'numeric'}
               imageName={'poundSign'}
             />
             <Dropdown
@@ -126,7 +134,6 @@ const AddJobForm = () => {
               name="notes"
               placeholder="Notes"
               title="Notes"
-              numericInput={true}
               imageName={'notes'}
             />
           </>
