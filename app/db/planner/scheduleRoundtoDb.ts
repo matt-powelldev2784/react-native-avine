@@ -56,6 +56,8 @@ export const scheduleRoundToDb = async (planInfo: scheduleRoundToDbT) => {
         recurringRounds: arrayRemove(planInfo.roundId),
       })
 
+      //logic to remove recurring round date from recurring round collection if it exists
+      //one off round will overwrite a recurring round if it exists
       const recurringRoundDocRef = doc(
         db,
         'users',
@@ -66,7 +68,8 @@ export const scheduleRoundToDb = async (planInfo: scheduleRoundToDbT) => {
 
       const recurringRoundDoc = await getDoc(recurringRoundDocRef)
       if (!recurringRoundDoc.exists()) {
-        throw Error('No recurring round found')
+        console.log('No recurring round found')
+        return
       }
 
       const recurringRoundData = recurringRoundDoc.data()
