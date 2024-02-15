@@ -48,8 +48,12 @@ export const useMoveToNextStep = ({
       const recuringRoundExits =
         checkForRecurringRound?.recurringRoundExists || false
 
-      setRecurringRoundExistsMessage(recuringRoundExits)
+      if (recuringRoundExits) {
+        setRecurringRoundExistsMessage(recuringRoundExits)
+        return moveToNextStep
+      }
 
+      setActiveStep((prev) => prev + 1)
       formik.setTouched({})
 
       return moveToNextStep
