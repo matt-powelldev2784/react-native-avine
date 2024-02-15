@@ -130,7 +130,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
         onCancel={() => setModalVisible(false)}
         visible={modalVisible}
         confirmButtonText={'Delete All'}
-        cancelButtonText={'Delete Single'}
+        onConfirmText2={'Delete Single'}
       />
     </View>
   )
