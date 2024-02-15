@@ -14,6 +14,8 @@ interface ConfirmModalProps {
   onConfirm: () => void
   onCancel: () => void
   modalText: string
+  modalText2?: string
+  modalText3?: string
   confirmButtonText?: string
   cancelButtonText?: string
 }
@@ -23,6 +25,8 @@ const ConfirmModal = ({
   onConfirm,
   onCancel,
   modalText,
+  modalText2,
+  modalText3,
   confirmButtonText,
   cancelButtonText,
 }: ConfirmModalProps) => {
@@ -36,6 +40,15 @@ const ConfirmModal = ({
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.modalText}>{modalText}</Text>
+
+          {modalText2 ? (
+            <Text style={styles.modalText}>{modalText2}</Text>
+          ) : null}
+
+          {modalText3 ? (
+            <Text style={styles.modalText}>{modalText3}</Text>
+          ) : null}
+
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={[styles.button, styles.buttonCancel]}
@@ -75,6 +88,7 @@ const styles = StyleSheet.create({
     borderWidth: 8,
     borderStyle: 'solid',
     borderColor: '#337bae',
+    maxWidth: 400,
   },
   buttonContainer: {
     flexDirection: 'row',

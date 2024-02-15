@@ -1,4 +1,5 @@
-import { doc, setDoc } from 'firebase/firestore'
+import { removeScheduledRoundsFromDb } from './removeScheduledRoundsFromDb'
+import { doc, setDoc, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { getRoundById } from '../rounds/getRoundById'
 import { getRecurringDatesTwoYearsAhead } from '../../utils/getRecurringDates2YearsAhead'
@@ -26,20 +27,35 @@ export const scheduleRoundsToDb = async (planInfo: planInfoT) => {
       return
     }
 
-    //add recurring round to recurringRounds collection
+    //get round info
     const round = await getRoundById(planInfo.roundId)
     if (!round) {
       return
     }
 
+    // get recurring round doc ref
     const recurringRoundDoc = doc(
       db,
       'users',
       auth.currentUser.uid,
       'recurringRounds',
-      planInfo?.roundId,
+      planInfo.roundId,
     )
 
+    //remove existing recurring round from db if it exists
+    // users are only allowed one recurring entry per round
+    const recurringRoundDocSnap = await getDoc(recurringRoundDoc)
+
+    if (recurringRoundDocSnap.exists()) {
+      await removeScheduledRoundsFromDb({
+        date: planInfo.date,
+        roundId: planInfo.roundId,
+        singleEntry: false,
+        recurringEntry: true,
+      })
+    }
+
+    //add recurring round to recurringRounds collection
     const recurringDates = getRecurringDatesTwoYearsAhead(
       planInfo.date,
       round.frequency,
@@ -48,7 +64,7 @@ export const scheduleRoundsToDb = async (planInfo: planInfoT) => {
     await setDoc(recurringRoundDoc, {
       roundId: planInfo.roundId,
       startDate: planInfo.date,
-      frequency: round?.frequency,
+      frequency: round.frequency,
       recurringDates: recurringDates,
     })
 
