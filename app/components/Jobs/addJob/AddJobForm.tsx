@@ -11,19 +11,25 @@ import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
+
 import theme from '../../../utils/theme/theme'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { freqencyArray } from '../../../utils/freqencyArray'
+import { useDeviceType } from '../../../utils/deviceTypes'
 
 const AddJobForm = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [activeStep, setActiveStep] = useState(0)
   const formik = useFormikSteps(activeStep)
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
+  const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
+
+  const handleStepBack = () => {
+    if (activeStep === 0) {
+      return
+    }
+    setActiveStep((prev) => prev - 1)
+  }
 
   return (
     <ScrollView
@@ -126,28 +132,42 @@ const AddJobForm = () => {
           </>
         ) : null}
 
+        {/*********************  buttons ***************************/}
         <View style={styles.buttonContainer}>
-          {activeStep < 2 ? (
-            <>
+          <View
+            style={[
+              styles.buttonContainer,
+              isLargeWeb
+                ? { flexDirection: 'row' }
+                : { flexDirection: 'column' },
+            ]}
+          >
+            {activeStep > 0 ? (
+              <TouchableOpacity
+                onPress={handleStepBack}
+                style={styles.buttonSecondary}
+              >
+                <Text style={styles.buttonText}>Go Back</Text>
+              </TouchableOpacity>
+            ) : null}
+
+            {activeStep >= 0 && activeStep < 2 ? (
               <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
                 <Text style={styles.buttonText}>Next</Text>
               </TouchableOpacity>
-            </>
-          ) : null}
+            ) : null}
 
-          {activeStep === 2 ? (
-            <TouchableOpacity
-              onPress={() => {
-                formik.handleSubmit()
-                if (formik.isValid) {
-                  navigation.navigate('Jobs', { refresh: true })
-                }
-              }}
-              style={styles.button}
-            >
-              <Text style={styles.buttonText}>Add Job</Text>
-            </TouchableOpacity>
-          ) : null}
+            {activeStep === 2 ? (
+              <TouchableOpacity
+                onPress={() => {
+                  formik.handleSubmit()
+                }}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Add Job</Text>
+              </TouchableOpacity>
+            ) : null}
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -179,12 +199,23 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
+    flexDirection: 'column',
+    width: '100%',
     maxWidth: 600,
+    gap: 8,
   },
   button: {
     alignItems: 'center',
     backgroundColor: theme.colors.primary,
+    padding: 10,
+    paddingHorizontal: 32,
+    borderRadius: 8,
+    width: '100%',
+    maxWidth: 270,
+  },
+  buttonSecondary: {
+    alignItems: 'center',
+    backgroundColor: theme.colors.buttonSecondary,
     padding: 10,
     paddingHorizontal: 32,
     borderRadius: 8,

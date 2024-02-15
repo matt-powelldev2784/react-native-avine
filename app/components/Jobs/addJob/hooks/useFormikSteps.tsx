@@ -1,6 +1,9 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { addJobToDb } from '../../../../db/jobs/addJobtoDb'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 
 export const stepOneSchema = Yup.object().shape({
   jobName: Yup.string().required('Name is required'),
@@ -31,6 +34,7 @@ export const stepThreeSchema = Yup.object().shape({
 })
 
 const useFormikSteps = (activeStep: number) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   let validationSchema
 
   if (activeStep === 0) {
@@ -58,6 +62,7 @@ const useFormikSteps = (activeStep: number) => {
     onSubmit: (values) => {
       console.log(values)
       addJobToDb(values)
+      navigation.navigate('Jobs', { refresh: true })
     },
     validationSchema,
   })
