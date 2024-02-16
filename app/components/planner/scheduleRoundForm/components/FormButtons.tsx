@@ -40,15 +40,12 @@ const FormButtons = ({
     setRecurringRoundExistsMessage,
   })
 
+  const containerStyle = isLargeWeb ? 'row' : 'column'
+
   return (
-    <View style={styles.buttonContainer}>
+    <View style={styles.container}>
       {activeStep < 2 ? (
-        <View
-          style={[
-            styles.buttonContainer,
-            { flexDirection: isLargeWeb ? 'row' : 'column' },
-          ]}
-        >
+        <View style={[styles.container, { flexDirection: containerStyle }]}>
           <Button
             onPress={handleStepBack}
             text={'Go Back'}
@@ -60,12 +57,7 @@ const FormButtons = ({
       ) : null}
 
       {activeStep === 2 ? (
-        <View
-          style={[
-            styles.buttonContainer,
-            { flexDirection: isLargeWeb ? 'row' : 'column' },
-          ]}
-        >
+        <View style={[styles.container, { flexDirection: containerStyle }]}>
           <Button
             onPress={handleStepBack}
             text={'Go Back'}
@@ -84,7 +76,7 @@ const FormButtons = ({
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
+  container: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
