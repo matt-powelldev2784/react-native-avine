@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { ConfirmModal } from '../../../../ui'
 import { useGetRoundById } from '../hooks/useGetRoundById'
@@ -9,7 +9,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 import { FormikProps } from 'formik'
 import theme from '../../../../utils/theme/theme'
-import { RoundWithIdT } from '../../../../types/RoundT'
+import { getFrequencyOptions } from './utils/getFrequencyOptions'
 
 interface FormStepTwoProps {
   setRecurringRoundExistsMessage: React.Dispatch<React.SetStateAction<boolean>>
@@ -26,16 +26,7 @@ const FormStepTwo = ({
 }: FormStepTwoProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const selectedRound = useGetRoundById(formik.values.roundId)
-
-  const getFrequencyLabel = (round: RoundWithIdT | null) => {
-    const roundFrequency = round?.frequency
-    const matchingItem = freqencyArray.find(
-      (item) => item.value === roundFrequency,
-    )
-    const frequencyLabel = matchingItem?.label
-    return frequencyLabel
-  }
-  const frequencyLabel = getFrequencyLabel(selectedRound)
+  const frequencyOptions = getFrequencyOptions(selectedRound)
 
   const editRound = () => {
     navigation.navigate('EditRound', {
@@ -45,24 +36,20 @@ const FormStepTwo = ({
 
   return (
     <>
-      <View style={styles.scheduleRoundInfo}>
-        <Text style={styles.scheduleRoundInfoText}>
+      <View style={styles.container}>
+        <Text style={styles.text}>
           Select one off clean or recurring round.
         </Text>
 
-        <Text style={styles.scheduleRoundInfoText}>
-          If you wish to change the frequency of the recurring round, click
-          <Text onPress={editRound} style={styles.scheduleRoundInfoTextBold}>
-            &nbsp;here&nbsp;
-          </Text>
-          <Text style={styles.scheduleRoundInfoText}>
-            to edit the {selectedRound?.roundName} round.
-          </Text>
+        <Text onPress={editRound} style={styles.text}>
+          If you wish to change the frequency of the recurring round,
+          <TouchableOpacity onPress={editRound} style={styles.textBold}>
+            <Text style={styles.text}>&nbsp;click here&nbsp;</Text>
+          </TouchableOpacity>
+          to edit the {selectedRound?.roundName} round.
         </Text>
 
-        <Text style={styles.scheduleRoundInfoText}>
-          Then return to the planner.
-        </Text>
+        <Text style={styles.text}>Then return to the planner.</Text>
       </View>
 
       <View style={styles.dropdownContainer}>
@@ -71,13 +58,7 @@ const FormStepTwo = ({
           name="recurring"
           placeholder="Select One off clean or Recurring Round?"
           title="One off clean or Recurring Round?"
-          options={[
-            {
-              label: `${frequencyLabel} recurring round`,
-              value: true,
-            },
-            { label: 'One off clean', value: false },
-          ]}
+          options={frequencyOptions}
           imageName={'round'}
         />
       </View>
@@ -105,23 +86,8 @@ const FormStepTwo = ({
 }
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    backgroundColor: 'white',
-  },
-  wrapper: {
-    width: '100%',
-    backgroundColor: 'white',
-    paddingTop: 16,
-  },
-  formContainer: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 6,
-    backgroundColor: 'white',
+  container: {
+    paddingHorizontal: 8,
   },
   dropdownContainer: {
     width: '90%',
@@ -131,45 +97,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     maxWidth: 600,
   },
-  scheduleRoundInfo: {
-    fontSize: 15,
-    color: theme.colors.primary,
-    marginBottom: 10,
-    textAlign: 'center',
-    paddingHorizontal: 8,
-    flex: 1,
-  },
-  scheduleRoundInfoText: {
+  text: {
     fontSize: 15,
     color: theme.colors.primary,
     textAlign: 'center',
     marginBottom: 2,
   },
-  scheduleRoundInfoTextBold: {
+  textBold: {
     fontSize: 15,
     color: theme.colors.primary,
     textAlign: 'center',
     marginBottom: 2,
     fontWeight: 'bold',
   },
-  scheduleRoundInfoTextRed: {
-    fontSize: 15,
-    color: 'red',
-    textAlign: 'center',
-    marginBottom: 2,
-    fontWeight: 'bold',
-  },
-  weekPlannerWrapper: {
-    width: '100%',
-    paddingBottom: 24,
-  },
-  addJobText: {
-    fontSize: 16,
-    color: theme.colors.primary,
-    marginBottom: 32,
-    textAlign: 'center',
-  },
-  footer: { height: 70 },
 })
 
 export default FormStepTwo
