@@ -30,6 +30,11 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'react', 'jest'],
   rules: {
+    'padding-line-between-statements': [
+      'error',
+      { blankLine: 'always', prev: '*', next: 'function' },
+      { blankLine: 'always', prev: 'function', next: '*' },
+    ],
     'react-native/no-inline-styles': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     semi: ['error', 'never'],

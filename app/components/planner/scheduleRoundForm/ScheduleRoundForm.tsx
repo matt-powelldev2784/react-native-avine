@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, View, ScrollView } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import Dropdown from '../../../ui/formElements/DropDown'
 import FormFlowTitles from './components/FormFlowTitles'
@@ -7,35 +7,19 @@ import theme from '../../../utils/theme/theme'
 import { useFetchRounds } from './hooks/useFetchRounds'
 import { formatDateForDb } from '../../../utils/formatDateForDb'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
-import { freqencyArray } from '../../../utils/freqencyArray'
-import { useGetRoundById } from './hooks/useGetRoundById'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
-import { ConfirmModal } from '../../../ui'
 import FormButtons from './components/FormButtons'
 import FormStepThree from './components/FormStepThree'
+import FormStepTwo from './components/FormStepTwo'
 
 const ScheduleRoundForm = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const [activeStep, setActiveStep] = useState(0)
+  const [activeStep, setActiveStep] = useState(1)
   const [recurringRoundExistsMessage, setRecurringRoundExistsMessage] =
     useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const userRounds = useFetchRounds()
   const formik = useFormikSteps({ activeStep, setIsLoading })
-
   useFormResetOnBlur(formik, setActiveStep)
-  const selectedRound = useGetRoundById(formik.values.roundId)
-  const frequencyLabel = freqencyArray.find(
-    (item) => item.value === selectedRound?.frequency,
-  )?.label
-  const editRound = () => {
-    navigation.navigate('EditRound', {
-      roundId: formik.values.roundId,
-    })
-  }
 
   useEffect(() => {
     if (formik.values.date === '') {
@@ -67,66 +51,12 @@ const ScheduleRoundForm = () => {
 
         {/********************* Step 2 Select Round Frequency ***************************/}
         {activeStep === 1 ? (
-          <>
-            <View style={styles.scheduleRoundInfo}>
-              {recurringRoundExistsMessage ? (
-                <ConfirmModal
-                  modalText={`A recurring round already exists for ${selectedRound?.roundName}. You may only have one set of recurring entries per round.`}
-                  modalText2={`The current recurring round entries for ${selectedRound?.roundName} will be over written!`}
-                  modalText3={'Do you wish to continue?'}
-                  onConfirm={() => {
-                    setRecurringRoundExistsMessage(false)
-                    setActiveStep((prev) => prev + 1)
-                  }}
-                  onCancel={() => {
-                    setRecurringRoundExistsMessage(false)
-                  }}
-                  cancelButtonText={'Cancel'}
-                  confirmButtonText={'Yes'}
-                  visible={true}
-                />
-              ) : null}
-
-              <Text style={styles.scheduleRoundInfoText}>
-                Select one off clean or recurring round.
-              </Text>
-
-              <Text style={styles.scheduleRoundInfoText}>
-                If you wish to change the frequency of the recurring round,
-                click
-                <Text
-                  onPress={editRound}
-                  style={styles.scheduleRoundInfoTextBold}
-                >
-                  &nbsp;here&nbsp;
-                </Text>
-                <Text style={styles.scheduleRoundInfoText}>
-                  to edit the {selectedRound?.roundName} round.
-                </Text>
-              </Text>
-
-              <Text style={styles.scheduleRoundInfoText}>
-                Then return to the planner.
-              </Text>
-            </View>
-
-            <View style={styles.dropdownContainer}>
-              <Dropdown
-                formik={formik}
-                name="recurring"
-                placeholder="Select One off clean or Recurring Round?"
-                title="One off clean or Recurring Round?"
-                options={[
-                  {
-                    label: `${frequencyLabel} recurring round`,
-                    value: true,
-                  },
-                  { label: 'One off clean', value: false },
-                ]}
-                imageName={'round'}
-              />
-            </View>
-          </>
+          <FormStepTwo
+            setRecurringRoundExistsMessage={setRecurringRoundExistsMessage}
+            recurringRoundExistsMessage={recurringRoundExistsMessage}
+            setActiveStep={setActiveStep}
+            formik={formik}
+          />
         ) : null}
 
         {/********************* Step 3 Week Planner ***************************/}
