@@ -5,7 +5,6 @@ import Dropdown from '../../../ui/formElements/DropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import theme from '../../../utils/theme/theme'
 import { useFetchRounds } from './hooks/useFetchRounds'
-import WeekPlanner from '../weekPlanner/WeekPlanner'
 import { formatDateForDb } from '../../../utils/formatDateForDb'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { freqencyArray } from '../../../utils/freqencyArray'
@@ -15,6 +14,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import { ConfirmModal } from '../../../ui'
 import FormButtons from './components/FormButtons'
+import FormStepThree from './components/FormStepThree'
 
 const ScheduleRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -130,23 +130,7 @@ const ScheduleRoundForm = () => {
         ) : null}
 
         {/********************* Step 3 Week Planner ***************************/}
-        {activeStep === 2 ? (
-          <>
-            <View style={styles.scheduleRoundInfo}>
-              <Text style={styles.scheduleRoundInfoText}>
-                Select date and click &quot;Add Round To Planner&quot; button.
-              </Text>
-              <Text style={styles.scheduleRoundInfoText}>
-                The rounds currenty booked on the date displayed will be shown
-                below
-              </Text>
-            </View>
-
-            <View style={styles.weekPlannerWrapper}>
-              <WeekPlanner addFooter={false} />
-            </View>
-          </>
-        ) : null}
+        {activeStep === 2 ? <FormStepThree /> : null}
 
         {/*********************  Buttons  ***************************/}
         <FormButtons
