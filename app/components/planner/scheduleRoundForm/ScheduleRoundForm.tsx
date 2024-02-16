@@ -3,10 +3,8 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import Dropdown from '../../../ui/formElements/DropDown'
 import FormFlowTitles from './components/FormFlowTitles'
-import { useMoveToNextStep } from './hooks/useMoveToNextStep'
 import theme from '../../../utils/theme/theme'
 import { useFetchRounds } from './hooks/useFetchRounds'
-import { useDeviceType } from '../../../utils/deviceTypes'
 import WeekPlanner from '../weekPlanner/WeekPlanner'
 import { formatDateForDb } from '../../../utils/formatDateForDb'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
@@ -16,7 +14,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import { ConfirmModal } from '../../../ui'
-import Button from '../../../ui/button/Button'
+import FormButtons from './components/FormButtons'
 
 const ScheduleRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -27,13 +25,6 @@ const ScheduleRoundForm = () => {
 
   const userRounds = useFetchRounds()
   const formik = useFormikSteps({ activeStep, setIsLoading })
-  const moveToNextStep = useMoveToNextStep({
-    formik,
-    setActiveStep,
-    activeStep,
-    setRecurringRoundExistsMessage,
-  })
-  const { isLargeWeb } = useDeviceType()
 
   useFormResetOnBlur(formik, setActiveStep)
   const selectedRound = useGetRoundById(formik.values.roundId)
@@ -45,22 +36,12 @@ const ScheduleRoundForm = () => {
       roundId: formik.values.roundId,
     })
   }
-  const handleFormikSubmit = () => {
-    formik.handleSubmit()
-  }
 
   useEffect(() => {
     if (formik.values.date === '') {
       formik.setFieldValue('date', formatDateForDb(new Date()))
     }
   }, [formik])
-
-  const handleStepBack = () => {
-    if (activeStep === 0) {
-      return
-    }
-    setActiveStep((prev) => prev - 1)
-  }
 
   return (
     <ScrollView
@@ -168,45 +149,13 @@ const ScheduleRoundForm = () => {
         ) : null}
 
         {/*********************  Buttons  ***************************/}
-        <View style={styles.buttonContainer}>
-          {activeStep < 2 ? (
-            <View
-              style={[
-                styles.buttonContainer,
-                { flexDirection: isLargeWeb ? 'row' : 'column' },
-              ]}
-            >
-              <Button
-                onPress={handleStepBack}
-                text={'Go Back'}
-                backgroundColor={theme.colors.buttonSecondary}
-              />
-
-              <Button onPress={moveToNextStep} text={'Next'} />
-            </View>
-          ) : null}
-
-          {activeStep === 2 ? (
-            <View
-              style={[
-                styles.buttonContainer,
-                { flexDirection: isLargeWeb ? 'row' : 'column' },
-              ]}
-            >
-              <Button
-                onPress={handleStepBack}
-                text={'Go Back'}
-                backgroundColor={theme.colors.buttonSecondary}
-              />
-
-              <Button
-                onPress={handleFormikSubmit}
-                text={'Add Round To Planner'}
-                isLoading={isLoading}
-              />
-            </View>
-          ) : null}
-        </View>
+        <FormButtons
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          isLoading={isLoading}
+          formik={formik}
+          setRecurringRoundExistsMessage={setRecurringRoundExistsMessage}
+        />
       </View>
 
       <View style={styles.footer} />
@@ -272,38 +221,6 @@ const styles = StyleSheet.create({
   weekPlannerWrapper: {
     width: '100%',
     paddingBottom: 24,
-  },
-  buttonContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    width: '100%',
-    maxWidth: 600,
-    gap: 8,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: theme.colors.primary,
-    padding: 10,
-    paddingHorizontal: 32,
-    borderRadius: 8,
-    width: '100%',
-    maxWidth: 270,
-  },
-  buttonSecondary: {
-    alignItems: 'center',
-    backgroundColor: theme.colors.buttonSecondary,
-    padding: 10,
-    paddingHorizontal: 32,
-    borderRadius: 8,
-    width: '100%',
-    maxWidth: 270,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   addJobText: {
     fontSize: 16,
