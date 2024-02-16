@@ -11,7 +11,7 @@ import FormStepTwo from './components/FormStepTwo'
 import FormStepOne from './components/FormStepOne'
 
 const ScheduleRoundForm = () => {
-  const [activeStep, setActiveStep] = useState(1)
+  const [activeStep, setActiveStep] = useState(0)
   const [recurringRoundExistsMessage, setRecurringRoundExistsMessage] =
     useState(false)
   const [isLoading, setIsLoading] = useState(false)
