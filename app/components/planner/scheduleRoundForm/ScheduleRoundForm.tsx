@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-} from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import Dropdown from '../../../ui/formElements/DropDown'
 import FormFlowTitles from './components/FormFlowTitles'
@@ -22,14 +16,17 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import { ConfirmModal } from '../../../ui'
+import Button from '../../../ui/button/Button'
 
 const ScheduleRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [activeStep, setActiveStep] = useState(0)
   const [recurringRoundExistsMessage, setRecurringRoundExistsMessage] =
     useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
   const userRounds = useFetchRounds()
-  const formik = useFormikSteps(activeStep)
+  const formik = useFormikSteps({ activeStep, setIsLoading })
   const moveToNextStep = useMoveToNextStep({
     formik,
     setActiveStep,
@@ -37,6 +34,7 @@ const ScheduleRoundForm = () => {
     setRecurringRoundExistsMessage,
   })
   const { isLargeWeb } = useDeviceType()
+
   useFormResetOnBlur(formik, setActiveStep)
   const selectedRound = useGetRoundById(formik.values.roundId)
   const frequencyLabel = freqencyArray.find(
@@ -46,6 +44,9 @@ const ScheduleRoundForm = () => {
     navigation.navigate('EditRound', {
       roundId: formik.values.roundId,
     })
+  }
+  const handleFormikSubmit = () => {
+    formik.handleSubmit()
   }
 
   useEffect(() => {
@@ -172,20 +173,16 @@ const ScheduleRoundForm = () => {
             <View
               style={[
                 styles.buttonContainer,
-                isLargeWeb
-                  ? { flexDirection: 'row' }
-                  : { flexDirection: 'column' },
+                { flexDirection: isLargeWeb ? 'row' : 'column' },
               ]}
             >
-              <TouchableOpacity
+              <Button
                 onPress={handleStepBack}
-                style={styles.buttonSecondary}
-              >
-                <Text style={styles.buttonText}>Go Back</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
-                <Text style={styles.buttonText}>Next</Text>
-              </TouchableOpacity>
+                text={'Go Back'}
+                backgroundColor={theme.colors.buttonSecondary}
+              />
+
+              <Button onPress={moveToNextStep} text={'Next'} />
             </View>
           ) : null}
 
@@ -193,26 +190,20 @@ const ScheduleRoundForm = () => {
             <View
               style={[
                 styles.buttonContainer,
-                isLargeWeb
-                  ? { flexDirection: 'row' }
-                  : { flexDirection: 'column' },
+                { flexDirection: isLargeWeb ? 'row' : 'column' },
               ]}
             >
-              <TouchableOpacity
+              <Button
                 onPress={handleStepBack}
-                style={styles.buttonSecondary}
-              >
-                <Text style={styles.buttonText}>Go Back</Text>
-              </TouchableOpacity>
+                text={'Go Back'}
+                backgroundColor={theme.colors.buttonSecondary}
+              />
 
-              <TouchableOpacity
-                onPress={() => {
-                  formik.handleSubmit()
-                }}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>Add Round To Planner</Text>
-              </TouchableOpacity>
+              <Button
+                onPress={handleFormikSubmit}
+                text={'Add Round To Planner'}
+                isLoading={isLoading}
+              />
             </View>
           ) : null}
         </View>
