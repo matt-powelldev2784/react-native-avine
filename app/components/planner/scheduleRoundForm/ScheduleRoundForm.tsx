@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
-import Dropdown from '../../../ui/formElements/DropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import theme from '../../../utils/theme/theme'
-import { useFetchRounds } from './hooks/useFetchRounds'
 import { formatDateForDb } from '../../../utils/formatDateForDb'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import FormButtons from './components/FormButtons'
 import FormStepThree from './components/FormStepThree'
 import FormStepTwo from './components/FormStepTwo'
+import FormStepOne from './components/FormStepOne'
 
 const ScheduleRoundForm = () => {
   const [activeStep, setActiveStep] = useState(1)
   const [recurringRoundExistsMessage, setRecurringRoundExistsMessage] =
     useState(false)
   const [isLoading, setIsLoading] = useState(false)
-
-  const userRounds = useFetchRounds()
   const formik = useFormikSteps({ activeStep, setIsLoading })
   useFormResetOnBlur(formik, setActiveStep)
 
@@ -35,21 +32,10 @@ const ScheduleRoundForm = () => {
       <FormFlowTitles activeStep={activeStep} />
 
       <View style={styles.formContainer}>
-        {/*********************  Step 1 Select Round ***************************/}
-        {activeStep === 0 ? (
-          <View style={styles.dropdownContainer}>
-            <Dropdown
-              formik={formik}
-              name="roundId"
-              placeholder="Select Round To Schedule"
-              title="Select Round"
-              options={userRounds}
-              imageName={'round'}
-            />
-          </View>
-        ) : null}
+        {/********************* Step 1 Select Round ***************************/}
+        {activeStep === 0 ? <FormStepOne formik={formik} /> : null}
 
-        {/********************* Step 2 Select Round Frequency ***************************/}
+        {/****************** Step 2 Select Round Frequency ********************/}
         {activeStep === 1 ? (
           <FormStepTwo
             setRecurringRoundExistsMessage={setRecurringRoundExistsMessage}
@@ -59,10 +45,10 @@ const ScheduleRoundForm = () => {
           />
         ) : null}
 
-        {/********************* Step 3 Week Planner ***************************/}
+        {/*************** Step 3 Select Date From Week Planner ******************/}
         {activeStep === 2 ? <FormStepThree /> : null}
 
-        {/*********************  Buttons  ***************************/}
+        {/********************  Buttons  ***************************************/}
         <FormButtons
           activeStep={activeStep}
           setActiveStep={setActiveStep}
@@ -95,14 +81,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 6,
     backgroundColor: 'white',
-  },
-  dropdownContainer: {
-    width: '90%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 24,
-    backgroundColor: 'white',
-    maxWidth: 600,
   },
   scheduleRoundInfo: {
     fontSize: 15,
