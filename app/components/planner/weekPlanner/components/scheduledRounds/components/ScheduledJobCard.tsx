@@ -1,17 +1,11 @@
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Platform,
-  TouchableOpacity,
-} from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
 import usePlannerDateFromStorage from '../../../hooks/usePlannerDateFromStorage'
 import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComplete'
 import { useWeekPlannerContext } from '../../../hooks/WeekPlannerContext'
+import { addItemToStorage } from '../../../../../../utils/addItemToStorage'
 
 interface ScheduledJobCardProps {
   job: JobWithIdT
@@ -22,11 +16,12 @@ const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
   const { setRefreshData } = useWeekPlannerContext()
   const plannerDate = usePlannerDateFromStorage('@plannerDate')
   const isComplete = job.isComplete
-  const height = Number(job.time) * 20 + 24
-
-  const isCompleteStyles = isComplete
-    ? styles.isCompleteContainer
-    : styles.notCompleteContainer
+  const timeWidth = Number(job.time) * 20 + 14
+  const jobShortName = job.jobName
+    .split(' ')
+    .map((word): string => word[0])
+    .join('')
+    .substring(0, 3)
 
   const handleIsCompletePress = async () => {
     if (isLoading) {
@@ -39,49 +34,111 @@ const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
       isComplete: !isComplete,
     })
     setIsLoading(false)
+
+    addItemToStorage('@newScheduleDate', plannerDate)
     setRefreshData(true)
   }
 
   return (
-    <View style={[{ height: height }, styles.jobItem]}>
-      <View style={styles.completeWrapper}>
-        <TouchableOpacity
-          style={isCompleteStyles}
-          onPress={handleIsCompletePress}
-        >
-          {isComplete ? (
-            <Image
-              source={require('../../../../../../../assets/tick_white.png')}
-              style={{ width: 12, height: 12 }}
-            />
-          ) : (
-            <Image
-              source={require('../../../../../../../assets/cross_white.png')}
-              style={{ width: 12, height: 12 }}
-            />
-          )}
-        </TouchableOpacity>
+    <View style={styles.jobItem}>
+      <View style={styles.jobShortNameContainer}>
+        <Text style={styles.jobShortNameText}>
+          {jobShortName.slice(0, 1).toUpperCase()}
+        </Text>
+        {jobShortName.length > 1 && (
+          <Text style={styles.jobShortNameText}>
+            {jobShortName.slice(1, 2).toUpperCase()}
+          </Text>
+        )}
+        {jobShortName.length > 1 && (
+          <Text style={styles.jobShortNameText}>
+            {jobShortName.slice(2, 3).toUpperCase()}
+          </Text>
+        )}
       </View>
 
       <View style={styles.leftContainer}>
-        <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+        <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
           {job.jobName}
+        </Text>
+
+        <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+          {job.address}
+        </Text>
+
+        <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+          {job.town}
+        </Text>
+
+        <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+          {job.postcode}
         </Text>
       </View>
 
       <View style={styles.rightContainer}>
-        <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-          Time: {job.time} hrs
-        </Text>
+        <View style={styles.iconsWrapper}>
+          <TouchableOpacity onPress={handleIsCompletePress}>
+            {isComplete ? (
+              <View style={styles.iconsContainer}>
+                <View style={styles.iconsText}>
+                  <Text style={styles.iconsTextBlue}>JOB</Text>
+                  <Text style={styles.iconsTextBlue}>COMPLETE</Text>
+                </View>
+                <Image
+                  source={require('../../../../../../../assets/tick_blue.png')}
+                  style={styles.icon}
+                />
+              </View>
+            ) : (
+              <View style={styles.iconsContainer}>
+                <View style={styles.iconsText}>
+                  <Text style={styles.iconsTextGrey}>JOB</Text>
+                  <Text style={styles.iconsTextGrey}>COMPLETE</Text>
+                </View>
+                <Image
+                  source={require('../../../../../../../assets/tick_grey.png')}
+                  style={styles.icon}
+                />
+              </View>
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={handleIsCompletePress}>
+            {isComplete ? (
+              <View style={styles.iconsContainer}>
+                <View style={styles.iconsText}>
+                  <Text style={styles.iconsTextBlue}>INVOICE</Text>
+                  <Text style={styles.iconsTextBlue}>PAID</Text>
+                </View>
+                <Image
+                  source={require('../../../../../../../assets/tick_blue.png')}
+                  style={styles.icon}
+                />
+              </View>
+            ) : (
+              <View style={styles.iconsContainer}>
+                <View style={styles.iconsText}>
+                  <Text style={styles.iconsTextGrey}>INVOICE</Text>
+                  <Text style={styles.iconsTextGrey}>PAID</Text>
+                </View>
+                <Image
+                  source={require('../../../../../../../assets/tick_grey.png')}
+                  style={styles.icon}
+                />
+              </View>
+            )}
+          </TouchableOpacity>
+
+          <Text style={[styles.time, { width: timeWidth }]} numberOfLines={1}>
+            {job.time} h&nbsp;&nbsp;
+          </Text>
+        </View>
       </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  jobsList: {
-    marginVertical: 4,
-  },
   jobItem: {
     borderRadius: 12,
     marginBottom: 4,
@@ -89,61 +146,93 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: theme.colors.primary,
+    height: 112,
+  },
+  jobShortNameContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 10,
+    width: 28,
+    height: '100%',
     backgroundColor: theme.colors.primary,
   },
-  completeWrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  notCompleteContainer: {
-    borderRadiusTopLeft: 8,
-    borderRadiusBottomLeft: 10,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 23,
-    height: 23,
-    borderRadius: 50,
-    marginVerical: 4,
-    marginHorizontal: 8,
-    backgroundColor: theme.colors.plannerPrimary,
-  },
-  isCompleteContainer: {
-    borderRadiusTopLeft: 8,
-    borderRadiusBottomLeft: 10,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 23,
-    height: 23,
-    borderRadius: 50,
-    marginVerical: 4,
-    marginHorizontal: 8,
-    backgroundColor: 'green',
-  },
-  completeText: {
+  jobShortNameText: {
     color: theme.colors.secondary,
-    fontSize: 10,
+    fontSize: 20,
+    fontWeight: 'bold',
     textAlign: 'center',
-    width: 60,
+    width: 28,
   },
-  leftContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    flexGrow: 2,
+  title: {
+    fontSize: 20,
+    color: theme.colors.primary,
+    minHeight: 24,
+  },
+  text: {
+    fontSize: 14,
+    height: 17,
   },
   rightContainer: {
     flex: 1,
     alignItems: 'flex-end',
     justifyContent: 'center',
-    backgroundColor: theme.colors.primary,
+    backgroundColor: 'white',
+    gap: 8,
     minWidth: 110,
   },
-  text: {
-    color: theme.colors.secondary,
-    fontSize: 14,
-    marginHorizontal: 8,
-    minHeight: Platform.OS === 'web' ? 18.5 : 17.5,
+  iconsWrapper: {
+    position: 'relative',
+    justifyContent: 'space-evenly',
+    alignItems: 'flex-end',
+    width: '100%',
+    height: '100%',
+    marginRight: 8,
+  },
+  iconsContainer: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    gap: 4,
+    flexDirection: 'row',
+  },
+  iconsText: {
+    flexDirection: 'column',
+  },
+  iconsTextBlue: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    color: theme.colors.primary,
+    textAlign: 'right',
+  },
+  iconsTextGrey: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    color: '#c8d4e3',
+    textAlign: 'right',
+  },
+  icon: { width: 28, height: 28 },
+  time: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    backgroundColor: '#6c93bf',
+    color: 'white',
+    borderRadius: 8,
+    height: 24,
+    minWidth: 50,
+    paddingTop: 4,
+    textAlign: 'right',
+  },
+  leftContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    flexGrow: 2,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
   },
 })
 
