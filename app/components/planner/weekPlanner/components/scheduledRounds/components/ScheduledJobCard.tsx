@@ -222,6 +222,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     height: 24,
     minWidth: 50,
+    maxWidth: 130,
     paddingTop: 4,
     textAlign: 'right',
   },
@@ -231,6 +232,7 @@ const styles = StyleSheet.create({
     flexGrow: 2,
     paddingVertical: 4,
     paddingHorizontal: 8,
+    minWidth: 200,
   },
 })
 
