@@ -7,10 +7,13 @@ type ScheduledRounds = RoundWithRelatedJobsT[] | []
 
 type UseScheduledRoundsReturn = [boolean, ScheduledRounds]
 
-export const useScheduledRounds = (
-  selectedDay: Date,
-  refreshData: boolean,
-): UseScheduledRoundsReturn => {
+interface UseScheduledRoundsProps {
+  selectedDay: Date
+}
+
+export const useScheduledRounds = ({
+  selectedDay,
+}: UseScheduledRoundsProps): UseScheduledRoundsReturn => {
   const [scheduledRounds, setScheduledRounds] = useState<ScheduledRounds>([])
   const [isError, seIsError] = useState<boolean>(false)
 
@@ -27,7 +30,7 @@ export const useScheduledRounds = (
       }
     }
     handleScheduledRounds()
-  }, [selectedDay, refreshData])
+  }, [selectedDay])
 
   return [isError, scheduledRounds]
 }
