@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 import { getItemFromStorage } from '../../../../utils/getItemFromStorage'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { addItemToStorage } from '../../../../utils/addItemToStorage'
 
 export const stepOneSchema = Yup.object().shape({
@@ -56,7 +55,7 @@ const useFormikSteps = ({ activeStep, setIsLoading }: useFormikStepsProps) => {
         addItemToStorage('@newScheduledDate', plannerDate)
       }
 
-      console.log(values)
+      console.log('schedule round form values', values)
       await scheduleRoundsToDb(values)
 
       navigation.navigate('Planner', { refresh: true })
