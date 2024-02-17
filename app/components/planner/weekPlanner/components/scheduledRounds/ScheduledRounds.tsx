@@ -10,8 +10,14 @@ interface ScheduledRoundsProps {
 }
 
 const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
-  const { selectedDay } = useWeekPlannerContext()
-  const [isError, scheduledRounds] = useScheduledRounds({ selectedDay })
+  const { selectedDay, refreshData, setRefreshData } = useWeekPlannerContext()
+  const [isError, scheduledRounds] = useScheduledRounds({
+    selectedDay,
+    refreshData,
+    setRefreshData,
+  })
+
+  console.log('refreshData', refreshData)
 
   if (isError) {
     return <DataError />

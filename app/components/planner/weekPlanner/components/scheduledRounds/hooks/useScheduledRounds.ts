@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { formatDateForDb } from '../../../../../../utils/formatDateForDb'
 import { RoundWithRelatedJobsT } from '../../../../../../types/RoundT'
 import { getRoundsandJobsByPlannerDate } from './../../../../../../db/planner/getRoundsandJobsByPlannerDate'
@@ -9,10 +9,14 @@ type UseScheduledRoundsReturn = [boolean, ScheduledRounds]
 
 interface UseScheduledRoundsProps {
   selectedDay: Date
+  refreshData: boolean
+  setRefreshData: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const useScheduledRounds = ({
   selectedDay,
+  refreshData,
+  setRefreshData,
 }: UseScheduledRoundsProps): UseScheduledRoundsReturn => {
   const [scheduledRounds, setScheduledRounds] = useState<ScheduledRounds>([])
   const [isError, seIsError] = useState<boolean>(false)
@@ -25,12 +29,13 @@ export const useScheduledRounds = ({
 
       if (rounds) {
         setScheduledRounds(rounds)
+        setRefreshData(false)
       } else {
         seIsError(true)
       }
     }
     handleScheduledRounds()
-  }, [selectedDay])
+  }, [selectedDay, refreshData, setRefreshData])
 
   return [isError, scheduledRounds]
 }

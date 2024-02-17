@@ -1,6 +1,7 @@
 export interface JobT {
   jobName: string
   address: string
+  town: string
   postcode: string
   jobType: string
   time: string
