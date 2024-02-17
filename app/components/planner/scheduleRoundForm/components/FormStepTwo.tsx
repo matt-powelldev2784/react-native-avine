@@ -43,9 +43,9 @@ const FormStepTwo = ({
 
         <Text onPress={editRound} style={styles.text}>
           If you wish to change the frequency of the recurring round,
-          <TouchableOpacity onPress={editRound} style={styles.textBold}>
-            <Text style={styles.text}>&nbsp;click here&nbsp;</Text>
-          </TouchableOpacity>
+          <Text onPress={editRound} style={styles.textBold}>
+            &nbsp;click here&nbsp;
+          </Text>
           to edit the {selectedRound?.roundName} round.
         </Text>
 
