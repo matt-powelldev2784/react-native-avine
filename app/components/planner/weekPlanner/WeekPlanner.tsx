@@ -1,12 +1,10 @@
 import { View, StyleSheet } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import WeekCalender from './components/weekCalender/WeekCalender'
 import ScheduledRounds from './components/scheduledRounds/ScheduledRounds'
-import { getItemFromStorage } from '../../../utils/getItemFromStorage'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+
 import { WeekPlannerContext } from './hooks/WeekPlannerContext'
-import { convertDbDateToDateString } from '../../../utils/convertDbDateToDateString'
-import { formatDateForDb } from '../../../utils/formatDateForDb'
+import useAddPlannerDateFromStorage from './hooks/useAddPlannerDateFromStorage'
 interface WeekPlannerProps {
   onDaySelect?: (day: Date) => void
   addFooter?: boolean
@@ -16,27 +14,7 @@ const WeekPlanner = ({ addFooter }: WeekPlannerProps) => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
   const [refreshData, setRefreshData] = useState(false)
-
-  useEffect(() => {
-    const getScheduledDate = async () => {
-      const newScheduledDate = await getItemFromStorage('@newScheduledDate')
-
-      if (newScheduledDate) {
-        const dateObject = new Date(convertDbDateToDateString(newScheduledDate))
-        setSelectedDay(dateObject)
-        setDisplayWeek(dateObject)
-        AsyncStorage.removeItem('@newScheduledDate')
-      }
-    }
-    getScheduledDate()
-
-    const setScheduledDate = async () => {
-      const dbDate = formatDateForDb(selectedDay)
-      AsyncStorage.setItem('@plannerDate', JSON.stringify(dbDate))
-    }
-
-    setScheduledDate()
-  })
+  useAddPlannerDateFromStorage({ setSelectedDay, setDisplayWeek, selectedDay })
 
   const weekPlannerContextValue = {
     displayWeek,
