@@ -1,9 +1,8 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { ConfirmModal } from '../../../../ui'
 import { useGetRoundById } from '../hooks/useGetRoundById'
 import Dropdown from '../../../../ui/formElements/DropDown'
-import { freqencyArray } from '../../../../utils/freqencyArray'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
@@ -43,9 +42,9 @@ const FormStepTwo = ({
 
         <Text onPress={editRound} style={styles.text}>
           If you wish to change the frequency of the recurring round,
-          <TouchableOpacity onPress={editRound} style={styles.textBold}>
-            <Text style={styles.text}>&nbsp;click here&nbsp;</Text>
-          </TouchableOpacity>
+          <Text onPress={editRound} style={styles.textBold}>
+            &nbsp;click here&nbsp;
+          </Text>
           to edit the {selectedRound?.roundName} round.
         </Text>
 
