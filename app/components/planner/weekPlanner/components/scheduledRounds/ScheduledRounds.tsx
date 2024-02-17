@@ -1,26 +1,17 @@
 import { View, StyleSheet, ScrollView } from 'react-native'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useScheduledRounds } from './hooks/useScheduledRounds'
 import ScheduledRoundCard from './components/ScheduledRoundCard'
 import NoScheduledRounds from './components/NoScheduledRounds'
-import { useWeekPlanner } from '../../hooks/WeekPlannerContext'
+import { useWeekPlannerContext } from '../../hooks/WeekPlannerContext'
 import DataError from './components/DataError'
 interface ScheduledRoundsProps {
   addFooter?: boolean
 }
 
 const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
-  const { selectedDay, refreshData, setRefreshData } = useWeekPlanner()
-  const [isError, scheduledRounds] = useScheduledRounds(
-    selectedDay,
-    refreshData,
-  )
-
-  useEffect(() => {
-    if (refreshData) {
-      setRefreshData(false)
-    }
-  }, [refreshData, setRefreshData])
+  const { selectedDay } = useWeekPlannerContext()
+  const [isError, scheduledRounds] = useScheduledRounds({ selectedDay })
 
   if (isError) {
     return <DataError />

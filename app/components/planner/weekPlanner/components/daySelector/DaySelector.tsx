@@ -9,14 +9,14 @@ import React from 'react'
 import { format } from 'date-fns'
 import theme from '../../../../../utils/theme/theme'
 import { addDbDateToStorage } from '../../../../../utils/addDbDateToStorage'
-import { useWeekPlanner } from '../../hooks/WeekPlannerContext'
+import { useWeekPlannerContext } from '../../hooks/WeekPlannerContext'
 
 interface DaySelectorProps {
   day: Date
 }
 
 const DaySelector = ({ day }: DaySelectorProps) => {
-  const { selectedDay, setSelectedDay } = useWeekPlanner()
+  const { selectedDay, setSelectedDay } = useWeekPlannerContext()
   const weekDay = format(day, 'EEEEEE')
   const dateToday = day.getDate()
   const selectDate = selectedDay.getDate()
