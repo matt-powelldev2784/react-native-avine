@@ -11,7 +11,7 @@ import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
 import usePlannerDateFromStorage from '../../../hooks/usePlannerDateFromStorage'
 import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComplete'
-import { useWeekPlanner } from '../../../hooks/WeekPlannerContext'
+import { useWeekPlannerContext } from '../../../hooks/WeekPlannerContext'
 
 interface ScheduledJobCardProps {
   job: JobWithIdT
@@ -19,7 +19,7 @@ interface ScheduledJobCardProps {
 
 const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
   const [isLoading, setIsLoading] = useState(false)
-  const { setRefreshData } = useWeekPlanner()
+  const { setRefreshData } = useWeekPlannerContext()
   const plannerDate = usePlannerDateFromStorage('@plannerDate')
   const isComplete = job.isComplete
   const height = Number(job.time) * 20 + 24

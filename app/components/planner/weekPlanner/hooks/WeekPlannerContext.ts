@@ -18,4 +18,4 @@ export const WeekPlannerContext = createContext<WeekPlannerContextType>({
   setRefreshData: () => {},
 })
 
-export const useWeekPlanner = () => useContext(WeekPlannerContext)
+export const useWeekPlannerContext = () => useContext(WeekPlannerContext)

@@ -3,14 +3,14 @@ import React from 'react'
 import { useScheduledRounds } from './hooks/useScheduledRounds'
 import ScheduledRoundCard from './components/ScheduledRoundCard'
 import NoScheduledRounds from './components/NoScheduledRounds'
-import { useWeekPlanner } from '../../hooks/WeekPlannerContext'
+import { useWeekPlannerContext } from '../../hooks/WeekPlannerContext'
 import DataError from './components/DataError'
 interface ScheduledRoundsProps {
   addFooter?: boolean
 }
 
 const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
-  const { selectedDay } = useWeekPlanner()
+  const { selectedDay } = useWeekPlannerContext()
   const [isError, scheduledRounds] = useScheduledRounds({ selectedDay })
 
   if (isError) {
