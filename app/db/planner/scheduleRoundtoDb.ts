@@ -69,19 +69,16 @@ export const scheduleRoundToDb = async (planInfo: scheduleRoundToDbT) => {
       const recurringRoundDoc = await getDoc(recurringRoundDocRef)
       if (!recurringRoundDoc.exists()) {
         console.log('No recurring round found')
-        return
       }
 
       const recurringRoundData = recurringRoundDoc.data()
-      if (!recurringRoundData.recurringDates) {
-        throw Error('No recurring dates found')
+      if (recurringRoundData?.recurringDates) {
+        await updateDoc(recurringRoundDocRef, {
+          recurringDates: recurringRoundData.recurringDates.filter(
+            (recurringDate: string) => recurringDate !== planInfo.date,
+          ),
+        })
       }
-
-      await updateDoc(recurringRoundDocRef, {
-        recurringDates: recurringRoundData.recurringDates.filter(
-          (recurringDate: string) => recurringDate !== planInfo.date,
-        ),
-      })
     }
 
     if (recurringRound) {
@@ -98,6 +95,7 @@ export const scheduleRoundToDb = async (planInfo: scheduleRoundToDbT) => {
     )
 
     const querySnapshot = await getDocs(q)
+    console.log('querySnapshot', querySnapshot)
 
     await Promise.all(
       querySnapshot.docs.map(async (job) => {
