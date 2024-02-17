@@ -37,19 +37,30 @@ export const removeScheduledRoundsFromDb = async ({
         date: date,
         recurringRound: false,
       })
-      console.log(`Single entry ${roundId} removed from planner collection`)
-      return
+      return {
+        success: true,
+        status: 200,
+        message: `Single entry ${roundId} removed from planner collection`,
+      }
     }
 
     //get recurring data from recurringRounds collection
     const recurringRoundDoc = await getDoc(recurringRoundDocRef)
     if (!recurringRoundDoc.exists()) {
-      throw Error('No recurring round found')
+      return {
+        success: false,
+        status: 500,
+        message: `No recurring round with round id ${roundId} in recurrring rounds collection`,
+      }
     }
 
     const recurringRoundData = recurringRoundDoc.data()
     if (!recurringRoundData.recurringDates) {
-      throw Error('No recurring dates found')
+      return {
+        success: false,
+        status: 500,
+        message: `No recurring dates found with round id ${roundId} in recurrring rounds collection`,
+      }
     }
 
     //if round is recurring entry and but only a single entry should be removed
@@ -66,26 +77,31 @@ export const removeScheduledRoundsFromDb = async ({
         ),
       })
 
-      console.log(
-        `Single recurring entry ${roundId} removed from planner collection`,
-      )
-      return
+      return {
+        success: false,
+        status: 200,
+        message: `Single recurring entry with round id ${roundId} removed from planner collection and ${date} removed from recurringRounds collection`,
+      }
     }
 
     //else remove all recurring rounds from planner and recurring rounds collection
-    recurringRoundData.recurringDates.map(async (recurringDate: string) => {
-      await removeScheduledRoundFromoDb({
-        roundId: roundId,
-        date: recurringDate,
-        recurringRound: true,
-      })
-    })
+    await Promise.all(
+      recurringRoundData.recurringDates.map((recurringDate: string) => {
+        return removeScheduledRoundFromoDb({
+          roundId: roundId,
+          date: recurringDate,
+          recurringRound: true,
+        })
+      }),
+    )
 
     await deleteDoc(recurringRoundDocRef)
 
-    console.log(
-      `Recurring rounds for ${roundId} removed from planner and recurringRounds collection`,
-    )
+    return {
+      success: true,
+      status: 200,
+      message: `All recurring rounds with round id ${roundId} removed from planner and recurringRounds collection`,
+    }
   } catch (error) {
     console.error(`Error removing round ${roundId} from db`, error)
   }

@@ -32,7 +32,11 @@ export const removeScheduledRoundFromoDb = async ({
     const plannerDoc = await getDoc(plannerDocRef)
 
     if (!plannerDoc.exists()) {
-      throw 'Document does not exist!'
+      return {
+        success: false,
+        status: 500,
+        message: `No planner document with date ${date} in planner collection`,
+      }
     }
 
     if (!recurringRound) {
@@ -79,7 +83,7 @@ export const removeScheduledRoundFromoDb = async ({
       }),
     )
 
-    console.log(`Sheduled round ${roundId} removed from db`)
+    console.log(`Scheduled round with round id ${roundId} removed from db`)
   } catch (error) {
     console.error(`Error removing round ${roundId} from db`, error)
   }
