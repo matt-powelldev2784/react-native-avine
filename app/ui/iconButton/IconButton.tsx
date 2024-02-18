@@ -3,17 +3,14 @@ import React from 'react'
 
 interface IconButtonProps {
   onPress: () => void
-  imgSource: string
+  imgSource: any
   size: number
 }
 
 const IconButton = ({ onPress, imgSource, size }: IconButtonProps) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <Image
-        source={require(`../../../assets/${imgSource}`)}
-        style={{ width: size, height: size }}
-      />
+      <Image source={imgSource} style={{ width: size, height: size }} />
     </TouchableOpacity>
   )
 }

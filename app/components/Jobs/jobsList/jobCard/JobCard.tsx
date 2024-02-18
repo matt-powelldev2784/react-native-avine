@@ -75,13 +75,13 @@ const JobCard = ({
         <View style={styles.buttons}>
           <IconButton
             onPress={handleEditJobPress}
-            imgSource={'pen.png'}
+            imgSource={require('../../../../../assets/pen.png')}
             size={35}
           />
 
           <IconButton
             onPress={handleDeleteJobPress}
-            imgSource={'bin.png'}
+            imgSource={require('../../../../../assets/bin.png')}
             size={35}
           />
         </View>
