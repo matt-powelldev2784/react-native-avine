@@ -1,12 +1,5 @@
 import React, { useState } from 'react'
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Platform,
-} from 'react-native'
+import { StyleSheet, View, ScrollView, Platform } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
@@ -18,12 +11,14 @@ import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigat
 import theme from '../../../utils/theme/theme'
 import { freqencyArray } from '../../../utils/freqencyArray'
 import { useDeviceType } from '../../../utils/deviceTypes'
+import Button from '../../../ui/button/Button'
 
 type EditJobFormRouteProp = RouteProp<RootStackParamList, 'EditJob'>
 
 const EditJobForm = () => {
   const route = useRoute<EditJobFormRouteProp>()
   const [activeStep, setActiveStep] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
   const { isLargeWeb } = useDeviceType()
 
   const jobId = route?.params?.jobId ? route?.params?.jobId : ''
@@ -31,6 +26,7 @@ const EditJobForm = () => {
     setActiveStep,
     activeStep,
     jobId,
+    setIsLoading,
   })
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
 
@@ -39,6 +35,10 @@ const EditJobForm = () => {
       return
     }
     setActiveStep((prev) => prev - 1)
+  }
+  const buttonsStyle = isLargeWeb ? 'row' : 'column'
+  const handleSumbit = () => {
+    formik.handleSubmit()
   }
 
   return (
@@ -151,37 +151,22 @@ const EditJobForm = () => {
         {/*********************  buttons ***************************/}
         <View style={styles.buttonContainer}>
           <View
-            style={[
-              styles.buttonContainer,
-              isLargeWeb
-                ? { flexDirection: 'row' }
-                : { flexDirection: 'column' },
-            ]}
+            style={[styles.buttonContainer, { flexDirection: buttonsStyle }]}
           >
             {activeStep > 0 ? (
-              <TouchableOpacity
-                onPress={handleStepBack}
-                style={styles.buttonSecondary}
-              >
-                <Text style={styles.buttonText}>Go Back</Text>
-              </TouchableOpacity>
+              <Button onPress={handleStepBack} text={'Go Back'} />
             ) : null}
 
             {activeStep >= 0 && activeStep < 2 ? (
-              <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
-                <Text style={styles.buttonText}>Next</Text>
-              </TouchableOpacity>
+              <Button onPress={moveToNextStep} text={'Next'} />
             ) : null}
 
             {activeStep === 2 ? (
-              <TouchableOpacity
-                onPress={() => {
-                  formik.handleSubmit()
-                }}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>Update Job</Text>
-              </TouchableOpacity>
+              <Button
+                onPress={handleSumbit}
+                text={'Update Job'}
+                isLoading={isLoading}
+              />
             ) : null}
           </View>
         </View>

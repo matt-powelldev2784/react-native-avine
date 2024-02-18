@@ -41,12 +41,14 @@ interface useFormikStepsInterface {
   activeStep: number
   setActiveStep: (step: number) => void
   jobId: string
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const useFormikSteps = ({
   activeStep,
   jobId,
   setActiveStep,
+  setIsLoading,
 }: useFormikStepsInterface) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [jobData, setJobData] = useState<JobWithIdT | null | undefined>(null)
@@ -90,9 +92,11 @@ const useFormikSteps = ({
       notes: '',
     },
     onSubmit: async (values) => {
+      setIsLoading(true)
       await updateJobInDb({ jobId, jobData: values })
       setActiveStep(0)
       navigation.navigate('Jobs', { refresh: true })
+      setIsLoading(false)
     },
     validationSchema,
     enableReinitialize: true,
