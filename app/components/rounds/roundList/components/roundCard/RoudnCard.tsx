@@ -73,6 +73,7 @@ const RoundCard = ({
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Jobs: {numOfJobs}
           </Text>
+
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             {frequency}
           </Text>
