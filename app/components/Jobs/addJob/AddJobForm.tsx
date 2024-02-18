@@ -1,12 +1,5 @@
 import React, { useState } from 'react'
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Platform,
-} from 'react-native'
+import { StyleSheet, View, ScrollView, Platform } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
@@ -26,6 +19,8 @@ const AddJobForm = () => {
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
+  const buttonsStyle = isLargeWeb ? 'row' : 'column'
+
   const handleSumbmitPress = () => {
     formik.handleSubmit()
   }
@@ -147,26 +142,14 @@ const AddJobForm = () => {
         {/*********************  buttons ***************************/}
         <View style={styles.buttonContainer}>
           <View
-            style={[
-              styles.buttonContainer,
-              isLargeWeb
-                ? { flexDirection: 'row' }
-                : { flexDirection: 'column' },
-            ]}
+            style={[styles.buttonContainer, { flexDirection: buttonsStyle }]}
           >
             {activeStep > 0 ? (
-              <TouchableOpacity
-                onPress={handleStepBack}
-                style={styles.buttonSecondary}
-              >
-                <Text style={styles.buttonText}>Go Back</Text>
-              </TouchableOpacity>
+              <Button onPress={handleStepBack} text="Go Back" />
             ) : null}
 
             {activeStep >= 0 && activeStep < 2 ? (
-              <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
-                <Text style={styles.buttonText}>Next</Text>
-              </TouchableOpacity>
+              <Button onPress={moveToNextStep} text="Next" />
             ) : null}
 
             {activeStep === 2 ? (

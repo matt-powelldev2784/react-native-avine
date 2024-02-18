@@ -20,6 +20,7 @@ import { useFetchJobs } from './hooks/useFetchJobs'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { freqencyArray } from '../../../utils/freqencyArray'
+import Button from '../../../ui/button/Button'
 
 const AddRoundForm = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -98,9 +99,7 @@ const AddRoundForm = () => {
 
         <View style={styles.buttonContainer}>
           {activeStep < 1 ? (
-            <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
-              <Text style={styles.buttonText}>Next</Text>
-            </TouchableOpacity>
+            <Button onPress={moveToNextStep} text={'Next'} />
           ) : null}
 
           {activeStep === 1 ? (
