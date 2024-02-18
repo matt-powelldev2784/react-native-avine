@@ -23,7 +23,7 @@ const ShortNameText = ({ text }: ShortNameTextProps) => {
           {shortText.slice(1, 2).toUpperCase()}
         </Text>
       )}
-      {shortText.length > 1 && (
+      {shortText.length > 2 && (
         <Text style={styles.jobShortNameText}>
           {shortText.slice(2, 3).toUpperCase()}
         </Text>
