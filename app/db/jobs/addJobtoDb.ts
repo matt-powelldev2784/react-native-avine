@@ -12,7 +12,7 @@ export const addJobToDb = async (jobData: JobT) => {
   const jobsCollection = collection(userDoc, 'jobs')
   const jobDoc = doc(jobsCollection)
 
-  await setDoc(jobDoc, jobData)
+  await setDoc(jobDoc, { ...jobData, deleted: false })
 
   console.log('New job added with ID:', jobDoc.id)
 }

@@ -34,7 +34,12 @@ export const stepThreeSchema = Yup.object().shape({
   notes: Yup.string(),
 })
 
-const useFormikSteps = (activeStep: number) => {
+interface useFormikStepsProps {
+  activeStep: number
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const useFormikSteps = ({ activeStep, setIsLoading }: useFormikStepsProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   let validationSchema
 
@@ -62,9 +67,13 @@ const useFormikSteps = (activeStep: number) => {
       linkedRounds: [],
     },
     onSubmit: (values) => {
-      console.log(values)
+      setIsLoading(true)
+
+      console.log('formik add job form values', values)
       addJobToDb(values)
+
       navigation.navigate('Jobs', { refresh: true })
+      setIsLoading(false)
     },
     validationSchema,
   })
