@@ -8,6 +8,7 @@ import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavi
 import { ConfirmModal } from '../../../../ui'
 import { deleteJobById } from '../../../../db/jobs/deleteJobById'
 import theme from '../../../../utils/theme/theme'
+import ShortNameText from '../../../../utils/shortNameText/ShortNameText'
 
 const JobCard = ({
   id,
@@ -22,29 +23,10 @@ const JobCard = ({
   const [modalVisible, setModalVisible] = useState(false)
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { isLargeWeb } = useDeviceType()
-  const jobShortName = jobName
-    .split(' ')
-    .map((word): string => word[0])
-    .join('')
-    .substring(0, 3)
 
   return (
     <View style={isLargeWeb ? styles.cardLargeWeb : styles.cardSmallScreen}>
-      <View style={styles.jobShortNameContainer}>
-        <Text style={styles.jobShortNameText}>
-          {jobShortName.slice(0, 1).toUpperCase()}
-        </Text>
-        {jobShortName.length > 1 && (
-          <Text style={styles.jobShortNameText}>
-            {jobShortName.slice(1, 2).toUpperCase()}
-          </Text>
-        )}
-        {jobShortName.length > 1 && (
-          <Text style={styles.jobShortNameText}>
-            {jobShortName.slice(2, 3).toUpperCase()}
-          </Text>
-        )}
-      </View>
+      <ShortNameText text={jobName} />
 
       <View style={styles.leftContainer}>
         <View style={styles.leftInfo}>
@@ -63,6 +45,7 @@ const JobCard = ({
           {jobType}
         </Text>
       </View>
+
       <View style={styles.rightContainer}>
         <View style={styles.rightText}>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
