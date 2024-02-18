@@ -17,13 +17,18 @@ import theme from '../../../utils/theme/theme'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { freqencyArray } from '../../../utils/freqencyArray'
 import { useDeviceType } from '../../../utils/deviceTypes'
+import Button from '../../../ui/button/Button'
 
 const AddJobForm = () => {
   const [activeStep, setActiveStep] = useState(0)
-  const formik = useFormikSteps(activeStep)
+  const [isLoading, setIsLoading] = useState(false)
+  const formik = useFormikSteps({ activeStep, setIsLoading })
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
+  const handleSumbmitPress = () => {
+    formik.handleSubmit()
+  }
 
   const handleStepBack = () => {
     if (activeStep === 0) {
@@ -165,14 +170,11 @@ const AddJobForm = () => {
             ) : null}
 
             {activeStep === 2 ? (
-              <TouchableOpacity
-                onPress={() => {
-                  formik.handleSubmit()
-                }}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>Add Job</Text>
-              </TouchableOpacity>
+              <Button
+                onPress={handleSumbmitPress}
+                text="Add Job"
+                isLoading={isLoading}
+              />
             ) : null}
           </View>
         </View>
