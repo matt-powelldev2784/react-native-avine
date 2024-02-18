@@ -124,23 +124,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     width: '100%',
   },
-  jobShortNameContainer: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 10,
-    width: 28,
-    height: '100%',
-    backgroundColor: theme.colors.primary,
-  },
-  jobShortNameText: {
-    color: theme.colors.secondary,
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    width: 28,
-  },
   leftContainer: {
     flex: 1,
     justifyContent: 'space-between',
