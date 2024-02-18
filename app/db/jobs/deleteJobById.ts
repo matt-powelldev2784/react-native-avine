@@ -1,4 +1,4 @@
-import { doc, deleteDoc } from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 
 export const deleteJobById = async (jobId: string) => {
@@ -11,7 +11,7 @@ export const deleteJobById = async (jobId: string) => {
   const jobDocRef = doc(userDoc, 'jobs', jobId)
 
   try {
-    await deleteDoc(jobDocRef)
+    await updateDoc(jobDocRef, { deleted: true })
     console.log('Job deleted successfully')
     return true
   } catch (error) {

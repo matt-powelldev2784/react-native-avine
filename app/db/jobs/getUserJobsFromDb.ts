@@ -1,4 +1,4 @@
-import { doc, collection, getDocs, query } from 'firebase/firestore'
+import { doc, collection, getDocs, query, where } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { JobWithIdT } from '../../types/JobT'
 
@@ -9,7 +9,7 @@ export const getUserJobsFromDb = async () => {
 
   const userDoc = doc(db, 'users', auth.currentUser.uid)
   const jobsCollection = collection(userDoc, 'jobs')
-  const q = query(jobsCollection)
+  const q = query(jobsCollection, where('deleted', '!=', true))
 
   const querySnapshot = await getDocs(q)
   let jobs = querySnapshot.docs.map((job) => ({
