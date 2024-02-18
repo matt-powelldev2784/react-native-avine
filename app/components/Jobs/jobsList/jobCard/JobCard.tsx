@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { JobWithIdT } from '../../../../types/JobT'
 import { useDeviceType } from '../../../../utils/deviceTypes'
@@ -9,6 +9,7 @@ import { ConfirmModal } from '../../../../ui'
 import { deleteJobById } from '../../../../db/jobs/deleteJobById'
 import theme from '../../../../utils/theme/theme'
 import ShortNameText from '../../../../utils/shortNameText/ShortNameText'
+import IconButton from '../../../../ui/iconButton/IconButton'
 
 const JobCard = ({
   id,
@@ -23,6 +24,18 @@ const JobCard = ({
   const [modalVisible, setModalVisible] = useState(false)
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { isLargeWeb } = useDeviceType()
+  const handleEditJobPress = () => {
+    navigation.navigate('EditJob', { jobId: id })
+  }
+  const handleDeleteJobPress = () => {
+    setModalVisible(true)
+  }
+  const handleDeleteJob = async () => {
+    const deletedJob = await deleteJobById(id)
+    if (deletedJob) {
+      navigation.navigate('Jobs', { refresh: true })
+    }
+  }
 
   return (
     <View style={isLargeWeb ? styles.cardLargeWeb : styles.cardSmallScreen}>
@@ -60,38 +73,23 @@ const JobCard = ({
         </View>
 
         <View style={styles.buttons}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('EditJob', { jobId: id })
-            }}
-          >
-            <Image
-              source={require('../../../../../assets/pen.png')}
-              style={{ width: 35, height: 35 }}
-            />
-          </TouchableOpacity>
+          <IconButton
+            onPress={handleEditJobPress}
+            imgSource={'pen.png'}
+            size={35}
+          />
 
-          <TouchableOpacity
-            onPress={() => {
-              setModalVisible(true)
-            }}
-          >
-            <Image
-              source={require('../../../../../assets/bin.png')}
-              style={{ width: 35, height: 35 }}
-            />
-          </TouchableOpacity>
+          <IconButton
+            onPress={handleDeleteJobPress}
+            imgSource={'bin.png'}
+            size={35}
+          />
         </View>
       </View>
 
       <ConfirmModal
         modalText={`Are you sure you want to delete ${jobName}`}
-        onConfirm={async () => {
-          const deletedJob = await deleteJobById(id)
-          if (deletedJob) {
-            navigation.navigate('Jobs', { refresh: true })
-          }
-        }}
+        onConfirm={handleDeleteJob}
         onCancel={() => setModalVisible(false)}
         visible={modalVisible}
       />
