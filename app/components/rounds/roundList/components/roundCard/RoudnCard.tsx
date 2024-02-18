@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { RoundWithJobT } from '../../../../../types/RoundT'
 import theme from '../../../../../utils/theme/theme'
@@ -9,6 +9,7 @@ import { RootStackParamList } from '../../../../../screens/stackNavigator/StackN
 import { ConfirmModal } from '../../../../../ui'
 import { deleteRoundById } from '../../../../../db/rounds/deleteRoundById'
 import ShortNameText from '../../../../../utils/shortNameText/ShortNameText'
+import IconButton from '../../../../../ui/iconButton/IconButton'
 
 const RoundCard = ({
   id,
@@ -29,6 +30,10 @@ const RoundCard = ({
     return acc + Number(job.price)
   }, 0)
 
+  const handleEditRoundPress = () => {
+    navigation.navigate('EditRound', { roundId: id })
+  }
+
   return (
     <View style={isLargeWeb ? styles.cardLargeWeb : styles.cardSmallScreen}>
       <ShortNameText text={roundName} />
@@ -38,6 +43,7 @@ const RoundCard = ({
           <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
             {roundName}
           </Text>
+
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Location: {location}
           </Text>
@@ -47,6 +53,7 @@ const RoundCard = ({
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Round Time: {roundTime} hrs
           </Text>
+
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Round Value: £{totalPrice}
           </Text>
@@ -64,27 +71,19 @@ const RoundCard = ({
         </View>
 
         <View style={styles.buttons}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('EditRound', { roundId: id })
-            }}
-          >
-            <Image
-              source={require('../../../../../../assets/pen.png')}
-              style={{ width: 35, height: 35 }}
-            />
-          </TouchableOpacity>
+          <IconButton
+            onPress={handleEditRoundPress}
+            imgSource={require('../../../../../../assets/pen.png')}
+            size={35}
+          />
 
-          <TouchableOpacity
+          <IconButton
             onPress={() => {
               setModalVisible(true)
             }}
-          >
-            <Image
-              source={require('../../../../../../assets/bin.png')}
-              style={{ width: 35, height: 35 }}
-            />
-          </TouchableOpacity>
+            imgSource={require('../../../../../../assets/bin.png')}
+            size={35}
+          />
         </View>
       </View>
 
