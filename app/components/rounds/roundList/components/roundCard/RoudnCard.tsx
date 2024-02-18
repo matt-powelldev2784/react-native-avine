@@ -8,6 +8,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../../screens/stackNavigator/StackNavigator'
 import { ConfirmModal } from '../../../../../ui'
 import { deleteRoundById } from '../../../../../db/rounds/deleteRoundById'
+import ShortNameText from '../../../../../utils/shortNameText/ShortNameText'
 
 const RoundCard = ({
   id,
@@ -28,29 +29,9 @@ const RoundCard = ({
     return acc + Number(job.price)
   }, 0)
 
-  const roundShortName = roundName
-    .split(' ')
-    .map((word): string => word[0])
-    .join('')
-    .substring(0, 3)
-
   return (
     <View style={isLargeWeb ? styles.cardLargeWeb : styles.cardSmallScreen}>
-      <View style={styles.jobShortNameContainer}>
-        <Text style={styles.jobShortNameText}>
-          {roundShortName.slice(0, 1).toUpperCase()}
-        </Text>
-        {roundShortName.length > 1 && (
-          <Text style={styles.jobShortNameText}>
-            {roundShortName.slice(1, 2).toUpperCase()}
-          </Text>
-        )}
-        {roundShortName.length > 2 && (
-          <Text style={styles.jobShortNameText}>
-            {roundShortName.slice(1, 2).toUpperCase()}
-          </Text>
-        )}
-      </View>
+      <ShortNameText text={roundName} />
 
       <View style={styles.leftContainer}>
         <View>
