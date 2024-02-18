@@ -34,6 +34,14 @@ const RoundCard = ({
     navigation.navigate('EditRound', { roundId: id })
   }
 
+  const hanldeDeleteRoundPress = async () => {
+    const deletedRound = await deleteRoundById(id)
+    if (deletedRound) {
+      navigation.navigate('Rounds', { refresh: true })
+      setModalVisible(false)
+    }
+  }
+
   return (
     <View style={isLargeWeb ? styles.cardLargeWeb : styles.cardSmallScreen}>
       <ShortNameText text={roundName} />
@@ -89,13 +97,7 @@ const RoundCard = ({
 
       <ConfirmModal
         modalText={`Are you sure you want to delete ${roundName}`}
-        onConfirm={async () => {
-          const deletedRound = await deleteRoundById(id)
-          if (deletedRound) {
-            navigation.navigate('Rounds', { refresh: true })
-            setModalVisible(false)
-          }
-        }}
+        onConfirm={hanldeDeleteRoundPress}
         onCancel={() => setModalVisible(false)}
         visible={modalVisible}
       />
