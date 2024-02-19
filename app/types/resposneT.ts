@@ -1,11 +1,11 @@
-export interface RepsonseSuccessT {
+export interface ResponseSuccessT {
   success: boolean
   status: number
   message: string
   data: any
 }
 
-export interface RepsonseErrorT {
+export interface ResponseErrorT {
   success: boolean
   status: number
   message: string
