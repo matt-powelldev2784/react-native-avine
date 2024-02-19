@@ -1,19 +1,17 @@
 import {
   doc,
-  setDoc,
   getDoc,
   collection,
-  updateDoc,
+  runTransaction,
   arrayUnion,
-  deleteDoc,
-  arrayRemove,
 } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { RoundT } from '../../types/RoundT'
+import { authError, responseError, responseSuccess } from '../utils/response'
 
 export const addRoundToDb = async (roundData: RoundT) => {
   if (auth.currentUser === null) {
-    return
+    return authError()
   }
 
   const userDoc = doc(db, 'users', auth.currentUser.uid)
@@ -21,56 +19,45 @@ export const addRoundToDb = async (roundData: RoundT) => {
   const roundDoc = doc(roundsCollection)
 
   try {
-    await setDoc(roundDoc, {
-      roundName: roundData.roundName,
-      location: roundData.location,
-      frequency: roundData.frequency,
-    })
+    await runTransaction(db, async (transaction) => {
+      transaction.set(roundDoc, {
+        roundName: roundData.roundName,
+        location: roundData.location,
+        frequency: roundData.frequency,
+        relatedJobs: [],
+      })
 
-    const linkedJobIds = roundData.jobs
+      //add related job id's to round doc
+      const relatedJobIds = roundData.relatedJobs
 
-    //add round id to each job to provide relationship
-    if (linkedJobIds) {
-      for (const jobId of linkedJobIds) {
-        const jobDocRef = doc(db, 'users', auth.currentUser.uid, 'jobs', jobId)
-        await updateDoc(jobDocRef, {
-          linkedRounds: arrayUnion(roundDoc.id),
-        })
-        await updateDoc(roundDoc, {
-          relatedjobs: arrayUnion(jobId),
-        })
+      if (!relatedJobIds) {
+        throw new Error('No related jobs array provided')
       }
-    }
 
-    console.log('New round added with ID:', roundDoc.id)
+      relatedJobIds.forEach((jobId) => {
+        transaction.update(roundDoc, {
+          relatedJobs: arrayUnion(jobId),
+        })
+      })
+    })
 
     const roundSnapshot = await getDoc(roundDoc)
     const round = roundSnapshot.data()
 
-    return round
+    return responseSuccess({
+      success: true,
+      status: 200,
+      message: `Round id ${roundSnapshot.id} added to database`,
+      data: {
+        id: roundSnapshot.id,
+        ...round,
+      },
+    })
   } catch (error) {
-    // remove round document if error occurs
-    if (roundDoc) {
-      await deleteDoc(roundDoc)
-      console.log('Round document deleted due to an error:', roundDoc.id)
-    }
-
-    //remove round id from each job to remove relationship
-    const linkedJobIds = roundData.jobs
-
-    if (linkedJobIds) {
-      for (const jobId of linkedJobIds) {
-        const jobDocRef = doc(db, 'users', auth.currentUser.uid, 'jobs', jobId)
-        if (jobDocRef) {
-          await updateDoc(jobDocRef, {
-            linkedRounds: arrayRemove(roundDoc.id),
-          })
-          await updateDoc(roundDoc, {
-            relatedjobs: arrayRemove(jobId),
-          })
-        }
-      }
-    }
-    console.error('Error adding round:', error)
+    return responseError({
+      success: false,
+      status: 500,
+      message: 'An error occurred while adding the round to the database',
+    })
   }
 }

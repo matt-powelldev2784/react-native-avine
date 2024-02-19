@@ -44,6 +44,11 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
+          {/* --------------------------  Round Screens  ------------------------- */}
+          <Stack.Screen name="Rounds" component={Rounds} />
+          <Stack.Screen name="AddRound" component={AddRound} />
+          <Stack.Screen name="EditRound" component={EditRound} />
+
           {/* --------------------------  Planner Screens  -------------------------- */}
           <Stack.Screen name="Planner" component={Planner} />
           <Stack.Screen name="ScheduleRound" component={ScheduleRound} />
@@ -52,11 +57,6 @@ const StackNavigator = () => {
           <Stack.Screen name="Jobs" component={Jobs} />
           <Stack.Screen name="AddJob" component={AddJob} />
           <Stack.Screen name="EditJob" component={EditJob} />
-
-          {/* --------------------------  Round Screens  ------------------------- */}
-          <Stack.Screen name="Rounds" component={Rounds} />
-          <Stack.Screen name="AddRound" component={AddRound} />
-          <Stack.Screen name="EditRound" component={EditRound} />
 
           {/* --------------------------  Auth Screens Screens  ------------------- */}
           <Stack.Screen name="SignOut" component={SignOutScreen} />
