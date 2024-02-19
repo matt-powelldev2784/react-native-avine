@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { RoundWithJobT } from '../../../../../types/RoundT'
 import theme from '../../../../../utils/theme/theme'
@@ -8,6 +8,8 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../../screens/stackNavigator/StackNavigator'
 import { ConfirmModal } from '../../../../../ui'
 import { deleteRoundById } from '../../../../../db/rounds/deleteRoundById'
+import ShortNameText from '../../../../../utils/shortNameText/ShortNameText'
+import IconButton from '../../../../../ui/iconButton/IconButton'
 
 const RoundCard = ({
   id,
@@ -28,35 +30,28 @@ const RoundCard = ({
     return acc + Number(job.price)
   }, 0)
 
-  const roundShortName = roundName
-    .split(' ')
-    .map((word): string => word[0])
-    .join('')
-    .substring(0, 3)
+  const handleEditRoundPress = () => {
+    navigation.navigate('EditRound', { roundId: id })
+  }
+
+  const hanldeDeleteRoundPress = async () => {
+    const deletedRound = await deleteRoundById(id)
+    if (deletedRound) {
+      navigation.navigate('Rounds', { refresh: true })
+      setModalVisible(false)
+    }
+  }
 
   return (
     <View style={isLargeWeb ? styles.cardLargeWeb : styles.cardSmallScreen}>
-      <View style={styles.jobShortNameContainer}>
-        <Text style={styles.jobShortNameText}>
-          {roundShortName.slice(0, 1).toUpperCase()}
-        </Text>
-        {roundShortName.length > 1 && (
-          <Text style={styles.jobShortNameText}>
-            {roundShortName.slice(1, 2).toUpperCase()}
-          </Text>
-        )}
-        {roundShortName.length > 2 && (
-          <Text style={styles.jobShortNameText}>
-            {roundShortName.slice(1, 2).toUpperCase()}
-          </Text>
-        )}
-      </View>
+      <ShortNameText text={roundName} />
 
       <View style={styles.leftContainer}>
         <View>
           <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
             {roundName}
           </Text>
+
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Location: {location}
           </Text>
@@ -66,6 +61,7 @@ const RoundCard = ({
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Round Time: {roundTime} hrs
           </Text>
+
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Round Value: £{totalPrice}
           </Text>
@@ -77,45 +73,35 @@ const RoundCard = ({
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             Jobs: {numOfJobs}
           </Text>
+
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
             {frequency}
           </Text>
         </View>
 
         <View style={styles.buttons}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('EditRound', { roundId: id })
-            }}
-          >
-            <Image
-              source={require('../../../../../../assets/pen.png')}
-              style={{ width: 35, height: 35 }}
-            />
-          </TouchableOpacity>
+          <IconButton
+            onPress={handleEditRoundPress}
+            imgSource={require('../../../../../../assets/pen.png')}
+            size={35}
+          />
 
-          <TouchableOpacity
+          <IconButton
             onPress={() => {
               setModalVisible(true)
             }}
-          >
-            <Image
-              source={require('../../../../../../assets/bin.png')}
-              style={{ width: 35, height: 35 }}
-            />
-          </TouchableOpacity>
+            imgSource={require('../../../../../../assets/bin.png')}
+            size={35}
+          />
         </View>
       </View>
 
       <ConfirmModal
         modalText={`Are you sure you want to delete ${roundName}`}
-        onConfirm={async () => {
-          const deletedRound = await deleteRoundById(id)
-          if (deletedRound) {
-            navigation.navigate('Rounds', { refresh: true })
-            setModalVisible(false)
-          }
-        }}
+        modalText2={
+          'If you delete this round all planner entries for this round will be removed from the planner '
+        }
+        onConfirm={hanldeDeleteRoundPress}
         onCancel={() => setModalVisible(false)}
         visible={modalVisible}
       />

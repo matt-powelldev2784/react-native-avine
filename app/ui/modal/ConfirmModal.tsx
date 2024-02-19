@@ -129,6 +129,8 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 32,
     borderRadius: 8,
+    maxWidth: 120,
+    minWidth: 100,
   },
   buttonCancel: {
     backgroundColor: theme.colors.buttonSecondary,

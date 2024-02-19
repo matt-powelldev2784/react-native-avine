@@ -1,34 +1,31 @@
 import React, { useState } from 'react'
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-} from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
 import MultiSelectDropdown from '../../../ui/formElements/MultiSelectDropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../utils/theme/theme'
 import { useFetchJobs } from './hooks/useFetchJobs'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { freqencyArray } from '../../../utils/freqencyArray'
+import Button from '../../../ui/button/Button'
 
 const AddRoundForm = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [activeStep, setActiveStep] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
   const userJobs = useFetchJobs()
-  const formik = useFormikSteps(activeStep)
+  const formik = useFormikSteps({ activeStep, setIsLoading })
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
+  const buttonsStyle = isLargeWeb ? 'row' : 'column'
+
+  const handleSumbmitPress = () => {
+    formik.handleSubmit()
+  }
 
   const handleStepBack = () => {
     if (activeStep === 0) {
@@ -98,38 +95,24 @@ const AddRoundForm = () => {
 
         <View style={styles.buttonContainer}>
           {activeStep < 1 ? (
-            <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
-              <Text style={styles.buttonText}>Next</Text>
-            </TouchableOpacity>
+            <Button onPress={moveToNextStep} text={'Next'} />
           ) : null}
 
           {activeStep === 1 ? (
             <View
-              style={[
-                styles.buttonContainer,
-                isLargeWeb
-                  ? { flexDirection: 'row' }
-                  : { flexDirection: 'column' },
-              ]}
+              style={[styles.buttonContainer, { flexDirection: buttonsStyle }]}
             >
-              <TouchableOpacity
+              <Button
                 onPress={handleStepBack}
-                style={styles.buttonSecondary}
-              >
-                <Text style={styles.buttonText}>Go Back</Text>
-              </TouchableOpacity>
+                text="Go Back"
+                backgroundColor={theme.colors.buttonSecondary}
+              />
 
-              <TouchableOpacity
-                onPress={() => {
-                  formik.handleSubmit()
-                  if (formik.isValid) {
-                    navigation.navigate('Rounds', { refresh: true })
-                  }
-                }}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>Add Round</Text>
-              </TouchableOpacity>
+              <Button
+                onPress={handleSumbmitPress}
+                text="Add Round"
+                isLoading={isLoading}
+              />
             </View>
           ) : null}
         </View>
