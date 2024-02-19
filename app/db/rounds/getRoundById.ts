@@ -1,35 +1,50 @@
+
 import { doc, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { RoundWithIdT } from '../../types/RoundT'
+import { authError, responseError, responseSuccess } from '../utils/response'
+import { getJobById } from '../jobs/getJobById'
 
-export const getRoundById = async (
-  roundId: string,
-): Promise<RoundWithIdT | null> => {
+export const getRoundById = async (roundId: string): responseErr=> {
   if (auth.currentUser === null) {
-    console.log('No user signed in')
-    return null
+    return authError()
   }
 
-  const userDoc = doc(db, 'users', auth.currentUser.uid)
-  const roundDocRef = doc(userDoc, 'rounds', roundId)
-
   try {
+    const userDoc = doc(db, 'users', auth.currentUser.uid)
+    const roundDocRef = doc(userDoc, 'rounds', roundId)
+
     const roundDoc = await getDoc(roundDocRef)
-    if (roundDoc.exists()) {
-      const roundData = {
-        id: roundDoc.id,
-        ...roundDoc.data(),
-      } as RoundWithIdT
-
-      console.log('Round data:', roundData)
-
-      return roundData
-    } else {
-      console.log('No such round found')
-      return null
+    if (!roundDoc.exists()) {
+      throw new Error('No such round found')
     }
+
+    const rounData = {
+      ...roundDoc.data(),
+    }
+
+    const relatedJobs = rounData.relatedJobs
+    if (!relatedJobs) {
+      throw new Error('Error getting related jobs data')
+    }
+
+    const relatedJobsData = await Promise.all(
+      relatedJobs.map((jobId: string) => getJobById(jobId)),
+    )
+
+    return responseSuccess({
+      success: true,
+      status: 200,
+      message: 'Round and related job data retrieved',
+      data: {
+        round: { ...rounData, id: roundDoc.id },
+        relatedJobs: relatedJobsData,
+      },
+    })
   } catch (error) {
-    console.error('Error getting round data:', error)
-    return null
+    return responseError({
+      success: false,
+      status: 500,
+      message: 'An error occurred while gettiing round and related job data',
+    })
   }
 }

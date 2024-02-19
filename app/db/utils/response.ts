@@ -1,11 +1,11 @@
-import { repsonseErrorT, repsonseSuccessT } from '../../types/resposneT'
+import { RepsonseErrorT, RepsonseSuccessT } from '../../types/resposneT'
 
 export const responseSuccess = ({
   success,
   status,
   message,
   data,
-}: repsonseSuccessT) => {
+}: RepsonseSuccessT) => {
   return {
     success,
     status,
@@ -14,7 +14,7 @@ export const responseSuccess = ({
   }
 }
 
-export const responseError = ({ success, status, message }: repsonseErrorT) => {
+export const responseError = ({ success, status, message }: RepsonseErrorT) => {
   return {
     success,
     status,
