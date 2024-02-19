@@ -2,9 +2,11 @@ import { doc, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { authError, responseError, responseSuccess } from '../utils/response'
 import { getJobById } from '../jobs/getJobById'
-import { ResponseError } from '../utils/response'}
+import { ResponseErrorT, ResponseSuccessT } from '../../types/resposneT'
 
-export const getRoundById = async (roundId: string): Promise<ResponseError> => {
+export const getRoundById = async (
+  roundId: string,
+): Promise<ResponseErrorT | ResponseSuccessT> => {
   if (auth.currentUser === null) {
     return authError()
   }

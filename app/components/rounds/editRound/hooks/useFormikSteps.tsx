@@ -35,9 +35,8 @@ const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
   useEffect(() => {
     const fetchData = async () => {
       const round = await getRoundById(roundId)
-      console.log('round', round)
 
-      const relatedJobs = round.data.relatedJobs
+      const data = round?.data
 
       if (relatedJobs) {
         setRoundData((prev) => {
