@@ -1,15 +1,4 @@
-interface repsonseSuccessT {
-  success: boolean
-  status: number
-  message: string
-  data: any
-}
-
-interface repsonseErrorT {
-  success: boolean
-  status: number
-  message: string
-}
+import { repsonseErrorT, repsonseSuccessT } from '../../types/resposneT'
 
 export const responseSuccess = ({
   success,
