@@ -36,6 +36,9 @@ export const addRoundToDb = async (roundData: RoundT) => {
         await updateDoc(jobDocRef, {
           linkedRounds: arrayUnion(roundDoc.id),
         })
+        await updateDoc(roundDoc, {
+          relatedjobs: arrayUnion(jobId),
+        })
       }
     }
 
@@ -61,6 +64,9 @@ export const addRoundToDb = async (roundData: RoundT) => {
         if (jobDocRef) {
           await updateDoc(jobDocRef, {
             linkedRounds: arrayRemove(roundDoc.id),
+          })
+          await updateDoc(roundDoc, {
+            relatedjobs: arrayRemove(jobId),
           })
         }
       }

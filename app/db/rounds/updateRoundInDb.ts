@@ -42,6 +42,9 @@ export const updateRoundInDb = async (roundData: roundData) => {
         await updateDoc(jobDocRef, {
           linkedRounds: arrayRemove(roundDoc.id),
         })
+        await updateDoc(roundDoc, {
+          relatedjobs: arrayRemove(jobId),
+        })
       }
     }
 
@@ -53,6 +56,9 @@ export const updateRoundInDb = async (roundData: roundData) => {
         const jobDocRef = doc(db, 'users', auth.currentUser.uid, 'jobs', jobId)
         await updateDoc(jobDocRef, {
           linkedRounds: arrayUnion(roundDoc.id),
+        })
+        await updateDoc(roundDoc, {
+          relatedjobs: arrayRemove(jobId),
         })
       }
     }
