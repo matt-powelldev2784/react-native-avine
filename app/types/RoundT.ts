@@ -4,7 +4,7 @@ export interface RoundT {
   roundName: string
   location: string
   frequency: string
-  jobs: string[] | undefined | null
+  relatedJobs: string[] | []
 }
 
 export interface RoundWithIdT extends RoundT {

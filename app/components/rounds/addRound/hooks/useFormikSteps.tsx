@@ -35,13 +35,13 @@ const useFormikSteps = ({ activeStep, setIsLoading }: UseFormikStepsProps) => {
       roundName: '',
       location: '',
       frequency: '',
-      jobs: [],
+      relatedJobs: [],
     },
     onSubmit: async (values) => {
       setIsLoading(true)
 
       console.log(values)
-      addRoundToDb(values)
+      await addRoundToDb(values)
 
       navigation.navigate('Rounds', { refresh: true })
       setIsLoading(false)

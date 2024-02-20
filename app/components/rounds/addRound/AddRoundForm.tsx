@@ -84,7 +84,7 @@ const AddRoundForm = () => {
             </Text>
             <MultiSelectDropdown
               formik={formik}
-              name="jobs"
+              name="relatedJobs"
               placeholder="Select jobs to add..."
               title="Add job"
               options={userJobs}
