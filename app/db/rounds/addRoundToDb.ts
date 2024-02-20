@@ -7,7 +7,7 @@ import {
 } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { RoundT } from '../../types/RoundT'
-import { authError, responseError, responseSuccess } from '../utils/response'
+import { authError } from '../utils/authError'
 
 export const addRoundToDb = async (roundData: RoundT) => {
   if (auth.currentUser === null) {
@@ -44,7 +44,7 @@ export const addRoundToDb = async (roundData: RoundT) => {
     const roundSnapshot = await getDoc(roundDoc)
     const round = roundSnapshot.data()
 
-    return responseSuccess({
+    return {
       success: true,
       status: 200,
       message: `Round id ${roundSnapshot.id} added to database`,
@@ -52,12 +52,12 @@ export const addRoundToDb = async (roundData: RoundT) => {
         id: roundSnapshot.id,
         ...round,
       },
-    })
+    }
   } catch (error) {
-    return responseError({
+    return {
       success: false,
       status: 500,
       message: 'An error occurred while adding the round to the database',
-    })
+    }
   }
 }

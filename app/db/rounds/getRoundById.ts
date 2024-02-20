@@ -1,12 +1,8 @@
 import { doc, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { authError, responseError, responseSuccess } from '../utils/response'
-import { getJobById } from '../jobs/getJobById'
-import { ResponseErrorT, ResponseSuccessT } from '../../types/resposneT'
+import { authError } from '../utils/authError'
 
-export const getRoundById = async (
-  roundId: string,
-): Promise<ResponseErrorT | ResponseSuccessT> => {
+export const getRoundById = async (roundId: string) => {
   if (auth.currentUser === null) {
     return authError()
   }
@@ -22,31 +18,22 @@ export const getRoundById = async (
 
     const rounData = {
       ...roundDoc.data(),
+      id: roundDoc.id,
     }
 
-    const relatedJobs = rounData.relatedJobs
-    if (!relatedJobs) {
-      throw new Error('Error getting related jobs data')
-    }
-
-    const relatedJobsData = await Promise.all(
-      relatedJobs.map((jobId: string) => getJobById(jobId)),
-    )
-
-    return responseSuccess({
+    return {
       success: true,
       status: 200,
       message: 'Round and related job data retrieved',
       data: {
-        round: { ...rounData, id: roundDoc.id },
-        relatedJobs: relatedJobsData,
+        round: { ...rounData },
       },
-    })
+    }
   } catch (error) {
-    return responseError({
+    return {
       success: false,
       status: 500,
       message: 'An error occurred while gettiing round and related job data',
-    })
+    }
   }
 }

@@ -1,4 +1,3 @@
-import { responseError, responseSuccess } from './../utils/response'
 import {
   doc,
   getDoc,
@@ -8,13 +7,9 @@ import {
 } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { RoundWithIdT } from '../../types/RoundT'
-import { authError } from '../utils/response'
+import { authError } from '../utils/authError'
 
-interface roundData extends RoundWithIdT {
-  currentRelatedJobs: string[]
-}
-
-export const updateRoundInDb = async (roundData: roundData) => {
+export const updateRoundInDb = async (roundData: RoundWithIdT) => {
   if (auth.currentUser === null) {
     return authError()
   }
@@ -60,7 +55,7 @@ export const updateRoundInDb = async (roundData: roundData) => {
     const roundSnapshot = await getDoc(roundDoc)
     const updatedRound = roundSnapshot.data()
 
-    return responseSuccess({
+    return {
       success: true,
       status: 200,
       message: `Round id ${roundSnapshot.id} updated database`,
@@ -68,12 +63,12 @@ export const updateRoundInDb = async (roundData: roundData) => {
         id: roundSnapshot.id,
         ...updatedRound,
       },
-    })
+    }
   } catch (error) {
-    return responseError({
+    return {
       success: false,
       status: 500,
       message: 'An error occurred while updating the round in the database',
-    })
+    }
   }
 }
