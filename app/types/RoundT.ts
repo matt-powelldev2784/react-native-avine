@@ -31,5 +31,6 @@ export interface RoundWithRelatedJobsT {
   roundName: string
   location: string
   frequency: string
+  recurringRound: boolean
   relatedJobs: JobWithIdT[]
 }
