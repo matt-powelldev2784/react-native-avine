@@ -2,15 +2,12 @@ import {
   doc,
   updateDoc,
   arrayUnion,
-  collection,
-  query,
-  where,
-  getDocs,
   setDoc,
   getDoc,
   arrayRemove,
 } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
+import { getRoundById } from '../rounds/getRoundById'
 interface scheduleRoundToDbT {
   roundId: string
   date: string
@@ -22,15 +19,9 @@ export const scheduleRoundToDb = async (planInfo: scheduleRoundToDbT) => {
     return
   }
 
-  const { recurringRound } = planInfo
+  const { recurringRound, roundId, date } = planInfo
 
-  const plannerDocRef = doc(
-    db,
-    'users',
-    auth.currentUser.uid,
-    'planner',
-    planInfo.date,
-  )
+  const plannerDocRef = doc(db, 'users', auth.currentUser.uid, 'planner', date)
 
   try {
     //add scheduled round to planner document
@@ -89,22 +80,17 @@ export const scheduleRoundToDb = async (planInfo: scheduleRoundToDbT) => {
     }
 
     //add each related to job to planner document
-    const q = query(
-      collection(db, 'users', auth.currentUser.uid, 'jobs'),
-      where('linkedRounds', 'array-contains', planInfo.roundId),
-    )
-
-    const querySnapshot = await getDocs(q)
-    console.log('querySnapshot', querySnapshot)
+    const round = await getRoundById(roundId)
+    const relatedJobs = round?.relatedJobs || []
 
     await Promise.all(
-      querySnapshot.docs.map(async (job) => {
+      relatedJobs.map(async (jobId) => {
         if (auth.currentUser === null) {
           return
         }
 
         await updateDoc(plannerDocRef, {
-          relatedJobs: arrayUnion(job.id),
+          relatedJobs: arrayUnion(`${roundId}/${jobId}`),
         })
       }),
     )

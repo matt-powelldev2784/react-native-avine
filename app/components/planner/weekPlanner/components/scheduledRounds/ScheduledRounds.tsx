@@ -5,6 +5,7 @@ import ScheduledRoundCard from './components/ScheduledRoundCard'
 import NoScheduledRounds from './components/NoScheduledRounds'
 import { useWeekPlannerContext } from '../../hooks/WeekPlannerContext'
 import DataError from './components/DataError'
+
 interface ScheduledRoundsProps {
   addFooter?: boolean
 }
@@ -17,7 +18,7 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
     setRefreshData,
   })
 
-  console.log('refreshData', refreshData)
+  console.log('scheduledRounds', scheduledRounds)
 
   if (isError) {
     return <DataError />
@@ -25,9 +26,10 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
 
   return (
     <ScrollView style={styles.flatListContainer}>
-      {scheduledRounds.map((round) => (
-        <ScheduledRoundCard key={round.id} round={round} />
-      ))}
+      {scheduledRounds.map((round) => {
+        return <ScheduledRoundCard key={round.id} round={round} />
+      })}
+
       {scheduledRounds.length === 0 ? <NoScheduledRounds /> : null}
 
       {addFooter ? <View style={styles.flatlistFooter} /> : null}

@@ -24,8 +24,8 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
   } = useHandleDelete({ setModalVisible, round })
 
   return (
-    <View key={round.id} style={styles.roundWrapper}>
-      <View key={round.id} style={styles.roundContainer}>
+    <View style={styles.roundWrapper}>
+      <View style={styles.roundContainer}>
         {/* ---------------------- Round Title ----------------------- */}
         <View style={styles.roundTitleContainer}>
           <Text
