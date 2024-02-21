@@ -2,6 +2,7 @@ import { auth } from '../../../../firebaseConfig'
 import { addRecurringRound } from './addRecurringRound'
 import { deleteRecurringDate } from './deleteRecurringDate'
 import { addOneOffRound } from './addOneOffRound'
+import { addRecurringData } from './addRecurringData'
 
 interface planInfoT {
   roundId: string
@@ -15,8 +16,26 @@ export const addRound = async ({ recurring, roundId, date }: planInfoT) => {
   }
   try {
     if (recurring) {
-      await addRecurringRound({ recurringRound: recurring, roundId, date })
-      await deleteRecurringDate({ recurringRound: recurring, roundId, date })
+      const recurringData = await addRecurringData({
+        recurringRound: recurring,
+        roundId,
+        date,
+      })
+
+      if (!recurringData) {
+        throw new Error('No recurring data')
+      }
+
+      const recurringDates = recurringData?.recurringDates
+      if (!recurringDates) {
+        throw new Error('No recurring dates')
+      }
+
+      await addRecurringRound({
+        recurringRound: recurring,
+        roundId,
+        recurringDates,
+      })
     }
 
     if (!recurring) {

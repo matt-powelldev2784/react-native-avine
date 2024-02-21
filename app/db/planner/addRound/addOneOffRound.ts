@@ -25,11 +25,18 @@ export const addOneOffRound = async ({
     return
   }
 
-  const plannerDocRef = doc(db, 'users', auth.currentUser.uid, 'planner', date)
+
 
   try {
     //add one off round to planner document
-    let plannerDoc = await getDoc(plannerDocRef)
+    const plannerDocRef = doc(
+      db,
+      'users',
+      auth.currentUser.uid,
+      'planner',
+      date,
+    )
+      const plannerDoc = await getDoc(plannerDocRef)
 
     if (!plannerDoc.exists()) {
       await setDoc(plannerDocRef, {
@@ -38,11 +45,6 @@ export const addOneOffRound = async ({
         completedJobs: [],
         recurringRounds: [],
       })
-      plannerDoc = await getDoc(plannerDocRef)
-    }
-
-    if (!plannerDoc.exists()) {
-      throw Error('Error creating planner doc')
     }
 
     if (!recurringRound) {
@@ -68,7 +70,10 @@ export const addOneOffRound = async ({
       }),
     )
 
-    return plannerDoc
+    const updatedPlannerDoc = await getDoc(plannerDocRef)
+    const updatedPlannerData = updatedPlannerDoc.data()
+
+    return updatedPlannerData
   } catch (error) {
     return { error }
   }
