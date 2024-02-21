@@ -17,7 +17,7 @@ export const scheduleRoundsToDb = async ({
   if (auth.currentUser === null) {
     return
   }
-
+try {
   if (recurring) {
     await addRecurringRound({ recurringRound: recurring, roundId, date })
     await deleteRecurringDate({ recurringRound: recurring, roundId, date })
@@ -26,9 +26,8 @@ export const scheduleRoundsToDb = async ({
   if (!recurring) {
     await addOneOffRound({ recurringRound: recurring, roundId, date })
   }
-
-  try {
-  } catch (error) {
-    return { error }
-  }
+} catch (error) {
+  console.error(error)
+  throw error
+}
 }
