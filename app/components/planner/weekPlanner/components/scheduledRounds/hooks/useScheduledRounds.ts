@@ -26,7 +26,6 @@ export const useScheduledRounds = ({
       seIsError(false)
       const selectedDayForDb = formatDateForDb(selectedDay)
       const rounds = await getRoundsByPlannerDate(selectedDayForDb)
-      console.log('rounds-------', rounds)
 
       if (rounds) {
         setScheduledRounds(rounds)

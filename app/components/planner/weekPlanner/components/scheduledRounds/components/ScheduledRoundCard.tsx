@@ -24,8 +24,6 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
     handleDeleteSingleRecurringRound,
   } = useHandleDelete({ setModalVisible, round })
 
-  console.log('round', round)
-
   return (
     <View style={styles.roundWrapper}>
       <View style={styles.roundContainer}>
@@ -60,7 +58,12 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
         {/* ---------------------- Jobs List ----------------------- */}
 
         {round?.relatedJobs?.map((job: JobWithIdT) => (
-          <ScheduledJobCard key={job.id} job={job} />
+          <ScheduledJobCard
+            key={job.id}
+            job={job}
+            recurringRound={recurringRound}
+            roundId={round.id}
+          />
         ))}
       </View>
 

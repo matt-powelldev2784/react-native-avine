@@ -45,7 +45,11 @@ export const getOneOffRounds = async (plannerDate: string) => {
 
         const relatedJobsData = await Promise.all(
           relatedJobs.map(async (jobId: string) => {
-            const jobIsComplete = completdJobs.includes(jobId)
+            const jobIsComplete = completdJobs.includes(
+              `${roundId}@${jobId}@oneOffRound`,
+            )
+             
+
 
             const job = await getJobById(jobId)
             return { ...job, id: jobId, jobIsComplete }

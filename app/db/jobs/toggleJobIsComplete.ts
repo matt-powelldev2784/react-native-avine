@@ -26,7 +26,7 @@ export const toggleJobIsComplete = async ({
   )
 
   try {
-    if (isComplete) {
+    if (isComplete === true) {
       await updateDoc(plannerDateDocRef, {
         completedJobs: arrayUnion(jobId),
       })

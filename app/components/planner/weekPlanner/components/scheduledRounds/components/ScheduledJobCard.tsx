@@ -9,9 +9,15 @@ import { useWeekPlannerContext } from '../../../hooks/WeekPlannerContext'
 
 interface ScheduledJobCardProps {
   job: JobWithIdT
+  roundId: string
+  recurringRound: boolean
 }
 
-const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
+const ScheduledJobCard = ({
+  job,
+  recurringRound,
+  roundId,
+}: ScheduledJobCardProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const isComplete = job.jobIsComplete
   const { setRefreshData } = useWeekPlannerContext()
@@ -28,8 +34,11 @@ const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
       return
     }
     setIsLoading(true)
+
+    const jobIdPrefix = recurringRound ? 'recurringRound' : 'oneOffRound'
+
     await toggleJobIsComplete({
-      jobId: job.id,
+      jobId: `${roundId}@${job.id}@${jobIdPrefix}`,
       plannerDate: plannerDate,
       isComplete: !isComplete,
     })
