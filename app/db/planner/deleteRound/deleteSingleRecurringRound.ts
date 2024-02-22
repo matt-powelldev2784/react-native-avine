@@ -26,7 +26,7 @@ export const deleteOneOffRound = async ({
     }
 
     await updateDoc(plannerDocRef, {
-      oneOffRounds: arrayRemove(`${roundId}@oneOffRound`),
+      recurringRounds: arrayRemove(`${roundId}@recurringRound`),
     })
 
     //remove each related job from planner document
@@ -48,7 +48,7 @@ export const deleteOneOffRound = async ({
         }
 
         await updateDoc(plannerDocRef, {
-          relatedJobs: arrayRemove(`${roundId}@${jobId}@oneOffRound`),
+          relatedJobs: arrayRemove(`${roundId}@${jobId}`),
         })
       }),
     )

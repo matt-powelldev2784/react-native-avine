@@ -61,7 +61,7 @@ export const addOneOffRound = async ({
         }
 
         await updateDoc(plannerDocRef, {
-          relatedJobs: arrayUnion(`${roundId}@${jobId}`),
+          relatedJobs: arrayUnion(`${roundId}@${jobId}@oneOffRound`),
         })
       }),
     )
