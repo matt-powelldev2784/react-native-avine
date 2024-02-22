@@ -6,13 +6,16 @@ import usePlannerDateFromStorage from '../../../hooks/usePlannerDateFromStorage'
 import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComplete'
 import { useWeekPlannerContext } from '../../../hooks/WeekPlannerContext'
 
+interface JobWithIsCompleteT extends JobWithIdT {
+  jobIsComplete: boolean
+}
 interface ScheduledJobCardProps {
-  job: JobWithIdT
+  job: JobWithIsCompleteT
 }
 
 const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
   const [isLoading, setIsLoading] = useState(false)
-  const isComplete = job.isComplete
+  const isComplete = job.jobIsComplete
   const { setRefreshData } = useWeekPlannerContext()
   const plannerDate = usePlannerDateFromStorage('@plannerDate')
   const timeWidth = Number(job.time) * 20 + 14
