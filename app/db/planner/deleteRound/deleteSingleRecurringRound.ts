@@ -64,7 +64,7 @@ export const deleteSingleRecurringRound = async ({
       })
 
       // remove each related job from planner document
-      relatedJobs.forEach((jobId: string) => {
+      relatedJobs.forEach(async (jobId: string) => {
         transaction.update(plannerDocRef, {
           relatedJobs: arrayRemove(`${roundId}@${jobId}@recurringRound`),
         })
@@ -77,7 +77,9 @@ export const deleteSingleRecurringRound = async ({
         ),
       })
 
-      console.log(`Scheduled round with round id ${roundId} removed from db`)
+      console.log(
+        `Scheduled round om ${date} with round id ${roundId} removed from db`,
+      )
     })
   } catch (error) {
     console.error(`Error removing round ${roundId} from db`, error)

@@ -6,6 +6,7 @@ import { RootStackParamList } from '../../../../../../screens/stackNavigator/Sta
 import { RoundWithRelatedJobsT } from '../../../../../../types/RoundT'
 import { deleteOneOffRound } from '../../../../../../db/planner/deleteRound/deleteOneOffRound'
 import { deleteSingleRecurringRound } from '../../../../../../db/planner/deleteRound/deleteSingleRecurringRound'
+import { deleteAllRecurringRounds } from '../../../../../../db/planner/deleteRound/deleteAllRecurrringRounds'
 
 interface useHandleDeleteProps {
   setModalVisible: (modalVisible: boolean) => void
@@ -43,9 +44,8 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
   const handleDeleteAllRecurringRounds = async () => {
     const currentPlannerDate = await getItemFromStorage('@plannerDate')
 
-    await deleteSingleRecurringRound({
+    await deleteAllRecurringRounds({
       roundId: round.id,
-      date: currentPlannerDate,
     })
 
     if (currentPlannerDate) {
