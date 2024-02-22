@@ -23,6 +23,8 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
     handleDeleteSingleRecurringRound,
   } = useHandleDelete({ setModalVisible, round })
 
+console.log('round', round)
+
   return (
     <View style={styles.roundWrapper}>
       <View style={styles.roundContainer}>

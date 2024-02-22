@@ -23,10 +23,12 @@ export const getOneOffRounds = async (plannerDate: string) => {
     const oneOffRounds = plannerDocData?.oneOffRounds || []
 
     const roundData = await Promise.all(
-      oneOffRounds.map(async (roundId: string) => {
+      oneOffRounds.map(async (roundInfo: string) => {
         if (auth.currentUser === null) {
           return
         }
+
+        const roundId = roundInfo.split('/')[0]
 
         const roundDocRef = doc(
           db,

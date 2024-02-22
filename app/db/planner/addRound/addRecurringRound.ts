@@ -53,7 +53,7 @@ export const addRecurringRound = async ({
 
         if (recurringRound) {
           transaction.update(plannerDocRef, {
-            recurringRounds: arrayUnion(roundId),
+            recurringRounds: arrayUnion(`${roundId}/recurringRound`),
           })
         }
 

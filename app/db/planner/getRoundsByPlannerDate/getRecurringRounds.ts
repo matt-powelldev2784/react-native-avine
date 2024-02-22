@@ -23,10 +23,12 @@ export const getRecurringRounds = async (plannerDate: string) => {
     const recurringRounds = plannerDocData?.recurringRounds || []
 
     const roundData = await Promise.all(
-      recurringRounds.map(async (roundId: string) => {
+      recurringRounds.map(async (roundInfo: string) => {
         if (auth.currentUser === null) {
           return
         }
+
+        const roundId = roundInfo.split('/')[0]
 
         const roundDocRef = doc(
           db,
@@ -51,7 +53,7 @@ export const getRecurringRounds = async (plannerDate: string) => {
         )
 
         const roundDataWithId = {
-          id: roundDoc.id,
+          id: `${roundDoc.id}`,
           ...roundDocData,
           relatedJobs: relatedJobsData,
           recurringRound: true,

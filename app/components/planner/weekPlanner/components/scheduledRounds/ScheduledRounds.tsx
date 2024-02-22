@@ -27,7 +27,12 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
   return (
     <ScrollView style={styles.flatListContainer}>
       {scheduledRounds.map((round) => {
-        return <ScheduledRoundCard key={round.id} round={round} />
+        return (
+          <ScheduledRoundCard
+            key={`${round.id}/recurringRound${round.recurringRound}`}
+            round={round}
+          />
+        )
       })}
 
       {scheduledRounds.length === 0 ? <NoScheduledRounds /> : null}
