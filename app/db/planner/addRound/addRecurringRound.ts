@@ -1,7 +1,6 @@
 import {
   doc,
   arrayUnion,
-  arrayRemove,
   runTransaction,
   setDoc,
   getDoc,
@@ -55,7 +54,6 @@ export const addRecurringRound = async ({
         if (recurringRound) {
           transaction.update(plannerDocRef, {
             recurringRounds: arrayUnion(roundId),
-            oneOffRounds: arrayRemove(roundId),
           })
         }
 

@@ -1,9 +1,7 @@
 import { auth } from '../../../../firebaseConfig'
 import { addRecurringRound } from './addRecurringRound'
-import { deleteRecurringDate } from './deleteRecurringDate'
 import { addOneOffRound } from './addOneOffRound'
 import { addRecurringData } from './addRecurringData'
-import { deleteRound } from './deleteRound'
 
 interface planInfoT {
   roundId: string
@@ -40,14 +38,6 @@ export const addRound = async ({ recurring, roundId, date }: planInfoT) => {
     }
 
     if (!recurring) {
-      // remove recurring date for recurring round document if it exists
-      // users can only schedule a round once per date
-      await deleteRecurringDate({ recurringRound: recurring, roundId, date })
-      await deleteRound({
-        date,
-        roundId,
-        recurringRound: true,
-      })
       await addOneOffRound({ recurringRound: recurring, roundId, date })
     }
   } catch (error) {

@@ -4,7 +4,6 @@ import {
   arrayUnion,
   setDoc,
   getDoc,
-  arrayRemove,
 } from 'firebase/firestore'
 import { db, auth } from '../../../../firebaseConfig'
 import { getRoundById } from '../../rounds/getRoundById'
@@ -50,7 +49,6 @@ export const addOneOffRound = async ({
     if (!recurringRound) {
       await updateDoc(plannerDocRef, {
         oneOffRounds: arrayUnion(roundId),
-        recurringRounds: arrayRemove(roundId),
       })
     }
 
