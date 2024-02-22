@@ -25,10 +25,11 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
     const currentPlannerDate = await getItemFromStorage('@plannerDate')
 
     await deleteOneOffRound({
-      roundId: `${round.id}@oneOffRound`,
+      roundId: `${round.id}`,
       date: currentPlannerDate,
     })
 
+    console.log('`${round.id}@oneOffRound`', `${round.id}@oneOffRound`)
     console.log('round', round)
     console.log('delete one off')
 

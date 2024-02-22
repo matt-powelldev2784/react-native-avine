@@ -19,13 +19,14 @@ export const deleteOneOffRound = async ({
   try {
     //remove scheduled round from planner document
     const plannerDoc = await getDoc(plannerDocRef)
+    console.log('plannerDoc', plannerDoc.data())
 
     if (!plannerDoc.exists()) {
       throw Error('Planner document does not exist')
     }
 
     await updateDoc(plannerDocRef, {
-      oneOffRounds: arrayRemove(`${roundId}@oneOff`),
+      oneOffRounds: arrayRemove(`${roundId}@oneOffRound`),
     })
 
     //remove each related job from planner document
@@ -38,10 +39,10 @@ export const deleteOneOffRound = async ({
     )
     const roundDoc = await getDoc(roundDocRef)
     const roundDocData = roundDoc.data()
-    const oneOffRounds = roundDocData?.oneOffRounds || []
+    const relatedJobs = roundDocData?.relatedJobs || []
 
     await Promise.all(
-      oneOffRounds.map(async (jobId: string) => {
+      relatedJobs.map(async (jobId: string) => {
         if (auth.currentUser === null) {
           return
         }
