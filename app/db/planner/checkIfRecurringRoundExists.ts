@@ -23,7 +23,7 @@ export const checkIfRecurringRoundExists = async ({ roundId }: planInfoT) => {
       db,
       'users',
       auth.currentUser.uid,
-      'recurringRounds',
+      'recurringRoundData',
       roundId,
     )
     const recurringRoundDocSnap = await getDoc(recurringRoundDoc)
