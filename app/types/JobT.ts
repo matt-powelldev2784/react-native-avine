@@ -14,6 +14,6 @@ export interface JobT {
 
 export interface JobWithIdT extends JobT {
   id: string
-  isComplete: boolean
+  jobIsComplete: boolean
   linkedRounds: string[]
 }
