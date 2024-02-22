@@ -46,7 +46,7 @@ export const addOneOffRound = async ({
 
     if (!recurringRound) {
       await updateDoc(plannerDocRef, {
-        oneOffRounds: arrayUnion(`${roundId}/oneOff`),
+        oneOffRounds: arrayUnion(`${roundId}@oneOff`),
       })
     }
 
@@ -61,7 +61,7 @@ export const addOneOffRound = async ({
         }
 
         await updateDoc(plannerDocRef, {
-          relatedJobs: arrayUnion(`${roundId}/${jobId}`),
+          relatedJobs: arrayUnion(`${roundId}@${jobId}`),
         })
       }),
     )

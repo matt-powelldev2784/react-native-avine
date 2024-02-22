@@ -53,7 +53,7 @@ export const addRecurringRound = async ({
 
         if (recurringRound) {
           transaction.update(plannerDocRef, {
-            recurringRounds: arrayUnion(`${roundId}/recurringRound`),
+            recurringRounds: arrayUnion(`${roundId}@recurringRound`),
           })
         }
 
@@ -63,7 +63,7 @@ export const addRecurringRound = async ({
 
         relatedJobs.forEach((jobId) => {
           transaction.update(plannerDocRef, {
-            relatedJobs: arrayUnion(`${roundId}/${jobId}`),
+            relatedJobs: arrayUnion(`${roundId}@${jobId}`),
           })
         })
       }

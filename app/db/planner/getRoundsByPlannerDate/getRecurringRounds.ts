@@ -28,7 +28,7 @@ export const getRecurringRounds = async (plannerDate: string) => {
           return
         }
 
-        const roundId = roundInfo.split('/')[0]
+        const roundId = roundInfo.split('@')[0]
 
         const roundDocRef = doc(
           db,

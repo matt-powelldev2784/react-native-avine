@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../../../screens/stackNavigator/StackNavigator'
 import { RoundWithRelatedJobsT } from '../../../../../../types/RoundT'
+import { deleteOneOffRound } from '../../../../../../db/planner/deleteRound/deleteOneOffRound'
 
 interface useHandleDeleteProps {
   setModalVisible: (modalVisible: boolean) => void
@@ -23,12 +24,13 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
 
     const currentPlannerDate = await getItemFromStorage('@plannerDate')
 
-    await removeScheduledRoundsFromDb({
-      roundId: round.id,
+    await deleteOneOffRound({
+      roundId: `${round.id}@oneOffRound`,
       date: currentPlannerDate,
-      recurringEntry: false,
-      singleEntry: true,
     })
+
+    console.log('round', round)
+    console.log('delete one off')
 
     if (currentPlannerDate) {
       addItemToStorage('@newScheduledDate', currentPlannerDate)
