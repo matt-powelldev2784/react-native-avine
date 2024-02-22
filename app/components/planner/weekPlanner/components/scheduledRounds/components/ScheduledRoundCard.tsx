@@ -17,13 +17,14 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
     (totalTime: number, job: JobWithIdT) => totalTime + parseFloat(job.time),
     0,
   )
+  const recurringRound = round?.recurringRound
   const {
     handleDeletePress,
     handleDeleteAllRecurringRounds,
     handleDeleteSingleRecurringRound,
   } = useHandleDelete({ setModalVisible, round })
 
-console.log('round', round)
+  console.log('round', round)
 
   return (
     <View style={styles.roundWrapper}>
@@ -37,9 +38,17 @@ console.log('round', round)
           >
             {round.roundName} {totalRoundtTime} hrs
           </Text>
+
+          {recurringRound ? (
+            <Image
+              source={require('../../../../../../../assets/repeat1_white.png')}
+              style={styles.recurringIcon}
+            />
+          ) : null}
+
           <TouchableOpacity
             onPress={handleDeletePress}
-            style={{ position: 'absolute', right: 12 }}
+            style={styles.deleteIcon}
           >
             <Image
               source={require('../../../../../../../assets/bin_white.png')}
@@ -94,6 +103,7 @@ const styles = StyleSheet.create({
     color: theme.colors.secondary,
     fontSize: 20,
     fontWeight: 'bold',
+    maxWidth: '70%',
   },
   roundTimeText: {
     color: theme.colors.secondary,
@@ -102,6 +112,13 @@ const styles = StyleSheet.create({
     fontSize: 10,
     width: '25%',
     textAlign: 'right',
+  },
+  deleteIcon: { position: 'absolute', right: 12 },
+  recurringIcon: {
+    position: 'absolute',
+    left: 12,
+    width: 25,
+    height: 20,
   },
 })
 
