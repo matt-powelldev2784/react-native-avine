@@ -4,7 +4,7 @@ export interface RoundT {
   roundName: string
   location: string
   frequency: string
-  jobs: string[] | undefined | null
+  relatedJobs: string[] | []
 }
 
 export interface RoundWithIdT extends RoundT {
@@ -31,7 +31,6 @@ export interface RoundWithRelatedJobsT {
   roundName: string
   location: string
   frequency: string
-  scheduledDates: string[]
   recurringRound: boolean
-  relatedJobs: JobWithIdT[] | undefined | null | []
+  relatedJobs: JobWithIdT[]
 }

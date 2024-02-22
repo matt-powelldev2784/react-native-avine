@@ -6,13 +6,20 @@ import usePlannerDateFromStorage from '../../../hooks/usePlannerDateFromStorage'
 import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComplete'
 import { useWeekPlannerContext } from '../../../hooks/WeekPlannerContext'
 
+
 interface ScheduledJobCardProps {
   job: JobWithIdT
+  roundId: string
+  recurringRound: boolean
 }
 
-const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
+const ScheduledJobCard = ({
+  job,
+  recurringRound,
+  roundId,
+}: ScheduledJobCardProps) => {
   const [isLoading, setIsLoading] = useState(false)
-  const isComplete = job.isComplete
+  const isComplete = job.jobIsComplete
   const { setRefreshData } = useWeekPlannerContext()
   const plannerDate = usePlannerDateFromStorage('@plannerDate')
   const timeWidth = Number(job.time) * 20 + 14
@@ -27,8 +34,11 @@ const ScheduledJobCard = ({ job }: ScheduledJobCardProps) => {
       return
     }
     setIsLoading(true)
+
+    const jobIdPrefix = recurringRound ? 'recurringRound' : 'oneOffRound'
+
     await toggleJobIsComplete({
-      jobId: job.id,
+      jobId: `${roundId}@${job.id}@${jobIdPrefix}`,
       plannerDate: plannerDate,
       isComplete: !isComplete,
     })

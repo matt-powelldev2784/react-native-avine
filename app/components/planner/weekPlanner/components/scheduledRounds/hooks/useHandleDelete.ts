@@ -1,10 +1,12 @@
-import { removeScheduledRoundsFromDb } from '../../../../../../db/planner/removeScheduledRoundsFromDb'
 import { getItemFromStorage } from '../../../../../../utils/getItemFromStorage'
 import { addItemToStorage } from '../../../../../../utils/addItemToStorage'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../../../screens/stackNavigator/StackNavigator'
 import { RoundWithRelatedJobsT } from '../../../../../../types/RoundT'
+import { deleteOneOffRound } from '../../../../../../db/planner/deleteRound/deleteOneOffRound'
+import { deleteSingleRecurringRound } from '../../../../../../db/planner/deleteRound/deleteSingleRecurringRound'
+import { deleteAllRecurringRounds } from '../../../../../../db/planner/deleteRound/deleteAllRecurrringRounds'
 
 interface useHandleDeleteProps {
   setModalVisible: (modalVisible: boolean) => void
@@ -23,12 +25,14 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
 
     const currentPlannerDate = await getItemFromStorage('@plannerDate')
 
-    await removeScheduledRoundsFromDb({
-      roundId: round.id,
+    await deleteOneOffRound({
+      roundId: `${round.id}`,
       date: currentPlannerDate,
-      recurringEntry: false,
-      singleEntry: true,
     })
+
+    console.log('`${round.id}@oneOffRound`', `${round.id}@oneOffRound`)
+    console.log('round', round)
+    console.log('delete one off')
 
     if (currentPlannerDate) {
       addItemToStorage('@newScheduledDate', currentPlannerDate)
@@ -40,11 +44,8 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
   const handleDeleteAllRecurringRounds = async () => {
     const currentPlannerDate = await getItemFromStorage('@plannerDate')
 
-    await removeScheduledRoundsFromDb({
+    await deleteAllRecurringRounds({
       roundId: round.id,
-      date: currentPlannerDate,
-      recurringEntry: true,
-      singleEntry: false,
     })
 
     if (currentPlannerDate) {
@@ -58,12 +59,9 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
   const handleDeleteSingleRecurringRound = async () => {
     const currentPlannerDate = await getItemFromStorage('@plannerDate')
 
-    await removeScheduledRoundsFromDb({
+    await deleteSingleRecurringRound({
       roundId: round.id,
       date: currentPlannerDate,
-      recurringEntry: true,
-      singleEntry: false,
-      removeAllRecurringRounds: false,
     })
 
     if (currentPlannerDate) {

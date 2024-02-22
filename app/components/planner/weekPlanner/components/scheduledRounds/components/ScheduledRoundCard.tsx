@@ -17,6 +17,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
     (totalTime: number, job: JobWithIdT) => totalTime + parseFloat(job.time),
     0,
   )
+  const recurringRound = round?.recurringRound
   const {
     handleDeletePress,
     handleDeleteAllRecurringRounds,
@@ -24,8 +25,8 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
   } = useHandleDelete({ setModalVisible, round })
 
   return (
-    <View key={round.id} style={styles.roundWrapper}>
-      <View key={round.id} style={styles.roundContainer}>
+    <View style={styles.roundWrapper}>
+      <View style={styles.roundContainer}>
         {/* ---------------------- Round Title ----------------------- */}
         <View style={styles.roundTitleContainer}>
           <Text
@@ -35,9 +36,17 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
           >
             {round.roundName} {totalRoundtTime} hrs
           </Text>
+
+          {recurringRound ? (
+            <Image
+              source={require('../../../../../../../assets/repeat1_white.png')}
+              style={styles.recurringIcon}
+            />
+          ) : null}
+
           <TouchableOpacity
             onPress={handleDeletePress}
-            style={{ position: 'absolute', right: 12 }}
+            style={styles.deleteIcon}
           >
             <Image
               source={require('../../../../../../../assets/bin_white.png')}
@@ -49,7 +58,12 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
         {/* ---------------------- Jobs List ----------------------- */}
 
         {round?.relatedJobs?.map((job: JobWithIdT) => (
-          <ScheduledJobCard key={job.id} job={job} />
+          <ScheduledJobCard
+            key={job.id}
+            job={job}
+            recurringRound={recurringRound}
+            roundId={round.id}
+          />
         ))}
       </View>
 
@@ -92,6 +106,7 @@ const styles = StyleSheet.create({
     color: theme.colors.secondary,
     fontSize: 20,
     fontWeight: 'bold',
+    maxWidth: '70%',
   },
   roundTimeText: {
     color: theme.colors.secondary,
@@ -100,6 +115,13 @@ const styles = StyleSheet.create({
     fontSize: 10,
     width: '25%',
     textAlign: 'right',
+  },
+  deleteIcon: { position: 'absolute', right: 12 },
+  recurringIcon: {
+    position: 'absolute',
+    left: 12,
+    width: 25,
+    height: 20,
   },
 })
 
