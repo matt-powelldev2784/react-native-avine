@@ -24,8 +24,6 @@ export const addOneOffRound = async ({
     return
   }
 
-
-
   try {
     //add one off round to planner document
     const plannerDocRef = doc(
@@ -35,7 +33,7 @@ export const addOneOffRound = async ({
       'planner',
       date,
     )
-      const plannerDoc = await getDoc(plannerDocRef)
+    const plannerDoc = await getDoc(plannerDocRef)
 
     if (!plannerDoc.exists()) {
       await setDoc(plannerDocRef, {
@@ -48,7 +46,7 @@ export const addOneOffRound = async ({
 
     if (!recurringRound) {
       await updateDoc(plannerDocRef, {
-        oneOffRounds: arrayUnion(`${roundId}/oneOffRound`),
+        oneOffRounds: arrayUnion(`${roundId}/oneOff`),
       })
     }
 
