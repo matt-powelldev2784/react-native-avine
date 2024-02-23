@@ -14,7 +14,7 @@ export const addJob = async (jobData: JobT) => {
     const jobsCollection = collection(userDoc, 'jobs')
     const jobDoc = doc(jobsCollection)
 
-    await setDoc(jobDoc, { ...jobData, deleted: false })
+    await setDoc(jobDoc, { ...jobData, isDeleted: false })
     const job = await getDoc(jobDoc)
 
     return job

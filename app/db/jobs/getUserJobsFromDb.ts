@@ -9,7 +9,7 @@ export const getUserJobsFromDb = async () => {
 
   const userDoc = doc(db, 'users', auth.currentUser.uid)
   const jobsCollection = collection(userDoc, 'jobs')
-  const q = query(jobsCollection, where('deleted', '!=', true))
+  const q = query(jobsCollection, where('isDeleted', '!=', true))
 
   const querySnapshot = await getDocs(q)
   let jobs = querySnapshot.docs.map((job) => ({
