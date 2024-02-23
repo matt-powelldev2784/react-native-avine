@@ -1,6 +1,6 @@
 import { getDoc, doc } from 'firebase/firestore'
 import { db, auth } from '../../../../firebaseConfig'
-import { getJobById } from '../../jobs/getJobById'
+import { getJob } from '../../jobs/getJob'
 import { RoundWithRelatedJobsT } from '../../../types/RoundT'
 
 export const getRecurringRounds = async (plannerDate: string) => {
@@ -49,7 +49,7 @@ export const getRecurringRounds = async (plannerDate: string) => {
               `${roundId}@${jobId}@recurringRound`,
             )
 
-            const job = await getJobById(jobId)
+            const job = await getJob(jobId)
             return { ...job, id: jobId, jobIsComplete }
           }),
         )
