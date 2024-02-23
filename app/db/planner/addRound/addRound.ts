@@ -2,7 +2,7 @@ import { auth } from '../../../../firebaseConfig'
 import { addRecurringRound } from './addRecurringRound'
 import { addOneOffRound } from './addOneOffRound'
 import { addRecurringData } from './addRecurringData'
-import { checkIfRecurringRoundExists } from '../checkIfRecurringRoundExists'
+import { checkIfRecurringRoundExists } from '../getRoundsByPlannerDate/checkIfRecurringRoundExists'
 import { deleteAllRecurringRounds } from '../deleteRound/deleteAllRecurrringRounds'
 
 interface planInfoT {

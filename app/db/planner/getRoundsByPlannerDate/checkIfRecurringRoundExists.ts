@@ -1,6 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore'
-import { db, auth } from '../../../firebaseConfig'
-import { getRoundById } from '../rounds/getRoundById'
+import { db, auth } from '../../../../firebaseConfig'
+import { getRoundById } from '../../rounds/getRoundById'
 
 interface planInfoT {
   roundId: string

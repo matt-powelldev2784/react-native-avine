@@ -1,7 +1,7 @@
 import { FormikProps } from 'formik'
 import { getRoundById } from '../../../../db/rounds/getRoundById'
 import { RoundWithIdT } from '../../../../types/RoundT'
-import { checkIfRecurringRoundExists } from '../../../../db/planner/checkIfRecurringRoundExists'
+import { checkIfRecurringRoundExists } from '../../../../db/planner/getRoundsByPlannerDate/checkIfRecurringRoundExists'
 
 interface UseMoveToNextStepProps {
   formik: FormikProps<any>
