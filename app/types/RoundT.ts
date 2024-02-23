@@ -4,11 +4,12 @@ export interface RoundT {
   roundName: string
   location: string
   frequency: string
-  relatedJobs: string[] | []
+  relatedJobs: string[]
 }
 
 export interface RoundWithIdT extends RoundT {
   id: string
+  isDeleted: boolean
 }
 
 export interface RoundWithJobT {
@@ -16,7 +17,7 @@ export interface RoundWithJobT {
   roundName: string
   location: string
   frequency: string
-  relatedJobs: JobWithIdT[] | []
+  relatedJobs: JobWithIdT[]
 }
 
 export interface RoundNoJobsT {

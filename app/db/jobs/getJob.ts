@@ -1,9 +1,9 @@
 import { doc, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { JobWithIdT } from '../../types/JobT'
 import { authError } from '../authError'
+import { JobWithIdT } from '../../types/JobT'
 
-export const getJob = async (jobId: string): Promise<JobWithIdT | null> => {
+export const getJob = async (jobId: string): Promise<JobWithIdT> => {
   if (auth.currentUser === null) {
     return authError({ filename: 'getJob' })
   }
