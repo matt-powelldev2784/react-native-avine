@@ -64,12 +64,12 @@ const useFormikSteps = ({ activeStep, setIsLoading }: useFormikStepsProps) => {
       contactName: '',
       contactTel: 0,
       notes: '',
-      linkedRounds: [],
+      isDeleted: false,
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       setIsLoading(true)
 
-      addJob(values)
+      await addJob(values)
 
       navigation.navigate('Jobs', { refresh: true })
       setIsLoading(false)
