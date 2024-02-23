@@ -1,6 +1,6 @@
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db, auth } from '../../../../firebaseConfig'
-import { getRoundById } from '../../rounds/getRoundById'
+import { getRound } from '../../rounds/getRound'
 import { getRecurringDatesTwoYearsAhead } from '../../../utils/getRecurringDates2YearsAhead'
 
 interface addRecurringRoundT {
@@ -32,7 +32,7 @@ export const addRecurringData = async ({
       roundId,
     )
 
-    const round = await getRoundById(roundId)
+    const round = await getRound(roundId)
     if (!round) {
       return
     }

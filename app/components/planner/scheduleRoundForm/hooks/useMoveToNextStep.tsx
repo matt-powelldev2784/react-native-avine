@@ -1,5 +1,5 @@
 import { FormikProps } from 'formik'
-import { getRoundById } from '../../../../db/rounds/getRoundById'
+import { getRound } from '../../../../db/rounds/getRound'
 import { RoundWithIdT } from '../../../../types/RoundT'
 import { checkIfRecurringRoundExists } from '../../../../db/planner/getRoundsByPlannerDate/checkIfRecurringRoundExists'
 
@@ -28,9 +28,7 @@ export const useMoveToNextStep = ({
     setFieldsAsTouched()
 
     if (formIsValid && activeStep === 0) {
-      const round: RoundWithIdT | null = await getRoundById(
-        formik.values.roundId,
-      )
+      const round: RoundWithIdT | null = await getRound(formik.values.roundId)
       formik.setFieldValue('roundFrequency', round?.frequency.toString())
 
       setActiveStep((prev) => prev + 1)

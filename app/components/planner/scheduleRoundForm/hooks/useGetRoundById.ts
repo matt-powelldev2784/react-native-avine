@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getRoundById } from '../../../../db/rounds/getRoundById'
+import { getRound } from '../../../../db/rounds/getRound'
 import { RoundWithIdT } from '../../../../types/RoundT'
 
 export const useGetRoundById = (roundId: string) => {
@@ -8,7 +8,7 @@ export const useGetRoundById = (roundId: string) => {
   useEffect(() => {
     const fetchRound = async () => {
       try {
-        const fetchedRound: RoundWithIdT | null = await getRoundById(roundId)
+        const fetchedRound: RoundWithIdT | null = await getRound(roundId)
         setRound(fetchedRound)
       } catch (error) {
         console.error('Error fetching round:', error)
