@@ -1,7 +1,7 @@
 import { doc, collection, getDocs, query } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { getJob } from '../jobs/getJob'
 import { authError } from '../authError'
+import { getJobsRelatedToRoundId } from './getJobsRelatedToRoundId'
 
 export const getRoundsWithRelatedJobs = async () => {
   if (!auth.currentUser) {
@@ -21,12 +21,7 @@ export const getRoundsWithRelatedJobs = async () => {
     const roundsData = await Promise.all(
       activeRounds.map(async (round) => {
         // Fetch all related jobs for the current round
-        const relatedJobIds = round.data().relatedJobs
-        const relatedJobsPromises = relatedJobIds.map((jobId: string) => {
-          const job = getJob(jobId)
-          return job
-        })
-        const relatedJobs = await Promise.all(relatedJobsPromises)
+        const relatedJobs = await getJobsRelatedToRoundId(round.id)
 
         // Return the round data with the related jobs
         return {
