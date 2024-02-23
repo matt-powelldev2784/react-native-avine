@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { updateJobInDb } from '../../../../db/jobs/updateJobIDb'
+import { updateJob } from '../../../../db/jobs/updateJob'
 import { getJob } from '../../../../db/jobs/getJob'
 import { JobWithIdT } from '../../../../types/JobT'
 import { useNavigation } from '@react-navigation/native'
@@ -94,7 +94,9 @@ const useFormikSteps = ({
     },
     onSubmit: async (values) => {
       setIsLoading(true)
-      await updateJobInDb({ jobId, jobData: values })
+
+      await updateJob({ jobId, jobData: values })
+
       setActiveStep(0)
       navigation.navigate('Jobs', { refresh: true })
       setIsLoading(false)
