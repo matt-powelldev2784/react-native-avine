@@ -4,7 +4,7 @@ import { updateRoundInDb } from '../../../../db/rounds/updateRoundInDb'
 import { useEffect, useState } from 'react'
 import { RoundWithIdT } from '../../../../types/RoundT'
 import { getRoundById } from '../../../../db/rounds/getRoundById'
-import { getUserJobsFromDb } from '../../../../db/jobs/getUserJobsFromDb'
+import { getAllJobs } from '../../../../db/jobs/getAllJobs'
 
 export const stepOneSchema = Yup.object().shape({
   roundName: Yup.string().required('Round Name is required'),
@@ -31,7 +31,7 @@ const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
     roundName: '',
     location: '',
     frequency: '',
-    jobs: [],
+    relatedJobs: [],
     currentRelatedJobs: [],
   })
 
@@ -40,7 +40,7 @@ const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
   useEffect(() => {
     const fetchData = async () => {
       const round = await getRoundById(roundId)
-      const jobs = await getUserJobsFromDb()
+      const jobs = await getAllJobs()
       const relatedJobs = jobs
         ?.map((job) => {
           if (job.linkedRounds.includes(roundId)) {

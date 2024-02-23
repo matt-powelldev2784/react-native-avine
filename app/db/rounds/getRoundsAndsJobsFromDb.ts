@@ -1,6 +1,6 @@
 import { doc, collection, getDocs, query } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { getUserJobsFromDb } from '../jobs/getUserJobsFromDb'
+import { getAllJobs } from '../jobs/getAllJobs'
 import { RoundWithJobT } from '../../types/RoundT'
 
 export const getRoundsAndJobsFromDb = async (): Promise<RoundWithJobT[]> => {
@@ -9,7 +9,7 @@ export const getRoundsAndJobsFromDb = async (): Promise<RoundWithJobT[]> => {
   }
 
   try {
-    const jobData = await getUserJobsFromDb()
+    const jobData = await getAllJobs()
 
     const userDoc = doc(db, 'users', auth.currentUser.uid)
     const roundsCollection = collection(userDoc, 'rounds')

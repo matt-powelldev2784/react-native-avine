@@ -16,7 +16,7 @@ export interface RoundWithJobT {
   roundName: string
   location: string
   frequency: string
-  jobs: JobWithIdT[] | undefined | null
+  jobs: JobWithIdT[] | []
 }
 
 export interface RoundNoJobsT {

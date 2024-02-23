@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import JobCard from './jobCard/JobCard'
 import { Loading } from '../../../ui'
 import { useDeviceType } from '../../../utils/deviceTypes'
-import { getUserJobsFromDb } from '../../../db/jobs/getUserJobsFromDb'
+import { getAllJobs } from '../../../db/jobs/getAllJobs'
 import { JobWithIdT } from '../../../types/JobT'
 import ErrorNoData from './errorNoData/ErrorNoData'
 import { useRoute } from '@react-navigation/native'
@@ -20,7 +20,7 @@ const JobList = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
-      const data = await getUserJobsFromDb()
+      const data = await getAllJobs()
       setIsLoading(false)
       setJobsData(data)
     }
