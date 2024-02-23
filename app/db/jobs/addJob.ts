@@ -17,7 +17,7 @@ export const addJob = async (jobData: JobT) => {
     await setDoc(jobDoc, { ...jobData, isDeleted: false })
     const job = await getDoc(jobDoc)
 
-    return job
+    return { id: job.id, ...job.data() }
   } catch (error) {
     console.error('Error adding job to db at addJob route', error)
     throw error
