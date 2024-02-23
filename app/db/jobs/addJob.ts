@@ -19,7 +19,6 @@ export const addJob = async (jobData: JobT) => {
 
     return { id: job.id, ...job.data() }
   } catch (error) {
-    console.error('Error adding job to db at addJob route', error)
-    throw error
+    throw new Error(`Error adding job to db at addJob route: ${error}`)
   }
 }

@@ -15,7 +15,6 @@ export const deleteJob = async (jobId: string) => {
 
     return { message: `Job with id ${jobId} deleted`, isDeleted: true }
   } catch (error) {
-    console.error('Error deleteting job from db at deleteJob route', error)
-    throw error
+    throw new Error(`Error deleteting job from db at deleteJob route: ${error}`)
   }
 }

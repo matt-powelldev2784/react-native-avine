@@ -17,7 +17,6 @@ export const getJob = async (jobId: string): Promise<JobWithIdT | null> => {
 
     return { ...jobData, id: jobDoc.id }
   } catch (error) {
-    console.error('Error getting job at getJob route', error)
-    throw error
+    throw new Error(`Error getting job at getJob route: ${error}`)
   }
 }
