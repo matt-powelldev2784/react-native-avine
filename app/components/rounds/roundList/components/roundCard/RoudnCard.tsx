@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../../screens/stackNavigator/StackNavigator'
 import { ConfirmModal } from '../../../../../ui'
-import { deleteRoundById } from '../../../../../db/rounds/deleteRoundById'
+import { deleteRound } from '../../../../../db/rounds/deleteRound'
 import ShortNameText from '../../../../../utils/shortNameText/ShortNameText'
 import IconButton from '../../../../../ui/iconButton/IconButton'
 
@@ -16,17 +16,17 @@ const RoundCard = ({
   roundName,
   location,
   frequency,
-  jobs,
+  relatedJobs,
 }: RoundWithJobT) => {
   const { isLargeWeb } = useDeviceType()
   const [modalVisible, setModalVisible] = useState(false)
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
-  const roundTime = jobs?.reduce((acc, job) => {
+  const roundTime = relatedJobs?.reduce((acc, job) => {
     return acc + Number(job.time)
   }, 0)
-  const numOfJobs = jobs?.length
-  const totalPrice = jobs?.reduce((acc, job) => {
+  const numOfJobs = relatedJobs?.length
+  const totalPrice = relatedJobs?.reduce((acc, job) => {
     return acc + Number(job.price)
   }, 0)
 
@@ -35,8 +35,9 @@ const RoundCard = ({
   }
 
   const hanldeDeleteRoundPress = async () => {
-    const deletedRound = await deleteRoundById(id)
-    if (deletedRound) {
+    const deletedRound = await deleteRound(id)
+    const isDeleted = deletedRound?.isDeleted
+    if (isDeleted) {
       navigation.navigate('Rounds', { refresh: true })
       setModalVisible(false)
     }

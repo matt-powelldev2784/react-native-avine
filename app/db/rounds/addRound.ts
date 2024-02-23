@@ -26,6 +26,7 @@ export const addRound = async (roundData: RoundT) => {
         location: roundData.location,
         frequency: roundData.frequency,
         relatedJobs: [],
+        isDeleted: false,
       })
 
       //add related job id's to round doc

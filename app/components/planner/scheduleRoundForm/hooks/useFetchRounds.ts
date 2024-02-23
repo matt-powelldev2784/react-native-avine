@@ -1,6 +1,6 @@
 // useFetchJobs.ts
 import { useEffect, useState } from 'react'
-import { getRoundsFromDb } from '../../../../db/rounds/getRoundsFromDb'
+import { getAllRounds } from '../../../../db/rounds/getAllRounds'
 
 interface RoundOption {
   label: string
@@ -12,7 +12,7 @@ export const useFetchRounds = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getRoundsFromDb()
+      const data = await getAllRounds()
       const roundOptions = data?.map((round) => ({
         value: round.id,
         label: round.roundName,
