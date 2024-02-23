@@ -2,7 +2,7 @@ import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
 
-interface UpdateJobInDb {
+interface toggleJobIsCompleteT {
   plannerDate: string
   jobId: string
   isComplete: boolean
@@ -12,7 +12,7 @@ export const toggleJobIsComplete = async ({
   jobId,
   plannerDate,
   isComplete,
-}: UpdateJobInDb) => {
+}: toggleJobIsCompleteT) => {
   if (auth.currentUser === null) {
     return authError({ filename: 'toggleJobIsComplete' })
   }
