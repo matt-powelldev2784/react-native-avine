@@ -4,6 +4,9 @@ import { updateRound } from '../../../../db/rounds/updateRound'
 import { useEffect, useState } from 'react'
 import { RoundWithRelatedJobIdsT } from '../../../../types/RoundT'
 import { getRound } from '../../../../db/rounds/getRound'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 
 export const stepOneSchema = Yup.object().shape({
   roundName: Yup.string().required('Round Name is required'),
@@ -18,9 +21,15 @@ export const stepTwoSchema = Yup.object().shape({
 interface useFormikStepsInterface {
   activeStep: number
   roundId: string
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
+const useFormikSteps = ({
+  activeStep,
+  roundId,
+  setIsLoading,
+}: useFormikStepsInterface) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [roundData, setRoundData] = useState<RoundWithRelatedJobIdsT>({
     id: '',
     roundName: '',
@@ -56,7 +65,13 @@ const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
   const formik = useFormik({
     initialValues: roundData,
     onSubmit: async (values) => {
+      setIsLoading(true)
+
       await updateRound(values)
+
+      setIsLoading(false)
+
+      navigation.navigate('Rounds', { refresh: true })
     },
     validationSchema,
     enableReinitialize: true,

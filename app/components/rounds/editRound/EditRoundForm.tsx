@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import {
-  TouchableOpacity,
   StyleSheet,
   Text,
   View,
@@ -12,8 +11,6 @@ import Dropdown from '../../../ui/formElements/DropDown'
 import MultiSelectDropdown from '../../../ui/formElements/MultiSelectDropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../utils/theme/theme'
 import { useFetchJobs } from './hooks/useFetchJobs'
@@ -22,23 +19,30 @@ import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
 import { freqencyArray } from '../../../utils/freqencyArray'
+import Button from '../../../ui/button/Button'
 
 type EditRoundFormRouteProp = RouteProp<RootStackParamList, 'EditRound'>
 
 const EditRoundForm = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const route = useRoute<EditRoundFormRouteProp>()
   const [activeStep, setActiveStep] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
 
   const userJobs = useFetchJobs()
   const roundId = route?.params?.roundId ? route?.params?.roundId : ''
   const formik = useFormikSteps({
     activeStep,
     roundId,
+    setIsLoading,
   })
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
+  const buttonsStyle = isLargeWeb ? 'row' : 'column'
+
+  const handleSumbmitPress = () => {
+    formik.handleSubmit()
+  }
 
   const handleStepBack = () => {
     if (activeStep === 0) {
@@ -106,40 +110,24 @@ const EditRoundForm = () => {
 
         <View style={styles.buttonContainer}>
           {activeStep < 1 ? (
-            <TouchableOpacity onPress={moveToNextStep} style={styles.button}>
-              <Text style={styles.buttonText}>Next</Text>
-            </TouchableOpacity>
+            <Button onPress={moveToNextStep} text="Next" />
           ) : null}
 
           {activeStep === 1 ? (
             <View
-              style={[
-                styles.buttonContainer,
-                isLargeWeb
-                  ? { flexDirection: 'row' }
-                  : { flexDirection: 'column' },
-              ]}
+              style={[styles.buttonContainer, { flexDirection: buttonsStyle }]}
             >
-              <TouchableOpacity
+              <Button
                 onPress={handleStepBack}
-                style={styles.buttonSecondary}
-              >
-                <Text style={styles.buttonText}>Go Back</Text>
-              </TouchableOpacity>
+                text="Go Back"
+                backgroundColor={theme.colors.buttonSecondary}
+              />
 
-              <TouchableOpacity
-                onPress={() => {
-                  formik.handleSubmit()
-                  if (formik.isValid) {
-                    setTimeout(() => {
-                      navigation.navigate('Rounds', { refresh: true })
-                    }, 500)
-                  }
-                }}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>Update Round</Text>
-              </TouchableOpacity>
+              <Button
+                onPress={handleSumbmitPress}
+                text="Update Round"
+                isLoading={isLoading}
+              />
             </View>
           ) : null}
         </View>
