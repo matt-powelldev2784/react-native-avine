@@ -154,7 +154,11 @@ const EditJobForm = () => {
             style={[styles.buttonContainer, { flexDirection: buttonsStyle }]}
           >
             {activeStep > 0 ? (
-              <Button onPress={handleStepBack} text={'Go Back'} />
+              <Button
+                onPress={handleStepBack}
+                text={'Go Back'}
+                backgroundColor={theme.colors.buttonSecondary}
+              />
             ) : null}
 
             {activeStep >= 0 && activeStep < 2 ? (

@@ -5,7 +5,6 @@ import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
-
 import theme from '../../../utils/theme/theme'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { freqencyArray } from '../../../utils/freqencyArray'
@@ -145,7 +144,11 @@ const AddJobForm = () => {
             style={[styles.buttonContainer, { flexDirection: buttonsStyle }]}
           >
             {activeStep > 0 ? (
-              <Button onPress={handleStepBack} text="Go Back" />
+              <Button
+                onPress={handleStepBack}
+                text="Go Back"
+                backgroundColor={theme.colors.buttonSecondary}
+              />
             ) : null}
 
             {activeStep >= 0 && activeStep < 2 ? (
