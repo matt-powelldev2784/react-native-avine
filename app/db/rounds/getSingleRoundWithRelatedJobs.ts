@@ -3,7 +3,7 @@ import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
 import { getJobsRelatedToRoundId } from './getJobsRelatedToRoundId'
 
-export const getRoundsWithRelatedJobs = async () => {
+export const getSingleRoundWithRelatedJobs = async () => {
   if (!auth.currentUser) {
     return authError({ filename: 'getRoundsWithRelatedJobs' })
   }
