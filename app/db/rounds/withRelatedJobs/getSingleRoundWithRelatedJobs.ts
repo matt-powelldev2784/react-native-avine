@@ -1,12 +1,11 @@
-import { doc, collection, getDocs, query, getDoc } from 'firebase/firestore'
-import { db, auth } from '../../../firebaseConfig'
-import { authError } from '../authError'
+import { auth } from '../../../../firebaseConfig'
+import { authError } from '../../authError'
 import { getJobsRelatedToRoundId } from './getJobsRelatedToRoundId'
-import { getRound } from './getRound'
+import { getRound } from '../getRound'
 
 export const getSingleRoundWithRelatedJobs = async (roundId: string) => {
   if (!auth.currentUser) {
-    return authError({ filename: 'getRoundsWithRelatedJobs' })
+    return authError({ filename: 'getSingleRoundWithRelatedJobs' })
   }
 
   try {
@@ -21,7 +20,7 @@ export const getSingleRoundWithRelatedJobs = async (roundId: string) => {
     return roundWithRelatedJobs
   } catch (error) {
     throw new Error(
-      `Error get rounds with related jobs at getRoundsWithRelatedJobs route: ${error}`,
+      `Error get rounds with related jobs at getSingleRoundWithRelatedJobs route: ${error}`,
     )
   }
 }

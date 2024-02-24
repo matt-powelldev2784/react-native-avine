@@ -1,6 +1,6 @@
 import { doc, collection, getDocs, query } from 'firebase/firestore'
-import { db, auth } from '../../../firebaseConfig'
-import { authError } from '../authError'
+import { db, auth } from '../../../../firebaseConfig'
+import { authError } from '../../authError'
 import { getJobsRelatedToRoundId } from './getJobsRelatedToRoundId'
 
 export const getAllRoundsWithRelatedJobs = async () => {

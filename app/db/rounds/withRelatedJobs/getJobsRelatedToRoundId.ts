@@ -1,11 +1,11 @@
-import { auth } from '../../../firebaseConfig'
-import { getJob } from '../jobs/getJob'
-import { authError } from '../authError'
-import { getRound } from './getRound'
+import { auth } from '../../../../firebaseConfig'
+import { getJob } from '../../jobs/getJob'
+import { authError } from '../../authError'
+import { getRound } from '../getRound'
 
 export const getJobsRelatedToRoundId = async (roundId: string) => {
   if (!auth.currentUser) {
-    return authError({ filename: 'getRoundsWithRelatedJobs' })
+    return authError({ filename: 'getJobsRelatedToRoundId' })
   }
 
   try {

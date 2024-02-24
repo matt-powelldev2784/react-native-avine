@@ -1,7 +1,7 @@
 import { View, FlatList, StyleSheet } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import RoundCard from './components/roundCard/RoudnCard'
-import { getAllRoundsWithRelatedJobs } from '../../../db/rounds/getAllRoundsWithRelatedJobs'
+import { getAllRoundsWithRelatedJobs } from '../../../db/rounds/withRelatedJobs/getAllRoundsWithRelatedJobs'
 import { RoundWithJobT } from '../../../types/RoundT'
 import { Loading } from '../../../ui/'
 import ErrorNoData from './components/errorData/ErrorNoData'
