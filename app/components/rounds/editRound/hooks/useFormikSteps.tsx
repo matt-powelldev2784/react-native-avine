@@ -1,10 +1,9 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { updateRoundInDb } from '../../../../db/rounds/updateRoundInDb'
+import { updateRound } from '../../../../db/rounds/updateRound'
 import { useEffect, useState } from 'react'
-import { RoundWithIdT } from '../../../../types/RoundT'
-import { getRoundById } from '../../../../db/rounds/getRoundById'
-import { getUserJobsFromDb } from '../../../../db/jobs/getUserJobsFromDb'
+import { RoundWithRelatedJobIdsT } from '../../../../types/RoundT'
+import { getRound } from '../../../../db/rounds/getRound'
 
 export const stepOneSchema = Yup.object().shape({
   roundName: Yup.string().required('Round Name is required'),
@@ -21,57 +20,31 @@ interface useFormikStepsInterface {
   roundId: string
 }
 
-interface roundData extends RoundWithIdT {
-  currentRelatedJobs: string[]
-}
-
 const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
-  const [roundData, setRoundData] = useState<roundData>({
+  const [roundData, setRoundData] = useState<RoundWithRelatedJobIdsT>({
     id: '',
     roundName: '',
     location: '',
     frequency: '',
-    jobs: [],
-    currentRelatedJobs: [],
+    relatedJobs: [],
+    isDeleted: false,
   })
 
   let validationSchema
 
   useEffect(() => {
-    const fetchData = async () => {
-      const round = await getRoundById(roundId)
-      const jobs = await getUserJobsFromDb()
-      const relatedJobs = jobs
-        ?.map((job) => {
-          if (job.linkedRounds.includes(roundId)) {
-            return job.id
-          }
-        })
-        .filter((job) => job !== undefined) as string[]
+    const handleRoundData = async (roundId: string) => {
+      const roundData = await getRound(roundId)
 
-      if (round) {
-        setRoundData((prev) => {
-          return {
-            ...prev,
-            ...round,
-          }
-        })
-      }
-
-      if (relatedJobs) {
-        setRoundData((prev) => {
-          return {
-            ...prev,
-            jobs: relatedJobs,
-            currentRelatedJobs: relatedJobs,
-          }
+      if (roundData) {
+        setRoundData({
+          ...roundData,
+          relatedJobs: roundData.relatedJobs,
         })
       }
     }
 
-    if (roundId) {
-      fetchData()
-    }
+    handleRoundData(roundId)
   }, [roundId])
 
   if (activeStep === 0) {
@@ -83,8 +56,7 @@ const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
   const formik = useFormik({
     initialValues: roundData,
     onSubmit: async (values) => {
-      console.log(values)
-      await updateRoundInDb(values)
+      await updateRound(values)
     },
     validationSchema,
     enableReinitialize: true,

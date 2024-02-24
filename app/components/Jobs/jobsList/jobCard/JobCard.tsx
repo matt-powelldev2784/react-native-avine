@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 import { ConfirmModal } from '../../../../ui'
-import { deleteJobById } from '../../../../db/jobs/deleteJobById'
+import { deleteJob } from '../../../../db/jobs/deleteJob'
 import theme from '../../../../utils/theme/theme'
 import ShortNameText from '../../../../utils/shortNameText/ShortNameText'
 import IconButton from '../../../../ui/iconButton/IconButton'
@@ -31,8 +31,9 @@ const JobCard = ({
     setModalVisible(true)
   }
   const handleDeleteJob = async () => {
-    const deletedJob = await deleteJobById(id)
-    if (deletedJob) {
+    const deletedJob = await deleteJob(id)
+    const isDeleted = deletedJob?.isDeleted
+    if (isDeleted) {
       navigation.navigate('Jobs', { refresh: true })
     }
   }

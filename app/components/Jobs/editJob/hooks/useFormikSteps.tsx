@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { updateJobInDb } from '../../../../db/jobs/updateJobIDb'
-import { getJobById } from '../../../../db/jobs/getJobById'
+import { updateJob } from '../../../../db/jobs/updateJob'
+import { getJob } from '../../../../db/jobs/getJob'
 import { JobWithIdT } from '../../../../types/JobT'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -57,7 +57,7 @@ const useFormikSteps = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getJobById(jobId)
+      const data = await getJob(jobId)
       if (data) {
         setJobData(data)
       }
@@ -90,10 +90,13 @@ const useFormikSteps = ({
       contactName: '',
       contactTel: 0,
       notes: '',
+      isDeleted: false,
     },
     onSubmit: async (values) => {
       setIsLoading(true)
-      await updateJobInDb({ jobId, jobData: values })
+
+      await updateJob({ jobId, jobData: values })
+
       setActiveStep(0)
       navigation.navigate('Jobs', { refresh: true })
       setIsLoading(false)

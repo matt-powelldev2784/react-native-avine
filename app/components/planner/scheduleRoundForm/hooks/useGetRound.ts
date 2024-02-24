@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
-import { getRoundById } from '../../../../db/rounds/getRoundById'
+import { getRound } from '../../../../db/rounds/getRound'
 import { RoundWithIdT } from '../../../../types/RoundT'
 
-export const useGetRoundById = (roundId: string) => {
+export const useGetRound = (roundId: string) => {
   const [round, setRound] = useState<RoundWithIdT | null>(null)
 
   useEffect(() => {
     const fetchRound = async () => {
       try {
-        const fetchedRound: RoundWithIdT | null = await getRoundById(roundId)
+        const fetchedRound: RoundWithIdT | null = await getRound(roundId)
         setRound(fetchedRound)
       } catch (error) {
         console.error('Error fetching round:', error)

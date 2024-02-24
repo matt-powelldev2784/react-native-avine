@@ -1,6 +1,6 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { addRoundToDb } from '../../../../db/rounds/addRoundToDb'
+import { addRound } from '../../../../db/rounds/addRound'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
@@ -41,7 +41,7 @@ const useFormikSteps = ({ activeStep, setIsLoading }: UseFormikStepsProps) => {
       setIsLoading(true)
 
       console.log(values)
-      await addRoundToDb(values)
+      await addRound(values)
 
       navigation.navigate('Rounds', { refresh: true })
       setIsLoading(false)

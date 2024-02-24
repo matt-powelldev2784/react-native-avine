@@ -1,6 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore'
-import { db, auth } from '../../../firebaseConfig'
-import { getRoundById } from '../rounds/getRoundById'
+import { db, auth } from '../../../../firebaseConfig'
+import { getRound } from '../../rounds/getRound'
 
 interface planInfoT {
   roundId: string
@@ -13,7 +13,7 @@ export const checkIfRecurringRoundExists = async ({ roundId }: planInfoT) => {
 
   try {
     //get round info
-    const round = await getRoundById(roundId)
+    const round = await getRound(roundId)
     if (!round) {
       return
     }

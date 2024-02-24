@@ -1,7 +1,8 @@
 import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
+import { authError } from '../authError'
 
-interface UpdateJobInDb {
+interface toggleJobIsCompleteT {
   plannerDate: string
   jobId: string
   isComplete: boolean
@@ -11,33 +12,36 @@ export const toggleJobIsComplete = async ({
   jobId,
   plannerDate,
   isComplete,
-}: UpdateJobInDb) => {
+}: toggleJobIsCompleteT) => {
   if (auth.currentUser === null) {
-    console.error('No user signed in')
-    return
+    return authError({ filename: 'toggleJobIsComplete' })
   }
 
-  const plannerDateDocRef = doc(
-    db,
-    'users',
-    auth.currentUser.uid,
-    'planner',
-    plannerDate,
-  )
-
   try {
+    const plannerDateDocRef = doc(
+      db,
+      'users',
+      auth.currentUser.uid,
+      'planner',
+      plannerDate,
+    )
+
     if (isComplete === true) {
       await updateDoc(plannerDateDocRef, {
         completedJobs: arrayUnion(jobId),
       })
-      console.log(`Job id ${jobId} set to complete`)
-    } else {
+      return { message: `Job id ${jobId} set to complete`, isComplete: true }
+    }
+
+    if (isComplete === false) {
       await updateDoc(plannerDateDocRef, {
         completedJobs: arrayRemove(jobId),
       })
-      console.log(`Job id ${jobId} set to incomplete`)
+      return { message: `Job id ${jobId} set to incomplete`, isComplete: false }
     }
   } catch (error) {
-    console.error('Error updating job:', error)
+    throw new Error(
+      `Error updating job is complete status at toggleJobIsComplete route: ${error}`,
+    )
   }
 }

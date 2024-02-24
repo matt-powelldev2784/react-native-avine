@@ -6,7 +6,7 @@ import {
   getDoc,
 } from 'firebase/firestore'
 import { db, auth } from '../../../../firebaseConfig'
-import { getRoundById } from '../../rounds/getRoundById'
+import { getRound } from '../../rounds/getRound'
 
 interface addOneOffRoundT {
   roundId: string
@@ -51,7 +51,7 @@ export const addOneOffRound = async ({
     }
 
     //add each related to job to planner document
-    const round = await getRoundById(roundId)
+    const round = await getRound(roundId)
     const relatedJobs = round?.relatedJobs || []
 
     await Promise.all(

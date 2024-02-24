@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React, { useState } from 'react'
-import { RoundWithRelatedJobsT } from '../../../../../../types/RoundT'
+import { RoundWithRecurringFlagT } from '../../../../../../types/RoundT'
 import { JobWithIdT } from '../../../../../../types/JobT'
 import theme from '../../../../../../utils/theme/theme'
 import ScheduledJobCard from './ScheduledJobCard'
@@ -8,7 +8,7 @@ import { ConfirmModal } from '../../../../../../ui'
 import useHandleDelete from '../hooks/useHandleDelete'
 
 interface ScheduledRoundCardProps {
-  round: RoundWithRelatedJobsT
+  round: RoundWithRecurringFlagT
 }
 
 const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {

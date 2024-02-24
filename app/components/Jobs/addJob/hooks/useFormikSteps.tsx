@@ -1,6 +1,6 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { addJobToDb } from '../../../../db/jobs/addJobtoDb'
+import { addJob } from '../../../../db/jobs/addJob'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
@@ -64,13 +64,12 @@ const useFormikSteps = ({ activeStep, setIsLoading }: useFormikStepsProps) => {
       contactName: '',
       contactTel: 0,
       notes: '',
-      linkedRounds: [],
+      isDeleted: false,
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       setIsLoading(true)
 
-      console.log('formik add job form values', values)
-      addJobToDb(values)
+      await addJob(values)
 
       navigation.navigate('Jobs', { refresh: true })
       setIsLoading(false)

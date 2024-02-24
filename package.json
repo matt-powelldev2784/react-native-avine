@@ -9,6 +9,7 @@
     "web": "expo start --web",
     "web:build": "npx expo export:web",
     "lint": "eslint .",
+    "ts-check": "tsc --noEmit",
     "dev": "npx expo start --dev-client -c"
   },
   "dependencies": {

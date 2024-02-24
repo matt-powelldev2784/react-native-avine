@@ -1,6 +1,6 @@
 // useFetchJobs.ts
 import { useEffect, useState } from 'react'
-import { getUserJobsFromDb } from '../../../../db/jobs/getUserJobsFromDb'
+import { getAllJobs } from '../../../../db/jobs/getAllJobs'
 
 interface JobOption {
   label: string
@@ -12,7 +12,7 @@ export const useFetchJobs = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getUserJobsFromDb()
+      const data = await getAllJobs()
       const jobOptions = data?.map((job) => ({
         label: job.id,
         value: job.jobName,

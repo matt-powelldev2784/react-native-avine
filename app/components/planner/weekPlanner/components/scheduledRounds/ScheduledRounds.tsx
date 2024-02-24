@@ -29,7 +29,7 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
       {scheduledRounds.map((round) => {
         return (
           <ScheduledRoundCard
-            key={`${round.id}/recurringRound${round.recurringRound}`}
+            key={`${round.id}/recurringRound/${round.recurringRound}`}
             round={round}
           />
         )
