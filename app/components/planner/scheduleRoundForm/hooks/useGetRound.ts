@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { getRound } from '../../../../db/rounds/getRound'
 import { RoundWithIdT } from '../../../../types/RoundT'
 
-export const useGetRoundById = (roundId: string) => {
+export const useGetRound = (roundId: string) => {
   const [round, setRound] = useState<RoundWithIdT | null>(null)
 
   useEffect(() => {

@@ -1,9 +1,9 @@
 import { doc, collection, getDocs, query, where } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { RoundNoJobsT } from '../../types/RoundT'
+import { RoundWithRelatedJobIdsT } from '../../types/RoundT'
 import { authError } from '../authError'
 
-export const getAllRounds = async (): Promise<RoundNoJobsT[]> => {
+export const getAllRounds = async (): Promise<RoundWithRelatedJobIdsT[]> => {
   if (!auth.currentUser) {
     return authError({ filename: 'getAllRounds' })
   }
@@ -15,13 +15,16 @@ export const getAllRounds = async (): Promise<RoundNoJobsT[]> => {
     const q = query(roundsCollection, where('isDeleted', '!=', true))
     const querySnapshot = await getDocs(q)
 
-    const roundsData: RoundNoJobsT[] = querySnapshot.docs.map((round) => ({
-      id: round.id,
-      roundName: round.data().roundName,
-      location: round.data().location,
-      frequency: round.data().frequency,
-      isDeleted: round.data().isDeleted,
-    }))
+    const roundsData: RoundWithRelatedJobIdsT[] = querySnapshot.docs.map(
+      (round) => ({
+        id: round.id,
+        roundName: round.data().roundName,
+        location: round.data().location,
+        frequency: round.data().frequency,
+        isDeleted: round.data().isDeleted,
+        relatedJobs: round.data().relatedJobs,
+      }),
+    )
 
     const sortedRounds = roundsData.sort((a, b) =>
       a.roundName.localeCompare(b.roundName),

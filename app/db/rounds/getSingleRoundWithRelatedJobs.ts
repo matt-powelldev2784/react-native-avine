@@ -1,44 +1,24 @@
-import { doc, collection, getDocs, query } from 'firebase/firestore'
+import { doc, collection, getDocs, query, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
 import { getJobsRelatedToRoundId } from './getJobsRelatedToRoundId'
+import { getRound } from './getRound'
 
-export const getSingleRoundWithRelatedJobs = async () => {
+export const getSingleRoundWithRelatedJobs = async (roundId: string) => {
   if (!auth.currentUser) {
     return authError({ filename: 'getRoundsWithRelatedJobs' })
   }
 
   try {
-    const userDoc = doc(db, 'users', auth.currentUser.uid)
-    const roundsCollection = collection(userDoc, 'rounds')
-    const roundsQuery = query(roundsCollection)
-    const roundsSnapshot = await getDocs(roundsQuery)
-    const activeRounds = roundsSnapshot.docs.filter(
-      (round) => round.data().isDeleted === false,
-    )
+    const round = await getRound(roundId)
+    const relatedJobs = await getJobsRelatedToRoundId(roundId)
 
-    // roundData with return a array of rounds with related jobs
-    const roundsData = await Promise.all(
-      activeRounds.map(async (round) => {
-        // Fetch all related jobs for the current round
-        const relatedJobs = await getJobsRelatedToRoundId(round.id)
+    const roundWithRelatedJobs = {
+      ...round,
+      relatedJobs,
+    }
 
-        // Return the round data with the related jobs
-        return {
-          id: round.id,
-          roundName: round.data().roundName,
-          location: round.data().location,
-          frequency: round.data().frequency,
-          relatedJobs,
-        }
-      }),
-    )
-
-    const sortedRoundData = roundsData.sort((a, b) =>
-      a.roundName.localeCompare(b.roundName),
-    )
-
-    return sortedRoundData
+    return roundWithRelatedJobs
   } catch (error) {
     throw new Error(
       `Error get rounds with related jobs at getRoundsWithRelatedJobs route: ${error}`,

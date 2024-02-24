@@ -20,11 +20,13 @@ export interface RoundWithJobT {
   relatedJobs: JobWithIdT[]
 }
 
-export interface RoundNoJobsT {
+export interface RoundWithRelatedJobIdsT {
   id: string
   roundName: string
   location: string
   frequency: string
+  relatedJobs: string[]
+  isDeleted: boolean
 }
 
 export interface RoundWithRelatedJobsT {
@@ -32,6 +34,6 @@ export interface RoundWithRelatedJobsT {
   roundName: string
   location: string
   frequency: string
-  recurringRound: boolean
   relatedJobs: JobWithIdT[]
+  isDeleted: boolean
 }

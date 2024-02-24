@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { ConfirmModal } from '../../../../ui'
-import { useGetRoundById } from '../hooks/useGetRoundById'
+import { useGetRound } from '../hooks/useGetRound'
 import Dropdown from '../../../../ui/formElements/DropDown'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -24,7 +24,7 @@ const FormStepTwo = ({
   formik,
 }: FormStepTwoProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const selectedRound = useGetRoundById(formik.values.roundId)
+  const selectedRound = useGetRound(formik.values.roundId)
   const frequencyOptions = getFrequencyOptions(selectedRound)
 
   const editRound = () => {

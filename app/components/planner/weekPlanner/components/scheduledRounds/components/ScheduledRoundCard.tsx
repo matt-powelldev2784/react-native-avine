@@ -7,8 +7,12 @@ import ScheduledJobCard from './ScheduledJobCard'
 import { ConfirmModal } from '../../../../../../ui'
 import useHandleDelete from '../hooks/useHandleDelete'
 
+interface RoundData extends RoundWithRelatedJobsT {
+  recurringRound: boolean
+}
+
 interface ScheduledRoundCardProps {
-  round: RoundWithRelatedJobsT
+  round: RoundData
 }
 
 const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {

@@ -8,9 +8,13 @@ import { deleteOneOffRound } from '../../../../../../db/planner/deleteRound/dele
 import { deleteSingleRecurringRound } from '../../../../../../db/planner/deleteRound/deleteSingleRecurringRound'
 import { deleteAllRecurringRounds } from '../../../../../../db/planner/deleteRound/deleteAllRecurrringRounds'
 
+
+interface RoundT extends RoundWithRelatedJobsT {
+  recurringRound: boolean
+}
 interface useHandleDeleteProps {
   setModalVisible: (modalVisible: boolean) => void
-  round: RoundWithRelatedJobsT
+  round: RoundT
 }
 
 const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {

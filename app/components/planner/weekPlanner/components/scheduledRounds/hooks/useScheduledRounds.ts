@@ -3,9 +3,15 @@ import { formatDateForDb } from '../../../../../../utils/formatDateForDb'
 import { RoundWithRelatedJobsT } from '../../../../../../types/RoundT'
 import { getRoundsByPlannerDate } from '../../../../../../db/planner/getRoundsByPlannerDate/getRoundsByPlannerDate'
 
-type ScheduledRounds = RoundWithRelatedJobsT[] | []
 
-type UseScheduledRoundsReturn = [boolean, ScheduledRounds]
+
+interface RoundWithRecurringFlag extends RoundWithRelatedJobsT {
+  recurringRound: boolean
+}
+
+type ScheduledRoundsT = RoundWithRecurringFlag[] | []
+
+type UseScheduledRoundsReturn = [boolean, ScheduledRoundsT]
 
 interface UseScheduledRoundsProps {
   selectedDay: Date
@@ -18,7 +24,7 @@ export const useScheduledRounds = ({
   refreshData,
   setRefreshData,
 }: UseScheduledRoundsProps): UseScheduledRoundsReturn => {
-  const [scheduledRounds, setScheduledRounds] = useState<ScheduledRounds>([])
+  const [scheduledRounds, setScheduledRounds] = useState<ScheduledRoundsT>([])
   const [isError, seIsError] = useState<boolean>(false)
 
   useEffect(() => {
