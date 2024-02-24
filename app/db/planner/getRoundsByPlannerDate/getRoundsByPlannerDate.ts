@@ -1,11 +1,7 @@
 import { auth } from '../../../../firebaseConfig'
-import { RoundWithRelatedJobsT } from '../../../types/RoundT'
+import { RoundWithRecurringFlagT } from '../../../types/RoundT'
 import { getOneOffRounds } from './getOneOffRounds'
 import { getRecurringRounds } from './getRecurringRounds'
-
-interface RoundData extends RoundWithRelatedJobsT {
-  recurringRound: boolean
-}
 
 export const getRoundsByPlannerDate = async (plannerDate: string) => {
   if (auth.currentUser === null) {
@@ -19,7 +15,7 @@ export const getRoundsByPlannerDate = async (plannerDate: string) => {
 
     console.log('roundData---------', roundData)
 
-    return roundData as RoundData[]
+    return roundData as RoundWithRecurringFlagT[]
   } catch (error) {
     console.error(error)
     throw error

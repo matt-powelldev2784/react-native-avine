@@ -37,3 +37,7 @@ export interface RoundWithRelatedJobsT {
   relatedJobs: JobWithIdT[]
   isDeleted: boolean
 }
+
+export interface RoundWithRecurringFlagT extends RoundWithRelatedJobsT {
+  recurringRound: boolean
+}

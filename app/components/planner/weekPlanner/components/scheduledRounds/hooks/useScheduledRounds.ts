@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { formatDateForDb } from '../../../../../../utils/formatDateForDb'
-import { RoundWithRelatedJobsT } from '../../../../../../types/RoundT'
+import { RoundWithRecurringFlagT } from '../../../../../../types/RoundT'
 import { getRoundsByPlannerDate } from '../../../../../../db/planner/getRoundsByPlannerDate/getRoundsByPlannerDate'
 
-
-
-interface RoundWithRecurringFlag extends RoundWithRelatedJobsT {
-  recurringRound: boolean
-}
-
-type ScheduledRoundsT = RoundWithRecurringFlag[] | []
+type ScheduledRoundsT = RoundWithRecurringFlagT[] | []
 
 type UseScheduledRoundsReturn = [boolean, ScheduledRoundsT]
 
