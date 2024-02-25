@@ -1,4 +1,8 @@
+// misc
+import ScreenMenu from './screenMenu/ScreenMenu'
+import PlanMeLogo from './PlanMeLogo/PlanMeLogo'
 import Dashboard from './dashboard/Dashboard'
+import ServerError from './serverError/ServerError'
 
 //jobs
 import JobList from './Jobs/jobsList/JobList'
@@ -15,8 +19,6 @@ import WeekPlanner from './planner/weekPlanner/WeekPlanner'
 import ScheduleRoundForm from './planner/scheduleRoundForm/ScheduleRoundForm'
 
 //otheres
-import ScreenMenu from './screenMenu/ScreenMenu'
-import PlanMeLogo from './PlanMeLogo/PlanMeLogo'
 
 export {
   JobList,
@@ -30,4 +32,5 @@ export {
   ScreenMenu,
   PlanMeLogo,
   Dashboard,
+  ServerError,
 }
