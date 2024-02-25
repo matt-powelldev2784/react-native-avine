@@ -1,30 +1,58 @@
 import { useState, useEffect } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import {
+  RefreshableScreen,
+  RootStackParamList,
+} from '../../screens/stackNavigator/StackNavigator'
 
-interface UseDataProps {
-  routeFunction: () => Promise<any>
+interface useDataProps {
+  onSuccessScreen: RefreshableScreen
+  refreshScreen?: boolean
 }
 
-const useData = ({ routeFunction }: UseDataProps) => {
-  const [data, setData] = useState<unknown[] | string>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [error, setError] = useState<unknown>('')
+const useData = ({ onSuccessScreen, refreshScreen }: useDataProps) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const [data, setData] = useState<unknown>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [routeFunction, setRouteFunction] = useState<any>()
+  const [routeArguments, setRouteArguments] = useState<any>()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await routeFunction()
+        if (!routeFunction) {
+          return
+        }
+
+        const response = await routeFunction(routeArguments)
+
         setData(response)
         setIsLoading(false)
+
+        if (refreshScreen) {
+          navigation.navigate(onSuccessScreen, { refresh: true })
+        }
+
+        if (!refreshScreen) {
+          navigation.navigate(onSuccessScreen)
+        }
       } catch (error: unknown) {
-        setError(error)
+        console.log('error', error)
         setIsLoading(false)
+        navigation.navigate('Error')
       }
     }
 
     fetchData()
-  }, [routeFunction])
+  }, [routeFunction, routeArguments])
 
-  return { data, isLoading, error }
+  return {
+    data,
+    isLoading,
+    setRouteFunction,
+    setRouteArguments,
+  }
 }
 
 export default useData

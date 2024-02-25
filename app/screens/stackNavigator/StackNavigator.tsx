@@ -41,6 +41,8 @@ export type RootStackParamList = {
   EditJob: { jobId: string } | undefined
 }
 
+export type RefreshableScreen = 'Rounds' | 'Planner' | 'Jobs'
+
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 const StackNavigator = () => {
@@ -51,8 +53,8 @@ const StackNavigator = () => {
       {userInfo ? (
         <>
           {/* --------------------------  Misc Screens  -------------------------- */}
-          <Stack.Screen name="Error" component={Error} />
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Error" component={Error} />
 
           {/* --------------------------  Planner Screens  -------------------------- */}
           <Stack.Screen name="Planner" component={Planner} />
