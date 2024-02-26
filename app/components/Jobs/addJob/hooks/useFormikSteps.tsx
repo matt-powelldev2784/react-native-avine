@@ -1,7 +1,7 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { addJob } from '../../../../db/jobs/addJob'
-import useSetData from '../../../../utils/hooks/useSetData'
+import useSetData from '../../../../utils/hooks/useData'
 
 export const stepOneSchema = Yup.object().shape({
   jobName: Yup.string().required('Name is required'),

@@ -12,33 +12,38 @@ import theme from '../../../utils/theme/theme'
 import { freqencyArray } from '../../../utils/freqencyArray'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import Button from '../../../ui/button/Button'
+import { handleFormStepBack } from '../../../utils/handleFormStepBack'
+import { Loading } from '../../../ui'
 
 type EditJobFormRouteProp = RouteProp<RootStackParamList, 'EditJob'>
 
 const EditJobForm = () => {
-  const route = useRoute<EditJobFormRouteProp>()
+  //state
   const [activeStep, setActiveStep] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
-  const { isLargeWeb } = useDeviceType()
 
+  //hooks
+  const route = useRoute<EditJobFormRouteProp>()
   const jobId = route?.params?.jobId ? route?.params?.jobId : ''
-  const formik = useFormikSteps({
-    setActiveStep,
+  const { isLargeWeb } = useDeviceType()
+  const { formik, getDataIsLoading, submitDataIsLoading } = useFormikSteps({
     activeStep,
     jobId,
-    setIsLoading,
   })
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
 
+  //functions
   const handleStepBack = () => {
-    if (activeStep === 0) {
-      return
-    }
-    setActiveStep((prev) => prev - 1)
+    handleFormStepBack({ setActiveStep, activeStep })
   }
-  const buttonsStyle = isLargeWeb ? 'row' : 'column'
   const handleSumbit = () => {
     formik.handleSubmit()
+  }
+
+  //variables
+  const buttonsStyle = isLargeWeb ? 'row' : 'column'
+
+  if (getDataIsLoading) {
+    return <Loading loadingText={'Loading job data...'} />
   }
 
   return (
@@ -169,7 +174,7 @@ const EditJobForm = () => {
               <Button
                 onPress={handleSumbit}
                 text={'Update Job'}
-                isLoading={isLoading}
+                isLoading={submitDataIsLoading}
               />
             ) : null}
           </View>

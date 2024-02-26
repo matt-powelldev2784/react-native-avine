@@ -20,13 +20,13 @@ interface useDataProps {
   refreshScreen?: boolean
 }
 
-type Data = { [key: string]: unknown }
+type Data = { [key: string]: unknown } | [{ [key: string]: unknown }]
 
 export type ApiFunction = () => Promise<any>
 
 const useData = ({ onSuccessScreen, refreshScreen }: useDataProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const [data, setData] = useState<Data>([])
+  const [data, setData] = useState<Data>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [apiFunction, setApiFunction] = useState<ApiFunction | undefined>()
 
