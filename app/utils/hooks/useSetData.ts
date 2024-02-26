@@ -6,6 +6,15 @@ import {
   RootStackParamList,
 } from '../../screens/stackNavigator/StackNavigator'
 
+// *****************************************************************
+// the setApiFunction should be called like this example:
+// setApiFunction(() => async () => addJob(values))
+//
+// i.e you must pass a function that returns a async function which
+// contains the api call and arguments if required
+// this ensures typescript still can check the values passed to the function
+// *****************************************************************
+
 interface useSetDataProps {
   onSuccessScreen: RefreshableScreen
   refreshScreen?: boolean

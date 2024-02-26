@@ -70,9 +70,6 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
     validationSchema,
   })
 
-  console.log('isLoading', isLoading)
-  console.table('formik.values', formik.values)
-
   return { isLoading, formik }
 }
 
