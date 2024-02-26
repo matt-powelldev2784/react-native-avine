@@ -17,7 +17,10 @@ const ServerError = () => {
           style={{ width: 183, height: 166, marginBottom: 8 }}
         />
 
-        <Text style={styles.primaryText}>Server Error</Text>
+        <Text style={styles.primaryText}>
+          The application has encountered an error.
+        </Text>
+
         <Text style={styles.secondaryText}>Please try again later.</Text>
 
         <View style={styles.buttonContainer}>
