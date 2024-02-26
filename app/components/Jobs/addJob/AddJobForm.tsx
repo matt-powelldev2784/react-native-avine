@@ -10,22 +10,15 @@ import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { freqencyArray } from '../../../utils/freqencyArray'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import Button from '../../../ui/button/Button'
-import useData from '../../../utils/hooks/useData'
 import { handleFormStepBack } from '../../../utils/handleFormStepBack'
 
 const AddJobForm = () => {
   //state
   const [activeStep, setActiveStep] = useState(0)
-  const { isLoading, setRouteFunction, setRouteArguments } = useData({
-    onSuccessScreen: 'Jobs',
-    refreshScreen: true,
-  })
 
   //hooks
-  const formik = useFormikSteps({
+  const { isLoading, formik } = useFormikSteps({
     activeStep,
-    setRouteFunction,
-    setRouteArguments,
   })
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()

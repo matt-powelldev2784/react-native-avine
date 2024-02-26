@@ -1,6 +1,7 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { addJob } from '../../../../db/jobs/addJob'
+import useSetData from '../../../../utils/hooks/useSetData'
 
 export const stepOneSchema = Yup.object().shape({
   jobName: Yup.string().required('Name is required'),
@@ -30,18 +31,11 @@ export const stepThreeSchema = Yup.object().shape({
   frequency: Yup.string().required('Frequency is required'),
   notes: Yup.string(),
 })
-
 interface useFormikStepsProps {
   activeStep: number
-  setRouteFunction: any
-  setRouteArguments: any
 }
 
-const useFormikSteps = ({
-  activeStep,
-  setRouteFunction,
-  setRouteArguments,
-}: useFormikStepsProps) => {
+const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
   const validationSchemas: { [key: number]: Yup.ObjectSchema<any, any> } = {
     0: stepOneSchema,
     1: stepTwoSchema,
@@ -49,6 +43,11 @@ const useFormikSteps = ({
   }
 
   const validationSchema = validationSchemas[activeStep]
+
+  const { isLoading, setApiFunction } = useSetData({
+    onSuccessScreen: 'Jobs',
+    refreshScreen: true,
+  })
 
   const formik = useFormik({
     initialValues: {
@@ -66,13 +65,15 @@ const useFormikSteps = ({
       isDeleted: false,
     },
     onSubmit: async (values) => {
-      setRouteFunction(() => addJob)
-      setRouteArguments(values)
+      setApiFunction(() => async () => addJob(values))
     },
     validationSchema,
   })
 
-  return formik
+  console.log('isLoading', isLoading)
+  console.table('formik.values', formik.values)
+
+  return { isLoading, formik }
 }
 
 export default useFormikSteps

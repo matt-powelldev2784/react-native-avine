@@ -11,25 +11,24 @@ interface useSetDataProps {
   refreshScreen?: boolean
 }
 
-type RouteFunction = (args: any) => Promise<any>
+export type ApiFunction = () => Promise<any>
 
 const useSetData = ({ onSuccessScreen, refreshScreen }: useSetDataProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [data, setData] = useState<unknown>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [routeFunction, setRouteFunction] = useState<
-    RouteFunction | undefined
-  >()
-  const [routeArguments, setRouteArguments] = useState<unknown>()
+  const [apiFunction, setApiFunction] = useState<ApiFunction | undefined>()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!routeFunction) {
+        if (!apiFunction) {
           return
         }
 
-        const response = await routeFunction(routeArguments)
+        setIsLoading(true)
+
+        const response = await apiFunction()
 
         setData(response)
         setIsLoading(false)
@@ -49,13 +48,12 @@ const useSetData = ({ onSuccessScreen, refreshScreen }: useSetDataProps) => {
     }
 
     fetchData()
-  }, [routeFunction, routeArguments])
+  }, [apiFunction])
 
   return {
     data,
     isLoading,
-    setRouteFunction,
-    setRouteArguments,
+    setApiFunction,
   }
 }
 
