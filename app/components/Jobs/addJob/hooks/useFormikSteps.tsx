@@ -1,9 +1,6 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { addJob } from '../../../../db/jobs/addJob'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 
 export const stepOneSchema = Yup.object().shape({
   jobName: Yup.string().required('Name is required'),
@@ -36,20 +33,22 @@ export const stepThreeSchema = Yup.object().shape({
 
 interface useFormikStepsProps {
   activeStep: number
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setRouteFunction: any
+  setRouteArguments: any
 }
 
-const useFormikSteps = ({ activeStep, setIsLoading }: useFormikStepsProps) => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  let validationSchema
-
-  if (activeStep === 0) {
-    validationSchema = stepOneSchema
-  } else if (activeStep === 1) {
-    validationSchema = stepTwoSchema
-  } else if (activeStep === 2) {
-    validationSchema = stepThreeSchema
+const useFormikSteps = ({
+  activeStep,
+  setRouteFunction,
+  setRouteArguments,
+}: useFormikStepsProps) => {
+  const validationSchemas: { [key: number]: Yup.ObjectSchema<any, any> } = {
+    0: stepOneSchema,
+    1: stepTwoSchema,
+    2: stepThreeSchema,
   }
+
+  const validationSchema = validationSchemas[activeStep]
 
   const formik = useFormik({
     initialValues: {
@@ -67,12 +66,8 @@ const useFormikSteps = ({ activeStep, setIsLoading }: useFormikStepsProps) => {
       isDeleted: false,
     },
     onSubmit: async (values) => {
-      setIsLoading(true)
-
-      await addJob(values)
-
-      navigation.navigate('Jobs', { refresh: true })
-      setIsLoading(false)
+      setRouteFunction(() => addJob)
+      setRouteArguments(values)
     },
     validationSchema,
   })

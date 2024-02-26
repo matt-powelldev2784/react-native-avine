@@ -11,12 +11,16 @@ interface useDataProps {
   refreshScreen?: boolean
 }
 
+type RouteFunction = (args: any) => Promise<any>
+
 const useData = ({ onSuccessScreen, refreshScreen }: useDataProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [data, setData] = useState<unknown>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [routeFunction, setRouteFunction] = useState<any>()
-  const [routeArguments, setRouteArguments] = useState<any>()
+  const [routeFunction, setRouteFunction] = useState<
+    RouteFunction | undefined
+  >()
+  const [routeArguments, setRouteArguments] = useState<unknown>()
 
   useEffect(() => {
     const fetchData = async () => {
