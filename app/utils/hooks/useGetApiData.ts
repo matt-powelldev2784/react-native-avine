@@ -20,7 +20,7 @@ interface useGetDataProps {
   onSuccessScreen?: RefreshableScreen
   refreshScreen?: boolean
   apiFunction: ApiFunction
-  route: RouteProp<ParamListBase>
+  route?: RouteProp<ParamListBase>
 }
 
 type Data = [{ [key: string]: unknown }] | []
