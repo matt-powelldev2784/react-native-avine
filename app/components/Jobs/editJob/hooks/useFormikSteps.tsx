@@ -1,9 +1,9 @@
-import { useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { updateJob } from '../../../../db/jobs/updateJob'
 import { getJob } from '../../../../db/jobs/getJob'
-import useData from '../../../../utils/hooks/useData'
+import useGetApiData from '../../../../utils/hooks/useGetApiData'
+import usePostApiData from '../../../../utils/hooks/usePostApiData'
 
 export const stepOneSchema = Yup.object().shape({
   jobName: Yup.string().required('Name is required'),
@@ -40,23 +40,11 @@ interface useFormikStepsInterface {
 }
 
 const useFormikSteps = ({ activeStep, jobId }: useFormikStepsInterface) => {
-  const [firstLoad, setFirstLoad] = useState(true)
+  const { getApiIsLoading, data } = useGetApiData({
+    apiFunction: async () => getJob(jobId),
+  })
 
-  const {
-    isLoading: getDataIsLoading,
-    data,
-    setApiFunction: setGetApiFunction,
-  } = useData({})
-
-  if (firstLoad) {
-    setGetApiFunction(() => async () => getJob(jobId))
-    setFirstLoad(false)
-  }
-
-  const {
-    isLoading: submitDataIsLoading,
-    setApiFunction: setUpdateApiFunction,
-  } = useData({
+  const { postApiIsLoading, setApiFunction } = usePostApiData({
     onSuccessScreen: 'Jobs',
     refreshScreen: true,
   })
@@ -87,13 +75,13 @@ const useFormikSteps = ({ activeStep, jobId }: useFormikStepsInterface) => {
       ...data,
     },
     onSubmit: async (values) => {
-      setUpdateApiFunction(() => async () => updateJob(values))
+      setApiFunction(() => async () => updateJob(values))
     },
     validationSchema,
     enableReinitialize: true,
   })
 
-  return { getDataIsLoading, submitDataIsLoading, formik }
+  return { getApiIsLoading, postApiIsLoading, formik }
 }
 
 export default useFormikSteps

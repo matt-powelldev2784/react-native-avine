@@ -25,7 +25,7 @@ const EditJobForm = () => {
   const route = useRoute<EditJobFormRouteProp>()
   const jobId = route?.params?.jobId ? route?.params?.jobId : ''
   const { isLargeWeb } = useDeviceType()
-  const { formik, getDataIsLoading, submitDataIsLoading } = useFormikSteps({
+  const { formik, getApiIsLoading, postApiIsLoading } = useFormikSteps({
     activeStep,
     jobId,
   })
@@ -42,7 +42,7 @@ const EditJobForm = () => {
   //variables
   const buttonsStyle = isLargeWeb ? 'row' : 'column'
 
-  if (getDataIsLoading) {
+  if (getApiIsLoading) {
     return <Loading loadingText={'Loading job data...'} />
   }
 
@@ -174,7 +174,7 @@ const EditJobForm = () => {
               <Button
                 onPress={handleSumbit}
                 text={'Update Job'}
-                isLoading={submitDataIsLoading}
+                isLoading={postApiIsLoading}
               />
             ) : null}
           </View>

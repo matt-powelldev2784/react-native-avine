@@ -1,7 +1,7 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { addJob } from '../../../../db/jobs/addJob'
-import useSetData from '../../../../utils/hooks/useData'
+import usePostApiData from '../../../../utils/hooks/usePostApiData'
 
 export const stepOneSchema = Yup.object().shape({
   jobName: Yup.string().required('Name is required'),
@@ -27,7 +27,7 @@ export const stepThreeSchema = Yup.object().shape({
   price: Yup.number()
     .typeError('Price must be a number')
     .required('Price is required')
-    .positive(),
+    .positive('Price must be a positive number'),
   frequency: Yup.string().required('Frequency is required'),
   notes: Yup.string(),
 })
@@ -44,7 +44,7 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
 
   const validationSchema = validationSchemas[activeStep]
 
-  const { isLoading, setApiFunction } = useSetData({
+  const { postApiIsLoading, setApiFunction } = usePostApiData({
     onSuccessScreen: 'Jobs',
     refreshScreen: true,
   })
@@ -70,7 +70,7 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
     validationSchema,
   })
 
-  return { isLoading, formik }
+  return { postApiIsLoading, formik }
 }
 
 export default useFormikSteps

@@ -17,7 +17,7 @@ const AddJobForm = () => {
   const [activeStep, setActiveStep] = useState(0)
 
   //hooks
-  const { isLoading, formik } = useFormikSteps({
+  const { postApiIsLoading, formik } = useFormikSteps({
     activeStep,
   })
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
@@ -163,7 +163,7 @@ const AddJobForm = () => {
               <Button
                 onPress={handleSumbmitPress}
                 text="Add Job"
-                isLoading={isLoading}
+                isLoading={postApiIsLoading}
               />
             ) : null}
           </View>
