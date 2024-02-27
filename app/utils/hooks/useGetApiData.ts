@@ -5,6 +5,7 @@ import {
   RefreshableScreen,
   RootStackParamList,
 } from '../../screens/stackNavigator/StackNavigator'
+import { RouteProp, ParamListBase } from '@react-navigation/native'
 
 // *****************************************************************
 // the setApiFunction should be called like this example:
@@ -19,17 +20,14 @@ interface useGetDataProps {
   onSuccessScreen?: RefreshableScreen
   refreshScreen?: boolean
   apiFunction: ApiFunction
+  route: RouteProp<ParamListBase>
 }
 
 type Data = [{ [key: string]: unknown }] | []
 
 export type ApiFunction = () => Promise<any>
 
-const useGetApiData = ({
-  onSuccessScreen,
-  refreshScreen,
-  apiFunction,
-}: useGetDataProps) => {
+const useGetApiData = ({ apiFunction, route }: useGetDataProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [data, setData] = useState<Data>([])
   const [getApiIsLoading, setGetApiIsLoading] = useState<boolean>(false)
@@ -43,32 +41,20 @@ const useGetApiData = ({
         }
 
         setGetApiIsLoading(true)
-
         const response = await apiFunction()
 
         setData(response)
         setGetApiIsLoading(false)
-
-        if (refreshScreen && onSuccessScreen) {
-          navigation.navigate(onSuccessScreen, { refresh: true })
-        }
-
-        if (!refreshScreen && onSuccessScreen) {
-          navigation.navigate(onSuccessScreen)
-        }
       } catch (error: unknown) {
         console.log('error', error)
         setGetApiIsLoading(false)
         setError(error)
-
-        if (!refreshScreen && onSuccessScreen) {
-          navigation.navigate('Error')
-        }
+        navigation.navigate('Error')
       }
     }
 
     fetchData()
-  }, [])
+  }, [route])
 
   return {
     data,
