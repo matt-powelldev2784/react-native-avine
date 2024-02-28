@@ -1,10 +1,12 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
-import usePlannerDateFromStorage from '../../../hooks/usePlannerDateFromStorage'
+import getPlannerDateFromStorage from '../../../hooks/getPlannerDateFromStorage'
 import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComplete'
 import { useWeekPlannerContext } from '../../../hooks/WeekPlannerContext'
+import usePostApiData from '../../../../../../utils/hooks/usePostApiData'
+import { convertDbDateToDateString } from '../../../../../../utils/convertDbDateToDateString'
 
 interface ScheduledJobCardProps {
   job: JobWithIdT
@@ -17,10 +19,13 @@ const ScheduledJobCard = ({
   recurringRound,
   roundId,
 }: ScheduledJobCardProps) => {
-  const [isLoading, setIsLoading] = useState(false)
+  //hooks
+  const { setSelectedDay } = useWeekPlannerContext()
+  const { setApiFunction, postApiIsLoading } = usePostApiData({})
+
+  //variables
   const isComplete = job.jobIsComplete
-  const { setRefreshData } = useWeekPlannerContext()
-  const plannerDate = usePlannerDateFromStorage('@plannerDate')
+  const plannerDate = getPlannerDateFromStorage('@plannerDate')
   const timeWidth = Number(job.time) * 20 + 14
   const jobShortName = job.jobName
     .split(' ')
@@ -28,22 +33,23 @@ const ScheduledJobCard = ({
     .join('')
     .substring(0, 3)
 
+  //functions
   const handleIsCompletePress = async () => {
-    if (isLoading) {
+    if (postApiIsLoading) {
       return
     }
-    setIsLoading(true)
-
     const jobIdPrefix = recurringRound ? 'recurringRound' : 'oneOffRound'
 
-    await toggleJobIsComplete({
-      jobId: `${roundId}@${job.id}@${jobIdPrefix}`,
-      plannerDate: plannerDate,
-      isComplete: !isComplete,
-    })
+    setApiFunction(
+      () => async () =>
+        toggleJobIsComplete({
+          jobId: `${roundId}@${job.id}@${jobIdPrefix}`,
+          plannerDate: plannerDate,
+          isComplete: !isComplete,
+        }),
+    )
 
-    setIsLoading(false)
-    setRefreshData(true)
+    setSelectedDay(convertDbDateToDateString(plannerDate))
   }
 
   return (

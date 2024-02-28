@@ -17,6 +17,9 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { recurringRound } = round
 
+  // *************************************************************************
+  // handle initial delete press
+  // if delette is pressed on a one off round immediate delete will occur
   const handleDeletePress = async () => {
     if (recurringRound) {
       setModalVisible(true)
@@ -30,10 +33,6 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
       date: currentPlannerDate,
     })
 
-    console.log('`${round.id}@oneOffRound`', `${round.id}@oneOffRound`)
-    console.log('round', round)
-    console.log('delete one off')
-
     if (currentPlannerDate) {
       addItemToStorage('@newScheduledDate', currentPlannerDate)
     }
@@ -41,6 +40,8 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
     navigation.navigate('Planner', { refresh: true })
   }
 
+  // *************************************************************************
+  // handle delete all recurring rounds
   const handleDeleteAllRecurringRounds = async () => {
     const currentPlannerDate = await getItemFromStorage('@plannerDate')
 
@@ -56,6 +57,8 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
     navigation.navigate('Planner', { refresh: true })
   }
 
+  // *************************************************************************
+  // handle delete single recurring round
   const handleDeleteSingleRecurringRound = async () => {
     const currentPlannerDate = await getItemFromStorage('@plannerDate')
 

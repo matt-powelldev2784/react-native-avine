@@ -13,8 +13,6 @@ export const getRoundsByPlannerDate = async (plannerDate: string) => {
     const recurringRounds = (await getRecurringRounds(plannerDate)) || []
     const roundData = [...oneOffRounds, ...recurringRounds]
 
-    console.log('roundData---------', roundData)
-
     return roundData as RoundWithRecurringFlagT[]
   } catch (error) {
     console.error(error)

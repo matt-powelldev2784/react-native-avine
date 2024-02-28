@@ -21,13 +21,18 @@ interface useGetDataProps {
   refreshScreen?: boolean
   apiFunction: ApiFunction
   route?: RouteProp<ParamListBase>
+  selectedDay?: Date
 }
 
 type Data = [{ [key: string]: unknown }] | []
 
 export type ApiFunction = () => Promise<any>
 
-const useGetApiData = ({ apiFunction, route }: useGetDataProps) => {
+const useGetApiData = ({
+  apiFunction,
+  route,
+  selectedDay,
+}: useGetDataProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [data, setData] = useState<Data>([])
   const [getApiIsLoading, setGetApiIsLoading] = useState<boolean>(false)
@@ -42,6 +47,7 @@ const useGetApiData = ({ apiFunction, route }: useGetDataProps) => {
 
         setGetApiIsLoading(true)
         const response = await apiFunction()
+        console.log('response', response)
 
         setData(response)
         setGetApiIsLoading(false)
@@ -54,7 +60,7 @@ const useGetApiData = ({ apiFunction, route }: useGetDataProps) => {
     }
 
     fetchData()
-  }, [route])
+  }, [route, selectedDay])
 
   return {
     data,

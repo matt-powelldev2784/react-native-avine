@@ -1,41 +1,50 @@
 import { View, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
-import { useScheduledRounds } from './hooks/useScheduledRounds'
 import ScheduledRoundCard from './components/ScheduledRoundCard'
 import NoScheduledRounds from './components/NoScheduledRounds'
 import { useWeekPlannerContext } from '../../hooks/WeekPlannerContext'
-import DataError from './components/DataError'
+import useGetApiData from '../../../../../utils/hooks/useGetApiData'
+import { formatDateForDb } from '../../../../../utils/formatDateForDb'
+import { getRoundsByPlannerDate } from '../../../../../db/planner/getRoundsByPlannerDate/getRoundsByPlannerDate'
+import { Loading } from '../../../../../ui'
+import { RoundWithRecurringFlagT } from '../../../../../types/RoundT'
 
 interface ScheduledRoundsProps {
   addFooter?: boolean
 }
 
+type ScheduledRoundsT = RoundWithRecurringFlagT[] | []
+
 const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
-  const { selectedDay, refreshData, setRefreshData } = useWeekPlannerContext()
-  const [isError, scheduledRounds] = useScheduledRounds({
+  const { selectedDay } = useWeekPlannerContext()
+  const selectedDayForDb = formatDateForDb(selectedDay)
+  const { getApiIsLoading, data } = useGetApiData({
+    apiFunction: async () => getRoundsByPlannerDate(selectedDayForDb),
     selectedDay,
-    refreshData,
-    setRefreshData,
   })
 
-  console.log('scheduledRounds', scheduledRounds)
+  const scheduledRounds = data as ScheduledRoundsT
 
-  if (isError) {
-    return <DataError />
+  if (getApiIsLoading) {
+    return <Loading loadingText="Loading scheduled rounds..." />
   }
+
+  if (!scheduledRounds || scheduledRounds.length === 0) {
+    return <NoScheduledRounds />
+  }
+
+  const scheduledRoundsJsx = scheduledRounds.map((round) => {
+    return (
+      <ScheduledRoundCard
+        key={`${round.id}/recurringRound/${round.recurringRound}`}
+        round={round}
+      />
+    )
+  })
 
   return (
     <ScrollView style={styles.flatListContainer}>
-      {scheduledRounds.map((round) => {
-        return (
-          <ScheduledRoundCard
-            key={`${round.id}/recurringRound/${round.recurringRound}`}
-            round={round}
-          />
-        )
-      })}
-
-      {scheduledRounds.length === 0 ? <NoScheduledRounds /> : null}
+      {scheduledRounds.length > 0 ? scheduledRoundsJsx : null}
 
       {addFooter ? <View style={styles.flatlistFooter} /> : null}
     </ScrollView>
