@@ -7,7 +7,7 @@ import MultiSelectDropdown from '../../../ui/formElements/MultiSelectDropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
 import theme from '../../../utils/theme/theme'
-import { useFetchJobs } from './hooks/useFetchJobs'
+import { useFetchJobs } from '../utils/useFetchJobs'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { freqencyArray } from '../../../utils/freqencyArray'
@@ -20,7 +20,6 @@ const AddRoundForm = () => {
 
   // hooks
   const userJobs = useFetchJobs()
-  console.log('userJobs', userJobs)
   const { formik, postApiIsLoading } = useFormikSteps({ activeStep })
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()
@@ -92,6 +91,7 @@ const AddRoundForm = () => {
               title="Add job"
               options={userJobs}
               imageName={'wiper'}
+              confirmUnqiueFiveDigitsPrefixAddedtoValue={true}
             />
           </>
         ) : null}

@@ -1,12 +1,9 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { updateRound } from '../../../../db/rounds/updateRound'
-import { useEffect, useState } from 'react'
-import { RoundWithRelatedJobIdsT } from '../../../../types/RoundT'
 import { getRound } from '../../../../db/rounds/getRound'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import useGetApiData from '../../../../utils/hooks/useGetApiData'
+import usePostApiData from '../../../../utils/hooks/usePostApiData'
 
 export const stepOneSchema = Yup.object().shape({
   roundName: Yup.string().required('Round Name is required'),
@@ -21,63 +18,46 @@ export const stepTwoSchema = Yup.object().shape({
 interface useFormikStepsInterface {
   activeStep: number
   roundId: string
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const useFormikSteps = ({
-  activeStep,
-  roundId,
-  setIsLoading,
-}: useFormikStepsInterface) => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const [roundData, setRoundData] = useState<RoundWithRelatedJobIdsT>({
-    id: '',
-    roundName: '',
-    location: '',
-    frequency: '',
-    relatedJobs: [],
-    isDeleted: false,
+const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
+  // const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  // const [roundData, setRoundData] = useState<RoundWithRelatedJobIdsT>({})
+
+  const { getApiIsLoading, data } = useGetApiData({
+    apiFunction: async () => getRound(roundId),
   })
 
-  let validationSchema
+  const { postApiIsLoading, setApiFunction } = usePostApiData({
+    onSuccessScreen: 'Rounds',
+    refreshScreen: true,
+  })
 
-  useEffect(() => {
-    const handleRoundData = async (roundId: string) => {
-      const roundData = await getRound(roundId)
-
-      if (roundData) {
-        setRoundData({
-          ...roundData,
-          relatedJobs: roundData.relatedJobs,
-        })
-      }
-    }
-
-    handleRoundData(roundId)
-  }, [roundId])
-
-  if (activeStep === 0) {
-    validationSchema = stepOneSchema
-  } else if (activeStep === 1) {
-    validationSchema = stepTwoSchema
+  const validationSchemas: { [key: number]: Yup.ObjectSchema<any, any> } = {
+    0: stepOneSchema,
+    1: stepTwoSchema,
   }
 
+  const validationSchema = validationSchemas[activeStep]
+
   const formik = useFormik({
-    initialValues: roundData,
+    initialValues: {
+      id: '',
+      roundName: '',
+      location: '',
+      frequency: '',
+      relatedJobs: [],
+      isDeleted: false,
+      ...data,
+    },
     onSubmit: async (values) => {
-      setIsLoading(true)
-
-      await updateRound(values)
-
-      setIsLoading(false)
-
-      navigation.navigate('Rounds', { refresh: true })
+      setApiFunction(() => async () => updateRound(values))
     },
     validationSchema,
     enableReinitialize: true,
   })
 
-  return formik
+  return { formik, getApiIsLoading, postApiIsLoading }
 }
 
 export default useFormikSteps

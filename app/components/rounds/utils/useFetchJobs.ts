@@ -1,10 +1,16 @@
 // useFetchJobs.ts
 import { useEffect, useState } from 'react'
-import { getAllJobs } from '../../../../db/jobs/getAllJobs'
+import { getAllJobs } from '../../../db/jobs/getAllJobs'
 
 interface JobOption {
   label: string
   value: string
+}
+
+const formatNumberToFiveDigits = (inputNumber: number) => {
+  const validInput = Math.max(1, Math.min(99999, inputNumber))
+  const formattedNumber = String(validInput).padStart(5, '0')
+  return formattedNumber
 }
 
 export const useFetchJobs = () => {
@@ -13,10 +19,12 @@ export const useFetchJobs = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getAllJobs()
-      const jobOptions = data?.map((job) => ({
+
+      const jobOptions = data?.map((job, i) => ({
         label: job.id,
-        value: job.jobName,
+        value: `${formatNumberToFiveDigits(i + 1)}${job.jobName}`,
       }))
+
       if (jobOptions) {
         setUserJobs(jobOptions)
       }

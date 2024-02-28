@@ -13,42 +13,47 @@ import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../utils/theme/theme'
-import { useFetchJobs } from './hooks/useFetchJobs'
+import { useFetchJobs } from '../utils/useFetchJobs'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
 import { freqencyArray } from '../../../utils/freqencyArray'
 import Button from '../../../ui/button/Button'
+import { handleFormStepBack } from '../../../utils/handleFormStepBack'
+import { Loading } from '../../../ui'
 
 type EditRoundFormRouteProp = RouteProp<RootStackParamList, 'EditRound'>
 
 const EditRoundForm = () => {
-  const route = useRoute<EditRoundFormRouteProp>()
+  // state
   const [activeStep, setActiveStep] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
 
+  //hooks
   const userJobs = useFetchJobs()
+  const route = useRoute<EditRoundFormRouteProp>()
   const roundId = route?.params?.roundId ? route?.params?.roundId : ''
-  const formik = useFormikSteps({
+  const { formik, getApiIsLoading, postApiIsLoading } = useFormikSteps({
     activeStep,
     roundId,
-    setIsLoading,
   })
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
-  const buttonsStyle = isLargeWeb ? 'row' : 'column'
 
+  //functions
   const handleSumbmitPress = () => {
     formik.handleSubmit()
   }
-
   const handleStepBack = () => {
-    if (activeStep === 0) {
-      return
-    }
-    setActiveStep((prev) => prev - 1)
+    handleFormStepBack({ setActiveStep, activeStep })
+  }
+
+  //variables
+  const buttonsStyle = isLargeWeb ? 'row' : 'column'
+
+  if (getApiIsLoading) {
+    return <Loading loadingText={'Loading round data...'} />
   }
 
   return (
@@ -104,10 +109,12 @@ const EditRoundForm = () => {
               title="Add job"
               options={userJobs}
               imageName={'wiper'}
+              confirmUnqiueFiveDigitsPrefixAddedtoValue={true}
             />
           </>
         ) : null}
 
+        {/********************* Buttons ***************************/}
         <View style={styles.buttonContainer}>
           {activeStep < 1 ? (
             <Button onPress={moveToNextStep} text="Next" />
@@ -126,7 +133,7 @@ const EditRoundForm = () => {
               <Button
                 onPress={handleSumbmitPress}
                 text="Update Round"
-                isLoading={isLoading}
+                isLoading={postApiIsLoading}
               />
             </View>
           ) : null}
