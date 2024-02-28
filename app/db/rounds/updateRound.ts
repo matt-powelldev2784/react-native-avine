@@ -8,8 +8,6 @@ export const updateRound = async (roundData: RoundWithRelatedJobIdsT) => {
     return authError({ filename: 'addRound' })
   }
 
-  console.log('roundData', roundData)
-
   try {
     const roundDoc = doc(
       db,

@@ -2,6 +2,10 @@
 import SignInScreen from './auth/SignInScreen'
 import SignOutScreen from './auth/SignOutScreen'
 
+//Misc
+import Home from './home/Home'
+import Error from './error/Error'
+
 //jobs
 import Jobs from './jobs/Jobs'
 import AddJob from './jobs/AddJob'
@@ -31,4 +35,6 @@ export {
   SplashScreen,
   SignInScreen,
   SignOutScreen,
+  Home,
+  Error,
 }

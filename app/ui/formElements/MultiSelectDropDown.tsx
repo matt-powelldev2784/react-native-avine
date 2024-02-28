@@ -5,6 +5,14 @@ import { MultiSelect } from 'react-native-element-dropdown'
 import { inputIcons } from './inputIcons'
 import theme from '../../utils/theme/theme'
 
+// confirmUnqiueFiveDigitsPrefixAddedtoValue prop is added for dev to confirm
+// they have added a unique 5 digit prefix to item.value
+// this is to over come a bug in the react-native-element-dropdown library
+// which sets the key to the item.value
+// item.value might not always be unique and therfore the dropdown might not work as expected
+// the 5 digit prefix is used to make the key unique
+// the prefix is not displayed as a value to the user
+
 interface DropdownProps {
   formik: FormikProps<any>
   name: string
@@ -12,6 +20,7 @@ interface DropdownProps {
   title: string
   options: { label: string; value: string }[] // Updated type
   imageName: keyof typeof inputIcons
+  confirmUnqiueFiveDigitsPrefixAddedtoValue: boolean
 }
 
 const MultiSelectDropdown = ({
@@ -21,6 +30,7 @@ const MultiSelectDropdown = ({
   title,
   options,
   imageName,
+  confirmUnqiueFiveDigitsPrefixAddedtoValue,
 }: DropdownProps) => {
   const handleChange = (item: any) => {
     if (item) {
@@ -54,10 +64,24 @@ const MultiSelectDropdown = ({
           return (
             <View
               key={item.label}
-              style={selected ? styles.selectedItem : styles.item}
+              style={selected ? styles.selectedRenderItem : styles.renderItem}
             >
-              <Text style={selected ? styles.selectedItemText : null}>
-                {item.value}
+              <Text style={selected ? styles.selectedRenderItemText : null}>
+                {confirmUnqiueFiveDigitsPrefixAddedtoValue
+                  ? item.value.substring(5)
+                  : item.value}
+              </Text>
+            </View>
+          )
+        }}
+        renderSelectedItem={(item, selected) => {
+          return (
+            <View style={styles.selectedItemBox}>
+              <Text style={styles.selectedBoxText}>
+                {confirmUnqiueFiveDigitsPrefixAddedtoValue
+                  ? item.value.substring(5)
+                  : item.value}
+                {selected ? null : null}
               </Text>
             </View>
           )
@@ -107,25 +131,30 @@ const styles = StyleSheet.create({
     zIndex: 0,
     backgroundColor: 'white',
   },
-  item: {
+  renderItem: {
     backgroundColor: 'white',
     height: 35,
     fontSize: 18,
     paddingLeft: 36,
     justifyContent: 'center',
   },
-  selectedItem: {
+  selectedRenderItem: {
     backgroundColor: theme.colors.primary,
     height: 35,
     fontSize: 18,
     paddingLeft: 36,
     justifyContent: 'center',
   },
-  selectedItemText: {
+  selectedRenderItemText: {
     color: 'white',
   },
-  selectedBox: {
+  selectedItemBox: {
     backgroundColor: theme.colors.primary,
+    marginHorizontal: 5,
+    marginVertical: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 8,
   },
   selectedBoxText: {
     color: 'white',

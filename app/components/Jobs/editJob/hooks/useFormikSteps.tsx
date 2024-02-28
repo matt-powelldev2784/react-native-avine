@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { updateJob } from '../../../../db/jobs/updateJob'
 import { getJob } from '../../../../db/jobs/getJob'
-import { JobWithIdT } from '../../../../types/JobT'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import useGetApiData from '../../../../utils/hooks/useGetApiData'
+import usePostApiData from '../../../../utils/hooks/usePostApiData'
 
 export const stepOneSchema = Yup.object().shape({
   jobName: Yup.string().required('Name is required'),
@@ -39,45 +36,29 @@ export const stepThreeSchema = Yup.object().shape({
 
 interface useFormikStepsInterface {
   activeStep: number
-  setActiveStep: (step: number) => void
   jobId: string
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const useFormikSteps = ({
-  activeStep,
-  jobId,
-  setActiveStep,
-  setIsLoading,
-}: useFormikStepsInterface) => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const [jobData, setJobData] = useState<JobWithIdT | null | undefined>(null)
+const useFormikSteps = ({ activeStep, jobId }: useFormikStepsInterface) => {
+  const { getApiIsLoading, data } = useGetApiData({
+    apiFunction: async () => getJob(jobId),
+  })
 
-  let validationSchema
+  const { postApiIsLoading, setApiFunction } = usePostApiData({
+    onSuccessScreen: 'Jobs',
+    refreshScreen: true,
+  })
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getJob(jobId)
-      if (data) {
-        setJobData(data)
-      }
-    }
-
-    if (jobId) {
-      fetchData()
-    }
-  }, [jobId])
-
-  if (activeStep === 0) {
-    validationSchema = stepOneSchema
-  } else if (activeStep === 1) {
-    validationSchema = stepTwoSchema
-  } else if (activeStep === 2) {
-    validationSchema = stepThreeSchema
+  const validationSchemas: { [key: number]: Yup.ObjectSchema<any, any> } = {
+    0: stepOneSchema,
+    1: stepTwoSchema,
+    2: stepThreeSchema,
   }
 
+  const validationSchema = validationSchemas[activeStep]
+
   const formik = useFormik({
-    initialValues: jobData || {
+    initialValues: {
       id: '',
       jobName: '',
       address: '',
@@ -91,21 +72,16 @@ const useFormikSteps = ({
       contactTel: 0,
       notes: '',
       isDeleted: false,
+      ...data,
     },
     onSubmit: async (values) => {
-      setIsLoading(true)
-
-      await updateJob({ jobId, jobData: values })
-
-      setActiveStep(0)
-      navigation.navigate('Jobs', { refresh: true })
-      setIsLoading(false)
+      setApiFunction(() => async () => updateJob(values))
     },
     validationSchema,
     enableReinitialize: true,
   })
 
-  return formik
+  return { getApiIsLoading, postApiIsLoading, formik }
 }
 
 export default useFormikSteps

@@ -1,9 +1,7 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { addJob } from '../../../../db/jobs/addJob'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import usePostApiData from '../../../../utils/hooks/usePostApiData'
 
 export const stepOneSchema = Yup.object().shape({
   jobName: Yup.string().required('Name is required'),
@@ -29,27 +27,27 @@ export const stepThreeSchema = Yup.object().shape({
   price: Yup.number()
     .typeError('Price must be a number')
     .required('Price is required')
-    .positive(),
+    .positive('Price must be a positive number'),
   frequency: Yup.string().required('Frequency is required'),
   notes: Yup.string(),
 })
-
 interface useFormikStepsProps {
   activeStep: number
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const useFormikSteps = ({ activeStep, setIsLoading }: useFormikStepsProps) => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  let validationSchema
-
-  if (activeStep === 0) {
-    validationSchema = stepOneSchema
-  } else if (activeStep === 1) {
-    validationSchema = stepTwoSchema
-  } else if (activeStep === 2) {
-    validationSchema = stepThreeSchema
+const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
+  const validationSchemas: { [key: number]: Yup.ObjectSchema<any, any> } = {
+    0: stepOneSchema,
+    1: stepTwoSchema,
+    2: stepThreeSchema,
   }
+
+  const validationSchema = validationSchemas[activeStep]
+
+  const { postApiIsLoading, setApiFunction } = usePostApiData({
+    onSuccessScreen: 'Jobs',
+    refreshScreen: true,
+  })
 
   const formik = useFormik({
     initialValues: {
@@ -67,17 +65,12 @@ const useFormikSteps = ({ activeStep, setIsLoading }: useFormikStepsProps) => {
       isDeleted: false,
     },
     onSubmit: async (values) => {
-      setIsLoading(true)
-
-      await addJob(values)
-
-      navigation.navigate('Jobs', { refresh: true })
-      setIsLoading(false)
+      setApiFunction(() => async () => addJob(values))
     },
     validationSchema,
   })
 
-  return formik
+  return { postApiIsLoading, formik }
 }
 
 export default useFormikSteps

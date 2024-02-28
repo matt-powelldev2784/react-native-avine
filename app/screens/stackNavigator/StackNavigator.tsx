@@ -11,6 +11,8 @@ import {
   EditJob,
   AddRound,
   EditRound,
+  Home,
+  Error,
 } from '..'
 import { useAuth } from '../../components/auth/AuthProvider'
 
@@ -19,6 +21,10 @@ export type RootStackParamList = {
   SignIn: undefined
   SignOut: undefined
   SplashScreen: undefined
+
+  //misc
+  Home: undefined
+  Error: undefined
 
   //rounds
   Rounds: { refresh?: boolean } | undefined
@@ -35,6 +41,8 @@ export type RootStackParamList = {
   EditJob: { jobId: string } | undefined
 }
 
+export type RefreshableScreen = 'Rounds' | 'Planner' | 'Jobs'
+
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 const StackNavigator = () => {
@@ -44,6 +52,10 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
+          {/* --------------------------  Misc Screens  -------------------------- */}
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Error" component={Error} />
+
           {/* --------------------------  Planner Screens  -------------------------- */}
           <Stack.Screen name="Planner" component={Planner} />
           <Stack.Screen name="ScheduleRound" component={ScheduleRound} />

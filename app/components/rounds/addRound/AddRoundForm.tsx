@@ -7,32 +7,34 @@ import MultiSelectDropdown from '../../../ui/formElements/MultiSelectDropDown'
 import FormFlowTitles from './components/FormFlowTitles'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
 import theme from '../../../utils/theme/theme'
-import { useFetchJobs } from './hooks/useFetchJobs'
+import { useFetchJobs } from '../utils/useFetchJobs'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { freqencyArray } from '../../../utils/freqencyArray'
 import Button from '../../../ui/button/Button'
+import { handleFormStepBack } from '../../../utils/handleFormStepBack'
 
 const AddRoundForm = () => {
+  // state
   const [activeStep, setActiveStep] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
+
+  // hooks
   const userJobs = useFetchJobs()
-  const formik = useFormikSteps({ activeStep, setIsLoading })
+  const { formik, postApiIsLoading } = useFormikSteps({ activeStep })
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
-  const buttonsStyle = isLargeWeb ? 'row' : 'column'
 
+  // functions
+  const handleStepBack = () => {
+    handleFormStepBack({ setActiveStep, activeStep })
+  }
   const handleSumbmitPress = () => {
     formik.handleSubmit()
   }
 
-  const handleStepBack = () => {
-    if (activeStep === 0) {
-      return
-    }
-    setActiveStep((prev) => prev - 1)
-  }
+  // variables
+  const buttonsStyle = isLargeWeb ? 'row' : 'column'
 
   return (
     <ScrollView
@@ -89,6 +91,7 @@ const AddRoundForm = () => {
               title="Add job"
               options={userJobs}
               imageName={'wiper'}
+              confirmUnqiueFiveDigitsPrefixAddedtoValue={true}
             />
           </>
         ) : null}
@@ -111,7 +114,7 @@ const AddRoundForm = () => {
               <Button
                 onPress={handleSumbmitPress}
                 text="Add Round"
-                isLoading={isLoading}
+                isLoading={postApiIsLoading}
               />
             </View>
           ) : null}

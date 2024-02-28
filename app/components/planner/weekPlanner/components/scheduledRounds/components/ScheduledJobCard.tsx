@@ -6,7 +6,6 @@ import usePlannerDateFromStorage from '../../../hooks/usePlannerDateFromStorage'
 import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComplete'
 import { useWeekPlannerContext } from '../../../hooks/WeekPlannerContext'
 
-
 interface ScheduledJobCardProps {
   job: JobWithIdT
   roundId: string

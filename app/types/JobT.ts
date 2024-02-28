@@ -15,5 +15,6 @@ export interface JobT {
 
 export interface JobWithIdT extends JobT {
   id: string
-  jobIsComplete: boolean
+  jobIsComplete?: boolean
 }
+

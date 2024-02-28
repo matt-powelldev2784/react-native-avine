@@ -1,9 +1,7 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { addRound } from '../../../../db/rounds/addRound'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import usePostApiData from '../../../../utils/hooks/usePostApiData'
 
 export const stepOneSchema = Yup.object().shape({
   roundName: Yup.string().required('Round Name is required'),
@@ -17,18 +15,20 @@ export const stepTwoSchema = Yup.object().shape({
 
 interface UseFormikStepsProps {
   activeStep: number
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const useFormikSteps = ({ activeStep, setIsLoading }: UseFormikStepsProps) => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  let validationSchema
-
-  if (activeStep === 0) {
-    validationSchema = stepOneSchema
-  } else if (activeStep === 1) {
-    validationSchema = stepTwoSchema
+const useFormikSteps = ({ activeStep }: UseFormikStepsProps) => {
+  const validationSchemas: { [key: number]: Yup.ObjectSchema<any, any> } = {
+    0: stepOneSchema,
+    1: stepTwoSchema,
   }
+
+  const validationSchema = validationSchemas[activeStep]
+
+  const { postApiIsLoading, setApiFunction } = usePostApiData({
+    onSuccessScreen: 'Rounds',
+    refreshScreen: true,
+  })
 
   const formik = useFormik({
     initialValues: {
@@ -38,18 +38,12 @@ const useFormikSteps = ({ activeStep, setIsLoading }: UseFormikStepsProps) => {
       relatedJobs: [],
     },
     onSubmit: async (values) => {
-      setIsLoading(true)
-
-      console.log(values)
-      await addRound(values)
-
-      navigation.navigate('Rounds', { refresh: true })
-      setIsLoading(false)
+      setApiFunction(() => async () => addRound(values))
     },
     validationSchema,
   })
 
-  return formik
+  return { postApiIsLoading, formik }
 }
 
 export default useFormikSteps

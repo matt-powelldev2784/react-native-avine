@@ -1,34 +1,26 @@
 import { View, FlatList, StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import JobCard from './jobCard/JobCard'
 import { Loading } from '../../../ui'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import { getAllJobs } from '../../../db/jobs/getAllJobs'
-import { JobWithIdT } from '../../../types/JobT'
 import ErrorNoData from './errorNoData/ErrorNoData'
-import { useRoute } from '@react-navigation/native'
 import theme from '../../../utils/theme/theme'
+import useGetApiData from '../../../utils/hooks/useGetApiData'
+import { JobWithIdT } from '../../../types/JobT'
+import { useRoute } from '@react-navigation/native'
 
 const JobList = () => {
   const route = useRoute()
   const { isSmallWeb, isLargeWeb, isNative } = useDeviceType()
-  const [isLoading, setIsLoading] = useState(true)
-  const [jobsData, setJobsData] = useState<JobWithIdT[] | null | undefined>(
-    null,
-  )
+  const { getApiIsLoading, data } = useGetApiData({
+    apiFunction: async () => getAllJobs(),
+    route,
+  })
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true)
-      const data = await getAllJobs()
-      setIsLoading(false)
-      setJobsData(data)
-    }
+  const jobsData = data as JobWithIdT[]
 
-    fetchData()
-  }, [route])
-
-  if (isLoading) {
+  if (getApiIsLoading) {
     return <Loading loadingText={'Loading jobs list...'} />
   }
 

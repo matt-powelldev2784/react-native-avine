@@ -10,26 +10,30 @@ import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { freqencyArray } from '../../../utils/freqencyArray'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import Button from '../../../ui/button/Button'
+import { handleFormStepBack } from '../../../utils/handleFormStepBack'
 
 const AddJobForm = () => {
+  //state
   const [activeStep, setActiveStep] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
-  const formik = useFormikSteps({ activeStep, setIsLoading })
+
+  //hooks
+  const { postApiIsLoading, formik } = useFormikSteps({
+    activeStep,
+  })
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
-  const buttonsStyle = isLargeWeb ? 'row' : 'column'
 
+  //functions
+  const handleStepBack = () => {
+    handleFormStepBack({ setActiveStep, activeStep })
+  }
   const handleSumbmitPress = () => {
     formik.handleSubmit()
   }
 
-  const handleStepBack = () => {
-    if (activeStep === 0) {
-      return
-    }
-    setActiveStep((prev) => prev - 1)
-  }
+  //variables
+  const buttonsStyle = isLargeWeb ? 'row' : 'column'
 
   return (
     <ScrollView
@@ -159,7 +163,7 @@ const AddJobForm = () => {
               <Button
                 onPress={handleSumbmitPress}
                 text="Add Job"
-                isLoading={isLoading}
+                isLoading={postApiIsLoading}
               />
             ) : null}
           </View>
