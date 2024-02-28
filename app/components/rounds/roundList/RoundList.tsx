@@ -1,5 +1,5 @@
 import { View, FlatList, StyleSheet } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import RoundCard from './components/roundCard/RoudnCard'
 import { getAllRoundsWithRelatedJobs } from '../../../db/rounds/withRelatedJobs/getAllRoundsWithRelatedJobs'
 import { RoundWithJobT } from '../../../types/RoundT'
@@ -8,26 +8,18 @@ import ErrorNoData from './components/errorData/ErrorNoData'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import { useRoute } from '@react-navigation/native'
 import theme from '../../../utils/theme/theme'
+import useGetApiData from '../../../utils/hooks/useGetApiData'
 
 const RoundList = () => {
   const route = useRoute()
-  const [isLoading, setIsLoading] = useState(true)
-  const [roundData, setRoundData] = useState<RoundWithJobT[] | null>(null)
   const { isSmallWeb, isLargeWeb, isNative } = useDeviceType()
+  const { getApiIsLoading, data } = useGetApiData({
+    route,
+    apiFunction: async () => getAllRoundsWithRelatedJobs(),
+  })
+  const roundData = data as RoundWithJobT[]
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true)
-      const data = await getAllRoundsWithRelatedJobs()
-      console.log('data', data)
-      setIsLoading(false)
-      setRoundData(data)
-    }
-
-    fetchData()
-  }, [route])
-
-  if (isLoading) {
+  if (getApiIsLoading) {
     return <Loading loadingText={'Loading rounds list...'} />
   }
 

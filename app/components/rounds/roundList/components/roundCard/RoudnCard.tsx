@@ -18,18 +18,14 @@ const RoundCard = ({
   frequency,
   relatedJobs,
 }: RoundWithJobT) => {
-  const { isLargeWeb } = useDeviceType()
+  //state
   const [modalVisible, setModalVisible] = useState(false)
+
+  //hooks
+  const { isLargeWeb } = useDeviceType()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
-  const roundTime = relatedJobs?.reduce((acc, job) => {
-    return acc + Number(job.time)
-  }, 0)
-  const numOfJobs = relatedJobs?.length
-  const totalPrice = relatedJobs?.reduce((acc, job) => {
-    return acc + Number(job.price)
-  }, 0)
-
+  //functions
   const handleEditRoundPress = () => {
     navigation.navigate('EditRound', { roundId: id })
   }
@@ -42,6 +38,15 @@ const RoundCard = ({
       setModalVisible(false)
     }
   }
+
+  //variables
+  const roundTime = relatedJobs?.reduce((acc, job) => {
+    return acc + Number(job.time)
+  }, 0)
+  const numOfJobs = relatedJobs?.length
+  const totalPrice = relatedJobs?.reduce((acc, job) => {
+    return acc + Number(job.price)
+  }, 0)
 
   return (
     <View style={isLargeWeb ? styles.cardLargeWeb : styles.cardSmallScreen}>
@@ -64,7 +69,7 @@ const RoundCard = ({
           </Text>
 
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            Round Value: £{totalPrice}
+            Round Value: £{totalPrice.toFixed(2)}
           </Text>
         </View>
       </View>
