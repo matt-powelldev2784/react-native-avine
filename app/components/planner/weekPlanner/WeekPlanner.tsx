@@ -1,5 +1,5 @@
 import { View, StyleSheet } from 'react-native'
-import React, { memo, useState } from 'react'
+import React, { useState } from 'react'
 import WeekCalender from './components/weekCalender/WeekCalender'
 import ScheduledRounds from './components/scheduledRounds/ScheduledRounds'
 
@@ -13,7 +13,7 @@ interface WeekPlannerProps {
 const WeekPlanner = ({ addFooter }: WeekPlannerProps) => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
-  const [storedDate, setStoreddDate] = useState(new Date())
+  const [storedDate, setStoredDate] = useState(new Date())
   setPlannerDate({ setSelectedDay, setDisplayWeek, selectedDay })
 
   const weekPlannerContextValue = {
@@ -22,7 +22,7 @@ const WeekPlanner = ({ addFooter }: WeekPlannerProps) => {
     selectedDay,
     setSelectedDay,
     storedDate,
-    setStoreddDate,
+    setStoredDate,
   }
 
   if (addFooter === undefined) {

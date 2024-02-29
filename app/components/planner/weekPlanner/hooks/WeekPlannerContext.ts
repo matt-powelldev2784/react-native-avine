@@ -6,6 +6,7 @@ interface WeekPlannerContextType {
   selectedDay: Date
   setSelectedDay: React.Dispatch<React.SetStateAction<Date>>
   storedDate: Date
+  setStoredDate: React.Dispatch<React.SetStateAction<Date>>
 }
 
 export const WeekPlannerContext = createContext<WeekPlannerContextType>({
@@ -14,6 +15,7 @@ export const WeekPlannerContext = createContext<WeekPlannerContextType>({
   selectedDay: new Date(),
   setSelectedDay: () => {},
   storedDate: new Date(),
+  setStoredDate: () => {},
 })
 
 export const useWeekPlannerContext = () => useContext(WeekPlannerContext)
