@@ -2,14 +2,14 @@ import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import Dropdown from '../../../../ui/formElements/DropDown'
 import { FormikProps } from 'formik'
-import { useFetchRounds } from '../hooks/useFetchRounds'
+import { useGetRoundOptions } from '../hooks/useGetRoundOptions'
 
 interface FromSteptThreeProps {
   formik: FormikProps<any>
 }
 
 const FormStepOne = ({ formik }: FromSteptThreeProps) => {
-  const userRounds = useFetchRounds()
+  const userRounds = useGetRoundOptions()
 
   return (
     <View style={styles.dropdownContainer}>

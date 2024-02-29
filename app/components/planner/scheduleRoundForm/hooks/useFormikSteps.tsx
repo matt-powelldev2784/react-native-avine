@@ -43,7 +43,7 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
     initialValues: {
       roundId: '',
       roundFrequency: '',
-      date: '',
+      date: formatDateForDb(selectedDay),
       recurring: false,
     },
     onSubmit: async (values) => {

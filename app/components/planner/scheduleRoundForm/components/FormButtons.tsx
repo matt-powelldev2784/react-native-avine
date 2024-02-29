@@ -4,6 +4,7 @@ import theme from '../../../../utils/theme/theme'
 import { useDeviceType } from '../../../../utils/deviceTypes'
 import Button from '../../../../ui/button/Button'
 import { useMoveToNextStep } from '../hooks/useMoveToNextStep'
+import { handleFormStepBack } from '../../../../utils/handleFormStepBack'
 
 interface FormButtonsProps {
   activeStep: number
@@ -20,19 +21,8 @@ const FormButtons = ({
   formik,
   isLoading,
 }: FormButtonsProps) => {
+  // hooks
   const { isLargeWeb } = useDeviceType()
-
-  const handleFormikSubmit = () => {
-    formik.handleSubmit()
-  }
-
-  const handleStepBack = () => {
-    if (activeStep === 0) {
-      return
-    }
-    setActiveStep((prev) => prev - 1)
-  }
-
   const moveToNextStep = useMoveToNextStep({
     formik,
     setActiveStep,
@@ -40,6 +30,15 @@ const FormButtons = ({
     setRecurringRoundExistsMessage,
   })
 
+  // functions
+  const handleFormikSubmit = () => {
+    formik.handleSubmit()
+  }
+  const handleStepBack = () => {
+    handleFormStepBack({ setActiveStep, activeStep })
+  }
+
+  //variables
   const containerStyle = isLargeWeb ? 'row' : 'column'
 
   return (
