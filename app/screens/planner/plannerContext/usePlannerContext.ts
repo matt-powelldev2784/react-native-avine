@@ -1,21 +1,18 @@
+import React from 'react'
 import { createContext, useContext } from 'react'
 
-interface WeekPlannerContextType {
+interface PlannerContextType {
   displayWeek: Date
   setDisplayWeek: React.Dispatch<React.SetStateAction<Date>>
   selectedDay: Date
   setSelectedDay: React.Dispatch<React.SetStateAction<Date>>
-  refreshData: boolean
-  setRefreshData: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const WeekPlannerContext = createContext<WeekPlannerContextType>({
+export const PlannerContext = createContext<PlannerContextType>({
   displayWeek: new Date(),
   setDisplayWeek: () => {},
   selectedDay: new Date(),
   setSelectedDay: () => {},
-  refreshData: false,
-  setRefreshData: () => {},
 })
 
-export const useWeekPlannerContext = () => useContext(WeekPlannerContext)
+export const usePlannerContext = () => useContext(PlannerContext)

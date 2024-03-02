@@ -4,11 +4,10 @@ import { format, startOfWeek, addDays } from 'date-fns'
 import DaySelector from '../daySelector/DaySelector'
 import theme from '../../../../../utils/theme/theme'
 import { getWeek } from '../../utils/getWeek'
-import { useWeekPlannerContext } from '../../hooks/WeekPlannerContext'
+import { usePlannerContext } from '../../../../../screens/planner/plannerContext/usePlannerContext'
 
 const WeekCalender = () => {
-  const { displayWeek, setDisplayWeek, setSelectedDay } =
-    useWeekPlannerContext()
+  const { displayWeek, setDisplayWeek, setSelectedDay } = usePlannerContext()
   const weekToDisplay = getWeek(displayWeek)
 
   const handleMoveToPrevWeek = () => {

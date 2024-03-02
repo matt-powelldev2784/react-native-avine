@@ -8,6 +8,7 @@ import { useDeviceType } from '../../utils/deviceTypes'
 interface ScreenMenuProps {
   title: string
   navigateTo?: keyof RootStackParamList
+  navigateToProp?: any
   buttonText?: string
   bgColor: string
 }
@@ -15,11 +16,17 @@ interface ScreenMenuProps {
 const ScreenMenu = ({
   title,
   navigateTo,
+  navigateToProp,
   buttonText,
   bgColor,
 }: ScreenMenuProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { isLargeWeb } = useDeviceType()
+  const handleNaviagteTo = () => {
+    if (navigateTo) {
+      navigation.navigate(navigateTo, navigateToProp)
+    }
+  }
 
   return (
     <View
@@ -33,10 +40,7 @@ const ScreenMenu = ({
       <Text style={styles.pageTitle}>{title}</Text>
 
       {navigateTo ? (
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => (navigateTo ? navigation.navigate(navigateTo) : null)}
-        >
+        <TouchableOpacity style={styles.button} onPress={handleNaviagteTo}>
           <Image
             source={require('../../../assets/plus.png')}
             style={{ width: 13, height: 13 }}

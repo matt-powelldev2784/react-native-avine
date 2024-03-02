@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import FormFlowTitles from './components/FormFlowTitles'
 import theme from '../../../utils/theme/theme'
-import { formatDateForDb } from '../../../utils/formatDateForDb'
 import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import FormButtons from './components/FormButtons'
 import FormStepThree from './components/FormStepThree'
@@ -11,18 +10,14 @@ import FormStepTwo from './components/FormStepTwo'
 import FormStepOne from './components/FormStepOne'
 
 const ScheduleRoundForm = () => {
+  // state
   const [activeStep, setActiveStep] = useState(0)
   const [recurringRoundExistsMessage, setRecurringRoundExistsMessage] =
     useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const formik = useFormikSteps({ activeStep, setIsLoading })
-  useFormResetOnBlur(formik, setActiveStep)
 
-  useEffect(() => {
-    if (formik.values.date === '') {
-      formik.setFieldValue('date', formatDateForDb(new Date()))
-    }
-  }, [formik])
+  // hooks
+  const { formik, postApiIsLoading } = useFormikSteps({ activeStep })
+  useFormResetOnBlur(formik, setActiveStep)
 
   return (
     <ScrollView
@@ -52,7 +47,7 @@ const ScheduleRoundForm = () => {
         <FormButtons
           activeStep={activeStep}
           setActiveStep={setActiveStep}
-          isLoading={isLoading}
+          isLoading={postApiIsLoading}
           formik={formik}
           setRecurringRoundExistsMessage={setRecurringRoundExistsMessage}
         />

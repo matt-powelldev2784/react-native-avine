@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const usePlannerDateFromStorage = (key: string) => {
+const getPlannerDateFromStorage = (key: string) => {
   const [plannerDate, setPlannerDate] = useState<string>('')
 
   useEffect(() => {
@@ -19,4 +19,4 @@ const usePlannerDateFromStorage = (key: string) => {
   return plannerDate
 }
 
-export default usePlannerDateFromStorage
+export default getPlannerDateFromStorage

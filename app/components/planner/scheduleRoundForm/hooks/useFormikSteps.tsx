@@ -1,11 +1,9 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { addRound } from '../../../../db/planner/addRound/addRound'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
-import { getItemFromStorage } from '../../../../utils/getItemFromStorage'
-import { addItemToStorage } from '../../../../utils/addItemToStorage'
+import usePostApiData from '../../../../utils/hooks/usePostApiData'
+import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
+import { formatDateForDb } from '../../../../utils/formatDateForDb'
 
 export const stepOneSchema = Yup.object().shape({
   roundId: Yup.string().required('Round Name is required'),
@@ -23,48 +21,40 @@ export const stepThreeSchema = Yup.object().shape({
 
 interface useFormikStepsProps {
   activeStep: number
-  setIsLoading: (isLoading: boolean) => void
 }
 
-const useFormikSteps = ({ activeStep, setIsLoading }: useFormikStepsProps) => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
+  const { selectedDay } = usePlannerContext()
 
-  let validationSchema
-
-  if (activeStep === 0) {
-    validationSchema = stepOneSchema
-  } else if (activeStep === 1) {
-    validationSchema = stepTwoSchema
-  } else if (activeStep === 2) {
-    validationSchema = stepThreeSchema
+  const validationSchemas: { [key: number]: Yup.ObjectSchema<any, any> } = {
+    0: stepOneSchema,
+    1: stepTwoSchema,
+    2: stepThreeSchema,
   }
+
+  const validationSchema = validationSchemas[activeStep]
+
+  const { postApiIsLoading, setApiFunction } = usePostApiData({
+    onSuccessScreen: 'Planner',
+  })
 
   const formik = useFormik({
     initialValues: {
       roundId: '',
       roundFrequency: '',
-      date: '',
+      date: formatDateForDb(selectedDay),
       recurring: false,
     },
     onSubmit: async (values) => {
-      setIsLoading(true)
-      const plannerDate = await getItemFromStorage('@plannerDate')
+      const dateForDb = formatDateForDb(selectedDay)
+      values.date = dateForDb
 
-      if (plannerDate) {
-        values.date = plannerDate
-        addItemToStorage('@newScheduledDate', plannerDate)
-      }
-
-      console.log('schedule round form values', values)
-      await addRound(values)
-
-      navigation.navigate('Planner', { refresh: true })
-      setIsLoading(false)
+      setApiFunction(() => async () => addRound(values))
     },
     validationSchema,
   })
 
-  return formik
+  return { postApiIsLoading, formik }
 }
 
 export default useFormikSteps

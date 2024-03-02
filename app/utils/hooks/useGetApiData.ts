@@ -16,20 +16,23 @@ import { RouteProp, ParamListBase } from '@react-navigation/native'
 // this ensures typescript still can check the values passed to the function
 // *****************************************************************
 
-interface useGetDataProps {
+interface useGetDataProps<T> {
   onSuccessScreen?: RefreshableScreen
   refreshScreen?: boolean
-  apiFunction: ApiFunction
+  apiFunction: ApiFunction<T>
   route?: RouteProp<ParamListBase>
+  selectedDay?: Date
 }
 
-type Data = [{ [key: string]: unknown }] | []
+export type ApiFunction<T> = () => Promise<T>
 
-export type ApiFunction = () => Promise<any>
-
-const useGetApiData = ({ apiFunction, route }: useGetDataProps) => {
+const useGetApiData = <T>({
+  apiFunction,
+  route,
+  selectedDay,
+}: useGetDataProps<T>) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const [data, setData] = useState<Data>([])
+  const [data, setData] = useState<T | null>(null)
   const [getApiIsLoading, setGetApiIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<unknown>()
 
@@ -54,7 +57,7 @@ const useGetApiData = ({ apiFunction, route }: useGetDataProps) => {
     }
 
     fetchData()
-  }, [route])
+  }, [route, selectedDay])
 
   return {
     data,

@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { ConfirmModal } from '../../../../ui'
-import { useGetRound } from '../hooks/useGetRound'
 import Dropdown from '../../../../ui/formElements/DropDown'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -9,6 +8,8 @@ import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavi
 import { FormikProps } from 'formik'
 import theme from '../../../../utils/theme/theme'
 import { getFrequencyOptions } from './utils/getFrequencyOptions'
+import { getRound } from '../../../../db/rounds/getRound'
+import useGetApiData from '../../../../utils/hooks/useGetApiData'
 
 interface FormStepTwoProps {
   setRecurringRoundExistsMessage: React.Dispatch<React.SetStateAction<boolean>>
@@ -24,10 +25,12 @@ const FormStepTwo = ({
   formik,
 }: FormStepTwoProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const selectedRound = useGetRound(formik.values.roundId)
+  const { data: selectedRound } = useGetApiData({
+    apiFunction: async () => getRound(formik.values.roundId),
+  })
   const frequencyOptions = getFrequencyOptions(selectedRound)
 
-  const editRound = () => {
+  const handleEditRoundPress = () => {
     navigation.navigate('EditRound', {
       roundId: formik.values.roundId,
     })
@@ -40,9 +43,9 @@ const FormStepTwo = ({
           Select one off clean or recurring round.
         </Text>
 
-        <Text onPress={editRound} style={styles.text}>
+        <Text onPress={handleEditRoundPress} style={styles.text}>
           If you wish to change the frequency of the recurring round,
-          <Text onPress={editRound} style={styles.textBold}>
+          <Text onPress={handleEditRoundPress} style={styles.textBold}>
             &nbsp;click here&nbsp;
           </Text>
           to edit the {selectedRound?.roundName} round.
