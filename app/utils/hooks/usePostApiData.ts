@@ -46,11 +46,7 @@ const usePostApiData = <T>({
         setData(response)
         setpostApiIsLoading(false)
 
-        if (refreshScreen && onSuccessScreen) {
-          navigation.navigate(onSuccessScreen, { refresh: true })
-        }
-
-        if (!refreshScreen && onSuccessScreen) {
+        if (onSuccessScreen) {
           navigation.navigate(onSuccessScreen)
         }
       } catch (error: unknown) {

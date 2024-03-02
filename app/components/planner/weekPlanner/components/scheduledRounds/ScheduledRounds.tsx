@@ -2,12 +2,13 @@ import { View, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import ScheduledRoundCard from './components/ScheduledRoundCard'
 import NoScheduledRounds from './components/NoScheduledRounds'
-import { useWeekPlannerContext } from '../../hooks/WeekPlannerContext'
+import { usePlannerContext } from '../../../../../screens/planner/plannerContext/usePlannerContext'
 import useGetApiData from '../../../../../utils/hooks/useGetApiData'
 import { formatDateForDb } from '../../../../../utils/formatDateForDb'
 import { getRoundsByPlannerDate } from '../../../../../db/planner/getRoundsByPlannerDate/getRoundsByPlannerDate'
 import { Loading } from '../../../../../ui'
 import { RoundWithRecurringFlagT } from '../../../../../types/RoundT'
+import { useRoute } from '@react-navigation/native'
 
 interface ScheduledRoundsProps {
   addFooter?: boolean
@@ -16,11 +17,13 @@ interface ScheduledRoundsProps {
 type ScheduledRoundsT = RoundWithRecurringFlagT[] | []
 
 const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
-  const { selectedDay } = useWeekPlannerContext()
+  const route = useRoute()
+  const { selectedDay } = usePlannerContext()
   const selectedDayForDb = formatDateForDb(selectedDay)
   const { getApiIsLoading, data } = useGetApiData({
     apiFunction: async () => getRoundsByPlannerDate(selectedDayForDb),
     selectedDay,
+    route,
   })
 
   const scheduledRounds = data as ScheduledRoundsT

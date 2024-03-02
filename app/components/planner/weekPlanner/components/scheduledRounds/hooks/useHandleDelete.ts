@@ -1,5 +1,3 @@
-import { getItemFromStorage } from '../../../../../../utils/getItemFromStorage'
-import { addItemToStorage } from '../../../../../../utils/addItemToStorage'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../../../screens/stackNavigator/StackNavigator'
@@ -7,6 +5,8 @@ import { RoundWithRecurringFlagT } from '../../../../../../types/RoundT'
 import { deleteOneOffRound } from '../../../../../../db/planner/deleteRound/deleteOneOffRound'
 import { deleteSingleRecurringRound } from '../../../../../../db/planner/deleteRound/deleteSingleRecurringRound'
 import { deleteAllRecurringRounds } from '../../../../../../db/planner/deleteRound/deleteAllRecurrringRounds'
+import { usePlannerContext } from '../../../../../../screens/planner/plannerContext/usePlannerContext'
+import { formatDateForDb } from '../../../../../../utils/formatDateForDb'
 
 interface useHandleDeleteProps {
   setModalVisible: (modalVisible: boolean) => void
@@ -16,6 +16,7 @@ interface useHandleDeleteProps {
 const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { recurringRound } = round
+  const { selectedDay } = usePlannerContext()
 
   // *************************************************************************
   // handle initial delete press
@@ -25,54 +26,43 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
       setModalVisible(true)
       return
     }
-
-    const currentPlannerDate = await getItemFromStorage('@plannerDate')
-
     await deleteOneOffRound({
       roundId: `${round.id}`,
-      date: currentPlannerDate,
+      date: formatDateForDb(selectedDay),
     })
 
-    if (currentPlannerDate) {
-      addItemToStorage('@newScheduledDate', currentPlannerDate)
-    }
-
-    navigation.navigate('Planner', { refresh: true })
+    navigation.navigate('Planner', {
+      displayScheduledRoundForm: false,
+      refresh: true,
+    })
   }
 
   // *************************************************************************
   // handle delete all recurring rounds
   const handleDeleteAllRecurringRounds = async () => {
-    const currentPlannerDate = await getItemFromStorage('@plannerDate')
-
     await deleteAllRecurringRounds({
       roundId: round.id,
     })
 
-    if (currentPlannerDate) {
-      addItemToStorage('@newScheduledDate', currentPlannerDate)
-    }
-
     setModalVisible(false)
-    navigation.navigate('Planner', { refresh: true })
+    navigation.navigate('Planner', {
+      displayScheduledRoundForm: false,
+      refresh: true,
+    })
   }
 
   // *************************************************************************
   // handle delete single recurring round
   const handleDeleteSingleRecurringRound = async () => {
-    const currentPlannerDate = await getItemFromStorage('@plannerDate')
-
     await deleteSingleRecurringRound({
       roundId: round.id,
-      date: currentPlannerDate,
+      date: formatDateForDb(selectedDay),
     })
 
-    if (currentPlannerDate) {
-      addItemToStorage('@newScheduledDate', currentPlannerDate)
-    }
-
-    setModalVisible(false)
-    navigation.navigate('Planner', { refresh: true })
+    navigation.navigate('Planner', {
+      displayScheduledRoundForm: false,
+      refresh: true,
+    })
   }
 
   return {

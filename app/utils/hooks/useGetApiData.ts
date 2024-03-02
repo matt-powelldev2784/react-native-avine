@@ -67,4 +67,3 @@ const useGetApiData = <T>({
 }
 
 export default useGetApiData
-

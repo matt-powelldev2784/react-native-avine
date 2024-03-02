@@ -2,7 +2,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { addRound } from '../../../../db/planner/addRound/addRound'
 import usePostApiData from '../../../../utils/hooks/usePostApiData'
-import { useWeekPlannerContext } from '../../weekPlanner/hooks/WeekPlannerContext'
+import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 import { formatDateForDb } from '../../../../utils/formatDateForDb'
 
 export const stepOneSchema = Yup.object().shape({
@@ -24,7 +24,7 @@ interface useFormikStepsProps {
 }
 
 const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
-  const { selectedDay, setStoredDate } = useWeekPlannerContext()
+  const { selectedDay } = usePlannerContext()
 
   const validationSchemas: { [key: number]: Yup.ObjectSchema<any, any> } = {
     0: stepOneSchema,
@@ -36,7 +36,6 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
 
   const { postApiIsLoading, setApiFunction } = usePostApiData({
     onSuccessScreen: 'Planner',
-    refreshScreen: true,
   })
 
   const formik = useFormik({
@@ -49,7 +48,6 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
     onSubmit: async (values) => {
       const dateForDb = formatDateForDb(selectedDay)
       values.date = dateForDb
-      setStoredDate(selectedDay)
 
       setApiFunction(() => async () => addRound(values))
     },

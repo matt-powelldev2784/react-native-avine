@@ -4,7 +4,7 @@ import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
 import getPlannerDateFromStorage from '../../../hooks/getPlannerDateFromStorage'
 import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComplete'
-import { useWeekPlannerContext } from '../../../hooks/WeekPlannerContext'
+import { usePlannerContext } from '../../../../../../screens/planner/plannerContext/usePlannerContext'
 import usePostApiData from '../../../../../../utils/hooks/usePostApiData'
 import { convertDbDateToDateString } from '../../../../../../utils/convertDbDateToDateString'
 
@@ -20,7 +20,7 @@ const ScheduledJobCard = ({
   roundId,
 }: ScheduledJobCardProps) => {
   //hooks
-  const { setSelectedDay } = useWeekPlannerContext()
+  const { setSelectedDay } = usePlannerContext()
   const { setApiFunction, postApiIsLoading } = usePostApiData({})
 
   //variables
