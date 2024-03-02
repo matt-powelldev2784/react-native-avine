@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Dashboard,
   ScheduleRoundForm,
@@ -17,6 +17,11 @@ const Planner = () => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
   const displayScheduledRoundForm = route.params?.displayScheduledRoundForm
+
+  useEffect(() => {
+    setSelectedDay(new Date())
+    setDisplayWeek(new Date())
+  }, [route.params?.refresh])
 
   const PlannerContextValue = {
     displayWeek,

@@ -33,7 +33,6 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
 
     navigation.navigate('Planner', {
       displayScheduledRoundForm: false,
-      refresh: true,
     })
   }
 
@@ -47,7 +46,6 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
     setModalVisible(false)
     navigation.navigate('Planner', {
       displayScheduledRoundForm: false,
-      refresh: true,
     })
   }
 
@@ -61,7 +59,6 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
 
     navigation.navigate('Planner', {
       displayScheduledRoundForm: false,
-      refresh: true,
     })
   }
 
