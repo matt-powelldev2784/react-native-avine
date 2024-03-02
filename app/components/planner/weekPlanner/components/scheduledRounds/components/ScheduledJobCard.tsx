@@ -2,11 +2,10 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
-import getPlannerDateFromStorage from '../../../hooks/getPlannerDateFromStorage'
 import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComplete'
 import { usePlannerContext } from '../../../../../../screens/planner/plannerContext/usePlannerContext'
 import usePostApiData from '../../../../../../utils/hooks/usePostApiData'
-import { convertDbDateToDateString } from '../../../../../../utils/convertDbDateToDateString'
+import { formatDateForDb } from '../../../../../../utils/formatDateForDb'
 
 interface ScheduledJobCardProps {
   job: JobWithIdT
@@ -20,12 +19,13 @@ const ScheduledJobCard = ({
   roundId,
 }: ScheduledJobCardProps) => {
   //hooks
-  const { setSelectedDay } = usePlannerContext()
-  const { setApiFunction, postApiIsLoading } = usePostApiData({})
+  const { selectedDay } = usePlannerContext()
+  const { setApiFunction, postApiIsLoading } = usePostApiData({
+    onSuccessScreen: 'Planner',
+  })
 
   //variables
   const isComplete = job.jobIsComplete
-  const plannerDate = getPlannerDateFromStorage('@plannerDate')
   const timeWidth = Number(job.time) * 20 + 14
   const jobShortName = job.jobName
     .split(' ')
@@ -44,12 +44,10 @@ const ScheduledJobCard = ({
       () => async () =>
         toggleJobIsComplete({
           jobId: `${roundId}@${job.id}@${jobIdPrefix}`,
-          plannerDate: plannerDate,
+          plannerDate: formatDateForDb(selectedDay),
           isComplete: !isComplete,
         }),
     )
-
-    setSelectedDay(convertDbDateToDateString(plannerDate))
   }
 
   return (
