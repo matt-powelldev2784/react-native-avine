@@ -1,14 +1,12 @@
 import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDeviceType } from '../../utils/deviceTypes'
 import theme from '../../utils/theme/theme'
+import useNavigationRouteFunctions from './useNavigationRouteFunctions'
 
 const NavBar = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const { routeFunctions } = useNavigationRouteFunctions()
   const { isLargeWeb } = useDeviceType()
 
   const styles = StyleSheet.create({
@@ -41,7 +39,7 @@ const NavBar = () => {
     <SafeAreaView edges={['right', 'bottom', 'left']} style={styles.nav}>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Jobs', { refresh: true })}
+        onPress={routeFunctions.jobsNaviagtion}
       >
         <Image
           source={require('../../../assets/customers.png')}
@@ -52,7 +50,7 @@ const NavBar = () => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Rounds')}
+        onPress={routeFunctions.roundsNavigation}
       >
         <Image
           source={require('../../../assets/round.png')}
@@ -63,12 +61,7 @@ const NavBar = () => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() =>
-          navigation.navigate('Planner', {
-            displayScheduledRoundForm: false,
-            refresh: true,
-          })
-        }
+        onPress={routeFunctions.plannerNavigation}
       >
         <Image
           source={require('../../../assets/calendar_white.png')}
@@ -80,7 +73,7 @@ const NavBar = () => {
       {isLargeWeb && (
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('SignOut')}
+          onPress={routeFunctions.signOut}
         >
           <Image
             source={require('../../../assets/settings.png')}
