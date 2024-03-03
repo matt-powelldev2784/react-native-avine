@@ -40,6 +40,7 @@ export default ModalButton
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: theme.colors.primary,
     padding: 10,
     paddingHorizontal: 32,
@@ -51,5 +52,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
+    textAlign: 'center',
   },
 })
