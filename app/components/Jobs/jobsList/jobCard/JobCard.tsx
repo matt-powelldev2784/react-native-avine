@@ -10,6 +10,7 @@ import { handleDeleteJob } from '../../../../db/jobs/handleDeleteJob/handleDelet
 import theme from '../../../../utils/theme/theme'
 import ShortNameText from '../../../../utils/shortNameText/ShortNameText'
 import IconButton from '../../../../ui/iconButton/IconButton'
+import usePostApiData from '../../../../utils/hooks/usePostApiData'
 
 const JobCard = ({
   id,
@@ -21,21 +22,26 @@ const JobCard = ({
   price,
   frequency,
 }: JobWithIdT) => {
+  // state
   const [modalVisible, setModalVisible] = useState(false)
+
+  //hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { isLargeWeb } = useDeviceType()
-  const handleEditJobPress = () => {
-    navigation.navigate('EditJob', { jobId: id })
-  }
+  const { postApiIsLoading, setApiFunction } = usePostApiData({
+    onSuccessScreen: 'Jobs',
+    refreshScreen: { refresh: true },
+  })
+
+  //functions
   const handleDeleteJobPress = () => {
     setModalVisible(true)
   }
   const handleConfirmDeleteJobPress = async () => {
-    const deletedJob = await handleDeleteJob(id)
-    const isDeleted = deletedJob?.isDeleted
-    if (isDeleted) {
-      navigation.navigate('Jobs', { refresh: true })
-    }
+    setApiFunction(() => async () => handleDeleteJob(id))
+  }
+  const handleEditJobPress = () => {
+    navigation.navigate('EditJob', { jobId: id })
   }
 
   return (
@@ -94,6 +100,7 @@ const JobCard = ({
         onConfirm={handleConfirmDeleteJobPress}
         onCancel={() => setModalVisible(false)}
         visible={modalVisible}
+        isLoading={postApiIsLoading}
       />
     </View>
   )

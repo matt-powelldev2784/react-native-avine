@@ -9,6 +9,7 @@ import {
   Image,
 } from 'react-native'
 import theme from '../../utils/theme/theme'
+import ModalButton from './ModalButton'
 
 interface ConfirmModalProps {
   visible: boolean
@@ -21,6 +22,7 @@ interface ConfirmModalProps {
   confirmButtonText?: string
   cancelButtonText?: string
   onConfirmText2?: string
+  isLoading?: boolean
 }
 
 const ConfirmModal = ({
@@ -34,6 +36,7 @@ const ConfirmModal = ({
   modalText3,
   confirmButtonText,
   cancelButtonText,
+  isLoading,
 }: ConfirmModalProps) => {
   return (
     <Modal
@@ -65,31 +68,26 @@ const ConfirmModal = ({
 
           {/* If there is a second confirm button, show it, else show the cancel button */}
           <View style={styles.buttonContainer}>
-            {onConfirm2 ? (
-              <TouchableOpacity
-                style={[styles.button, styles.buttonCancel]}
+            {onConfirm2 && onConfirmText2 ? (
+              <ModalButton
                 onPress={onConfirm2}
-              >
-                <Text style={styles.textStyle}>{onConfirmText2}</Text>
-              </TouchableOpacity>
+                text={onConfirmText2}
+                backgroundColor={theme.colors.buttonSecondary}
+              />
             ) : (
-              <TouchableOpacity
-                style={[styles.button, styles.buttonCancel]}
+              <ModalButton
                 onPress={onCancel}
-              >
-                <Text style={styles.textStyle}>
-                  {cancelButtonText || 'Cancel'}
-                </Text>
-              </TouchableOpacity>
+                text={cancelButtonText || 'Cancel'}
+                backgroundColor={theme.colors.buttonSecondary}
+              />
             )}
 
             {/********************************** Confirm Button ***********************************/}
-            <TouchableOpacity
-              style={[styles.button, styles.buttonConfirm]}
+            <ModalButton
               onPress={onConfirm}
-            >
-              <Text style={styles.textStyle}>{confirmButtonText || 'OK'}</Text>
-            </TouchableOpacity>
+              text={confirmButtonText || 'OK'}
+              isLoading={isLoading}
+            />
           </View>
         </View>
       </View>

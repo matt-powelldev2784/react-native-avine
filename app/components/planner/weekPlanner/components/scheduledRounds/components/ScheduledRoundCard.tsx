@@ -12,17 +12,29 @@ interface ScheduledRoundCardProps {
 }
 
 const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
-  const [modalVisible, setModalVisible] = useState(false)
+  //state
+  const [recurringModalVisible, setRecurringModalVisible] = useState(false)
+  const [oneOffModalVisible, setOneOffModalVisible] = useState(false)
+
+  //hooks
+  const {
+    handleDeletePress,
+    handleDeleteOneOffRound,
+    handleDeleteAllRecurringRounds,
+    handleDeleteSingleRecurringRound,
+    postApiIsLoading,
+  } = useHandleDelete({
+    setRecurringModalVisible,
+    setOneOffModalVisible,
+    round,
+  })
+
+  // variables
   const totalRoundtTime = round?.relatedJobs?.reduce(
     (totalTime: number, job: JobWithIdT) => totalTime + parseFloat(job.time),
     0,
   )
   const recurringRound = round?.recurringRound
-  const {
-    handleDeletePress,
-    handleDeleteAllRecurringRounds,
-    handleDeleteSingleRecurringRound,
-  } = useHandleDelete({ setModalVisible, round })
 
   return (
     <View style={styles.roundWrapper}>
@@ -67,14 +79,27 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
         ))}
       </View>
 
+      {/* ---------------------- Delete one off round modal ----------------------- */}
       <ConfirmModal
-        modalText={`Do you want to delete all recurring rounds for ${round.roundName} or just this entry?`}
+        modalText={`Are you sure you want to delete the ${round.roundName} one off round from the planner?`}
+        onConfirm={handleDeleteOneOffRound}
+        onCancel={() => setOneOffModalVisible(false)}
+        visible={oneOffModalVisible}
+        confirmButtonText={'Yes'}
+        isLoading={postApiIsLoading}
+      />
+
+      {/* ---------------------- Delete recurring rounds modal ----------------------- */}
+      <ConfirmModal
+        modalText={`Please confirm deletion of ${round.roundName} round from the planner.`}
+        modalText2={`Do you want to delete a single entry for this date only or all recurring entries?`}
         onConfirm={handleDeleteAllRecurringRounds}
         onConfirm2={handleDeleteSingleRecurringRound}
-        onCancel={() => setModalVisible(false)}
-        visible={modalVisible}
+        onCancel={() => setRecurringModalVisible(false)}
+        visible={recurringModalVisible}
         confirmButtonText={'Delete All'}
         onConfirmText2={'Delete Single'}
+        isLoading={postApiIsLoading}
       />
     </View>
   )

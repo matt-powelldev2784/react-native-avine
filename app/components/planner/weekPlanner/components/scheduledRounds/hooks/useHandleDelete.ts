@@ -1,71 +1,80 @@
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../../../screens/stackNavigator/StackNavigator'
 import { RoundWithRecurringFlagT } from '../../../../../../types/RoundT'
 import { deleteOneOffRound } from '../../../../../../db/planner/deleteRound/deleteOneOffRound'
 import { deleteSingleRecurringRound } from '../../../../../../db/planner/deleteRound/deleteSingleRecurringRound'
 import { deleteAllRecurringRounds } from '../../../../../../db/planner/deleteRound/deleteAllRecurrringRounds'
 import { usePlannerContext } from '../../../../../../screens/planner/plannerContext/usePlannerContext'
 import { formatDateForDb } from '../../../../../../utils/formatDateForDb'
+import usePostApiData from '../../../../../../utils/hooks/usePostApiData'
 
 interface useHandleDeleteProps {
-  setModalVisible: (modalVisible: boolean) => void
+  setRecurringModalVisible: (modalVisible: boolean) => void
+  setOneOffModalVisible: (modalVisible: boolean) => void
   round: RoundWithRecurringFlagT
 }
 
-const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+const useHandleDelete = ({
+  setRecurringModalVisible,
+  setOneOffModalVisible,
+  round,
+}: useHandleDeleteProps) => {
   const { recurringRound } = round
   const { selectedDay } = usePlannerContext()
+  const { postApiIsLoading, setApiFunction } = usePostApiData({
+    onSuccessScreen: 'Planner',
+    refreshScreen: { displayScheduledRoundForm: false, refresh: true },
+  })
 
   // *************************************************************************
   // handle initial delete press
   // if delette is pressed on a one off round immediate delete will occur
   const handleDeletePress = async () => {
     if (recurringRound) {
-      setModalVisible(true)
+      setRecurringModalVisible(true)
       return
     }
-    await deleteOneOffRound({
-      roundId: `${round.id}`,
-      date: formatDateForDb(selectedDay),
-    })
 
-    navigation.navigate('Planner', {
-      displayScheduledRoundForm: false,
+    if (!recurringRound) {
+      setOneOffModalVisible(true)
+      return
+    }
+  }
+
+  const handleDeleteOneOffRound = async () => {
+    setApiFunction(() => async () => {
+      await deleteOneOffRound({
+        roundId: `${round.id}`,
+        date: formatDateForDb(selectedDay),
+      })
     })
   }
 
   // *************************************************************************
   // handle delete all recurring rounds
   const handleDeleteAllRecurringRounds = async () => {
-    await deleteAllRecurringRounds({
-      roundId: round.id,
-    })
-
-    setModalVisible(false)
-    navigation.navigate('Planner', {
-      displayScheduledRoundForm: false,
+    setApiFunction(() => async () => {
+      await deleteAllRecurringRounds({
+        roundId: round.id,
+      })
     })
   }
 
   // *************************************************************************
   // handle delete single recurring round
   const handleDeleteSingleRecurringRound = async () => {
-    await deleteSingleRecurringRound({
-      roundId: round.id,
-      date: formatDateForDb(selectedDay),
-    })
-
-    navigation.navigate('Planner', {
-      displayScheduledRoundForm: false,
+    setApiFunction(() => async () => {
+      await deleteSingleRecurringRound({
+        roundId: round.id,
+        date: formatDateForDb(selectedDay),
+      })
     })
   }
 
   return {
     handleDeletePress,
+    handleDeleteOneOffRound,
     handleDeleteAllRecurringRounds,
     handleDeleteSingleRecurringRound,
+    postApiIsLoading,
   }
 }
 
