@@ -60,7 +60,7 @@ export const removeRelatedRoundsIdFromDb = async (roundId: string) => {
       // remove round id from all planner recurring job arrays
       const recurringRoundfQuery = query(
         plannerCollection,
-        where('oneOffRounds', 'array-contains', `${roundId}@oneOffRound`),
+        where('recurringRounds', 'array-contains', `${roundId}@recurringRound`),
       )
 
       const recurringRoundQuerySnapshot = await getDocs(recurringRoundfQuery)
