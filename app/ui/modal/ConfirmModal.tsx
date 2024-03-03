@@ -22,6 +22,7 @@ interface ConfirmModalProps {
   confirmButtonText?: string
   cancelButtonText?: string
   onConfirmText2?: string
+  isLoading?: boolean
 }
 
 const ConfirmModal = ({
@@ -35,6 +36,7 @@ const ConfirmModal = ({
   modalText3,
   confirmButtonText,
   cancelButtonText,
+  isLoading,
 }: ConfirmModalProps) => {
   return (
     <Modal
@@ -81,7 +83,11 @@ const ConfirmModal = ({
             )}
 
             {/********************************** Confirm Button ***********************************/}
-            <ModalButton onPress={onConfirm} text={confirmButtonText || 'OK'} />
+            <ModalButton
+              onPress={onConfirm}
+              text={confirmButtonText || 'OK'}
+              isLoading={isLoading}
+            />
           </View>
         </View>
       </View>

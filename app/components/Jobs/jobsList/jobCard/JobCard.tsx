@@ -10,6 +10,7 @@ import { handleDeleteJob } from '../../../../db/jobs/handleDeleteJob/handleDelet
 import theme from '../../../../utils/theme/theme'
 import ShortNameText from '../../../../utils/shortNameText/ShortNameText'
 import IconButton from '../../../../ui/iconButton/IconButton'
+import usePostApiData from '../../../../utils/hooks/usePostApiData'
 
 const JobCard = ({
   id,
@@ -30,12 +31,18 @@ const JobCard = ({
   const handleDeleteJobPress = () => {
     setModalVisible(true)
   }
+  const { postApiIsLoading, setApiFunction } = usePostApiData({
+    onSuccessScreen: 'Jobs',
+    refreshScreen: { refresh: true },
+  })
+
   const handleConfirmDeleteJobPress = async () => {
-    const deletedJob = await handleDeleteJob(id)
-    const isDeleted = deletedJob?.isDeleted
-    if (isDeleted) {
-      navigation.navigate('Jobs', { refresh: true })
-    }
+    setApiFunction(() => async () => handleDeleteJob(id))
+    // const deletedJob = await handleDeleteJob(id)
+    // const isDeleted = deletedJob?.isDeleted
+    // if (isDeleted) {
+    //   navigation.navigate('Jobs', { refresh: true })
+    // }
   }
 
   return (
@@ -94,6 +101,7 @@ const JobCard = ({
         onConfirm={handleConfirmDeleteJobPress}
         onCancel={() => setModalVisible(false)}
         visible={modalVisible}
+        isLoading={postApiIsLoading}
       />
     </View>
   )
