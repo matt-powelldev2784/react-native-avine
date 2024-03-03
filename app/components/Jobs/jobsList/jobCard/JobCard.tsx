@@ -22,27 +22,28 @@ const JobCard = ({
   price,
   frequency,
 }: JobWithIdT) => {
+  // state
   const [modalVisible, setModalVisible] = useState(false)
+
+  //hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { isLargeWeb } = useDeviceType()
-  const handleEditJobPress = () => {
-    navigation.navigate('EditJob', { jobId: id })
-  }
-  const handleDeleteJobPress = () => {
-    setModalVisible(true)
-  }
   const { postApiIsLoading, setApiFunction } = usePostApiData({
     onSuccessScreen: 'Jobs',
     refreshScreen: { refresh: true },
   })
 
+  //functions
+  const handleDeleteJobPress = () => {
+    setModalVisible(true)
+  }
+
   const handleConfirmDeleteJobPress = async () => {
     setApiFunction(() => async () => handleDeleteJob(id))
-    // const deletedJob = await handleDeleteJob(id)
-    // const isDeleted = deletedJob?.isDeleted
-    // if (isDeleted) {
-    //   navigation.navigate('Jobs', { refresh: true })
-    // }
+  }
+
+  const handleEditJobPress = () => {
+    navigation.navigate('EditJob', { jobId: id })
   }
 
   return (
