@@ -103,9 +103,9 @@ const RoundCard = ({
       </View>
 
       <ConfirmModal
-        modalText={`Are you sure you want to delete ${roundName}`}
+        modalText={`Are you sure you want to delete ${roundName}?`}
         modalText2={
-          'If you delete this round all planner entries for this round will be removed from the planner '
+          'All planned occurrences of this round will be deleted from the planner. This action cannot be undone.'
         }
         onConfirm={hanldeDeleteRoundPress}
         onCancel={() => setModalVisible(false)}

@@ -1,4 +1,4 @@
-import { authError } from './../../../authError'
+import { authError } from '../../authError'
 import {
   arrayRemove,
   collection,
@@ -8,7 +8,7 @@ import {
   runTransaction,
   where,
 } from 'firebase/firestore'
-import { db, auth } from '../../../../../firebaseConfig'
+import { db, auth } from '../../../../firebaseConfig'
 
 export const removeRelatedRoundsIdFromDb = async (roundId: string) => {
   if (!auth.currentUser) {
@@ -48,8 +48,6 @@ export const removeRelatedRoundsIdFromDb = async (roundId: string) => {
               'plannerDoc does not exist at removeRelatedRoundsIdFromDb route',
             )
           }
-
-          
 
           transaction.update(plannerDocRef, {
             oneOffRounds: arrayRemove(`${roundId}@oneOffRound`),

@@ -1,7 +1,7 @@
 import { authError } from './../../authError'
 import { doc, updateDoc } from 'firebase/firestore'
 import { db, auth } from '../../../../firebaseConfig'
-import { removeRelatedRoundsIdFromDb } from './removeRelatedRoundsIdFromDb/removeRelatedRoundsIdFromDb'
+import { removeRelatedRoundsIdFromDb } from '../removeRelatedRoundsIdFromDb/removeRelatedRoundsIdFromDb'
 
 export const handleDeleteRound = async (roundId: string) => {
   if (!auth.currentUser) {
