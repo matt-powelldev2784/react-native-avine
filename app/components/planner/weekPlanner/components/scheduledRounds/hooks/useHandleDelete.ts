@@ -9,11 +9,16 @@ import { usePlannerContext } from '../../../../../../screens/planner/plannerCont
 import { formatDateForDb } from '../../../../../../utils/formatDateForDb'
 
 interface useHandleDeleteProps {
-  setModalVisible: (modalVisible: boolean) => void
+  setRecurringModalVisible: (modalVisible: boolean) => void
+  setOneOffModalVisible: (modalVisible: boolean) => void
   round: RoundWithRecurringFlagT
 }
 
-const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
+const useHandleDelete = ({
+  setRecurringModalVisible,
+  setOneOffModalVisible,
+  round,
+}: useHandleDeleteProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { recurringRound } = round
   const { selectedDay } = usePlannerContext()
@@ -23,9 +28,17 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
   // if delette is pressed on a one off round immediate delete will occur
   const handleDeletePress = async () => {
     if (recurringRound) {
-      setModalVisible(true)
+      setRecurringModalVisible(true)
       return
     }
+
+    if (!recurringRound) {
+      setOneOffModalVisible(true)
+      return
+    }
+  }
+
+  const handleDeleteOneOffRound = async () => {
     await deleteOneOffRound({
       roundId: `${round.id}`,
       date: formatDateForDb(selectedDay),
@@ -43,7 +56,6 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
       roundId: round.id,
     })
 
-    setModalVisible(false)
     navigation.navigate('Planner', {
       displayScheduledRoundForm: false,
     })
@@ -64,6 +76,7 @@ const useHandleDelete = ({ setModalVisible, round }: useHandleDeleteProps) => {
 
   return {
     handleDeletePress,
+    handleDeleteOneOffRound,
     handleDeleteAllRecurringRounds,
     handleDeleteSingleRecurringRound,
   }
