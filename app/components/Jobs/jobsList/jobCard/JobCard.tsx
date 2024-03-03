@@ -37,11 +37,9 @@ const JobCard = ({
   const handleDeleteJobPress = () => {
     setModalVisible(true)
   }
-
   const handleConfirmDeleteJobPress = async () => {
     setApiFunction(() => async () => handleDeleteJob(id))
   }
-
   const handleEditJobPress = () => {
     navigation.navigate('EditJob', { jobId: id })
   }
