@@ -12,9 +12,11 @@ export const handleDeleteJob = async (jobId: string) => {
     const userDoc = doc(db, 'users', auth.currentUser.uid)
     const jobDocRef = doc(userDoc, 'jobs', jobId)
 
-    await removeRelatedJobIdFromAllRounds(jobId)
+    const removedJobIdsIsSuccess = await removeRelatedJobIdFromAllRounds(jobId)
 
-    await updateDoc(jobDocRef, { isDeleted: true })
+    if (removedJobIdsIsSuccess.relatedJobIdsDeleted) {
+      await updateDoc(jobDocRef, { isDeleted: true })
+    }
 
     return { message: `Job with id ${jobId} deleted`, isDeleted: true }
   } catch (error) {

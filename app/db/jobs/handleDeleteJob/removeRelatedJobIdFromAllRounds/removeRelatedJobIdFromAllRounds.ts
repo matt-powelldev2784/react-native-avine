@@ -5,6 +5,7 @@ import {
   collection,
   getDocs,
   runTransaction,
+  arrayRemove,
 } from 'firebase/firestore'
 import { db, auth } from '../../../../../firebaseConfig'
 import { authError } from './../../../authError'
@@ -26,7 +27,7 @@ export const removeRelatedJobIdFromAllRounds = async (jobId: string) => {
     const querySnapshot = await getDocs(q)
 
     await runTransaction(db, async (transaction) => {
-      querySnapshot.forEach(async (round) => {
+      const updatePromises = querySnapshot.docs.map(async (round) => {
         if (!auth.currentUser) {
           return authError({ filename: 'removeRelatedJobIdFromAllRounds' })
         }
@@ -46,15 +47,15 @@ export const removeRelatedJobIdFromAllRounds = async (jobId: string) => {
           )
         }
 
-        const updatedRelatedJobs = roundDoc
-          .data()
-          .relatedJobs.filter((id: string) => id !== jobId)
-
-        transaction.update(roundDocRef, { relatedJobs: updatedRelatedJobs })
+        transaction.update(roundDocRef, { relatedJobs: arrayRemove(jobId) })
       })
-    })
 
-    return { message: `Job with id ${jobId} deleted`, isDeleted: true }
+      await Promise.all(updatePromises)
+    })
+  return {
+    message: `Job with id ${jobId} removed from all rounds relatedJobs arrays`,
+    relatedJobIdsDeleted: true,
+  }
   } catch (error) {
     throw new Error(
       `Error deleting all related job ids from all rounds at removeRelatedJobIdFromAllRounds route: ${error}`,
