@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 import { ConfirmModal } from '../../../../ui'
-import { deleteJob } from '../../../../db/jobs/deleteJob'
+import { handleDeleteJob } from '../../../../db/jobs/handleDeleteJob/handleDeleteJob'
 import theme from '../../../../utils/theme/theme'
 import ShortNameText from '../../../../utils/shortNameText/ShortNameText'
 import IconButton from '../../../../ui/iconButton/IconButton'
@@ -30,8 +30,8 @@ const JobCard = ({
   const handleDeleteJobPress = () => {
     setModalVisible(true)
   }
-  const handleDeleteJob = async () => {
-    const deletedJob = await deleteJob(id)
+  const handleConfirmDeleteJobPress = async () => {
+    const deletedJob = await handleDeleteJob(id)
     const isDeleted = deletedJob?.isDeleted
     if (isDeleted) {
       navigation.navigate('Jobs', { refresh: true })
@@ -90,7 +90,8 @@ const JobCard = ({
 
       <ConfirmModal
         modalText={`Are you sure you want to delete ${jobName}`}
-        onConfirm={handleDeleteJob}
+        modalText2={`This will remove ${jobName} from all accociated rounds and all remove all instances of the job from the planner. This action cannot be undone.`}
+        onConfirm={handleConfirmDeleteJobPress}
         onCancel={() => setModalVisible(false)}
         visible={modalVisible}
       />

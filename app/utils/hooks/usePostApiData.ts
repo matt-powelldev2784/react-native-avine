@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import {
-  RefreshableScreen,
-  RootStackParamList,
-} from '../../screens/stackNavigator/StackNavigator'
+import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 
 // *****************************************************************
 // the setApiFunction should be called like this example:
@@ -16,8 +13,8 @@ import {
 // *****************************************************************
 
 interface useDataProps {
-  onSuccessScreen?: RefreshableScreen
-  refreshScreen?: boolean
+  onSuccessScreen?: keyof RootStackParamList
+  refreshScreen?: any
 }
 
 export type ApiFunction<T> = () => Promise<T>
@@ -47,7 +44,7 @@ const usePostApiData = <T>({
         setpostApiIsLoading(false)
 
         if (onSuccessScreen) {
-          navigation.navigate(onSuccessScreen)
+          navigation.navigate(onSuccessScreen, refreshScreen)
         }
       } catch (error: unknown) {
         console.log('error', error)

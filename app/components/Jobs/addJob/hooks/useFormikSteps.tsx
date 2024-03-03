@@ -46,7 +46,7 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
 
   const { postApiIsLoading, setApiFunction } = usePostApiData({
     onSuccessScreen: 'Jobs',
-    refreshScreen: true,
+    refreshScreen: { refresh: true },
   })
 
   const formik = useFormik({
