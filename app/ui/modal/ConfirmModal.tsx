@@ -9,6 +9,7 @@ import {
   Image,
 } from 'react-native'
 import theme from '../../utils/theme/theme'
+import ModalButton from './ModalButton'
 
 interface ConfirmModalProps {
   visible: boolean
@@ -65,31 +66,22 @@ const ConfirmModal = ({
 
           {/* If there is a second confirm button, show it, else show the cancel button */}
           <View style={styles.buttonContainer}>
-            {onConfirm2 ? (
-              <TouchableOpacity
-                style={[styles.button, styles.buttonCancel]}
+            {onConfirm2 && onConfirmText2 ? (
+              <ModalButton
                 onPress={onConfirm2}
-              >
-                <Text style={styles.textStyle}>{onConfirmText2}</Text>
-              </TouchableOpacity>
+                text={onConfirmText2}
+                backgroundColor={theme.colors.buttonSecondary}
+              />
             ) : (
-              <TouchableOpacity
-                style={[styles.button, styles.buttonCancel]}
+              <ModalButton
                 onPress={onCancel}
-              >
-                <Text style={styles.textStyle}>
-                  {cancelButtonText || 'Cancel'}
-                </Text>
-              </TouchableOpacity>
+                text={cancelButtonText || 'Cancel'}
+                backgroundColor={theme.colors.buttonSecondary}
+              />
             )}
 
             {/********************************** Confirm Button ***********************************/}
-            <TouchableOpacity
-              style={[styles.button, styles.buttonConfirm]}
-              onPress={onConfirm}
-            >
-              <Text style={styles.textStyle}>{confirmButtonText || 'OK'}</Text>
-            </TouchableOpacity>
+            <ModalButton onPress={onConfirm} text={confirmButtonText || 'OK'} />
           </View>
         </View>
       </View>
