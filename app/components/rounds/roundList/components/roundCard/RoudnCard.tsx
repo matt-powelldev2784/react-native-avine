@@ -7,9 +7,9 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../../screens/stackNavigator/StackNavigator'
 import { ConfirmModal } from '../../../../../ui'
-import { deleteRound } from '../../../../../db/rounds/deleteRound'
 import ShortNameText from '../../../../../utils/shortNameText/ShortNameText'
 import IconButton from '../../../../../ui/iconButton/IconButton'
+import { handleDeleteRound } from '../../../../../db/rounds/handleDeleteRound/handleDeleteRound'
 
 const RoundCard = ({
   id,
@@ -31,7 +31,7 @@ const RoundCard = ({
   }
 
   const hanldeDeleteRoundPress = async () => {
-    const deletedRound = await deleteRound(id)
+    const deletedRound = await handleDeleteRound(id)
     const isDeleted = deletedRound?.isDeleted
     if (isDeleted) {
       navigation.navigate('Rounds', { refresh: true })
