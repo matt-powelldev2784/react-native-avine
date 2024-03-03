@@ -15,21 +15,26 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
   //state
   const [recurringModalVisible, setRecurringModalVisible] = useState(false)
   const [oneOffModalVisible, setOneOffModalVisible] = useState(false)
-  const totalRoundtTime = round?.relatedJobs?.reduce(
-    (totalTime: number, job: JobWithIdT) => totalTime + parseFloat(job.time),
-    0,
-  )
-  const recurringRound = round?.recurringRound
+
+  //hooks
   const {
     handleDeletePress,
     handleDeleteOneOffRound,
     handleDeleteAllRecurringRounds,
     handleDeleteSingleRecurringRound,
+    postApiIsLoading,
   } = useHandleDelete({
     setRecurringModalVisible,
     setOneOffModalVisible,
     round,
   })
+
+  // variables
+  const totalRoundtTime = round?.relatedJobs?.reduce(
+    (totalTime: number, job: JobWithIdT) => totalTime + parseFloat(job.time),
+    0,
+  )
+  const recurringRound = round?.recurringRound
 
   return (
     <View style={styles.roundWrapper}>
@@ -81,6 +86,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
         onCancel={() => setOneOffModalVisible(false)}
         visible={oneOffModalVisible}
         confirmButtonText={'Yes'}
+        isLoading={postApiIsLoading}
       />
 
       {/* ---------------------- Delete recurring rounds modal ----------------------- */}
@@ -93,6 +99,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
         visible={recurringModalVisible}
         confirmButtonText={'Delete All'}
         onConfirmText2={'Delete Single'}
+        isLoading={postApiIsLoading}
       />
     </View>
   )
