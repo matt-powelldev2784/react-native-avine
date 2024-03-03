@@ -1,7 +1,7 @@
 import { authError } from './../../authError'
 import { doc, updateDoc } from 'firebase/firestore'
 import { db, auth } from '../../../../firebaseConfig'
-import { removeRelatedJobIdFromAllRounds } from './removeRelatedJobIdFromAllRounds/removeRelatedJobIdFromAllRounds'
+import { removeRelatedJobIdsFromDb } from './removeRelatedJobIdFromDb/removeRelatedJobIdsFromDb'
 
 export const handleDeleteJob = async (jobId: string) => {
   if (!auth.currentUser) {
@@ -12,7 +12,7 @@ export const handleDeleteJob = async (jobId: string) => {
     const userDoc = doc(db, 'users', auth.currentUser.uid)
     const jobDocRef = doc(userDoc, 'jobs', jobId)
 
-    const removedJobIdsIsSuccess = await removeRelatedJobIdFromAllRounds(jobId)
+    const removedJobIdsIsSuccess = await removeRelatedJobIdsFromDb(jobId)
 
     if (removedJobIdsIsSuccess.relatedJobIdsDeleted) {
       await updateDoc(jobDocRef, { isDeleted: true })
