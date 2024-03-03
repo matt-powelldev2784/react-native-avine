@@ -90,7 +90,7 @@ const JobCard = ({
 
       <ConfirmModal
         modalText={`Are you sure you want to delete ${jobName}?`}
-        modalText2={`This will remove ${jobName} from all accociated rounds and all remove all instances of the job from the planner. This action cannot be undone.`}
+        modalText2={`This will remove ${jobName} from all associated rounds and all remove all instances of the job from the planner. This action cannot be undone.`}
         onConfirm={handleConfirmDeleteJobPress}
         onCancel={() => setModalVisible(false)}
         visible={modalVisible}
