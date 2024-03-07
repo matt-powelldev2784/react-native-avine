@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
@@ -13,13 +13,11 @@ import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { freqencyArray } from '../../../utils/freqencyArray'
 import Button from '../../../ui/button/Button'
 import { handleFormStepBack } from '../../../utils/handleFormStepBack'
-import DraggableFlatList from 'react-native-draggable-flatlist'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import OrderJobsList from './components/OrderJobsList'
 
 const AddRoundForm = () => {
   // state
   const [activeStep, setActiveStep] = useState(1)
-  const [orderedJobs, setOrderedJobs] = useState<string>([])
 
   // hooks
   const userJobs = useFetchJobs()
@@ -27,10 +25,6 @@ const AddRoundForm = () => {
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
-  useEffect(() => {
-    const jobs = formik.values.relatedJobs
-    setOrderedJobs(jobs)
-  }, [formik.values.relatedJobs])
 
   // functions
   const handleStepBack = () => {
@@ -42,39 +36,6 @@ const AddRoundForm = () => {
 
   // variables
   const buttonsStyle = isLargeWeb ? 'row' : 'column'
-
-  const renderItem = ({ item, index, drag, isActive }) => {
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          borderWidth: 1,
-          borderStyle: 'solid',
-          borderColor: 'red',
-        }}
-      >
-        <TouchableOpacity onPressIn={drag}>
-          <Image source={require('../../../../assets/bin.png')} />
-        </TouchableOpacity>
-
-        <Text
-          style={{
-            height: 50,
-            // backgroundColor: isActive ? 'blue' : 'white',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderColor: 'black',
-            borderWidth: 1,
-          }}
-          onPress={drag}
-        >
-          {item}
-          AAAAA
-        </Text>
-      </View>
-    )
-  }
 
   return (
     <ScrollView
@@ -134,14 +95,10 @@ const AddRoundForm = () => {
               confirmUnqiueFiveDigitsPrefixAddedtoValue={true}
             />
 
-            <View style={{ flex: 1 }}>
-              <DraggableFlatList
-                data={orderedJobs}
-                renderItem={renderItem}
-                keyExtractor={(item, index) => `draggable-item-${index}`}
-                onDragEnd={({ data }) => setOrderedJobs(data)}
-              />
-            </View>
+            <OrderJobsList
+              relatedJobs={formik.values.relatedJobs || []}
+              userJobs={userJobs}
+            />
           </>
         ) : null}
 
