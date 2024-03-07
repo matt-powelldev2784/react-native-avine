@@ -10,7 +10,7 @@ interface JobOption {
 const formatNumberToFiveDigits = (inputNumber: number) => {
   const validInput = Math.max(1, Math.min(99999, inputNumber))
   const formattedNumber = String(validInput).padStart(5, '0')
-  return formattedNumber
+  return formattedNumber.toString()
 }
 
 export const useFetchJobs = () => {
@@ -20,10 +20,13 @@ export const useFetchJobs = () => {
     const fetchData = async () => {
       const data = await getAllJobs()
 
-      const jobOptions = data?.map((job, i) => ({
-        label: job.id,
-        value: `${formatNumberToFiveDigits(i + 1)}${job.jobName}`,
-      }))
+      const jobOptions = data?.map((job, i) => {
+        const jobDetails = {
+          label: job.id,
+          value: `${formatNumberToFiveDigits(i + 1)}${job.jobName}`,
+        }
+        return jobDetails
+      })
 
       if (jobOptions) {
         setUserJobs(jobOptions)
