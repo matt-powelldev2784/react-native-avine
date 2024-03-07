@@ -17,7 +17,7 @@ import OrderJobsList from './components/OrderJobsList'
 
 const AddRoundForm = () => {
   // state
-  const [activeStep, setActiveStep] = useState(1)
+  const [activeStep, setActiveStep] = useState(0)
 
   // hooks
   const userJobs = useFetchJobs()
@@ -94,20 +94,49 @@ const AddRoundForm = () => {
               imageName={'wiper'}
               confirmUnqiueFiveDigitsPrefixAddedtoValue={true}
             />
+          </>
+        ) : null}
+
+        {/*********************  Step 3 ***************************/}
+        {activeStep === 2 ? (
+          <View style={styles.orderJobs}>
+            <Text style={styles.addJobText}>
+              If you wish to set the order of the jobs for
+              <Text style={{ fontWeight: 'bold' }}>
+                &nbsp;{formik.values.roundName}&nbsp;
+              </Text>
+              you can do so by clicking on each job in the list and dragging up
+              or down to reorder.
+            </Text>
 
             <OrderJobsList
               relatedJobs={formik.values.relatedJobs || []}
               userJobs={userJobs}
             />
-          </>
+          </View>
         ) : null}
 
+        {/*********************  Buttons  ***************************/}
         <View style={styles.buttonContainer}>
           {activeStep < 1 ? (
             <Button onPress={moveToNextStep} text={'Next'} />
           ) : null}
 
-          {activeStep === 1 ? (
+          {activeStep > 0 && activeStep < 2 ? (
+            <View
+              style={[styles.buttonContainer, { flexDirection: buttonsStyle }]}
+            >
+              <Button
+                onPress={handleStepBack}
+                text="Go Back"
+                backgroundColor={theme.colors.buttonSecondary}
+              />
+
+              <Button onPress={moveToNextStep} text={'Next'} />
+            </View>
+          ) : null}
+
+          {activeStep > 1 ? (
             <View
               style={[styles.buttonContainer, { flexDirection: buttonsStyle }]}
             >
@@ -188,6 +217,10 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     marginBottom: 32,
     textAlign: 'center',
+  },
+  orderJobs: {
+    width: '100%',
+    marginBottom: 32,
   },
 })
 
