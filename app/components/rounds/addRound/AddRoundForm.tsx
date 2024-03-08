@@ -22,7 +22,11 @@ const AddRoundForm = () => {
   // hooks
   const userJobs = useFetchJobs()
   const { formik, postApiIsLoading } = useFormikSteps({ activeStep })
-  const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
+  const { moveToNextStep } = useMoveToNextStep({
+    formik,
+    activeStep,
+    setActiveStep,
+  })
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
 
@@ -82,8 +86,6 @@ const AddRoundForm = () => {
                 &nbsp;{formik.values.roundName}&nbsp;
               </Text>
               round by using drop down menu to select a single or multiple jobs.
-              You can skip this step by clicking &quot;Add Round&quot; and add
-              your jobs later.
             </Text>
             <MultiSelectDropdown
               formik={formik}
@@ -101,12 +103,12 @@ const AddRoundForm = () => {
         {activeStep === 2 ? (
           <View style={styles.orderJobs}>
             <Text style={styles.addJobText}>
-              If you wish to set the order of the jobs for
-              <Text style={{ fontWeight: 'bold' }}>
+              Customise the job order for
+              <Text style={styles.textBold}>
                 &nbsp;{formik.values.roundName}&nbsp;
               </Text>
-              you can do so by clicking on each job in the list and dragging up
-              or down to reorder.
+              round by clicking on each job in the list and dragging up or down
+              to reorder.
             </Text>
 
             <OrderJobsList
@@ -218,6 +220,13 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     marginBottom: 32,
     textAlign: 'center',
+  },
+  textBold: {
+    fontSize: 16,
+    color: theme.colors.primary,
+    marginBottom: 32,
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   orderJobs: {
     width: '100%',
