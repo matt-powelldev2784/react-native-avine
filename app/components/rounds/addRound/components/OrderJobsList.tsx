@@ -36,7 +36,7 @@ const OrderJobsList = ({
     })
 
     setOrderedJobs(selectdJobs)
-  }, [relatedJobs, userJobs])
+  }, [userJobs])
 
   const handleDragEnd = (data: JobOption[] | []) => {
     setOrderedJobs(data)
