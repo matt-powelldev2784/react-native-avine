@@ -112,6 +112,7 @@ const AddRoundForm = () => {
             <OrderJobsList
               relatedJobs={formik.values.relatedJobs || []}
               userJobs={userJobs}
+              formik={formik}
             />
           </View>
         ) : null}

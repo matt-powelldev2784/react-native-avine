@@ -43,6 +43,8 @@ const useFormikSteps = ({ activeStep }: UseFormikStepsProps) => {
     validationSchema,
   })
 
+  console.log('formik.values', formik.values)
+
   return { postApiIsLoading, formik }
 }
 
