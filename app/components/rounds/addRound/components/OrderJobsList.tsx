@@ -1,7 +1,8 @@
 import { View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import DraggableFlatList from 'react-native-draggable-flatlist'
 import OrderedJobListItem from './OrderedJobListItem'
+import useOrderedJobs from '../hooks/useOrderedJobs'
 
 interface JobOption {
   label: string
@@ -19,26 +20,9 @@ const OrderJobsList = ({
   userJobs,
   formik,
 }: OrderJobsListProps) => {
-  const [orderedJobs, setOrderedJobs] = useState<JobOption[] | []>([])
+  const [orderedJobs, setOrderedJobs] = useOrderedJobs(userJobs, relatedJobs)
 
-  useEffect(() => {
-    const userJobsWithoutPrefix = userJobs.map((job) => {
-      return {
-        label: job.label,
-        value: job.value.substring(5),
-      }
-    })
-
-    const selectdJobs = userJobsWithoutPrefix.filter((job) => {
-      if (relatedJobs.includes(job.label)) {
-        return job
-      }
-    })
-
-    setOrderedJobs(selectdJobs)
-  }, [userJobs])
-
-  const handleDragEnd = (data: JobOption[] | []) => {
+  const handleDragEnd = (data: JobOption[]) => {
     setOrderedJobs(data)
     const orderedJobLabels = data.map((job) => job.label)
     formik.setFieldValue('relatedJobs', orderedJobLabels)
