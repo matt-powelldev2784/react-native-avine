@@ -10,7 +10,11 @@ export const stepOneSchema = Yup.object().shape({
 })
 
 export const stepTwoSchema = Yup.object().shape({
-  jobs: Yup.array().of(Yup.string().required('Job ID is required')),
+  relatedJobs: Yup.array()
+    .required('You must select at least one job')
+    .test('has-items', 'You must select at least one job', (value) => {
+      return Array.isArray(value) && value.length > 0
+    }),
 })
 
 interface UseFormikStepsProps {

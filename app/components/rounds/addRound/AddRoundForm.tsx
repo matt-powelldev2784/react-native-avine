@@ -13,6 +13,7 @@ import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { freqencyArray } from '../../../utils/freqencyArray'
 import Button from '../../../ui/button/Button'
 import { handleFormStepBack } from '../../../utils/handleFormStepBack'
+import OrderJobsList from '../orderedJobs/OrderJobsList'
 
 const AddRoundForm = () => {
   // state
@@ -21,7 +22,11 @@ const AddRoundForm = () => {
   // hooks
   const userJobs = useFetchJobs()
   const { formik, postApiIsLoading } = useFormikSteps({ activeStep })
-  const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
+  const { moveToNextStep } = useMoveToNextStep({
+    formik,
+    activeStep,
+    setActiveStep,
+  })
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
 
@@ -81,8 +86,6 @@ const AddRoundForm = () => {
                 &nbsp;{formik.values.roundName}&nbsp;
               </Text>
               round by using drop down menu to select a single or multiple jobs.
-              You can skip this step by clicking &quot;Add Round&quot; and add
-              your jobs later.
             </Text>
             <MultiSelectDropdown
               formik={formik}
@@ -96,12 +99,47 @@ const AddRoundForm = () => {
           </>
         ) : null}
 
+        {/*********************  Step 3 ***************************/}
+        {activeStep === 2 ? (
+          <View style={styles.orderJobs}>
+            <Text style={styles.addJobText}>
+              Customise the job order for
+              <Text style={styles.textBold}>
+                &nbsp;{formik.values.roundName}&nbsp;
+              </Text>
+              round by clicking on each job in the list and dragging up or down
+              to reorder.
+            </Text>
+
+            <OrderJobsList
+              relatedJobs={formik.values.relatedJobs || []}
+              userJobs={userJobs}
+              formik={formik}
+            />
+          </View>
+        ) : null}
+
+        {/*********************  Buttons  ***************************/}
         <View style={styles.buttonContainer}>
           {activeStep < 1 ? (
             <Button onPress={moveToNextStep} text={'Next'} />
           ) : null}
 
-          {activeStep === 1 ? (
+          {activeStep > 0 && activeStep < 2 ? (
+            <View
+              style={[styles.buttonContainer, { flexDirection: buttonsStyle }]}
+            >
+              <Button
+                onPress={handleStepBack}
+                text="Go Back"
+                backgroundColor={theme.colors.buttonSecondary}
+              />
+
+              <Button onPress={moveToNextStep} text={'Next'} />
+            </View>
+          ) : null}
+
+          {activeStep > 1 ? (
             <View
               style={[styles.buttonContainer, { flexDirection: buttonsStyle }]}
             >
@@ -182,6 +220,17 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     marginBottom: 32,
     textAlign: 'center',
+  },
+  textBold: {
+    fontSize: 16,
+    color: theme.colors.primary,
+    marginBottom: 32,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  orderJobs: {
+    width: '100%',
+    marginBottom: 32,
   },
 })
 
