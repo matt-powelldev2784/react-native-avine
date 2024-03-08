@@ -12,7 +12,7 @@ export const stepOneSchema = Yup.object().shape({
 })
 
 export const stepTwoSchema = Yup.object().shape({
-  jobs: Yup.array().of(Yup.string().required('Job ID is required')),
+  relatedJobs: Yup.array().of(Yup.string().required('Job ID is required')),
 })
 
 interface useFormikStepsInterface {
@@ -21,9 +21,6 @@ interface useFormikStepsInterface {
 }
 
 const useFormikSteps = ({ activeStep, roundId }: useFormikStepsInterface) => {
-  // const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  // const [roundData, setRoundData] = useState<RoundWithRelatedJobIdsT>({})
-
   const { getApiIsLoading, data } = useGetApiData({
     apiFunction: async () => getRound(roundId),
   })

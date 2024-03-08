@@ -13,7 +13,7 @@ import { useFormResetOnBlur } from '../../../utils/useFormResetOnBlur'
 import { freqencyArray } from '../../../utils/freqencyArray'
 import Button from '../../../ui/button/Button'
 import { handleFormStepBack } from '../../../utils/handleFormStepBack'
-import OrderJobsList from './components/OrderJobsList'
+import OrderJobsList from '../orderedJobs/OrderJobsList'
 
 const AddRoundForm = () => {
   // state

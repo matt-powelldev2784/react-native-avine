@@ -1,7 +1,7 @@
 import { Text, Image, StyleSheet, View } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import theme from '../../../../utils/theme/theme'
+import theme from '../../../utils/theme/theme'
 
 interface OrderedJobListItemProps {
   item: { label: string; value: string }
@@ -27,7 +27,7 @@ const OrderedJobListItem = ({
     >
       <TouchableOpacity onPressIn={drag} style={styles.button}>
         <Image
-          source={require('../../../../../assets/drag_grey.png')}
+          source={require('../../../../assets/drag_grey.png')}
           style={styles.image}
         />
 
