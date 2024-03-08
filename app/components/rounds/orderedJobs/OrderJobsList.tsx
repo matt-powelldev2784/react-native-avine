@@ -2,7 +2,7 @@ import { View } from 'react-native'
 import React from 'react'
 import DraggableFlatList from 'react-native-draggable-flatlist'
 import OrderedJobListItem from './OrderedJobListItem'
-import useOrderedJobs from '../hooks/useOrderedJobs'
+import useOrderedJobs from './hooks/useOrderedJobs'
 
 interface JobOption {
   label: string
