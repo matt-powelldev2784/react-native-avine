@@ -1,8 +1,14 @@
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { ReactNode } from 'react'
 import PlanMeLogo from '../PlanMeLogo/PlanMeLogo'
-import NavBar from '../navBar/NavBar'
+import NavBar from './components/navBar/NavBar'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
@@ -14,11 +20,11 @@ interface DashboardProps {
 
 const Dashboard = ({ children }: DashboardProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const childrenArray = React.Children.toArray(children)
 
   return (
     <SafeAreaView style={styles.screen}>
       {/* -------------------------- Header --------------------------  */}
-
       <View style={styles.headerNative}>
         <PlanMeLogo width={150} height={40} />
 
@@ -31,7 +37,13 @@ const Dashboard = ({ children }: DashboardProps) => {
       </View>
 
       {/* -------------------------- Children for Main View --------------------------  */}
-      <View style={styles.page}>{children}</View>
+
+      <FlatList
+        style={styles.page}
+        data={childrenArray}
+        renderItem={({ item }) => <View>{item}</View>}
+        keyExtractor={(item, index) => `child-${index}`}
+      />
 
       {/* -------------------------- Bottom Navbar --------------------------  */}
       <NavBar />
@@ -46,8 +58,9 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
   },
   headerNative: {
+    position: 'relative',
     backgroundColor: theme.colors.primary,
-    paddingHorizontal: '5%',
+    paddingHorizontal: 10,
     paddingVertical: 6,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -56,10 +69,9 @@ const styles = StyleSheet.create({
   },
   page: {
     flex: 1,
-    width: '100%',
     backgroundColor: '#ffffff',
-    alignItems: 'center',
     paddingBottom: 52,
+    width: '100%',
   },
   text: {
     backgroundColor: theme.colors.primary,

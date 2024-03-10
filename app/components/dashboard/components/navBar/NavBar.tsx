@@ -1,8 +1,8 @@
 import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useDeviceType } from '../../utils/deviceTypes'
-import theme from '../../utils/theme/theme'
+import { useDeviceType } from '../../../../utils/deviceTypes'
+import theme from '../../../../utils/theme/theme'
 import useNavigationRouteFunctions from './useNavigationRouteFunctions'
 
 const NavBar = () => {
@@ -42,7 +42,7 @@ const NavBar = () => {
         onPress={routeFunctions.jobsNaviagtion}
       >
         <Image
-          source={require('../../../assets/customers.png')}
+          source={require('../../../../../assets/customers.png')}
           style={{ width: 25, height: 25 }}
         />
         <Text style={styles.buttonText}>JOBS</Text>
@@ -53,7 +53,7 @@ const NavBar = () => {
         onPress={routeFunctions.roundsNavigation}
       >
         <Image
-          source={require('../../../assets/round.png')}
+          source={require('../../../../../assets/round.png')}
           style={{ width: 25, height: 25 }}
         />
         <Text style={styles.buttonText}>ROUNDS</Text>
@@ -64,7 +64,7 @@ const NavBar = () => {
         onPress={routeFunctions.plannerNavigation}
       >
         <Image
-          source={require('../../../assets/calendar_white.png')}
+          source={require('../../../../../assets/calendar_white.png')}
           style={{ width: 25, height: 25 }}
         />
         <Text style={styles.buttonText}>PLANNER</Text>
@@ -76,7 +76,7 @@ const NavBar = () => {
           onPress={routeFunctions.signOut}
         >
           <Image
-            source={require('../../../assets/settings.png')}
+            source={require('../../../../../assets/settings.png')}
             style={{ width: 25, height: 25 }}
           />
           <Text style={styles.buttonText}>SETTINGS</Text>

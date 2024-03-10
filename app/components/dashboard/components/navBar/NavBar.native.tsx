@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import theme from '../../utils/theme/theme'
+import theme from '../../../../utils/theme/theme'
 import useNavigationRouteFunctions from './useNavigationRouteFunctions'
 
 const NavBar = () => {
@@ -14,7 +14,7 @@ const NavBar = () => {
         onPress={routeFunctions.jobsNaviagtion}
       >
         <Image
-          source={require('../../../assets/customers.png')}
+          source={require('../../../../../assets/customers.png')}
           style={{ width: 25, height: 25 }}
         />
         <Text style={styles.buttonText}>JOBS</Text>

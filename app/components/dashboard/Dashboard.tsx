@@ -8,7 +8,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { ReactNode } from 'react'
 import PlanMeLogo from '../PlanMeLogo/PlanMeLogo'
-import NavBar from '../navBar/NavBar'
+import NavBar from './components/navBar/NavBar'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'

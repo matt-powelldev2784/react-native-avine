@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
   image: {
     width: 19,
     height: 31,
-    poiner: 'grab',
   },
   text: {
     alignItems: 'center',
