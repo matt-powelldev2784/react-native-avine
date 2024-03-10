@@ -10,7 +10,7 @@ const Client = () => {
           title={'Client List'}
           navigateTo={'AddClient'}
           buttonText="Add Client"
-          bgColor={theme.colors.jobPrimary}
+          bgColor={theme.colors.clientPrimary}
         />
       </Dashboard>
     </>
