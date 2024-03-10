@@ -6,6 +6,7 @@ import ServerError from './serverError/ServerError'
 
 //clients
 import AddClientForm from './clients/addClient/AddClientForm'
+import EditClientForm from './clients/editClient/EditClientForm'
 
 //jobs
 import JobList from './Jobs/jobsList/JobList'
@@ -25,6 +26,7 @@ import ScheduleRoundForm from './planner/scheduleRoundForm/ScheduleRoundForm'
 
 export {
   AddClientForm,
+  EditClientForm,
   JobList,
   AddJobForm,
   EditJobForm,

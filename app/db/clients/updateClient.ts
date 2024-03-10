@@ -8,32 +8,34 @@ export const updateClient = async (clientData: ClientWithIdT) => {
     return authError({ filename: 'updateClient' })
   }
 
-  try {
-    const clientDocRef = doc(
-      db,
-      'users',
-      auth.currentUser.uid,
-      'clients',
-      clientData.id,
-    )
+console.log('clientData', clientData)
 
-    await updateDoc(clientDocRef, {
-      name: clientData.name,
-      address: clientData.address,
-      town: clientData.town,
-      postcode: clientData.postcode,
-      contactTel: clientData.contactTel,
-      notes: clientData.notes,
-      isDeleted: clientData.isDeleted,
-    })
+try {
+  const clientDocRef = doc(
+    db,
+    'users',
+    auth.currentUser.uid,
+    'clients',
+    clientData.id,
+  )
 
-    const updatedClient = await getDoc(clientDocRef)
-    const updatedClientData = { id: updatedClient.id, ...updatedClient.data() }
+  await updateDoc(clientDocRef, {
+    name: clientData.name,
+    address: clientData.address,
+    town: clientData.town,
+    postcode: clientData.postcode,
+    contactTel: clientData.contactTel,
+    notes: clientData.notes,
+    isDeleted: clientData.isDeleted,
+  })
 
-    return updatedClientData
-  } catch (error) {
-    throw new Error(
-      `Error updating client detail at updateClient route: ${error}`,
-    )
-  }
+  const updatedClient = await getDoc(clientDocRef)
+  const updatedClientData = { id: updatedClient.id, ...updatedClient.data() }
+
+  return updatedClientData
+} catch (error) {
+  throw new Error(
+    `Error updating client detail at updateClient route: ${error}`,
+  )
+}
 }

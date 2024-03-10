@@ -15,7 +15,7 @@ try {
   const clientDoc = await getDoc(clientDocRef)
   const clientData = clientDoc.data() as ClientWithIdT
 
-  return { ...clientData, id: clientData.id }
+  return { ...clientData, id: clientDoc.id }
 } catch (error) {
   throw new Error(`Error getting client at getClient route: ${error}`)
 }
