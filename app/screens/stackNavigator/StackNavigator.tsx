@@ -26,6 +26,11 @@ export type RootStackParamList = {
   Home: undefined
   Error: undefined
 
+  //clients
+  Clients: { refresh?: boolean } | undefined
+  AddClient: undefined
+  EditClient: { clientId: string } | undefined
+
   //rounds
   Rounds: { refresh?: boolean } | undefined
   AddRound: undefined
