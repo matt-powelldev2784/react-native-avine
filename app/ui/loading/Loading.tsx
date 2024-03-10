@@ -1,4 +1,4 @@
-import { View, ActivityIndicator, Text } from 'react-native'
+import { View, ActivityIndicator, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import theme from '../../utils/theme/theme'
 
@@ -8,7 +8,7 @@ interface LoadingProps {
 
 const Loading = ({ loadingText }: LoadingProps) => {
   return (
-    <View>
+    <View style={styles.container}>
       <ActivityIndicator
         style={{
           marginTop: 32,
@@ -25,3 +25,11 @@ const Loading = ({ loadingText }: LoadingProps) => {
 }
 
 export default Loading
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+})
