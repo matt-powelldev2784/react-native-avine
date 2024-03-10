@@ -5,7 +5,7 @@ import { ClientWithIdT } from '../../types/ClientT'
 
 export const getClient = async (clientId: string): Promise<ClientWithIdT> => {
   if (auth.currentUser === null) {
-    return authError({ filename: 'getJob' })
+    return authError({ filename: 'getClient' })
   }
 
   try {
@@ -17,6 +17,6 @@ export const getClient = async (clientId: string): Promise<ClientWithIdT> => {
 
     return { ...clientData, id: clientData.id }
   } catch (error) {
-    throw new Error(`Error getting job at getJob route: ${error}`)
+    throw new Error(`Error getting job at getClient route: ${error}`)
   }
 }
