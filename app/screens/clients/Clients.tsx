@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dashboard, JobList, ScreenMenu } from '../../components'
+import { Dashboard, ScreenMenu } from '../../components'
 import theme from '../../utils/theme/theme'
 
 const Client = () => {
@@ -12,7 +12,6 @@ const Client = () => {
           buttonText="Add Client"
           bgColor={theme.colors.jobPrimary}
         />
-        <JobList />
       </Dashboard>
     </>
   )

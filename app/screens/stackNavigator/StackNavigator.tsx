@@ -13,7 +13,10 @@ import {
   EditRound,
   Home,
   Error,
-} from '..'
+  Clients,
+  AddClient,
+  EditClient,
+} from '../../screens'
 import { useAuth } from '../../components/auth/AuthProvider'
 
 export type RootStackParamList = {
@@ -57,14 +60,19 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
+          {/* --------------------------  Misc Screens  -------------------------- */}
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Error" component={Error} />
+
+          {/* --------------------------  Job Screens  ---------------------- */}
+          <Stack.Screen name="Clients" component={Clients} />
+          <Stack.Screen name="AddClient" component={AddClient} />
+          <Stack.Screen name="EditClient" component={EditClient} />
+
           {/* --------------------------  Job Screens  ---------------------- */}
           <Stack.Screen name="Jobs" component={Jobs} />
           <Stack.Screen name="AddJob" component={AddJob} />
           <Stack.Screen name="EditJob" component={EditJob} />
-
-          {/* --------------------------  Misc Screens  -------------------------- */}
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Error" component={Error} />
 
           {/* --------------------------  Planner Screens  -------------------------- */}
           <Stack.Screen

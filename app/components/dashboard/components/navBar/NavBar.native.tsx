@@ -11,10 +11,21 @@ const NavBar = () => {
     <SafeAreaView edges={['right', 'bottom', 'left']} style={styles.nav}>
       <TouchableOpacity
         style={styles.button}
-        onPress={routeFunctions.jobsNaviagtion}
+        onPress={routeFunctions.clientsNaviagtion}
       >
         <Image
           source={require('../../../../../assets/customers.png')}
+          style={{ width: 25, height: 25 }}
+        />
+        <Text style={styles.buttonText}>CLIENTS</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={routeFunctions.jobsNaviagtion}
+      >
+        <Image
+          source={require('../../../../../assets/clipboard_tick.png')}
           style={{ width: 25, height: 25 }}
         />
         <Text style={styles.buttonText}>JOBS</Text>
@@ -64,6 +75,7 @@ const styles = StyleSheet.create({
     width: 80,
   },
   buttonText: {
+    marginTop: 2,
     color: 'white',
     fontSize: 12,
   },

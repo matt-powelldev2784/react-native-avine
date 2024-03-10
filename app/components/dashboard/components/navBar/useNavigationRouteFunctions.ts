@@ -6,6 +6,7 @@ const useNavigationRouteFunctions = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
   const routeFunctions = {
+    clientsNaviagtion: () => navigation.navigate('Clients', { refresh: true }),
     jobsNaviagtion: () => navigation.navigate('Jobs', { refresh: true }),
     roundsNavigation: () => navigation.navigate('Rounds', { refresh: true }),
     plannerNavigation: () =>
