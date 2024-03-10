@@ -25,7 +25,7 @@ const NavBar = () => {
         onPress={routeFunctions.roundsNavigation}
       >
         <Image
-          source={require('../../../assets/round.png')}
+          source={require('../../../../../assets/round.png')}
           style={{ width: 25, height: 25 }}
         />
         <Text style={styles.buttonText}>ROUNDS</Text>
@@ -36,7 +36,7 @@ const NavBar = () => {
         onPress={routeFunctions.plannerNavigation}
       >
         <Image
-          source={require('../../../assets/calendar_white.png')}
+          source={require('../../../../../assets/calendar_white.png')}
           style={{ width: 25, height: 25 }}
         />
         <Text style={styles.buttonText}>PLANNER</Text>
