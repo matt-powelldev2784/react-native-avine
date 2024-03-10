@@ -4,6 +4,9 @@ import PlanMeLogo from './PlanMeLogo/PlanMeLogo'
 import Dashboard from './dashboard/Dashboard'
 import ServerError from './serverError/ServerError'
 
+//clients
+import AddClientForm from './clients/addClient/AddClientForm'
+
 //jobs
 import JobList from './Jobs/jobsList/JobList'
 import AddJobForm from './Jobs/addJob/AddJobForm'
@@ -21,6 +24,7 @@ import ScheduleRoundForm from './planner/scheduleRoundForm/ScheduleRoundForm'
 //otheres
 
 export {
+  AddClientForm,
   JobList,
   AddJobForm,
   EditJobForm,
