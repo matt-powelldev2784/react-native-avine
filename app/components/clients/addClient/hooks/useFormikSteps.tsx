@@ -1,7 +1,7 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { addJob } from '../../../../db/jobs/addJob'
 import usePostApiData from '../../../../utils/hooks/usePostApiData'
+import { addClient } from '../../../../db/clients/addCleint'
 
 export const stepOneSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
@@ -42,8 +42,7 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
       isDeleted: false,
     },
     onSubmit: async (values) => {
-      // setApiFunction(() => async () => addJob(values))
-      console.log('values', values)
+      setApiFunction(() => async () => addClient(values))
     },
     validationSchema,
   })
