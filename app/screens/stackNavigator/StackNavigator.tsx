@@ -60,12 +60,14 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
+          <Stack.Screen name="Clients" component={Clients} />
+
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Error" component={Error} />
 
-          {/* --------------------------  Job Screens  ---------------------- */}
-          <Stack.Screen name="Clients" component={Clients} />
+          {/* --------------------------  Client Screens  ---------------------- */}
+
           <Stack.Screen name="AddClient" component={AddClient} />
           <Stack.Screen name="EditClient" component={EditClient} />
 

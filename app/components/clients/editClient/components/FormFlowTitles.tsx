@@ -18,7 +18,7 @@ const FormFlowTitles = ({ activeStep }: FormFlowTitlesProps) => {
       }
     >
       <Text style={activeStep === 0 ? styles.titleActive : styles.title}>
-        {isSmallDevice ? ' Add\nClient\nDetails' : ' Add Client Details'}
+        {isSmallDevice ? ' Edit\nClient\nDetails' : ' Edit Client Details'}
       </Text>
     </View>
   )
