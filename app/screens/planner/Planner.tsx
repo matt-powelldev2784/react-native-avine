@@ -34,7 +34,12 @@ const Planner = () => {
     <>
       <Dashboard>
         <PlannerContext.Provider value={PlannerContextValue}>
-          {displayScheduledRoundForm ? null : (
+          {displayScheduledRoundForm ? (
+            <ScreenMenu
+              title={'Schedule Round'}
+              bgColor={theme.colors.plannerPrimary}
+            />
+          ) : (
             <ScreenMenu
               title={'Planner'}
               navigateTo={'Planner'}
