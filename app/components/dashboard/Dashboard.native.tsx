@@ -1,10 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native'
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { ReactNode } from 'react'
 import PlanMeLogo from '../PlanMeLogo/PlanMeLogo'
@@ -20,7 +14,6 @@ interface DashboardProps {
 
 const Dashboard = ({ children }: DashboardProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const childrenArray = React.Children.toArray(children)
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -37,13 +30,7 @@ const Dashboard = ({ children }: DashboardProps) => {
       </View>
 
       {/* -------------------------- Children for Main View --------------------------  */}
-
-      <FlatList
-        style={styles.page}
-        data={childrenArray}
-        renderItem={({ item }) => <View>{item}</View>}
-        keyExtractor={(item, index) => `child-${index}`}
-      />
+      <View style={styles.page}>{children}</View>
 
       {/* -------------------------- Bottom Navbar --------------------------  */}
       <NavBar />

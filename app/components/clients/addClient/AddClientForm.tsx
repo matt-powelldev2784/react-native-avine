@@ -93,6 +93,8 @@ const AddClientForm = () => {
           </View>
         </View>
       </View>
+
+      {!isLargeWeb ? <View style={{ height: 250 }} /> : null}
     </ScrollView>
   )
 }

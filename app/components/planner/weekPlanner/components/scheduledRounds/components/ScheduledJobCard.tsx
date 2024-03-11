@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     gap: 8,
-    minWidth: 110,
+    minWidth: 100,
   },
   iconsWrapper: {
     position: 'relative',
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     flexGrow: 2,
     paddingVertical: 4,
     paddingHorizontal: 8,
-    minWidth: 200,
+    minWidth: 150,
   },
 })
 
