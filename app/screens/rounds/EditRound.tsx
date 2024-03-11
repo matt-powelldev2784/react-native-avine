@@ -2,12 +2,23 @@ import React from 'react'
 import { EditRoundForm, Dashboard } from '../../components'
 import { ScreenMenu } from '../../components'
 import theme from '../../utils/theme/theme'
+import { FlatList, View } from 'react-native'
 
 const EditRound = () => {
+  // flatlist is used to render the form as vitualized lists are used
+  // by react-native-draggable-flatlist in the add round form
+  // this is a workaround to fix potentional rendering issues
+  const childrenArray = [<EditRoundForm key={1} />]
+
   return (
     <Dashboard>
       <ScreenMenu title={'Edit Round'} bgColor={theme.colors.roundPrimary} />
-      <EditRoundForm />
+      <FlatList
+        style={{ flex: 1, width: '100%' }}
+        data={childrenArray}
+        renderItem={({ item }) => <View>{item}</View>}
+        keyExtractor={(item, index) => `child-${index}`}
+      />
     </Dashboard>
   )
 }

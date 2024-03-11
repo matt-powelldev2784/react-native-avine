@@ -28,10 +28,6 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
 
   const scheduledRounds = data as ScheduledRoundsT
 
-  if (getApiIsLoading) {
-    return <Loading loadingText="Loading scheduled rounds..." />
-  }
-
   if (!scheduledRounds || scheduledRounds.length === 0) {
     return <NoScheduledRounds />
   }
@@ -47,7 +43,13 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
 
   return (
     <ScrollView style={styles.flatListContainer}>
-      {scheduledRounds.length > 0 ? scheduledRoundsJsx : null}
+      {getApiIsLoading ? (
+        <Loading loadingText="Loading scheduled rounds..." />
+      ) : null}
+
+      {!getApiIsLoading && scheduledRounds.length > 0
+        ? scheduledRoundsJsx
+        : null}
 
       {addFooter ? <View style={styles.flatlistFooter} /> : null}
     </ScrollView>
