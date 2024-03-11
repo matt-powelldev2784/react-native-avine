@@ -3,6 +3,7 @@ import React from 'react'
 import DraggableFlatList from 'react-native-draggable-flatlist'
 import OrderedJobListItem from './OrderedJobListItem'
 import useOrderedJobs from './hooks/useOrderedJobs'
+import usePreventPullToRefresh from '../../../utils/hooks/usePreventPullToRefresh'
 
 interface JobOption {
   label: string
@@ -21,6 +22,7 @@ const OrderJobsList = ({
   formik,
 }: OrderJobsListProps) => {
   const [orderedJobs, setOrderedJobs] = useOrderedJobs(userJobs, relatedJobs)
+  usePreventPullToRefresh()
 
   const handleDragEnd = (data: JobOption[]) => {
     setOrderedJobs(data)
