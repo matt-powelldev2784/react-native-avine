@@ -13,7 +13,10 @@ import {
   EditRound,
   Home,
   Error,
-} from '..'
+  Clients,
+  AddClient,
+  EditClient,
+} from '../../screens'
 import { useAuth } from '../../components/auth/AuthProvider'
 
 export type RootStackParamList = {
@@ -25,6 +28,11 @@ export type RootStackParamList = {
   //misc
   Home: undefined
   Error: undefined
+
+  //clients
+  Clients: { refresh?: boolean } | undefined
+  AddClient: undefined
+  EditClient: { clientId: string } | undefined
 
   //rounds
   Rounds: { refresh?: boolean } | undefined
@@ -52,14 +60,21 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
-          {/* --------------------------  Job Screens  ---------------------- */}
-          <Stack.Screen name="Jobs" component={Jobs} />
-          <Stack.Screen name="AddJob" component={AddJob} />
-          <Stack.Screen name="EditJob" component={EditJob} />
+          <Stack.Screen name="Clients" component={Clients} />
 
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Error" component={Error} />
+
+          {/* --------------------------  Client Screens  ---------------------- */}
+
+          <Stack.Screen name="AddClient" component={AddClient} />
+          <Stack.Screen name="EditClient" component={EditClient} />
+
+          {/* --------------------------  Job Screens  ---------------------- */}
+          <Stack.Screen name="Jobs" component={Jobs} />
+          <Stack.Screen name="AddJob" component={AddJob} />
+          <Stack.Screen name="EditJob" component={EditJob} />
 
           {/* --------------------------  Planner Screens  -------------------------- */}
           <Stack.Screen

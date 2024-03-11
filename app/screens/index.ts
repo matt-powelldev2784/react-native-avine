@@ -6,6 +6,12 @@ import SignOutScreen from './auth/SignOutScreen'
 import Home from './home/Home'
 import Error from './error/Error'
 
+//clients
+import Clients from './clients/Clients'
+import AddClient from './clients/AddClient'
+import EditClient from './clients/EditClient'
+
+
 //jobs
 import Jobs from './jobs/Jobs'
 import AddJob from './jobs/AddJob'
@@ -24,6 +30,9 @@ import EditRound from './rounds/EditRound'
 import SplashScreen from './auth/SplashScreen'
 
 export {
+  Clients,
+  AddClient,
+  EditClient,
   Jobs,
   AddJob,
   EditJob,
