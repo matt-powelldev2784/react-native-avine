@@ -23,6 +23,7 @@ export const updateJob = async (jobData: JobWithIdT) => {
       contactName: jobData.contactName,
       contactTel: jobData.contactTel,
       notes: jobData.notes,
+      clientId: jobData.clientId,
       isDeleted: jobData.isDeleted,
     })
 

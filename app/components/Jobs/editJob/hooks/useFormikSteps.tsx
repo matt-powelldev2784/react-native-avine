@@ -21,6 +21,7 @@ export const stepTwoSchema = Yup.object().shape({
 })
 
 export const stepThreeSchema = Yup.object().shape({
+  clientId: Yup.string().required('Client is required'),
   jobType: Yup.string().required('Job Type is required'),
   time: Yup.number()
     .typeError('Time must be a number')
@@ -71,6 +72,7 @@ const useFormikSteps = ({ activeStep, jobId }: useFormikStepsInterface) => {
       contactName: '',
       contactTel: 0,
       notes: '',
+      clientId: '',
       isDeleted: false,
       ...data,
     },

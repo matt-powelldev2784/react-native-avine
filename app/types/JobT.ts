@@ -10,6 +10,7 @@ export interface JobT {
   contactName: string
   contactTel: number
   notes: string | null
+  clientId: string
   isDeleted: boolean
 }
 
