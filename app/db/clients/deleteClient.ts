@@ -9,7 +9,7 @@ export const deleteClient = async (clientId: string) => {
 
   try {
     const userDoc = doc(db, 'users', auth.currentUser.uid)
-    const clientDocRef = doc(userDoc, 'client', clientId)
+    const clientDocRef = doc(userDoc, 'clients', clientId)
 
     await updateDoc(clientDocRef, { isDeleted: true })
 
