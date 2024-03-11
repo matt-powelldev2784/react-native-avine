@@ -6,7 +6,7 @@ import theme from '../../utils/theme/theme'
 const AddClient = () => {
   return (
     <Dashboard>
-      <ScreenMenu title={'Add Client'} bgColor={theme.colors.jobPrimary} />
+      <ScreenMenu title={'Add Client'} bgColor={theme.colors.clientPrimary} />
       <AddClientForm />
     </Dashboard>
   )
