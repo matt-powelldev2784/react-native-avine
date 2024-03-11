@@ -14,6 +14,7 @@ import { useDeviceType } from '../../../utils/deviceTypes'
 import Button from '../../../ui/button/Button'
 import { handleFormStepBack } from '../../../utils/handleFormStepBack'
 import { Loading } from '../../../ui'
+import { useGetClientOptions } from './hooks/useFetchClients'
 
 type EditJobFormRouteProp = RouteProp<RootStackParamList, 'EditJob'>
 
@@ -24,6 +25,7 @@ const EditJobForm = () => {
   //hooks
   const route = useRoute<EditJobFormRouteProp>()
   const jobId = route?.params?.jobId ? route?.params?.jobId : ''
+  const clientList = useGetClientOptions()
   const { isLargeWeb } = useDeviceType()
   const { formik, getApiIsLoading, postApiIsLoading } = useFormikSteps({
     activeStep,
@@ -112,6 +114,14 @@ const EditJobForm = () => {
         {/*********************  Step 3 ***************************/}
         {activeStep === 2 ? (
           <>
+            <Dropdown
+              formik={formik}
+              name="clientId"
+              placeholder="Select client for invoice"
+              title="Select client for invoice"
+              options={clientList}
+              imageName={'person'}
+            />
             <InputField
               formik={formik}
               name="jobType"

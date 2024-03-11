@@ -11,6 +11,7 @@ import { freqencyArray } from '../../../utils/freqencyArray'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import Button from '../../../ui/button/Button'
 import { handleFormStepBack } from '../../../utils/handleFormStepBack'
+import { useGetClientOptions } from '../editJob/hooks/useFetchClients'
 
 const AddJobForm = () => {
   //state
@@ -21,6 +22,7 @@ const AddJobForm = () => {
     activeStep,
   })
   const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
+  const clientList = useGetClientOptions()
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
 
@@ -101,6 +103,14 @@ const AddJobForm = () => {
         {/*********************  Step 3 ***************************/}
         {activeStep === 2 ? (
           <>
+            <Dropdown
+              formik={formik}
+              name="clientId"
+              placeholder="Select client for invoice"
+              title="Select client for invoice"
+              options={clientList}
+              imageName={'person'}
+            />
             <InputField
               formik={formik}
               name="jobType"
