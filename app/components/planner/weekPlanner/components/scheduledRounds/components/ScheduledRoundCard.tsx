@@ -90,9 +90,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
               recurringRound={recurringRound}
               roundId={round.id}
             />
-            {index !== self.length - 1 && (
-              <View style={{ height: 0.5, backgroundColor: 'grey' }} />
-            )}
+            {index !== self.length - 1 && <View style={styles.jobCardLine} />}
           </View>
         ))}
       </View>
@@ -182,6 +180,7 @@ const styles = StyleSheet.create({
     width: '25%',
     textAlign: 'right',
   },
+  jobCardLine: { height: 1, backgroundColor: theme.colors.primary },
 })
 
 export default ScheduledRoundCard
