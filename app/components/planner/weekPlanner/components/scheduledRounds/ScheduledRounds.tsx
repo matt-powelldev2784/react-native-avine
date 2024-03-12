@@ -32,6 +32,14 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
     return <NoScheduledRounds />
   }
 
+  if (getApiIsLoading) {
+    return (
+      <View style={{ height: 100 }}>
+        <Loading loadingText="Loading scheduled rounds..." />
+      </View>
+    )
+  }
+
   const scheduledRoundsJsx = scheduledRounds.map((round) => {
     return (
       <ScheduledRoundCard
@@ -43,10 +51,6 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
 
   return (
     <ScrollView style={styles.flatListContainer}>
-      {getApiIsLoading ? (
-        <Loading loadingText="Loading scheduled rounds..." />
-      ) : null}
-
       {!getApiIsLoading && scheduledRounds.length > 0
         ? scheduledRoundsJsx
         : null}
@@ -59,6 +63,7 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
 const styles = StyleSheet.create({
   flatListContainer: {
     width: '100%',
+    backgroundColor: 'lightgrey',
   },
   flatlistFooter: {
     height: 250,
