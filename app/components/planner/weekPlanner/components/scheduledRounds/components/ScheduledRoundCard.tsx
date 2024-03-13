@@ -10,7 +10,7 @@ import React, { useState } from 'react'
 import { RoundWithRecurringFlagT } from '../../../../../../types/RoundT'
 import { JobWithIdT } from '../../../../../../types/JobT'
 import theme from '../../../../../../utils/theme/theme'
-import ScheduledJobCard from './ScheduledJobCard'
+import ScheduledListItem from './ScheduledJobListItem'
 import { ConfirmModal } from '../../../../../../ui'
 import useHandleDelete from '../hooks/useHandleDelete'
 
@@ -84,7 +84,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
 
         {round?.relatedJobs?.map((job: JobWithIdT, index, self) => (
           <View key={job.id}>
-            <ScheduledJobCard
+            <ScheduledListItem
               key={job.id}
               job={job}
               recurringRound={recurringRound}

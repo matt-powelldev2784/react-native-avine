@@ -13,7 +13,7 @@ interface ScheduledJobCardProps {
   recurringRound: boolean
 }
 
-const ScheduledJobCard = ({
+const ScheduledJobListItem = ({
   job,
   recurringRound,
   roundId,
@@ -120,4 +120,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ScheduledJobCard
+export default ScheduledJobListItem
