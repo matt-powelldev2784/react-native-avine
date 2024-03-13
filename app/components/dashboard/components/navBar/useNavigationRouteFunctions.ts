@@ -11,8 +11,7 @@ const useNavigationRouteFunctions = () => {
     roundsNavigation: () => navigation.navigate('Rounds', { refresh: true }),
     plannerNavigation: () =>
       navigation.navigate('Planner', {
-        displayScheduledRoundForm: false,
-        refresh: true,
+        screen: 'PlannerView',
       }),
     signOut: () => {
       navigation.navigate('SignOut')

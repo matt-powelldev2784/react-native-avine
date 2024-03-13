@@ -1,19 +1,19 @@
 import React from 'react'
-import { Dashboard, ScreenMenu, ScheduledJobCard } from '../../components'
+import { Dashboard, ScheduleRoundForm, ScreenMenu } from '../../components'
 import theme from '../../utils/theme/theme'
 
-const ScheduledJob = () => {
+const ScheduleRoundFormView = () => {
   return (
     <>
       <Dashboard>
         <ScreenMenu
-          title={'Scheduled Job Details'}
+          title={'Schedule Round'}
           bgColor={theme.colors.plannerPrimary}
         />
-        <ScheduledJobCard />
+        <ScheduleRoundForm />
       </Dashboard>
     </>
   )
 }
 
-export default ScheduledJob
+export default ScheduleRoundFormView

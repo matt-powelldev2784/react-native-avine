@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
   Planner,
   ScheduleRound,
-  ScheduledJob,
   Rounds,
   Jobs,
   SignInScreen,
@@ -41,9 +40,8 @@ export type RootStackParamList = {
   EditRound: { roundId: string } | undefined
 
   //payments
-  Planner: { refresh?: boolean; displayScheduledRoundForm: boolean } | undefined
+  Planner: { refresh?: boolean; screen: string; jobId?: string } | undefined
   ScheduleRound: undefined
-  ScheduledJob: { jobId: string } | undefined
 
   //jobs
   Jobs: { refresh?: boolean } | undefined
@@ -65,7 +63,7 @@ const StackNavigator = () => {
           <Stack.Screen
             name="Planner"
             component={Planner}
-            initialParams={{ displayScheduledRoundForm: false }}
+            initialParams={{ screen: 'PlannerView' }}
           />
 
           {/* --------------------------  Misc Screens  -------------------------- */}
@@ -85,7 +83,6 @@ const StackNavigator = () => {
           {/* --------------------------  Planner Screens  -------------------------- */}
 
           <Stack.Screen name="ScheduleRound" component={ScheduleRound} />
-          <Stack.Screen name="ScheduledJob" component={ScheduledJob} />
 
           {/* --------------------------  Round Screens  ------------------------- */}
           <Stack.Screen name="Rounds" component={Rounds} />

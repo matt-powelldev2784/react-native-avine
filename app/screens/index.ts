@@ -20,7 +20,6 @@ import EditJob from './jobs/EditJob'
 //planner
 import Planner from './planner/Planner'
 import ScheduleRound from './planner/ScheduleRound'
-import ScheduledJob from './planner/ScheduledJob'
 
 //rounds
 import Rounds from './rounds/Rounds'
@@ -42,7 +41,6 @@ export {
   EditRound,
   Planner,
   ScheduleRound,
-  ScheduledJob,
   SplashScreen,
   SignInScreen,
   SignOutScreen,

@@ -49,8 +49,10 @@ const ScheduledJobListItem = ({
   }
 
   const handleViewScheduledJobDetails = () => {
-    console.log('job.id', job.id)
-    navigation.navigate('ScheduledJob', { jobId: job.id })
+    navigation.navigate('Planner', {
+      screen: 'ScheduledJobView',
+      jobId: job.id,
+    })
   }
 
   return (

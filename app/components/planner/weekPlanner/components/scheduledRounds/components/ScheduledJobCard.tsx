@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
 import { RootStackParamList } from '../../../../../../screens/stackNavigator/StackNavigator'
@@ -8,11 +8,11 @@ import { getJob } from '../../../../../../db/jobs/getJob'
 import { JobWithIdT } from '../../../../../../types/JobT'
 import { Loading } from '../../../../../../ui'
 
-type EditJobFormRouteProp = RouteProp<RootStackParamList, 'ScheduledJob'>
+type EditJobFormRouteProp = RouteProp<RootStackParamList, 'Planner'>
 
 const ScheduledJobCard = () => {
-  const [jobDetails, setJobDetails] = useState<JobWithIdT | null>(null)
   const route = useRoute<EditJobFormRouteProp>()
+  console.log('route.params', route.params)
   const jobId = route?.params?.jobId ? route?.params?.jobId : ''
   console.log('jobId', jobId)
 
@@ -24,19 +24,9 @@ const ScheduledJobCard = () => {
   const jobsData = data as JobWithIdT
   console.log('jobsData', jobsData)
 
-  if (!getApiIsLoading) {
+  if (getApiIsLoading) {
     return <Loading loadingText={'Loading job details...'} />
   }
-
-  // if (getApiIsLoading) {
-  //   return (
-  //     <View style={{ height: 100 }}>
-  //       <Loading loadingText="Loading scheduled rounds..." />
-  //     </View>
-  //   )
-  // }
-
-  console.log('jobDetails', jobDetails)
 
   return (
     <View>
