@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
@@ -6,6 +6,9 @@ import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComple
 import { usePlannerContext } from '../../../../../../screens/planner/plannerContext/usePlannerContext'
 import usePostApiData from '../../../../../../utils/hooks/usePostApiData'
 import { formatDateForDb } from '../../../../../../utils/formatDateForDb'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../../../../screens/stackNavigator/StackNavigator'
 
 interface ScheduledJobCardProps {
   job: JobWithIdT
@@ -19,6 +22,7 @@ const ScheduledJobListItem = ({
   roundId,
 }: ScheduledJobCardProps) => {
   //hooks
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { selectedDay } = usePlannerContext()
   const { setApiFunction, postApiIsLoading } = usePostApiData({
     onSuccessScreen: 'Planner',
@@ -44,6 +48,11 @@ const ScheduledJobListItem = ({
     )
   }
 
+  const handleViewScheduledJobDetails = () => {
+    console.log('job.id', job.id)
+    navigation.navigate('ScheduledJob', { jobId: job.id })
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
@@ -59,10 +68,12 @@ const ScheduledJobListItem = ({
       </View>
 
       <View style={styles.iconsConatiner}>
-        <Image
-          source={require('../../../../../../../assets/edit.png')}
-          style={styles.image}
-        />
+        <TouchableOpacity onPress={handleViewScheduledJobDetails}>
+          <Image
+            source={require('../../../../../../../assets/edit.png')}
+            style={styles.image}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   )
