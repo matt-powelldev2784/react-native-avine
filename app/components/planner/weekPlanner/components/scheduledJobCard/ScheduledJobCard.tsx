@@ -1,4 +1,4 @@
-import { View, Text, Switch, Platform } from 'react-native'
+import { View, Text } from 'react-native'
 import React from 'react'
 import { Loading } from '../../../../../ui'
 import { usePlannerContext } from '../../../../../screens/planner/plannerContext/usePlannerContext'
@@ -9,6 +9,7 @@ import { useGetJobCardData } from './hooks/useGetJobCardData'
 import { StackNavigationProp } from '@react-navigation/stack'
 import useFormikIsComplete from './hooks/useFormikIsComplete'
 import theme from '../../../../../utils/theme/theme'
+import SwitchToggle from 'react-native-switch-toggle'
 
 type ScheduledJobCardRouteProp = RouteProp<RootStackParamList, 'Planner'>
 
@@ -40,18 +41,13 @@ const ScheduledJobCard = () => {
     <View>
       <Text>ScheduledJobCard</Text>
 
-      <Switch
-        value={isComplete}
-        onValueChange={() => formik.handleSubmit()}
-        disabled={postApiIsLoading}
-        trackColor={{ false: '#767577', true: theme.colors.primary }}
-        thumbColor={isComplete ? 'red' : 'blue'}
-        ios_backgroundColor="#3e3e3e"
-        {...Platform.select({
-          web: {
-            activeThumbColor: 'white',
-          },
-        })}
+      <SwitchToggle
+        switchOn={isComplete}
+        onPress={() => formik.handleSubmit()}
+        circleColorOff={theme.colors.primary}
+        circleColorOn={'white'}
+        backgroundColorOn={theme.colors.primary}
+        backgroundColorOff="#C4C4C4"
       />
 
       {isComplete ? (
