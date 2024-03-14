@@ -33,8 +33,6 @@ const useFormikIsComplete = ({ isComplete }: useFormikStepsInterface) => {
         return
       }
 
-      console.log('isComplete', isComplete)
-
       const relatedJobSuffix = selectedJob.recurringRound
         ? 'recurringRound'
         : 'oneOffRound'
