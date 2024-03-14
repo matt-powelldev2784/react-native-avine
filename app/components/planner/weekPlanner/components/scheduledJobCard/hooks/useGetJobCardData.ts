@@ -1,7 +1,5 @@
-// useGetJobCardData.js
-
 import { getJobIsComplete } from '../../../../../../db/planner/getJobIsComplete/getJobIsComplete'
-import { JobWithIdT, SelectedJobT } from '../../../../../../types/JobT'
+import { JobWithIdT } from '../../../../../../types/JobT'
 import { formatDateForDb } from '../../../../../../utils/formatDateForDb'
 import useGetApiData from '../../../../../../utils/hooks/useGetApiData'
 import { RouteProp } from '@react-navigation/native'
