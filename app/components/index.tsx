@@ -21,7 +21,7 @@ import EditRoundForm from './rounds/editRound/EditRoundForm'
 //planner
 import WeekPlanner from './planner/weekPlanner/WeekPlanner'
 import ScheduleRoundForm from './planner/scheduleRoundForm/ScheduleRoundForm'
-import ScheduledJobCard from './planner/weekPlanner/components/scheduledRounds/components/ScheduledJobCard'
+import ScheduledJobCard from './planner/weekPlanner/components/scheduledJobCard/ScheduledJobCard'
 
 //otheres
 

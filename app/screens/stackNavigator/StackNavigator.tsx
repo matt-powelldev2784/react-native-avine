@@ -40,7 +40,12 @@ export type RootStackParamList = {
   EditRound: { roundId: string } | undefined
 
   //payments
-  Planner: { refresh?: boolean; screen: string; jobId?: string } | undefined
+  Planner:
+    | {
+        refresh?: boolean
+        screen: string
+      }
+    | undefined
   ScheduleRound: undefined
 
   //jobs

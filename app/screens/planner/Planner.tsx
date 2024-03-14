@@ -5,6 +5,7 @@ import { RouteProp, useRoute } from '@react-navigation/native'
 import { RootStackParamList } from '../stackNavigator/StackNavigator'
 import PlannerView from './PlannerView'
 import ScheduledJobView from './ScheduledJobView'
+import { SelectedJobT } from '../../types/JobT'
 
 type PlannerRouteProp = RouteProp<RootStackParamList, 'Planner'>
 
@@ -12,6 +13,7 @@ const Planner = () => {
   const route = useRoute<PlannerRouteProp>()
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
+  const [selectedJob, setSelectedJob] = useState<SelectedJobT | null>(null)
   const screen = route.params?.screen
 
   useEffect(() => {
@@ -24,6 +26,8 @@ const Planner = () => {
     setDisplayWeek,
     selectedDay,
     setSelectedDay,
+    selectedJob,
+    setSelectedJob,
   }
 
   return (

@@ -2,13 +2,11 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../../../types/JobT'
-import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComplete'
-import { usePlannerContext } from '../../../../../../screens/planner/plannerContext/usePlannerContext'
-import usePostApiData from '../../../../../../utils/hooks/usePostApiData'
-import { formatDateForDb } from '../../../../../../utils/formatDateForDb'
+
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../../../screens/stackNavigator/StackNavigator'
+import { usePlannerContext } from '../../../../../../screens/planner/plannerContext/usePlannerContext'
 
 interface ScheduledJobCardProps {
   job: JobWithIdT
@@ -21,37 +19,15 @@ const ScheduledJobListItem = ({
   recurringRound,
   roundId,
 }: ScheduledJobCardProps) => {
-  //hooks
+  // hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { selectedDay } = usePlannerContext()
-  const { setApiFunction, postApiIsLoading } = usePostApiData({
-    onSuccessScreen: 'Planner',
-  })
-
-  //variables
-  const isComplete = job.jobIsComplete
-
-  //functions
-  const handleIsCompletePress = async () => {
-    if (postApiIsLoading) {
-      return
-    }
-    const jobIdPrefix = recurringRound ? 'recurringRound' : 'oneOffRound'
-
-    setApiFunction(
-      () => async () =>
-        toggleJobIsComplete({
-          jobId: `${roundId}@${job.id}@${jobIdPrefix}`,
-          plannerDate: formatDateForDb(selectedDay),
-          isComplete: !isComplete,
-        }),
-    )
-  }
+  const { setSelectedJob } = usePlannerContext()
 
   const handleViewScheduledJobDetails = () => {
+    setSelectedJob({ jobId: job.id, recurringRound, roundId })
+
     navigation.navigate('Planner', {
       screen: 'ScheduledJobView',
-      jobId: job.id,
     })
   }
 
