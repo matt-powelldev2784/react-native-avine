@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgrey',
   },
   flatlistFooter: {
-    height: 250,
+    height: 450,
+    backgroundColor: 'lightgrey',
   },
 })
 
