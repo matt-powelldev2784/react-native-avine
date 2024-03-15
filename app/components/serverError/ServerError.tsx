@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.colors.primary,
     marginVertical: 16,
+    textAlign: 'center',
   },
   secondaryText: {
     fontSize: 18,
