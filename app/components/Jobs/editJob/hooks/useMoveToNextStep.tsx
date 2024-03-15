@@ -25,6 +25,12 @@ export const useMoveToNextStep = ({
 
     setFieldsAsTouched()
 
+      const clientId = formik.values.clientId
+      if (!clientId) {
+        formik.setFieldError('clientId', 'Client is required')
+        return
+      }
+
     if (toggleCopyClient && activeStep == 0) {
       const clientDetails = await getClient(formik.values.clientId)
       const { name, address, contactTel, town, postcode } = clientDetails
