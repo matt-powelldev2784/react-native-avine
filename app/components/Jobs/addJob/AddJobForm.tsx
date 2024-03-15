@@ -154,8 +154,8 @@ const AddJobForm = () => {
             <Dropdown
               formik={formik}
               name="frequency"
-              placeholder="Cleaning Frequency"
-              title="Cleaning Frequency"
+              placeholder="Requested Cleaning Frequency"
+              title="Requested Cleaning Frequency"
               options={freqencyArray}
               imageName={'calender'}
             />
