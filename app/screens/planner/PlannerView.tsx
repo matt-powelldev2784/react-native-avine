@@ -1,8 +1,13 @@
 import React from 'react'
 import { ScreenMenu, WeekPlanner } from '../../components'
 import theme from '../../utils/theme/theme'
+import { FlatList, View } from 'react-native'
 
 const PlannerView = () => {
+  // flatlist is used to render children to allow the
+  // dashboatd header to be sticky in the webview
+  const childrenArray = [<WeekPlanner key={1} />]
+
   return (
     <>
       <ScreenMenu
@@ -12,7 +17,13 @@ const PlannerView = () => {
         buttonText="Schedule Round"
         bgColor={theme.colors.plannerPrimary}
       />
-      <WeekPlanner />
+
+      <FlatList
+        style={{ flex: 1, width: '100%' }}
+        data={childrenArray}
+        renderItem={({ item }) => <View>{item}</View>}
+        keyExtractor={(item, index) => `child-${index}`}
+      />
     </>
   )
 }

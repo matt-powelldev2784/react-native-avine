@@ -1,8 +1,13 @@
 import React from 'react'
 import { Dashboard, JobList, ScreenMenu } from '../../components'
 import theme from '../../utils/theme/theme'
+import { FlatList, View } from 'react-native'
 
 const Jobs = () => {
+  // flatlist is used to render children to allow the
+  // dashboatd header to be sticky in the webview
+  const childrenArray = [<JobList key={1} />]
+
   return (
     <>
       <Dashboard>
@@ -12,7 +17,13 @@ const Jobs = () => {
           buttonText="Add Job"
           bgColor={theme.colors.jobPrimary}
         />
-        <JobList />
+
+        <FlatList
+          style={{ flex: 1, width: '100%' }}
+          data={childrenArray}
+          renderItem={({ item }) => <View>{item}</View>}
+          keyExtractor={(item, index) => `child-${index}`}
+        />
       </Dashboard>
     </>
   )

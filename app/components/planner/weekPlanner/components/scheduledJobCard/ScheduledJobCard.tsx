@@ -10,7 +10,6 @@ import useFormikIsComplete from './hooks/useFormikIsComplete'
 import theme from '../../../../../utils/theme/theme'
 import { format } from 'date-fns'
 import DataLineItem from './components/DataLineItem'
-import { ScrollView } from 'react-native-gesture-handler'
 import DataSwitchItem from './components/DataSwitchItem'
 import LongDataItem from './components/LongDataItem'
 import { Loading } from '../../../../../ui'
@@ -45,10 +44,7 @@ const ScheduledJobCard = () => {
   }
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.cardWrapper}
-      style={styles.cardWrapperWeb}
-    >
+    <View style={styles.cardWrapperWeb}>
       <View style={styles.cardContainer}>
         <View style={styles.titleContainer}>
           <Image
@@ -100,23 +96,17 @@ const ScheduledJobCard = () => {
       </View>
 
       <View style={{ height: 100 }} />
-    </ScrollView>
+    </View>
   )
 }
 
 export default ScheduledJobCard
 
 const styles = StyleSheet.create({
-  cardWrapper: {
-    width: '100%',
-    alignItems: 'center',
-    marginVertical: 8,
-    paddingHorizontal: 8,
-  },
   cardWrapperWeb: {
     width: '100%',
-    marginVertical: 8,
-    paddingHorizontal: 8,
+    padding: 8,
+    backgroundColor: theme.colors.backgroundGrey,
   },
   cardContainer: {
     marginTop: 8,
@@ -125,7 +115,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     backgroundColor: 'white',
     borderRadius: 12,
-    marginHorizontal: 8,
+
     overflow: 'hidden',
     borderWidth: 1,
     borderStyle: 'solid',
