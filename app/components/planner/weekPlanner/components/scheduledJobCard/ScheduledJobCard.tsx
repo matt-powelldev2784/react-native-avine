@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
-import { Loading } from '../../../../../ui'
 import { usePlannerContext } from '../../../../../screens/planner/plannerContext/usePlannerContext'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
@@ -14,6 +13,7 @@ import DataLineItem from './components/DataLineItem'
 import { ScrollView } from 'react-native-gesture-handler'
 import DataSwitchItem from './components/DataSwitchItem'
 import LongDataItem from './components/LongDataItem'
+import { Loading } from '../../../../../ui'
 
 type ScheduledJobCardRouteProp = RouteProp<RootStackParamList, 'Planner'>
 
@@ -22,7 +22,7 @@ const ScheduledJobCard = () => {
   const route = useRoute<ScheduledJobCardRouteProp>()
   const { selectedDay, selectedJob } = usePlannerContext()
 
-  const { getApiIsLoading, jobData, isComplete } = useGetJobCardData({
+  const { jobData, isComplete } = useGetJobCardData({
     route,
   })
 
@@ -37,7 +37,7 @@ const ScheduledJobCard = () => {
     return
   }
 
-  if (getApiIsLoading || typeof isComplete !== 'boolean') {
+  if (typeof isComplete !== 'boolean') {
     return <Loading loadingText={'Loading job details...'} />
   }
 
