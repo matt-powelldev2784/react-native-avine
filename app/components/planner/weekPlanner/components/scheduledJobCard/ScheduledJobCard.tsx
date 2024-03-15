@@ -22,13 +22,21 @@ const ScheduledJobCard = () => {
   const route = useRoute<ScheduledJobCardRouteProp>()
   const { selectedDay, selectedJob } = usePlannerContext()
 
-  const { jobData, isComplete } = useGetJobCardData({
+  const { jobData, isComplete, isPaid } = useGetJobCardData({
     route,
   })
 
   const { postApiIsLoading, formik } = useFormikIsComplete({
     isComplete,
   })
+
+  console.log('jobData', jobData)
+  console.log('isComplete', isComplete)
+  console.log('isPaid', isPaid)
+
+  // const { isPaidApiIsLoading, formikIsPaid } = useFormikIsPaid({
+  //   isPaid,
+  // })
 
   if (!selectedJob || !selectedDay) {
     navigation.navigate('Error')

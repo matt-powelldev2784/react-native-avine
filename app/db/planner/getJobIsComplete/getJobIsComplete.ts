@@ -1,7 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../../../firebaseConfig'
 import { authError } from '../../authError'
-import { getJob } from '../../jobs/getJob'
 
 interface JobIsCompleteT {
   roundId: string
@@ -35,18 +34,16 @@ export const getJobIsComplete = async ({
 
     const relatedJobString = `${roundId}@${jobId}@${relatedJobSuffix}`
 
-    // if job is complete return job with jobIsComplete true property
+    // if job is complete return jobIsComplete true property
     if (plannerData?.completedJobs?.includes(relatedJobString)) {
-      const job = await getJob(jobId)
       const jobIsComplete = true
-      return { ...job, jobIsComplete }
+      return { jobIsComplete }
     }
 
-    // if job is not complete return job with jobIsComplete false property
+    // if job is not complete return jobIsComplete false property
     if (plannerData?.relatedJobs?.includes(relatedJobString)) {
-      const job = await getJob(jobId)
       const jobIsComplete = false
-      return { ...job, jobIsComplete }
+      return { jobIsComplete }
     }
 
     //if job not found in planner throw error

@@ -17,6 +17,7 @@ export interface JobT {
 export interface JobWithIdT extends JobT {
   id: string
   jobIsComplete?: boolean
+  invoiceIsPaid?: boolean
 }
 
 export interface SelectedJobT {
