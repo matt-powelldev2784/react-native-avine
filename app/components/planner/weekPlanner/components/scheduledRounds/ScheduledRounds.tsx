@@ -29,10 +29,6 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
 
   const scheduledRounds = data as ScheduledRoundsT
 
-  if (!scheduledRounds || scheduledRounds.length === 0) {
-    return <NoScheduledRounds />
-  }
-
   if (getApiIsLoading) {
     return (
       <View style={{ height: 100 }}>
@@ -40,6 +36,12 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
       </View>
     )
   }
+
+  if (!scheduledRounds || scheduledRounds.length === 0) {
+    return <NoScheduledRounds />
+  }
+
+  
 
   const scheduledRoundsJsx = scheduledRounds.map((round) => {
     return (
