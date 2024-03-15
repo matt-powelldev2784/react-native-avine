@@ -6,7 +6,7 @@ import theme from '../../utils/theme/theme'
 interface CustomSwitchProps {
   value: boolean
   onValueChange: () => void
-  disabled: boolean
+  disabled?: boolean
 }
 
 const CustomSwitch = ({

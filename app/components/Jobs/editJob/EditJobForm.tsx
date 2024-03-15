@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, ScrollView, Platform } from 'react-native'
+import { StyleSheet, View, ScrollView, Platform, Text } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
@@ -13,7 +13,7 @@ import { freqencyArray } from '../../../utils/freqencyArray'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import Button from '../../../ui/button/Button'
 import { handleFormStepBack } from '../../../utils/handleFormStepBack'
-import { Loading } from '../../../ui'
+import { CustomSwitch, Loading } from '../../../ui'
 import { useGetClientOptions } from './hooks/useFetchClients'
 
 type EditJobFormRouteProp = RouteProp<RootStackParamList, 'EditJob'>
@@ -21,6 +21,7 @@ type EditJobFormRouteProp = RouteProp<RootStackParamList, 'EditJob'>
 const EditJobForm = () => {
   //state
   const [activeStep, setActiveStep] = useState(0)
+  const [toggleCopyClient, setToggleCopyClient] = useState(false)
 
   //hooks
   const route = useRoute<EditJobFormRouteProp>()
@@ -31,9 +32,17 @@ const EditJobForm = () => {
     activeStep,
     jobId,
   })
-  const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
+  const { moveToNextStep } = useMoveToNextStep({
+    formik,
+    activeStep,
+    setActiveStep,
+    toggleCopyClient,
+  })
 
   //functions
+  const handleToggleCopyClient = async () => {
+    setToggleCopyClient(!toggleCopyClient)
+  }
   const handleStepBack = () => {
     handleFormStepBack({ setActiveStep, activeStep })
   }
@@ -59,6 +68,43 @@ const EditJobForm = () => {
         {/*********************  Step 1 ***************************/}
         {activeStep === 0 ? (
           <>
+            <Dropdown
+              formik={formik}
+              name="clientId"
+              placeholder="Select client for invoice"
+              title="Select client for invoice"
+              options={clientList}
+              imageName={'person'}
+            />
+
+            <View style={styles.toggleContainer}>
+              <Text style={styles.text}>Copy contact details from client</Text>
+              <CustomSwitch
+                value={toggleCopyClient}
+                onValueChange={handleToggleCopyClient}
+              />
+            </View>
+          </>
+        ) : null}
+
+        {/*********************  Step 2 ***************************/}
+        {activeStep === 1 ? (
+          <>
+            <InputField
+              formik={formik}
+              name="contactName"
+              placeholder="Contact Name"
+              title="Contact Name"
+              imageName={'person'}
+            />
+            <InputField
+              formik={formik}
+              name="contactTel"
+              placeholder="Contact Telephone Number"
+              title="Contact Telephone Number"
+              keyboardType={'phone-pad'}
+              imageName={'tel'}
+            />
             <InputField
               formik={formik}
               name="jobName"
@@ -90,38 +136,9 @@ const EditJobForm = () => {
           </>
         ) : null}
 
-        {/*********************  Step 2 ***************************/}
-        {activeStep === 1 ? (
-          <>
-            <InputField
-              formik={formik}
-              name="contactName"
-              placeholder="Contact Name"
-              title="Contact Name"
-              imageName={'person'}
-            />
-            <InputField
-              formik={formik}
-              name="contactTel"
-              placeholder="Contact Telephone Number"
-              title="Contact Telephone Number"
-              keyboardType={'phone-pad'}
-              imageName={'tel'}
-            />
-          </>
-        ) : null}
-
         {/*********************  Step 3 ***************************/}
         {activeStep === 2 ? (
           <>
-            <Dropdown
-              formik={formik}
-              name="clientId"
-              placeholder="Select client for invoice"
-              title="Select client for invoice"
-              options={clientList}
-              imageName={'person'}
-            />
             <InputField
               formik={formik}
               name="jobType"
@@ -248,6 +265,22 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  text: {
+    fontSize: 14,
+    color: theme.colors.primary,
+  },
+  toggleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    padding: 8,
+    paddingHorizontal: 16,
+    marginBottom: 32,
+    backgroundColor: theme.colors.formFlowSecondary,
+    borderRadius: 8,
+    overflow: 'hidden',
   },
 })
 

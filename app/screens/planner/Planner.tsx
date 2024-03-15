@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Dashboard, ScheduleRoundForm } from '../../components'
+import { Dashboard } from '../../components'
 import { PlannerContext } from './plannerContext/usePlannerContext'
 import { RouteProp, useRoute } from '@react-navigation/native'
 import { RootStackParamList } from '../stackNavigator/StackNavigator'
 import PlannerView from './PlannerView'
 import ScheduledJobView from './ScheduledJobView'
 import { SelectedJobT } from '../../types/JobT'
+import ScheduleRoundFormView from './ScheduleRoundFormView'
 
 type PlannerRouteProp = RouteProp<RootStackParamList, 'Planner'>
 
@@ -35,7 +36,9 @@ const Planner = () => {
       <Dashboard>
         <PlannerContext.Provider value={PlannerContextValue}>
           {screen === 'PlannerView' ? <PlannerView /> : null}
-          {screen === 'ScheduleRoundFormView' ? <ScheduleRoundForm /> : null}
+          {screen === 'ScheduleRoundFormView' ? (
+            <ScheduleRoundFormView />
+          ) : null}
           {screen === 'ScheduledJobView' ? <ScheduledJobView /> : null}
         </PlannerContext.Provider>
       </Dashboard>
