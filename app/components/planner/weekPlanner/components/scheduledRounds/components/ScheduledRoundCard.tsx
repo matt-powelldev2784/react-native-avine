@@ -1,9 +1,16 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Platform,
+} from 'react-native'
 import React, { useState } from 'react'
 import { RoundWithRecurringFlagT } from '../../../../../../types/RoundT'
 import { JobWithIdT } from '../../../../../../types/JobT'
 import theme from '../../../../../../utils/theme/theme'
-import ScheduledJobCard from './ScheduledJobCard'
+import ScheduledListItem from './ScheduledJobListItem'
 import { ConfirmModal } from '../../../../../../ui'
 import useHandleDelete from '../hooks/useHandleDelete'
 
@@ -30,52 +37,61 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
   })
 
   // variables
-  const totalRoundtTime = round?.relatedJobs?.reduce(
-    (totalTime: number, job: JobWithIdT) => totalTime + parseFloat(job.time),
-    0,
-  )
   const recurringRound = round?.recurringRound
+  // const totalRoundtTime = round?.relatedJobs?.reduce(
+  //   (totalTime: number, job: JobWithIdT) => totalTime + parseFloat(job.time),
+  //   0,
+  // )
 
   return (
     <View style={styles.roundWrapper}>
       <View style={styles.roundContainer}>
         {/* ---------------------- Round Title ----------------------- */}
         <View style={styles.roundTitleContainer}>
+          <Image
+            source={require('../../../../../../../assets/round.png')}
+            style={{ width: 30, height: 30, margin: 8 }}
+          />
+
           <Text
             style={styles.roundTitleText}
             numberOfLines={1}
             ellipsizeMode="tail"
           >
-            {round.roundName} {totalRoundtTime} hrs
+            {round.roundName}
           </Text>
 
-          {recurringRound ? (
-            <Image
-              source={require('../../../../../../../assets/repeat1_white.png')}
-              style={styles.recurringIcon}
-            />
-          ) : null}
+          <View style={styles.roundIconsContainer}>
+            {recurringRound ? (
+              <Image
+                source={require('../../../../../../../assets/repeat1_white.png')}
+                style={{ width: 25, height: 20 }}
+              />
+            ) : (
+              <Text />
+            )}
 
-          <TouchableOpacity
-            onPress={handleDeletePress}
-            style={styles.deleteIcon}
-          >
-            <Image
-              source={require('../../../../../../../assets/bin_white.png')}
-              style={{ width: 18, height: 22 }}
-            />
-          </TouchableOpacity>
+            <TouchableOpacity onPress={handleDeletePress}>
+              <Image
+                source={require('../../../../../../../assets/bin_white.png')}
+                style={{ width: 20, height: 25 }}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* ---------------------- Jobs List ----------------------- */}
 
-        {round?.relatedJobs?.map((job: JobWithIdT) => (
-          <ScheduledJobCard
-            key={job.id}
-            job={job}
-            recurringRound={recurringRound}
-            roundId={round.id}
-          />
+        {round?.relatedJobs?.map((job: JobWithIdT, index, self) => (
+          <View key={job.id}>
+            <ScheduledListItem
+              key={job.id}
+              job={job}
+              recurringRound={recurringRound}
+              roundId={round.id}
+            />
+            {index !== self.length - 1 && <View style={styles.jobCardLine} />}
+          </View>
         ))}
       </View>
 
@@ -109,29 +125,52 @@ const styles = StyleSheet.create({
   roundWrapper: {
     width: '100%',
     alignItems: 'center',
+    marginVertical: 8,
+    paddingHorizontal: 8,
   },
   roundContainer: {
     marginTop: 8,
     width: '100%',
     maxWidth: 700,
-    paddingHorizontal: 6,
+    marginBottom: 8,
+    backgroundColor: 'white',
+    borderRadius: 12,
+    marginHorizontal: 8,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   roundTitleContainer: {
-    borderRadius: 12,
-    marginHorizontal: 4,
-    marginBottom: 4,
-    height: 34,
+    padding: 8,
     overflow: 'hidden',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.colors.plannerPrimary,
+    backgroundColor: theme.colors.primary,
+    width: '100%',
   },
   roundTitleText: {
     color: theme.colors.secondary,
     fontSize: 20,
     fontWeight: 'bold',
-    maxWidth: '70%',
+    marginBottom: 8,
+  },
+  roundIconsContainer: {
+    position: 'absolute',
+    top: 4,
+    paddingHorizontal: 8,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: Platform.OS === 'web' ? '96%' : '100%',
+    height: 40,
   },
   roundTimeText: {
     color: theme.colors.secondary,
@@ -141,13 +180,7 @@ const styles = StyleSheet.create({
     width: '25%',
     textAlign: 'right',
   },
-  deleteIcon: { position: 'absolute', right: 12 },
-  recurringIcon: {
-    position: 'absolute',
-    left: 12,
-    width: 25,
-    height: 20,
-  },
+  jobCardLine: { height: 1, backgroundColor: theme.colors.primary },
 })
 
 export default ScheduledRoundCard

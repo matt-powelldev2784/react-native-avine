@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
     flexGrow: 2,
   },
   rightContainer: {
-    flex: 1,
     alignItems: 'flex-end',
     justifyContent: 'space-between',
     padding: 8,

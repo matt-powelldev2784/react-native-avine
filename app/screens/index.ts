@@ -17,7 +17,7 @@ import Jobs from './jobs/Jobs'
 import AddJob from './jobs/AddJob'
 import EditJob from './jobs/EditJob'
 
-//payments
+//planner
 import Planner from './planner/Planner'
 import ScheduleRound from './planner/ScheduleRound'
 

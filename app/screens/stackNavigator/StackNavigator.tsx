@@ -40,7 +40,12 @@ export type RootStackParamList = {
   EditRound: { roundId: string } | undefined
 
   //payments
-  Planner: { refresh?: boolean; displayScheduledRoundForm: boolean } | undefined
+  Planner:
+    | {
+        refresh?: boolean
+        screen: string
+      }
+    | undefined
   ScheduleRound: undefined
 
   //jobs
@@ -60,14 +65,18 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
-          <Stack.Screen name="Clients" component={Clients} />
+          <Stack.Screen
+            name="Planner"
+            component={Planner}
+            initialParams={{ screen: 'PlannerView' }}
+          />
 
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Error" component={Error} />
 
           {/* --------------------------  Client Screens  ---------------------- */}
-
+          <Stack.Screen name="Clients" component={Clients} />
           <Stack.Screen name="AddClient" component={AddClient} />
           <Stack.Screen name="EditClient" component={EditClient} />
 
@@ -77,11 +86,7 @@ const StackNavigator = () => {
           <Stack.Screen name="EditJob" component={EditJob} />
 
           {/* --------------------------  Planner Screens  -------------------------- */}
-          <Stack.Screen
-            name="Planner"
-            component={Planner}
-            initialParams={{ displayScheduledRoundForm: false }}
-          />
+
           <Stack.Screen name="ScheduleRound" component={ScheduleRound} />
 
           {/* --------------------------  Round Screens  ------------------------- */}

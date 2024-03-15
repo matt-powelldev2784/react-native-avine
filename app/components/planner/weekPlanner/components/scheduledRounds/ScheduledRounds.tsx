@@ -9,6 +9,7 @@ import { getRoundsByPlannerDate } from '../../../../../db/planner/getRoundsByPla
 import { Loading } from '../../../../../ui'
 import { RoundWithRecurringFlagT } from '../../../../../types/RoundT'
 import { useRoute } from '@react-navigation/native'
+import theme from '../../../../../utils/theme/theme'
 
 interface ScheduledRoundsProps {
   addFooter?: boolean
@@ -28,9 +29,19 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
 
   const scheduledRounds = data as ScheduledRoundsT
 
+  if (getApiIsLoading) {
+    return (
+      <View style={{ height: 100 }}>
+        <Loading loadingText="Loading scheduled rounds..." />
+      </View>
+    )
+  }
+
   if (!scheduledRounds || scheduledRounds.length === 0) {
     return <NoScheduledRounds />
   }
+
+  
 
   const scheduledRoundsJsx = scheduledRounds.map((round) => {
     return (
@@ -43,10 +54,6 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
 
   return (
     <ScrollView style={styles.flatListContainer}>
-      {getApiIsLoading ? (
-        <Loading loadingText="Loading scheduled rounds..." />
-      ) : null}
-
       {!getApiIsLoading && scheduledRounds.length > 0
         ? scheduledRoundsJsx
         : null}
@@ -59,9 +66,11 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
 const styles = StyleSheet.create({
   flatListContainer: {
     width: '100%',
+    backgroundColor: theme.colors.backgroundGrey,
   },
   flatlistFooter: {
-    height: 250,
+    height: 450,
+    backgroundColor: theme.colors.backgroundGrey,
   },
 })
 

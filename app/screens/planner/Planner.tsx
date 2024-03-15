@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Dashboard,
-  ScheduleRoundForm,
-  ScreenMenu,
-  WeekPlanner,
-} from '../../components'
-import theme from '../../utils/theme/theme'
+import { Dashboard, ScheduleRoundForm } from '../../components'
 import { PlannerContext } from './plannerContext/usePlannerContext'
 import { RouteProp, useRoute } from '@react-navigation/native'
 import { RootStackParamList } from '../stackNavigator/StackNavigator'
+import PlannerView from './PlannerView'
+import ScheduledJobView from './ScheduledJobView'
+import { SelectedJobT } from '../../types/JobT'
 
 type PlannerRouteProp = RouteProp<RootStackParamList, 'Planner'>
 
@@ -16,7 +13,8 @@ const Planner = () => {
   const route = useRoute<PlannerRouteProp>()
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
-  const displayScheduledRoundForm = route.params?.displayScheduledRoundForm
+  const [selectedJob, setSelectedJob] = useState<SelectedJobT | null>(null)
+  const screen = route.params?.screen
 
   useEffect(() => {
     setSelectedDay(new Date())
@@ -28,27 +26,17 @@ const Planner = () => {
     setDisplayWeek,
     selectedDay,
     setSelectedDay,
+    selectedJob,
+    setSelectedJob,
   }
 
   return (
     <>
       <Dashboard>
         <PlannerContext.Provider value={PlannerContextValue}>
-          {displayScheduledRoundForm ? (
-            <ScreenMenu
-              title={'Schedule Round'}
-              bgColor={theme.colors.plannerPrimary}
-            />
-          ) : (
-            <ScreenMenu
-              title={'Planner'}
-              navigateTo={'Planner'}
-              navigateToProp={{ displayScheduledRoundForm: true }}
-              buttonText="Schedule Round"
-              bgColor={theme.colors.plannerPrimary}
-            />
-          )}
-          {displayScheduledRoundForm ? <ScheduleRoundForm /> : <WeekPlanner />}
+          {screen === 'PlannerView' ? <PlannerView /> : null}
+          {screen === 'ScheduleRoundFormView' ? <ScheduleRoundForm /> : null}
+          {screen === 'ScheduledJobView' ? <ScheduledJobView /> : null}
         </PlannerContext.Provider>
       </Dashboard>
     </>

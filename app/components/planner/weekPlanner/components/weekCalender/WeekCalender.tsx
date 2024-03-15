@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   datePickerWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: theme.colors.formFlowSecondary,
+    backgroundColor: theme.colors.backgroundGrey,
     paddingBottom: 4,
     paddingHorizontal: 8,
   },

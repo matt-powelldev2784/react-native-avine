@@ -19,7 +19,7 @@ const Dashboard = ({ children }: DashboardProps) => {
     <SafeAreaView style={styles.screen}>
       {/* -------------------------- Header --------------------------  */}
       <View style={styles.headerNative}>
-        <PlanMeLogo width={150} height={40} />
+        <PlanMeLogo width={175} height={45} />
 
         <TouchableOpacity onPress={() => navigation.navigate('SignOut')}>
           <Image
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   headerNative: {
     position: 'relative',
     backgroundColor: theme.colors.primary,
-    paddingHorizontal: 10,
+    paddingHorizontal: '5%',
     paddingVertical: 6,
     flexDirection: 'row',
     justifyContent: 'space-between',

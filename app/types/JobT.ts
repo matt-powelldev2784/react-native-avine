@@ -19,3 +19,9 @@ export interface JobWithIdT extends JobT {
   jobIsComplete?: boolean
 }
 
+export interface SelectedJobT {
+  jobId: string
+  recurringRound: boolean
+  roundId: string
+}
+
