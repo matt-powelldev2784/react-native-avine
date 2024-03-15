@@ -2,6 +2,8 @@ import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import WeekCalender from './components/weekCalender/WeekCalender'
 import ScheduledRounds from './components/scheduledRounds/ScheduledRounds'
+import { ScrollView } from 'react-native-gesture-handler'
+import theme from '../../../utils/theme/theme'
 
 interface WeekPlannerProps {
   addFooter?: boolean
@@ -15,9 +17,9 @@ const WeekPlanner = ({ addFooter }: WeekPlannerProps) => {
   return (
     <View style={styles.conatiner}>
       <WeekCalender />
-      <View style={styles.roundsContainer}>
+      <ScrollView contentContainerStyle={styles.roundsContainer}>
         <ScheduledRounds addFooter={addFooter} />
-      </View>
+      </ScrollView>
     </View>
   )
 }
@@ -25,6 +27,7 @@ const WeekPlanner = ({ addFooter }: WeekPlannerProps) => {
 const styles = StyleSheet.create({
   conatiner: {
     width: '100%',
+    backgroundColor: theme.colors.backgroundGrey,
   },
   roundsContainer: {
     width: '100%',
