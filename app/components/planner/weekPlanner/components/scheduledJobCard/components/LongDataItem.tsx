@@ -16,7 +16,6 @@ const LongDataItem = ({ name, value }: DataLineProps) => {
         </Text>
         <View style={styles.line} />
         <Text style={styles.value}>
-          {' '}
           {value === '' ? 'No notes available' : value}
         </Text>
       </View>
