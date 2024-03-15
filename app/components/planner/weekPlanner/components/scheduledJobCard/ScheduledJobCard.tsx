@@ -26,8 +26,6 @@ const ScheduledJobCard = () => {
     route,
   })
 
-  console.log('jobData', jobData)
-
   const { postApiIsLoading, formik } = useFormikIsComplete({
     isComplete,
   })
