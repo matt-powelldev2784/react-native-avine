@@ -1,4 +1,4 @@
-import { doc, query, where, getDocs, getDoc } from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../../../firebaseConfig'
 import { authError } from '../../authError'
 import { getJob } from '../../jobs/getJob'
