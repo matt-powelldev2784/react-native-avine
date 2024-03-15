@@ -15,7 +15,10 @@ const LongDataItem = ({ name, value }: DataLineProps) => {
           {name}
         </Text>
         <View style={styles.line} />
-        <Text style={styles.value}>{value}</Text>
+        <Text style={styles.value}>
+          {' '}
+          {value === '' ? 'No notes available' : value}
+        </Text>
       </View>
     </>
   )
