@@ -31,8 +31,11 @@ const ScheduledJobListItem = ({
     })
   }
 
+  const isComplete = job?.jobIsComplete
+  const completeStyle = isComplete ? 0.5 : 1
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { opacity: completeStyle }]}>
       <View style={styles.leftContainer}>
         <View style={styles.timeContainer}>
           <Text style={styles.time} numberOfLines={1}>
@@ -106,6 +109,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'right',
+  },
+  opacity50opercent: {
+    opacity: 0.5,
   },
 })
 
