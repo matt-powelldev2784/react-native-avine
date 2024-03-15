@@ -30,8 +30,6 @@ export const useGetJobCardData = ({ route }: UseGetJobCardDataT) => {
       }),
   })
 
-  console.log('data', data)
-
   const jobData = data as JobWithIdT
   const isComplete = jobData?.jobIsComplete
   const isPaid = jobData?.invoiceIsPaid

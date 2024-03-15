@@ -5,7 +5,9 @@ import { View } from 'react-native'
 
 const ScheduledJobView = () => {
   return (
-    <View style={{ backgroundColor: theme.colors.backgroundGrey }}>
+    <View
+      style={{ backgroundColor: theme.colors.backgroundGrey, width: '100%' }}
+    >
       <ScreenMenu
         title={'Scheduled Job Details'}
         bgColor={theme.colors.plannerPrimary}
