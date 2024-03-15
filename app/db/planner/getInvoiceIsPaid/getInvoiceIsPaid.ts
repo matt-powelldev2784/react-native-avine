@@ -2,21 +2,21 @@ import { doc, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../../../firebaseConfig'
 import { authError } from '../../authError'
 
-interface JobIsCompleteT {
+interface InvoiceIsPaidT {
   roundId: string
   jobId: string
   plannerDate: string
   recurringRound: boolean
 }
 
-export const getJobIsComplete = async ({
+export const getInvoiceIsPaid = async ({
   roundId,
   jobId,
   plannerDate,
   recurringRound,
-}: JobIsCompleteT) => {
+}: InvoiceIsPaidT) => {
   if (!auth.currentUser) {
-    return authError({ filename: 'getJobIsComplete' })
+    return authError({ filename: 'getInvoiceIsPaid' })
   }
 
   try {
@@ -27,30 +27,30 @@ export const getJobIsComplete = async ({
     const plannerSnapshot = await getDoc(plannerDoc)
 
     if (!plannerSnapshot.exists()) {
-      throw new Error('Job not found in planner')
+      throw new Error('Scheduled job not found in planner')
     }
 
     const plannerData = plannerSnapshot.data()
 
     const relatedJobString = `${roundId}@${jobId}@${relatedJobSuffix}`
 
-    // if job is complete return jobIsComplete true property
-    if (plannerData?.completedJobs?.includes(relatedJobString)) {
-      const jobIsComplete = true
-      return { jobIsComplete }
+    // if job is complete return jobIsInvoiced true property
+    if (plannerData?.invoicedJobs?.includes(relatedJobString)) {
+      const invoiceIsPaid = true
+      return { invoiceIsPaid }
     }
 
-    // if job is not complete return jobIsComplete false property
+    // if job is not complete return jobIsInvoiced false property
     if (plannerData?.relatedJobs?.includes(relatedJobString)) {
-      const jobIsComplete = false
-      return { jobIsComplete }
+      const invoiceIsPaid = false
+      return { invoiceIsPaid }
     }
 
     //if job not found in planner throw error
-    throw new Error('Job not found in planner')
+    throw new Error('Scheduled job not found in planner')
   } catch (error) {
     throw new Error(
-      `Error getting job is complete at getJobIsComplete route: ${error}`,
+      `Error getting job is complete at getInvoiceIsPaid route: ${error}`,
     )
   }
 }

@@ -1,10 +1,10 @@
-import { getJobIsComplete } from '../../../../../../db/planner/getJobIsComplete/getJobIsComplete'
 import { JobWithIdT } from '../../../../../../types/JobT'
 import { formatDateForDb } from '../../../../../../utils/formatDateForDb'
 import useGetApiData from '../../../../../../utils/hooks/useGetApiData'
 import { RouteProp } from '@react-navigation/native'
 import { RootStackParamList } from '../../../../../../screens/stackNavigator/StackNavigator'
 import { usePlannerContext } from '../../../../../../screens/planner/plannerContext/usePlannerContext'
+import { getScheduledJobDetails } from '../../../../../../db/planner/getScheduledJobDetails/getScheduledJobDetails'
 
 type ScheduledJobCardRouteProp = RouteProp<RootStackParamList, 'Planner'>
 
@@ -22,7 +22,7 @@ export const useGetJobCardData = ({ route }: UseGetJobCardDataT) => {
   const { getApiIsLoading, data } = useGetApiData({
     route,
     apiFunction: async () =>
-      getJobIsComplete({
+      getScheduledJobDetails({
         roundId: selectedJob.roundId,
         jobId: selectedJob.jobId,
         plannerDate: formatDateForDb(selectedDay),
@@ -32,6 +32,7 @@ export const useGetJobCardData = ({ route }: UseGetJobCardDataT) => {
 
   const jobData = data as JobWithIdT
   const isComplete = jobData?.jobIsComplete
+  const isPaid = jobData?.invoiceIsPaid
 
-  return { getApiIsLoading, jobData, isComplete }
+  return { getApiIsLoading, jobData, isComplete, isPaid }
 }
