@@ -14,6 +14,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import DataSwitchItem from './components/DataSwitchItem'
 import LongDataItem from './components/LongDataItem'
 import { Loading } from '../../../../../ui'
+import useFormikIsPaid from './hooks/useFormikIsPaid'
 
 type ScheduledJobCardRouteProp = RouteProp<RootStackParamList, 'Planner'>
 
@@ -30,20 +31,16 @@ const ScheduledJobCard = () => {
     isComplete,
   })
 
-  console.log('jobData', jobData)
-  console.log('isComplete', isComplete)
-  console.log('isPaid', isPaid)
-
-  // const { isPaidApiIsLoading, formikIsPaid } = useFormikIsPaid({
-  //   isPaid,
-  // })
+  const { isPaidApiIsLoading, formikIsPaid } = useFormikIsPaid({
+    isPaid,
+  })
 
   if (!selectedJob || !selectedDay) {
     navigation.navigate('Error')
     return
   }
 
-  if (typeof isComplete !== 'boolean') {
+  if (typeof isComplete !== 'boolean' || typeof isPaid !== 'boolean') {
     return <Loading loadingText={'Loading job details...'} />
   }
 
@@ -79,9 +76,9 @@ const ScheduledJobCard = () => {
           />
           <DataSwitchItem
             name={'Invoice Paid'}
-            value={isComplete}
-            isLoading={postApiIsLoading}
-            formik={formik}
+            value={isPaid}
+            isLoading={isPaidApiIsLoading}
+            formik={formikIsPaid}
           />
         </View>
 

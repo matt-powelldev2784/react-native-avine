@@ -9,7 +9,7 @@ interface useFormikStepsInterface {
   isPaid: boolean | null | undefined
 }
 
-const useFormikIsComplete = ({ isPaid }: useFormikStepsInterface) => {
+const useFormikIsPaid = ({ isPaid }: useFormikStepsInterface) => {
   const { selectedDay, selectedJob } = usePlannerContext()
 
   const { setApiFunction, postApiIsLoading } = usePostApiData({
@@ -51,9 +51,9 @@ const useFormikIsComplete = ({ isPaid }: useFormikStepsInterface) => {
   })
 
   const formikIsPaid = formik
-  const postIsPaidApiIsLoading = postApiIsLoading
+  const isPaidApiIsLoading = postApiIsLoading
 
-  return { postIsPaidApiIsLoading, formikIsPaid }
+  return { isPaidApiIsLoading, formikIsPaid }
 }
 
-export default useFormikIsComplete
+export default useFormikIsPaid
