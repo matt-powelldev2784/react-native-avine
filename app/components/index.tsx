@@ -3,6 +3,8 @@ import ScreenMenu from './screenMenu/ScreenMenu'
 import PlanMeLogo from './PlanMeLogo/PlanMeLogo'
 import Dashboard from './dashboard/Dashboard'
 import ServerError from './serverError/ServerError'
+import SignIn from './auth/components/SignIn'
+import SignOut from './auth/components/SignOut'
 
 //clients
 import AddClientForm from './clients/addClient/AddClientForm'
@@ -41,4 +43,6 @@ export {
   PlanMeLogo,
   Dashboard,
   ServerError,
+  SignIn,
+  SignOut,
 }
