@@ -9,6 +9,7 @@ import { getRoundsByPlannerDate } from '../../../../../db/planner/getRoundsByPla
 import { Loading } from '../../../../../ui'
 import { RoundWithRecurringFlagT } from '../../../../../types/RoundT'
 import { useRoute } from '@react-navigation/native'
+import theme from '../../../../../utils/theme/theme'
 
 interface ScheduledRoundsProps {
   addFooter?: boolean
@@ -63,11 +64,11 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
 const styles = StyleSheet.create({
   flatListContainer: {
     width: '100%',
-    backgroundColor: 'lightgrey',
+    backgroundColor: theme.colors.backgroundGrey,
   },
   flatlistFooter: {
     height: 450,
-    backgroundColor: 'lightgrey',
+    backgroundColor: theme.colors.backgroundGrey,
   },
 })
 
