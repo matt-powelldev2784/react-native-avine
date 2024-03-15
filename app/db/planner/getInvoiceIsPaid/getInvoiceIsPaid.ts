@@ -3,7 +3,7 @@ import { db, auth } from '../../../../firebaseConfig'
 import { authError } from '../../authError'
 import { getJob } from '../../jobs/getJob'
 
-interface JobIsCompleteT {
+interface InvoiceIsPaidT {
   roundId: string
   jobId: string
   plannerDate: string
@@ -15,7 +15,7 @@ export const getInvoiceIsPaid = async ({
   jobId,
   plannerDate,
   recurringRound,
-}: JobIsCompleteT) => {
+}: InvoiceIsPaidT) => {
   if (!auth.currentUser) {
     return authError({ filename: 'getInvoiceIsPaid' })
   }
