@@ -6,14 +6,14 @@ import { FormikProps } from 'formik'
 
 interface DataSwitchProps {
   name: string
-  isComplete: boolean
+  value: boolean
   isLoading: boolean
   formik: FormikProps<any>
 }
 
 const DataSwitchItem = ({
   name,
-  isComplete,
+  value,
   isLoading,
   formik,
 }: DataSwitchProps) => {
@@ -24,7 +24,7 @@ const DataSwitchItem = ({
           {name}
         </Text>
         <CustomSwitch
-          value={isComplete}
+          value={value}
           disabled={isLoading}
           onValueChange={() => {
             formik.handleSubmit()

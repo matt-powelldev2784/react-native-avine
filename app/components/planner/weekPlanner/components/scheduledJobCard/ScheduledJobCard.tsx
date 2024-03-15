@@ -73,13 +73,13 @@ const ScheduledJobCard = () => {
         <View style={styles.switchWrapper}>
           <DataSwitchItem
             name={'Job Complete'}
-            isComplete={isComplete}
+            value={isComplete}
             isLoading={postApiIsLoading}
             formik={formik}
           />
           <DataSwitchItem
             name={'Invoice Paid'}
-            isComplete={isComplete}
+            value={isComplete}
             isLoading={postApiIsLoading}
             formik={formik}
           />
