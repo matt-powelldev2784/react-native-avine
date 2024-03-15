@@ -19,8 +19,8 @@ const FormFlowTitles = ({ activeStep }: FormFlowTitlesProps) => {
     >
       <Text style={activeStep === 0 ? styles.titleActive : styles.title}>
         {isSmallDevice
-          ? ' Update\nLocation\nDetails'
-          : ' Update Location Details'}
+          ? ' Update\nInvoice\nDetails'
+          : ' Update Invoice Details'}
       </Text>
 
       <View style={isSmallDevice ? styles.lineSmallWeb : styles.line} />

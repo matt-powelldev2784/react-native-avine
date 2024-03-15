@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, ScrollView, Platform } from 'react-native'
+import { StyleSheet, View, ScrollView, Platform, Text } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
@@ -13,7 +13,7 @@ import { freqencyArray } from '../../../utils/freqencyArray'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import Button from '../../../ui/button/Button'
 import { handleFormStepBack } from '../../../utils/handleFormStepBack'
-import { Loading } from '../../../ui'
+import { CustomSwitch, Loading } from '../../../ui'
 import { useGetClientOptions } from './hooks/useFetchClients'
 
 type EditJobFormRouteProp = RouteProp<RootStackParamList, 'EditJob'>
@@ -21,6 +21,7 @@ type EditJobFormRouteProp = RouteProp<RootStackParamList, 'EditJob'>
 const EditJobForm = () => {
   //state
   const [activeStep, setActiveStep] = useState(0)
+  const [toggleCopyClient, setToggleCopyClient] = useState(false)
 
   //hooks
   const route = useRoute<EditJobFormRouteProp>()
@@ -31,9 +32,17 @@ const EditJobForm = () => {
     activeStep,
     jobId,
   })
-  const { moveToNextStep } = useMoveToNextStep({ formik, setActiveStep })
+  const { moveToNextStep } = useMoveToNextStep({
+    formik,
+    activeStep,
+    setActiveStep,
+    toggleCopyClient,
+  })
 
   //functions
+  const handleToggleCopyClient = async () => {
+    setToggleCopyClient(!toggleCopyClient)
+  }
   const handleStepBack = () => {
     handleFormStepBack({ setActiveStep, activeStep })
   }
@@ -67,6 +76,14 @@ const EditJobForm = () => {
               options={clientList}
               imageName={'person'}
             />
+
+            <View style={styles.toggleContainer}>
+              <Text style={styles.text}>Copy contact details from client</Text>
+              <CustomSwitch
+                value={toggleCopyClient}
+                onValueChange={handleToggleCopyClient}
+              />
+            </View>
           </>
         ) : null}
 
@@ -248,6 +265,22 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  text: {
+    fontSize: 14,
+    color: theme.colors.primary,
+  },
+  toggleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    padding: 8,
+    paddingHorizontal: 16,
+    marginBottom: 32,
+    backgroundColor: theme.colors.formFlowSecondary,
+    borderRadius: 8,
+    overflow: 'hidden',
   },
 })
 
