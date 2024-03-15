@@ -59,6 +59,35 @@ const EditJobForm = () => {
         {/*********************  Step 1 ***************************/}
         {activeStep === 0 ? (
           <>
+            <Dropdown
+              formik={formik}
+              name="clientId"
+              placeholder="Select client for invoice"
+              title="Select client for invoice"
+              options={clientList}
+              imageName={'person'}
+            />
+          </>
+        ) : null}
+
+        {/*********************  Step 2 ***************************/}
+        {activeStep === 1 ? (
+          <>
+            <InputField
+              formik={formik}
+              name="contactName"
+              placeholder="Contact Name"
+              title="Contact Name"
+              imageName={'person'}
+            />
+            <InputField
+              formik={formik}
+              name="contactTel"
+              placeholder="Contact Telephone Number"
+              title="Contact Telephone Number"
+              keyboardType={'phone-pad'}
+              imageName={'tel'}
+            />
             <InputField
               formik={formik}
               name="jobName"
@@ -90,38 +119,9 @@ const EditJobForm = () => {
           </>
         ) : null}
 
-        {/*********************  Step 2 ***************************/}
-        {activeStep === 1 ? (
-          <>
-            <InputField
-              formik={formik}
-              name="contactName"
-              placeholder="Contact Name"
-              title="Contact Name"
-              imageName={'person'}
-            />
-            <InputField
-              formik={formik}
-              name="contactTel"
-              placeholder="Contact Telephone Number"
-              title="Contact Telephone Number"
-              keyboardType={'phone-pad'}
-              imageName={'tel'}
-            />
-          </>
-        ) : null}
-
         {/*********************  Step 3 ***************************/}
         {activeStep === 2 ? (
           <>
-            <Dropdown
-              formik={formik}
-              name="clientId"
-              placeholder="Select client for invoice"
-              title="Select client for invoice"
-              options={clientList}
-              imageName={'person'}
-            />
             <InputField
               formik={formik}
               name="jobType"
