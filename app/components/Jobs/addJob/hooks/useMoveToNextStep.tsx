@@ -1,13 +1,18 @@
 import { FormikProps } from 'formik'
+import { getClient } from '../../../../db/clients/getClient'
 
 interface UseMoveToNextStepProps {
   formik: FormikProps<any>
+  activeStep: number
   setActiveStep: React.Dispatch<React.SetStateAction<number>>
+  toggleCopyClient: boolean
 }
 
 export const useMoveToNextStep = ({
   formik,
+  activeStep,
   setActiveStep,
+  toggleCopyClient,
 }: UseMoveToNextStepProps) => {
   const setFieldsAsTouched = () => {
     Object.keys(formik.values).forEach((key) => {
@@ -16,16 +21,27 @@ export const useMoveToNextStep = ({
   }
 
   const moveToNextStep = async () => {
-    const formHasBeenTouched = Object.keys(formik.touched).length > 0
     const formIsValid = Object.keys(formik.errors).length === 0
 
     setFieldsAsTouched()
 
-    if (formHasBeenTouched) {
-      await formik.validateForm()
+    const clientId = formik.values.clientId
+    if (!clientId) {
+      formik.setFieldError('clientId', 'Client is required')
+      return
     }
 
-    if (formHasBeenTouched && formIsValid) {
+    if (toggleCopyClient && activeStep == 0) {
+      const clientDetails = await getClient(formik.values.clientId)
+      const { name, address, contactTel, town, postcode } = clientDetails
+      formik.setFieldValue('contactName', name)
+      formik.setFieldValue('address', address)
+      formik.setFieldValue('contactTel', contactTel)
+      formik.setFieldValue('town', town)
+      formik.setFieldValue('postcode', postcode)
+    }
+
+    if (formIsValid) {
       setActiveStep((prev) => prev + 1)
       formik.setTouched({})
     }
