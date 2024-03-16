@@ -49,7 +49,7 @@ const Dashboard = ({ children }: DashboardProps) => {
       {isLargeWeb ? (
         <View style={styles.headerLargeScreen}>
           <View style={styles.logoContainerLargeScreen}>
-            <PlanMeIcon width={40} height={40} />
+            <PlanMeIcon width={30} height={30} />
           </View>
 
           <NavBar />
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     paddingHorizontal: 34,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
   },
