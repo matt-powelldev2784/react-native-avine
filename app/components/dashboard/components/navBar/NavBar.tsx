@@ -18,7 +18,7 @@ const NavBar = () => {
       alignItems: 'center',
       justifyContent: 'space-around',
       backgroundColor: theme.colors.primary,
-      gap: isLargeWeb ? 4 : 0,
+      gap: isLargeWeb ? 20 : 0,
       paddingTop: 8,
       paddingBottom: 6,
       width: isLargeWeb ? 'auto' : '100%',
@@ -39,31 +39,31 @@ const NavBar = () => {
   return (
     <SafeAreaView edges={['right', 'bottom', 'left']} style={styles.nav}>
       <NavBarWebItem
-        buttonText="CLIENTS"
+        buttonText="Clients"
         imageSource={require('../../../../../assets/customers.png')}
         routeFunction={routeFunctions.clientsNaviagtion}
       />
 
       <NavBarWebItem
-        buttonText="JOBS"
+        buttonText="Jobs"
         imageSource={require('../../../../../assets/clipboard_tick.png')}
         routeFunction={routeFunctions.jobsNaviagtion}
       />
 
       <NavBarWebItem
-        buttonText="ROUNDS"
+        buttonText="Rounds"
         imageSource={require('../../../../../assets/round.png')}
         routeFunction={routeFunctions.roundsNavigation}
       />
 
       <NavBarWebItem
-        buttonText="PLANNNER"
+        buttonText="Planner"
         imageSource={require('../../../../../assets/calendar_white.png')}
         routeFunction={routeFunctions.plannerNavigation}
       />
 
       <NavBarWebItem
-        buttonText="INVOICES"
+        buttonText="Invoices"
         imageSource={require('../../../../../assets/pay.png')}
         routeFunction={routeFunctions.plannerNavigation}
       />
@@ -71,7 +71,7 @@ const NavBar = () => {
       {isLargeWeb && (
         <>
           <NavBarWebItem
-            buttonText="SETTINGS"
+            buttonText="Settings"
             imageSource={require('../../../../../assets/settings.png')}
             routeFunction={routeFunctions.signOut}
           />

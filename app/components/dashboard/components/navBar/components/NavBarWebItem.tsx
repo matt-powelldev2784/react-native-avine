@@ -18,23 +18,29 @@ const NavBarWebItem = ({
 
   const styles = StyleSheet.create({
     button: {
+      flexDirection: isLargeWeb ? 'row' : 'column',
+      gap: isLargeWeb ? 6 : 0,
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 4,
-      width: isLargeWeb ? 75 : 60,
+      width: isLargeWeb ? 'auto' : 60,
     },
     buttonText: {
-      paddingTop: 2,
       color: 'white',
-      fontSize: isLargeWeb ? 12 : 10,
+      fontSize: isLargeWeb ? 15 : 10,
+      fontFamily: 'Noto Sans',
+    },
+    image: {
+      width: isLargeWeb ? 15 : 25,
+      height: isLargeWeb ? 15 : 25,
     },
   })
 
   return (
     <TouchableOpacity style={styles.button} onPress={routeFunction}>
-      <Image source={imageSource} style={{ width: 25, height: 25 }} />
+      <Image source={imageSource} style={styles.image} />
 
-      <Text style={styles.buttonText}>{buttonText}</Text>
+      <Text style={styles.buttonText}>{buttonText.toUpperCase()}</Text>
     </TouchableOpacity>
   )
 }
