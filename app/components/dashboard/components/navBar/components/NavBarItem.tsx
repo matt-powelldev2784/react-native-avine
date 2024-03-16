@@ -19,7 +19,7 @@ const NavBarItem = ({
   const styles = StyleSheet.create({
     button: {
       flexDirection: isLargeWeb ? 'row' : 'column',
-      gap: isLargeWeb ? 6 : 0,
+      gap: isLargeWeb ? 6 : 2,
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 4,
