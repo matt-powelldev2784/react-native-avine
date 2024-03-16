@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDeviceType } from '../../../../utils/deviceTypes'
 import theme from '../../../../utils/theme/theme'
 import useNavigationRouteFunctions from './hooks/useNavigationRouteFunctions'
-import NavBarWebItem from './components/NavBarWebItem'
+import NavBarItem from './components/NavBarItem'
 
 const NavBar = () => {
   const { routeFunctions } = useNavigationRouteFunctions()
@@ -38,31 +38,31 @@ const NavBar = () => {
 
   return (
     <SafeAreaView edges={['right', 'bottom', 'left']} style={styles.nav}>
-      <NavBarWebItem
+      <NavBarItem
         buttonText="Clients"
         imageSource={require('../../../../../assets/customers.png')}
         routeFunction={routeFunctions.clientsNaviagtion}
       />
 
-      <NavBarWebItem
+      <NavBarItem
         buttonText="Jobs"
         imageSource={require('../../../../../assets/clipboard_tick.png')}
         routeFunction={routeFunctions.jobsNaviagtion}
       />
 
-      <NavBarWebItem
+      <NavBarItem
         buttonText="Rounds"
         imageSource={require('../../../../../assets/round.png')}
         routeFunction={routeFunctions.roundsNavigation}
       />
 
-      <NavBarWebItem
+      <NavBarItem
         buttonText="Planner"
         imageSource={require('../../../../../assets/calendar_white.png')}
         routeFunction={routeFunctions.plannerNavigation}
       />
 
-      <NavBarWebItem
+      <NavBarItem
         buttonText="Invoices"
         imageSource={require('../../../../../assets/pay.png')}
         routeFunction={routeFunctions.plannerNavigation}
@@ -70,7 +70,7 @@ const NavBar = () => {
 
       {isLargeWeb && (
         <>
-          <NavBarWebItem
+          <NavBarItem
             buttonText="Settings"
             imageSource={require('../../../../../assets/settings.png')}
             routeFunction={routeFunctions.signOut}

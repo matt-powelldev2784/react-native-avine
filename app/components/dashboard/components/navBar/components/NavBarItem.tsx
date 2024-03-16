@@ -3,17 +3,17 @@ import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useDeviceType } from '../../../../../utils/deviceTypes'
 
-interface NavBarWebItemProps {
+interface NavBarItemProps {
   routeFunction: () => void
   imageSource: ImageSourcePropType
   buttonText: string
 }
 
-const NavBarWebItem = ({
+const NavBarItem = ({
   routeFunction,
   imageSource,
   buttonText,
-}: NavBarWebItemProps) => {
+}: NavBarItemProps) => {
   const { isLargeWeb } = useDeviceType()
 
   const styles = StyleSheet.create({
@@ -45,4 +45,4 @@ const NavBarWebItem = ({
   )
 }
 
-export default NavBarWebItem
+export default NavBarItem
