@@ -14,6 +14,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 import { useDeviceType } from '../../utils/deviceTypes'
 import theme from '../../utils/theme/theme'
+import PlanMeIcon from '../PlanMeLogo/PlanMeIcon'
 
 interface DashboardProps {
   children?: ReactNode
@@ -48,7 +49,7 @@ const Dashboard = ({ children }: DashboardProps) => {
       {isLargeWeb ? (
         <View style={styles.headerLargeScreen}>
           <View style={styles.logoContainerLargeScreen}>
-            <PlanMeLogo width={200} height={50} />
+            <PlanMeIcon width={40} height={40} />
           </View>
 
           <NavBar />
