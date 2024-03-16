@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   headerLargeScreen: {
     backgroundColor: theme.colors.primary,
-    paddingHorizontal: 36,
+    paddingHorizontal: 34,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import theme from '../../../../utils/theme/theme'
-import useNavigationRouteFunctions from './useNavigationRouteFunctions'
+import useNavigationRouteFunctions from './hooks/useNavigationRouteFunctions'
 
 const NavBar = () => {
   const { routeFunctions } = useNavigationRouteFunctions()

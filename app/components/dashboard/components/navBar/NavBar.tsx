@@ -1,9 +1,10 @@
-import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDeviceType } from '../../../../utils/deviceTypes'
 import theme from '../../../../utils/theme/theme'
-import useNavigationRouteFunctions from './useNavigationRouteFunctions'
+import useNavigationRouteFunctions from './hooks/useNavigationRouteFunctions'
+import NavBarWebItem from './components/NavBarWebItem'
 
 const NavBar = () => {
   const { routeFunctions } = useNavigationRouteFunctions()
@@ -17,7 +18,7 @@ const NavBar = () => {
       alignItems: 'center',
       justifyContent: 'space-around',
       backgroundColor: theme.colors.primary,
-      gap: isLargeWeb ? 16 : 0,
+      gap: isLargeWeb ? 4 : 0,
       paddingTop: 8,
       paddingBottom: 6,
       width: isLargeWeb ? 'auto' : '100%',
@@ -37,61 +38,44 @@ const NavBar = () => {
 
   return (
     <SafeAreaView edges={['right', 'bottom', 'left']} style={styles.nav}>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={routeFunctions.clientsNaviagtion}
-      >
-        <Image
-          source={require('../../../../../assets/customers.png')}
-          style={{ width: 25, height: 25 }}
-        />
-        <Text style={styles.buttonText}>CLIENTS</Text>
-      </TouchableOpacity>
+      <NavBarWebItem
+        buttonText="CLIENTS"
+        imageSource={require('../../../../../assets/customers.png')}
+        routeFunction={routeFunctions.clientsNaviagtion}
+      />
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={routeFunctions.jobsNaviagtion}
-      >
-        <Image
-          source={require('../../../../../assets/clipboard_tick.png')}
-          style={{ width: 25, height: 25 }}
-        />
-        <Text style={styles.buttonText}>JOBS</Text>
-      </TouchableOpacity>
+      <NavBarWebItem
+        buttonText="JOBS"
+        imageSource={require('../../../../../assets/clipboard_tick.png')}
+        routeFunction={routeFunctions.jobsNaviagtion}
+      />
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={routeFunctions.roundsNavigation}
-      >
-        <Image
-          source={require('../../../../../assets/round.png')}
-          style={{ width: 25, height: 25 }}
-        />
-        <Text style={styles.buttonText}>ROUNDS</Text>
-      </TouchableOpacity>
+      <NavBarWebItem
+        buttonText="ROUNDS"
+        imageSource={require('../../../../../assets/round.png')}
+        routeFunction={routeFunctions.roundsNavigation}
+      />
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={routeFunctions.plannerNavigation}
-      >
-        <Image
-          source={require('../../../../../assets/calendar_white.png')}
-          style={{ width: 25, height: 25 }}
-        />
-        <Text style={styles.buttonText}>PLANNER</Text>
-      </TouchableOpacity>
+      <NavBarWebItem
+        buttonText="PLANNNER"
+        imageSource={require('../../../../../assets/calendar_white.png')}
+        routeFunction={routeFunctions.plannerNavigation}
+      />
+
+      <NavBarWebItem
+        buttonText="INVOICES"
+        imageSource={require('../../../../../assets/pay.png')}
+        routeFunction={routeFunctions.plannerNavigation}
+      />
 
       {isLargeWeb && (
-        <TouchableOpacity
-          style={styles.button}
-          onPress={routeFunctions.signOut}
-        >
-          <Image
-            source={require('../../../../../assets/settings.png')}
-            style={{ width: 25, height: 25 }}
+        <>
+          <NavBarWebItem
+            buttonText="SETTINGS"
+            imageSource={require('../../../../../assets/settings.png')}
+            routeFunction={routeFunctions.signOut}
           />
-          <Text style={styles.buttonText}>SETTINGS</Text>
-        </TouchableOpacity>
+        </>
       )}
     </SafeAreaView>
   )
