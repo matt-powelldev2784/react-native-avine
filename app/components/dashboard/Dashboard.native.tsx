@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     backgroundColor: theme.colors.primary,
     paddingHorizontal: '5%',
-    paddingVertical: 6,
+    paddingVertical: 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

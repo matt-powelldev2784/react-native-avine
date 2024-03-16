@@ -1,57 +1,44 @@
-import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import theme from '../../../../utils/theme/theme'
-import useNavigationRouteFunctions from './useNavigationRouteFunctions'
+import useNavigationRouteFunctions from './hooks/useNavigationRouteFunctions'
+import NavBarItem from './components/NavBarItem'
 
 const NavBar = () => {
   const { routeFunctions } = useNavigationRouteFunctions()
 
   return (
     <SafeAreaView edges={['right', 'bottom', 'left']} style={styles.nav}>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={routeFunctions.clientsNaviagtion}
-      >
-        <Image
-          source={require('../../../../../assets/customers.png')}
-          style={{ width: 25, height: 25 }}
-        />
-        <Text style={styles.buttonText}>CLIENTS</Text>
-      </TouchableOpacity>
+      <NavBarItem
+        buttonText="Clients"
+        imageSource={require('../../../../../assets/customers.png')}
+        routeFunction={routeFunctions.clientsNaviagtion}
+      />
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={routeFunctions.jobsNaviagtion}
-      >
-        <Image
-          source={require('../../../../../assets/clipboard_tick.png')}
-          style={{ width: 25, height: 25 }}
-        />
-        <Text style={styles.buttonText}>JOBS</Text>
-      </TouchableOpacity>
+      <NavBarItem
+        buttonText="Jobs"
+        imageSource={require('../../../../../assets/clipboard_tick.png')}
+        routeFunction={routeFunctions.jobsNaviagtion}
+      />
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={routeFunctions.roundsNavigation}
-      >
-        <Image
-          source={require('../../../../../assets/round.png')}
-          style={{ width: 25, height: 25 }}
-        />
-        <Text style={styles.buttonText}>ROUNDS</Text>
-      </TouchableOpacity>
+      <NavBarItem
+        buttonText="Rounds"
+        imageSource={require('../../../../../assets/round.png')}
+        routeFunction={routeFunctions.roundsNavigation}
+      />
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={routeFunctions.plannerNavigation}
-      >
-        <Image
-          source={require('../../../../../assets/calendar_white.png')}
-          style={{ width: 25, height: 25 }}
-        />
-        <Text style={styles.buttonText}>PLANNER</Text>
-      </TouchableOpacity>
+      <NavBarItem
+        buttonText="Planner"
+        imageSource={require('../../../../../assets/calendar_white.png')}
+        routeFunction={routeFunctions.plannerNavigation}
+      />
+
+      <NavBarItem
+        buttonText="Invoices"
+        imageSource={require('../../../../../assets/pay.png')}
+        routeFunction={routeFunctions.plannerNavigation}
+      />
     </SafeAreaView>
   )
 }
@@ -64,7 +51,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     backgroundColor: theme.colors.primary,
-    paddingTop: 8,
+    paddingTop: 9,
     paddingBottom: 6,
     width: '100%',
   },

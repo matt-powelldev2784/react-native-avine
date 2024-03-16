@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import { RootStackParamList } from '../../../../../screens/stackNavigator/StackNavigator'
 
 const useNavigationRouteFunctions = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
