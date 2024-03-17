@@ -7,10 +7,14 @@ import { toggleInvoiceIsPaid } from '../../../../../../db/jobs/toggleInvoiceIsPa
 
 interface useFormikStepsInterface {
   isPaid: boolean | null | undefined
+  isComplete: boolean | null | undefined
 }
 
-const useFormikIsPaid = ({ isPaid }: useFormikStepsInterface) => {
+const useFormikIsPaid = ({ isPaid, isComplete }: useFormikStepsInterface) => {
   const { selectedDay, selectedJob } = usePlannerContext()
+  const isPaidError = isComplete
+    ? false
+    : 'You cannot toggle a invoice as paid until the job is set to complete.'
 
   const { setApiFunction, postApiIsLoading } = usePostApiData({
     onSuccessScreen: 'Planner',
@@ -53,7 +57,7 @@ const useFormikIsPaid = ({ isPaid }: useFormikStepsInterface) => {
   const formikIsPaid = formik
   const isPaidApiIsLoading = postApiIsLoading
 
-  return { isPaidApiIsLoading, formikIsPaid }
+  return { isPaidApiIsLoading, formikIsPaid, isPaidError }
 }
 
 export default useFormikIsPaid

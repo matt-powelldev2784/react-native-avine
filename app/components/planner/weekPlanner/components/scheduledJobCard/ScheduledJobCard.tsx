@@ -26,12 +26,14 @@ const ScheduledJobCard = () => {
     route,
   })
 
-  const { postApiIsLoading, formik } = useFormikIsComplete({
+  const { postApiIsLoading, formik, isCompleteError } = useFormikIsComplete({
     isComplete,
+    isPaid,
   })
 
-  const { isPaidApiIsLoading, formikIsPaid } = useFormikIsPaid({
+  const { isPaidApiIsLoading, formikIsPaid, isPaidError } = useFormikIsPaid({
     isPaid,
+    isComplete,
   })
 
   if (!selectedJob || !selectedDay) {
@@ -69,12 +71,15 @@ const ScheduledJobCard = () => {
             value={isComplete}
             isLoading={postApiIsLoading}
             formik={formik}
+            error={isCompleteError || false}
           />
+
           <DataSwitchItem
             name={'Invoice Paid'}
             value={isPaid}
             isLoading={isPaidApiIsLoading}
             formik={formikIsPaid}
+            error={isPaidError || false}
           />
         </View>
 
