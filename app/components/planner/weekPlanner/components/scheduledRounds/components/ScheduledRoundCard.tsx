@@ -50,7 +50,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
         <View style={styles.roundTitleContainer}>
           <Image
             source={require('../../../../../../../assets/round_icon.png')}
-            style={{ width: 30, height: 30, margin: 8 }}
+            style={{ width: 30, height: 30, margin: 8, marginTop: 20 }}
           />
 
           <Text
@@ -74,7 +74,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
             <TouchableOpacity onPress={handleDeletePress}>
               <Image
                 source={require('../../../../../../../assets/bin.png')}
-                style={{ width: 30, height: 30 }}
+                style={{ width: 34, height: 34 }}
               />
             </TouchableOpacity>
           </View>
@@ -137,8 +137,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginHorizontal: 8,
     overflow: 'hidden',
-    borderWidth: 1
-    ,
+    borderWidth: 1,
     borderStyle: 'solid',
     borderColor: theme.colors.primary,
   },
@@ -158,7 +157,7 @@ const styles = StyleSheet.create({
   },
   roundIconsContainer: {
     position: 'absolute',
-    top: 4,
+    top: 8,
     paddingHorizontal: 8,
     overflow: 'hidden',
     flexDirection: 'row',
