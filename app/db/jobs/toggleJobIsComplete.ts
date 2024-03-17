@@ -1,4 +1,10 @@
-import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  getDoc,
+} from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
 import { addInvoice } from '../invoice/addInvoice'
@@ -27,6 +33,21 @@ export const toggleJobIsComplete = async ({
       'planner',
       plannerDate,
     )
+    // only allow job is complete toggle if invoice is not paid
+    const plannerDoc = await getDoc(plannerDateDocRef)
+    if (!plannerDoc.exists()) {
+      throw new Error(
+        `Error updating job is complete status at toggleInvoiceIsPaid route: planner date doc does not exist`,
+      )
+    }
+
+    const jobIsInvoiced = plannerDoc.data().invoicedJobs.includes(jobId)
+
+    if (jobIsInvoiced === true) {
+      throw new Error(
+        'You cannnot toggle a job as incomplete if the invoice has been paid.',
+      )
+    }
 
     if (isComplete === true) {
       await updateDoc(plannerDateDocRef, {
