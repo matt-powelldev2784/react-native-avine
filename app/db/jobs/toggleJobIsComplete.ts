@@ -1,6 +1,8 @@
 import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
+import { addInvoice } from '../invoice/addInvoice'
+import { deleteInvoice } from '../invoice/deleteInvoice'
 
 interface toggleJobIsCompleteT {
   plannerDate: string
@@ -30,6 +32,7 @@ export const toggleJobIsComplete = async ({
       await updateDoc(plannerDateDocRef, {
         completedJobs: arrayUnion(jobId),
       })
+      await addInvoice({ plannerId: jobId, plannerDate })
       return { message: `Job id ${jobId} set to complete`, isComplete: true }
     }
 
@@ -37,6 +40,7 @@ export const toggleJobIsComplete = async ({
       await updateDoc(plannerDateDocRef, {
         completedJobs: arrayRemove(jobId),
       })
+      await deleteInvoice({ plannerId: jobId })
       return { message: `Job id ${jobId} set to incomplete`, isComplete: false }
     }
   } catch (error) {
