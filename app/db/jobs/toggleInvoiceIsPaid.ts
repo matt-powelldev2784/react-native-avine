@@ -82,7 +82,7 @@ export const toggleInvoiceIsPaid = async ({
     }
   } catch (error) {
     throw new Error(
-      `Error updating job is complete status at toggleInvoiceIsPaid route: ${error}`,
+      `Error updating invoice is paid status at toggleInvoiceIsPaid route: ${error}`,
     )
   }
 }
