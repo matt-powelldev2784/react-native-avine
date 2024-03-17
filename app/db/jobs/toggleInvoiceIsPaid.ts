@@ -32,6 +32,14 @@ export const toggleInvoiceIsPaid = async ({
       plannerDate,
     )
 
+    const invoiceDocRef = doc(
+      db,
+      'users',
+      auth.currentUser.uid,
+      'invoices',
+      jobId,
+    )
+
     // only allow invoice to be toggled if job is complete
     const plannerDoc = await getDoc(plannerDateDocRef)
     if (!plannerDoc.exists()) {
@@ -51,6 +59,9 @@ export const toggleInvoiceIsPaid = async ({
       await updateDoc(plannerDateDocRef, {
         invoicedJobs: arrayUnion(jobId),
       })
+      await updateDoc(invoiceDocRef, {
+        isPaid: true,
+      })
       return {
         message: `Invoice for job id ${jobId} set to unpaid`,
         isPaid: true,
@@ -60,6 +71,9 @@ export const toggleInvoiceIsPaid = async ({
     if (isPaid === false) {
       await updateDoc(plannerDateDocRef, {
         invoicedJobs: arrayRemove(jobId),
+      })
+      await updateDoc(invoiceDocRef, {
+        isPaid: false,
       })
       return {
         message: `Invoice for job id ${jobId} set to paid`,

@@ -40,6 +40,7 @@ export const addInvoice = async ({ plannerId, plannerDate }: addInvoiceT) => {
         price: job.price,
         jobType: job.jobType,
         jobName: job.jobName,
+        isPaid: false,
       })
     }
 
