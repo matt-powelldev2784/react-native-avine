@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: '100%',
-    backgroundColor: 'white',
+    backgroundColor: theme.colors.backgroundGrey,
   },
   largeWebCards: {
     display: 'grid' as any,

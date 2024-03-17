@@ -19,7 +19,11 @@ const Jobs = () => {
         />
 
         <FlatList
-          style={{ flex: 1, width: '100%' }}
+          style={{
+            flex: 1,
+            width: '100%',
+            backgroundColor: theme.colors.backgroundGrey,
+          }}
           data={childrenArray}
           renderItem={({ item }) => <View>{item}</View>}
           keyExtractor={(item, index) => `child-${index}`}
