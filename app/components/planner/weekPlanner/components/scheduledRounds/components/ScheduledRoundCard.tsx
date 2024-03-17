@@ -49,7 +49,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
         {/* ---------------------- Round Title ----------------------- */}
         <View style={styles.roundTitleContainer}>
           <Image
-            source={require('../../../../../../../assets/round.png')}
+            source={require('../../../../../../../assets/round_icon.png')}
             style={{ width: 30, height: 30, margin: 8 }}
           />
 
@@ -64,8 +64,8 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
           <View style={styles.roundIconsContainer}>
             {recurringRound ? (
               <Image
-                source={require('../../../../../../../assets/repeat1_white.png')}
-                style={{ width: 25, height: 20 }}
+                source={require('../../../../../../../assets/repeat.png')}
+                style={{ width: 25, height: 25 }}
               />
             ) : (
               <Text />
@@ -73,8 +73,8 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
 
             <TouchableOpacity onPress={handleDeletePress}>
               <Image
-                source={require('../../../../../../../assets/bin_white.png')}
-                style={{ width: 20, height: 25 }}
+                source={require('../../../../../../../assets/bin.png')}
+                style={{ width: 30, height: 30 }}
               />
             </TouchableOpacity>
           </View>
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     marginVertical: 8,
-    paddingHorizontal: 8,
+    paddingHorizontal: 12,
   },
   roundContainer: {
     marginTop: 8,
@@ -137,14 +137,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginHorizontal: 8,
     overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    borderWidth: 1
+    ,
+    borderStyle: 'solid',
+    borderColor: theme.colors.primary,
   },
   roundTitleContainer: {
     padding: 8,
@@ -152,11 +148,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.colors.primary,
     width: '100%',
   },
   roundTitleText: {
-    color: theme.colors.secondary,
+    color: theme.colors.primary,
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
@@ -180,7 +175,16 @@ const styles = StyleSheet.create({
     width: '25%',
     textAlign: 'right',
   },
-  jobCardLine: { height: 1, backgroundColor: theme.colors.primary },
+  roundCardLine: {
+    height: 2,
+    backgroundColor: theme.colors.primary,
+    width: '100%',
+  },
+  jobCardLine: {
+    height: 1,
+    backgroundColor: theme.colors.primary,
+    width: '100%',
+  },
 })
 
 export default ScheduledRoundCard
