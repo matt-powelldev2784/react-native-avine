@@ -2,7 +2,7 @@ import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
   Planner,
-  ScheduleRound,
+  Invoices,
   Rounds,
   Jobs,
   SignInScreen,
@@ -39,14 +39,16 @@ export type RootStackParamList = {
   AddRound: undefined
   EditRound: { roundId: string } | undefined
 
-  //payments
+  //planner
   Planner:
     | {
         refresh?: boolean
         screen: string
       }
     | undefined
-  ScheduleRound: undefined
+
+  //invoices
+  Invoices: undefined
 
   //jobs
   Jobs: { refresh?: boolean } | undefined
@@ -65,7 +67,6 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
-          <Stack.Screen name="Jobs" component={Jobs} />
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Error" component={Error} />
@@ -76,9 +77,14 @@ const StackNavigator = () => {
           <Stack.Screen name="EditClient" component={EditClient} />
 
           {/* --------------------------  Job Screens  ---------------------- */}
-
+          <Stack.Screen name="Jobs" component={Jobs} />
           <Stack.Screen name="AddJob" component={AddJob} />
           <Stack.Screen name="EditJob" component={EditJob} />
+
+          {/* --------------------------  Round Screens  ------------------------- */}
+          <Stack.Screen name="Rounds" component={Rounds} />
+          <Stack.Screen name="AddRound" component={AddRound} />
+          <Stack.Screen name="EditRound" component={EditRound} />
 
           {/* --------------------------  Planner Screens  -------------------------- */}
           <Stack.Screen
@@ -86,12 +92,9 @@ const StackNavigator = () => {
             component={Planner}
             initialParams={{ screen: 'PlannerView' }}
           />
-          <Stack.Screen name="ScheduleRound" component={ScheduleRound} />
 
-          {/* --------------------------  Round Screens  ------------------------- */}
-          <Stack.Screen name="Rounds" component={Rounds} />
-          <Stack.Screen name="AddRound" component={AddRound} />
-          <Stack.Screen name="EditRound" component={EditRound} />
+          {/* --------------------------  Invoice Screens  -------------------------- */}
+          <Stack.Screen name="Invoices" component={Invoices} />
 
           {/* --------------------------  Auth Screens Screens  ------------------- */}
           <Stack.Screen name="SignOut" component={SignOutScreen} />
