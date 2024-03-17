@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   cardSmallScreen: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.secondary,
     borderRadius: 12,
     marginBottom: 8,
     borderWidth: 1,
@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     height: 130,
     overflow: 'hidden',
     width: '100%',
+    backgroundColor: theme.colors.secondary,
   },
   leftContainer: {
     flex: 1,
