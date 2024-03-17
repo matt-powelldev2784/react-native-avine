@@ -20,6 +20,10 @@ export const deleteInvoice = async ({ plannerId }: addInvoiceT) => {
       plannerId,
     )
 
+    if (!invoiceDocRef) {
+      throw new Error('No invoice found')
+    }
+
     const invoiceDoc = await getDoc(invoiceDocRef)
 
     if (invoiceDoc.exists()) {
