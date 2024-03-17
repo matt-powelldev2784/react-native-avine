@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 8,
     backgroundColor: theme.colors.backgroundGrey,
+    alignItems: 'center',
   },
   cardContainer: {
     marginTop: 8,
