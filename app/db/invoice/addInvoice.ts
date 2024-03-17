@@ -37,9 +37,6 @@ export const addInvoice = async ({ plannerId, plannerDate }: addInvoiceT) => {
         roundType: roundType,
         completedDate: plannerDate,
         job: job,
-        price: job.price,
-        jobType: job.jobType,
-        jobName: job.jobName,
         isPaid: false,
       })
     }
@@ -51,6 +48,7 @@ export const addInvoice = async ({ plannerId, plannerDate }: addInvoiceT) => {
         roundType: roundType,
         completedDate: plannerDate,
         job: job,
+        isPaid: false,
       })
     }
   } catch (error) {
