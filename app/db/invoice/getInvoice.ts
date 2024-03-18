@@ -1,7 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
-import { JobWithIdT } from '../../types/JobT'
 import { InvoiceWithIdT } from '../../types/InvoiceT'
 
 export const getInvoice = async (
