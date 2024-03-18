@@ -48,7 +48,9 @@ export const toggleInvoiceIsPaid = async ({
       )
     }
 
-    const jobIsComplete = plannerDoc.data().completedJobs.includes(jobId)
+    const completeJobs = plannerDoc.data().completedJobs
+    const jobIsComplete = completeJobs ? completeJobs.includes(jobId) : false
+
 
     if (jobIsComplete === false) {
       throw new Error('You cannot toggle a job as paid if it is not complete')
