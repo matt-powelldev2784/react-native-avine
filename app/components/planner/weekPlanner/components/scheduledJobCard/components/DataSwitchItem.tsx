@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native'
 import React from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { CustomSwitch } from '../../../../../../ui'
@@ -26,13 +26,19 @@ const DataSwitchItem = ({
           {name}
         </Text>
 
-        <CustomSwitch
-          value={value}
-          disabled={isLoading}
-          onValueChange={() => {
-            formik.handleSubmit()
-          }}
-        />
+        <View style={styles.rightContainer}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color={theme.colors.primary} />
+          ) : null}
+
+          <CustomSwitch
+            value={value}
+            disabled={isLoading}
+            onValueChange={() => {
+              formik.handleSubmit()
+            }}
+          />
+        </View>
       </View>
 
       {error ? (
@@ -57,6 +63,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  rightContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
   },
   name: {
     fontSize: 16,
