@@ -110,7 +110,7 @@ export default ScheduledJobCard
 const styles = StyleSheet.create({
   cardWrapperWeb: {
     width: '100%',
-    padding: 8,
+    padding: 12,
     backgroundColor: theme.colors.backgroundGrey,
     alignItems: 'center',
   },
