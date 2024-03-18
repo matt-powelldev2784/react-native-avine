@@ -37,6 +37,7 @@ export const addInvoice = async ({ plannerId, plannerDate }: addInvoiceT) => {
         roundType: roundType,
         completedDate: plannerDate,
         job: job,
+        price: job.price,
         isPaid: false,
       })
     }

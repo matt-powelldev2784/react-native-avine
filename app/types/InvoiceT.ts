@@ -7,5 +7,6 @@ export interface InvoiceWithIdT {
   roundType: string
   completedDate: string
   job: JobWithIdT
+  price: string
   isPaid: boolean
 }
