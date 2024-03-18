@@ -1,6 +1,6 @@
 import { View, FlatList, StyleSheet } from 'react-native'
 import React from 'react'
-import InvoiceListItem from './invoiceCard/InvoiceListItem'
+import InvoiceListItem from './invoiceListItem/InvoiceListItem'
 import { Loading } from '../../../ui'
 import ErrorNoData from './errorNoData/ErrorNoData'
 import useGetApiData from '../../../utils/hooks/useGetApiData'
