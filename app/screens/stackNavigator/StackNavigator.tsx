@@ -48,7 +48,7 @@ export type RootStackParamList = {
     | undefined
 
   //invoices
-  Invoices: { refresh?: boolean } | undefined
+  DueInvoices: { refresh?: boolean } | undefined
 
   //jobs
   Jobs: { refresh?: boolean } | undefined
@@ -68,7 +68,7 @@ const StackNavigator = () => {
       {userInfo ? (
         <>
           {/* --------------------------  Invoice Screens  -------------------------- */}
-          <Stack.Screen name="Invoices" component={Invoices} />
+          <Stack.Screen name="DueInvoices" component={Invoices} />
 
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />

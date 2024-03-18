@@ -1,6 +1,6 @@
 import { View, FlatList, StyleSheet } from 'react-native'
 import React from 'react'
-import InvoiceCard from './invoiceCard/InvoiceCard'
+import InvoiceListItem from './invoiceCard/InvoiceListItem'
 import { Loading } from '../../../ui'
 import ErrorNoData from './errorNoData/ErrorNoData'
 import useGetApiData from '../../../utils/hooks/useGetApiData'
@@ -8,7 +8,7 @@ import { useRoute } from '@react-navigation/native'
 import { getUnpaidInvoices } from '../../../db/invoice/getUnpaidInvoices'
 import { InvoiceWithIdT } from '../../../types/InvoiceT'
 
-const InvoiceList = () => {
+const UnpaidInvoices = () => {
   const route = useRoute()
   const { getApiIsLoading, data } = useGetApiData({
     apiFunction: async () => getUnpaidInvoices(),
@@ -30,7 +30,7 @@ const InvoiceList = () => {
       <FlatList
         style={styles.cardsContainer}
         data={invoiceData}
-        renderItem={({ item }) => <InvoiceCard {...item} />}
+        renderItem={({ item }) => <InvoiceListItem {...item} />}
         keyExtractor={(item) => item.id}
         ListFooterComponent={<View style={styles.flatlistFooter} />}
       />
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default InvoiceList
+export default UnpaidInvoices

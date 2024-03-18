@@ -26,7 +26,7 @@ import AddRound from './rounds/AddRound'
 import EditRound from './rounds/EditRound'
 
 //invoices
-import Invoices from './invoices/Invoices'
+import Invoices from './invoices/DueInvoices'
 
 export {
   Clients,

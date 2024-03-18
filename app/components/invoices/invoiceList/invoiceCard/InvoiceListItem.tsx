@@ -6,7 +6,7 @@ import { format } from 'date-fns'
 import { convertDbDateToDateString } from '../../../../utils/convertDbDateToDateString'
 import IconButton from '../../../../ui/iconButton/IconButton'
 
-const InvoiceCard = ({ id, completedDate, job }: InvoiceWithIdT) => {
+const InvoiceListItem = ({ id, completedDate, job }: InvoiceWithIdT) => {
   const completedDateString = convertDbDateToDateString(completedDate)
   const formattedDate = format(completedDateString, 'dd MMMM yyyy')
 
@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default InvoiceCard
+export default InvoiceListItem
