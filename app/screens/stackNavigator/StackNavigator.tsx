@@ -48,7 +48,7 @@ export type RootStackParamList = {
     | undefined
 
   //invoices
-  Invoices: undefined
+  Invoices: { refresh?: boolean } | undefined
 
   //jobs
   Jobs: { refresh?: boolean } | undefined
@@ -67,6 +67,9 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
+          {/* --------------------------  Invoice Screens  -------------------------- */}
+          <Stack.Screen name="Invoices" component={Invoices} />
+
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Error" component={Error} />
@@ -92,9 +95,6 @@ const StackNavigator = () => {
             component={Planner}
             initialParams={{ screen: 'PlannerView' }}
           />
-
-          {/* --------------------------  Invoice Screens  -------------------------- */}
-          <Stack.Screen name="Invoices" component={Invoices} />
 
           {/* --------------------------  Auth Screens Screens  ------------------- */}
           <Stack.Screen name="SignOut" component={SignOutScreen} />

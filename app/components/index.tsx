@@ -25,6 +25,9 @@ import WeekPlanner from './planner/weekPlanner/WeekPlanner'
 import ScheduleRoundForm from './planner/scheduleRoundForm/ScheduleRoundForm'
 import ScheduledJobCard from './planner/weekPlanner/components/scheduledJobCard/ScheduledJobCard'
 
+// invoice
+ import InvoiceList from './invoices/invoiceList/InvoiceList'
+
 //otheres
 
 export {
@@ -37,6 +40,7 @@ export {
   AddRoundForm,
   EditRoundForm,
   WeekPlanner,
+  InvoiceList,
   ScheduleRoundForm,
   ScheduledJobCard,
   ScreenMenu,

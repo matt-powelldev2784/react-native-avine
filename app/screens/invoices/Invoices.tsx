@@ -1,12 +1,12 @@
 import React from 'react'
-import { Dashboard, ScreenMenu } from '../../components'
+import { Dashboard, InvoiceList, ScreenMenu } from '../../components'
 import theme from '../../utils/theme/theme'
 import { FlatList, View } from 'react-native'
 
 const Invoices = () => {
   // flatlist is used to render children to allow the
   // dashboatd header to be sticky in the webview
-  const childrenArray = [<></>]
+  const childrenArray = [<InvoiceList key={0} />]
 
   return (
     <>
