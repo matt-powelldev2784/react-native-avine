@@ -41,7 +41,11 @@ const ScheduledJobCard = () => {
     return
   }
 
-  if (typeof isComplete !== 'boolean' || typeof isPaid !== 'boolean') {
+  if (
+    typeof isComplete !== 'boolean' ||
+    typeof isPaid !== 'boolean' ||
+    !jobData
+  ) {
     return <Loading loadingText={'Loading job details...'} />
   }
 
