@@ -13,7 +13,8 @@ const useNavigationRouteFunctions = () => {
       navigation.navigate('Planner', {
         screen: 'PlannerView',
       }),
-    invoicesNavigation: () => navigation.navigate('Invoices'),
+    invoicesNavigation: () =>
+      navigation.navigate('Invoices', { refresh: true }),
     signOut: () => {
       navigation.navigate('SignOut')
     },
