@@ -1,19 +1,19 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import usePostApiData from '../../../utils/hooks/usePostApiData'
-import { toggleInvoiceIsPaid } from '../../../db/jobs/toggleInvoiceIsPaid'
+import usePostApiData from '../../../../utils/hooks/usePostApiData'
+import { toggleInvoiceIsPaid } from '../../../../db/jobs/toggleInvoiceIsPaid'
 
 interface useFormikStepsInterface {
   isPaid: boolean | null | undefined
   isComplete: boolean | null | undefined
-  plannerId: string
-  plannerDate: string
+  invoiceId: string
+  plannerDate: string | null
 }
 
 const useFormikIsPaid = ({
   isPaid,
   isComplete,
-  plannerId,
+  invoiceId,
   plannerDate,
 }: useFormikStepsInterface) => {
   const isPaidError = isComplete
@@ -21,7 +21,8 @@ const useFormikIsPaid = ({
     : 'You cannot toggle a invoice as paid until the job is set to complete.'
 
   const { setApiFunction, postApiIsLoading } = usePostApiData({
-    onSuccessScreen: 'DueInvoices',
+    onSuccessScreen: 'InvoiceCardView',
+    refreshScreen: { invoiceId },
   })
 
   const validationSchema = Yup.object().shape({
@@ -37,10 +38,14 @@ const useFormikIsPaid = ({
         return
       }
 
+      if (!plannerDate) {
+        return
+      }
+
       setApiFunction(
         () => async () =>
           toggleInvoiceIsPaid({
-            jobId: plannerId,
+            jobId: invoiceId,
             plannerDate,
             isPaid: !isPaid,
           }),

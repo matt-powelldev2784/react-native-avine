@@ -5,13 +5,17 @@ import { InvoiceWithIdT } from '../../../../types/InvoiceT'
 import { format } from 'date-fns'
 import { convertDbDateToDateString } from '../../../../utils/convertDbDateToDateString'
 import IconButton from '../../../../ui/iconButton/IconButton'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 
 const InvoiceListItem = ({ id, completedDate, job }: InvoiceWithIdT) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const completedDateString = convertDbDateToDateString(completedDate)
   const formattedDate = format(completedDateString, 'dd MMMM yyyy')
 
   const handleEditInvoicePress = () => {
-    console.log('edit invoice')
+    navigation.navigate('InvoiceCardView', { invoiceId: id })
   }
 
   return (

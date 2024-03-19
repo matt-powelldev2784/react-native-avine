@@ -1,74 +1,80 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
-import { usePlannerContext } from '../../../../../screens/planner/plannerContext/usePlannerContext'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
-import { RootStackParamList } from '../../../../../screens/stackNavigator/StackNavigator'
-import { useGetJobCardData } from './hooks/useGetJobCardData'
-import { StackNavigationProp } from '@react-navigation/stack'
-import useFormikIsComplete from './hooks/useFormikIsComplete'
-import theme from '../../../../../utils/theme/theme'
-import { format } from 'date-fns'
-import DataLineItem from './components/DataLineItem'
-import DataSwitchItem from './components/DataSwitchItem'
-import LongDataItem from './components/LongDataItem'
-import { Loading } from '../../../../../ui'
-import useFormikIsPaid from './hooks/useFormikIsPaid'
+import { useGetInvoiceData } from '../invoiceList/hooks/getInvoiceCardData'
+import { Loading } from '../../../ui'
+import useFormikIsPaid from '../invoiceList/hooks/useFormikIsPaid'
+import DataSwitchItem from '../../planner/weekPlanner/components/scheduledJobCard/components/DataSwitchItem'
+import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
+import theme from '../../../utils/theme/theme'
+import DataLineItem from '../../planner/weekPlanner/components/scheduledJobCard/components/DataLineItem'
+import { convertPlannerDateToShortDate } from '../../../utils/convertPlannerDateToShortDate'
+import LongDataItem from '../../planner/weekPlanner/components/scheduledJobCard/components/LongDataItem'
 
-type ScheduledJobCardRouteProp = RouteProp<RootStackParamList, 'Planner'>
+interface InvoiceCardProps {
+  invoiceId: string
+}
 
-const ScheduledJobCard = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const route = useRoute<ScheduledJobCardRouteProp>()
-  const { selectedDay, selectedJob } = usePlannerContext()
+type DueInvoiceCardRouteProp = RouteProp<RootStackParamList, 'DueInvoices'>
 
-  const { jobData, isComplete, isPaid } = useGetJobCardData({
+const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
+  // hooks
+  const route = useRoute<DueInvoiceCardRouteProp>()
+  const { invoiceData, isComplete, isPaid } = useGetInvoiceData({
+    invoiceId,
     route,
   })
-
   const { isPaidApiIsLoading, formikIsPaid, isPaidError } = useFormikIsPaid({
     isPaid,
     isComplete,
+    invoiceId,
+    plannerDate: invoiceData?.completedDate || null,
   })
 
-  if (!selectedJob || !selectedDay) {
-    navigation.navigate('Error')
-    return
-  }
-
-  if (typeof isComplete !== 'boolean' || typeof isPaid !== 'boolean') {
+  if (
+    typeof isComplete !== 'boolean' ||
+    typeof isPaid !== 'boolean' ||
+    !invoiceData
+  ) {
     return <Loading loadingText={'Loading job details...'} />
   }
+
+  // variables
+  const shortDateString = convertPlannerDateToShortDate(
+    invoiceData?.completedDate,
+  )
 
   return (
     <View style={styles.cardWrapperWeb}>
       <View style={styles.cardContainer}>
         <View style={styles.titleContainer}>
           <Image
-            source={require('../../../../../../assets/clipboard_white.png')}
-            style={{ width: 24, height: 32, margin: 8 }}
+            source={require('../../../../assets/paper_white.png')}
+            style={{ width: 27, height: 32, margin: 8 }}
           />
 
           <Text style={styles.titleText} numberOfLines={1} ellipsizeMode="tail">
-            {jobData.jobName}
+            {invoiceData.job.jobName}
           </Text>
 
           <View style={styles.dateTextContainer}>
-            <Text style={styles.dateText}>
-              {format(selectedDay, 'dd MMMM yyyy')}
-            </Text>
+            <Text style={styles.dateText}>{shortDateString}</Text>
           </View>
         </View>
 
-        <View style={styles.switchWrapper}>
-          <DataSwitchItem
-            name={'Job Complete'}
-            value={isComplete}
-            isLoading={postApiIsLoading}
-            formik={formik}
-            error={isCompleteError || false}
-          />
+        <View style={styles.infoWrapper}>
+          <Text style={styles.infoTitle}>Invoice Details:</Text>
+          <DataLineItem name={'Date Completed'} value={shortDateString} />
+          <DataLineItem name={'Price'} value={`£${invoiceData.price}`} />
 
+          <LongDataItem
+            name={'Description'}
+            value={invoiceData.description || ''}
+          />
+        </View>
+
+        <View style={styles.switchWrapper}>
           <DataSwitchItem
             name={'Invoice Paid'}
             value={isPaid}
@@ -77,30 +83,12 @@ const ScheduledJobCard = () => {
             error={isPaidError || false}
           />
         </View>
-
-        <View style={styles.infoWrapper}>
-          <Text style={styles.infoTitle}>Job Infomation:</Text>
-          <DataLineItem name={'Contact Name'} value={jobData.contactName} />
-          <DataLineItem name={'Address'} value={jobData.address} />
-          <DataLineItem name={'Town'} value={jobData.town} />
-          <DataLineItem name={'Post Code'} value={jobData.postcode} />
-          <DataLineItem name={'Contact Tel'} value={jobData.contactTel} />
-          <DataLineItem name={'Job Type'} value={jobData.jobType} />
-          <DataLineItem name={'Estimated Time'} value={`${jobData.time} hrs`} />
-          <DataLineItem name={'Client'} value={jobData.clientId} />
-          <DataLineItem name={'Price'} value={jobData.price} />
-          <DataLineItem name={'Frequency'} value={jobData.frequency} />
-
-          <LongDataItem name={'Notes'} value={jobData.notes || ''} />
-        </View>
       </View>
 
       <View style={{ height: 100 }} />
     </View>
   )
 }
-
-export default ScheduledJobCard
 
 const styles = StyleSheet.create({
   cardWrapperWeb: {
@@ -163,3 +151,5 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 })
+
+export default InvoiceCard

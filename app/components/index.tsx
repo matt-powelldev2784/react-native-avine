@@ -26,7 +26,8 @@ import ScheduleRoundForm from './planner/scheduleRoundForm/ScheduleRoundForm'
 import ScheduledJobCard from './planner/weekPlanner/components/scheduledJobCard/ScheduledJobCard'
 
 // invoice
- import UnpaidInvoices from './invoices/invoiceList/UnpaidInvoices'
+import UnpaidInvoices from './invoices/invoiceList/UnpaidInvoices'
+import InvoiceCard from './invoices/invoiceCard/InvoiceCard'
 
  //otheres
 
@@ -41,6 +42,7 @@ import ScheduledJobCard from './planner/weekPlanner/components/scheduledJobCard/
    EditRoundForm,
    WeekPlanner,
    UnpaidInvoices,
+   InvoiceCard,
    ScheduleRoundForm,
    ScheduledJobCard,
    ScreenMenu,

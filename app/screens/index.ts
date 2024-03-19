@@ -27,6 +27,7 @@ import EditRound from './rounds/EditRound'
 
 //invoices
 import Invoices from './invoices/DueInvoices'
+import InvoiceCardView from './invoices/InvoiceCardView'
 
 export {
   Clients,
@@ -40,6 +41,7 @@ export {
   EditRound,
   Planner,
   Invoices,
+  InvoiceCardView,
   SignInScreen,
   SignOutScreen,
   Home,

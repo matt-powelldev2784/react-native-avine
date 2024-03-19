@@ -2,6 +2,7 @@ import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
 import { getJob } from '../jobs/getJob'
+import { convertPlannerDateToShortDate } from '../../utils/convertPlannerDateToShortDate'
 
 interface addInvoiceT {
   plannerId: string
@@ -38,6 +39,9 @@ export const addInvoice = async ({ plannerId, plannerDate }: addInvoiceT) => {
         completedDate: plannerDate,
         job: job,
         price: job.price,
+        description: `Window cleaning on services completed on ${convertPlannerDateToShortDate(
+          plannerDate,
+        )}`,
         isPaid: false,
       })
     }

@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
   Planner,
   Invoices,
+  InvoiceCardView,
   Rounds,
   Jobs,
   SignInScreen,
@@ -49,6 +50,7 @@ export type RootStackParamList = {
 
   //invoices
   DueInvoices: { refresh?: boolean } | undefined
+  InvoiceCardView: { invoiceId: string } | undefined
 
   //jobs
   Jobs: { refresh?: boolean } | undefined
@@ -69,6 +71,7 @@ const StackNavigator = () => {
         <>
           {/* --------------------------  Invoice Screens  -------------------------- */}
           <Stack.Screen name="DueInvoices" component={Invoices} />
+          <Stack.Screen name="InvoiceCardView" component={InvoiceCardView} />
 
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />
