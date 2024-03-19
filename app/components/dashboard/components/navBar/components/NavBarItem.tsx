@@ -28,7 +28,7 @@ const NavBarItem = ({
     buttonText: {
       color: 'white',
       fontSize: isLargeWeb ? 15 : 10,
-      fontFamily: 'Noto Sans',
+      fontFamily: 'NotoSans_400Regular',
     },
     image: {
       width: isLargeWeb ? 15 : 25,
