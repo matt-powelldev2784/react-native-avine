@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 16,
     color: 'black',
+    textAlign: 'center',
   },
   line: {
     marginVertical: 8,
