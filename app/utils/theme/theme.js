@@ -9,6 +9,7 @@ const theme = {
     jobPrimary: '#aa337b',
     roundPrimary: '#00b4e1',
     plannerPrimary: '#FF593E',
+    invoicePrimary: '#33ae50',
   },
 }
 

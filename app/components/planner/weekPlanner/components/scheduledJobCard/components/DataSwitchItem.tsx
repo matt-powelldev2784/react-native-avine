@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native'
 import React from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { CustomSwitch } from '../../../../../../ui'
@@ -9,6 +9,7 @@ interface DataSwitchProps {
   value: boolean
   isLoading: boolean
   formik: FormikProps<any>
+  error: string | boolean
 }
 
 const DataSwitchItem = ({
@@ -16,6 +17,7 @@ const DataSwitchItem = ({
   value,
   isLoading,
   formik,
+  error,
 }: DataSwitchProps) => {
   return (
     <>
@@ -23,14 +25,32 @@ const DataSwitchItem = ({
         <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
           {name}
         </Text>
-        <CustomSwitch
-          value={value}
-          disabled={isLoading}
-          onValueChange={() => {
-            formik.handleSubmit()
-          }}
-        />
+
+        <View style={styles.rightContainer}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color={theme.colors.primary} />
+          ) : null}
+
+          <CustomSwitch
+            value={value}
+            disabled={isLoading}
+            onValueChange={() => {
+              formik.handleSubmit()
+            }}
+          />
+        </View>
       </View>
+
+      {error ? (
+        <View style={styles.errorContainer}>
+          <Image
+            source={require('../../../../../../../assets/info.png')}
+            style={{ width: 15, height: 15 }}
+          />
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      ) : null}
+
       <View style={styles.line} />
     </>
   )
@@ -44,10 +64,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  rightContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+  },
   name: {
     fontSize: 16,
     fontWeight: 'bold',
     color: theme.colors.primary,
+  },
+  errorContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
+    marginBottom: 16,
+  },
+  errorText: {
+    textAlign: 'center',
+    fontSize: 10,
   },
   line: {
     height: 1,

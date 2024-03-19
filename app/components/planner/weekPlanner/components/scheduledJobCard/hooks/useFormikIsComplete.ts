@@ -7,10 +7,17 @@ import { usePlannerContext } from '../../../../../../screens/planner/plannerCont
 
 interface useFormikStepsInterface {
   isComplete: boolean | null | undefined
+  isPaid: boolean | null | undefined
 }
 
-const useFormikIsComplete = ({ isComplete }: useFormikStepsInterface) => {
+const useFormikIsComplete = ({
+  isComplete,
+  isPaid,
+}: useFormikStepsInterface) => {
   const { selectedDay, selectedJob } = usePlannerContext()
+  const isCompleteError = isPaid
+    ? 'You cannot toggle a job as incomplete if the invoice has been set to paid.'
+    : false
 
   const { setApiFunction, postApiIsLoading } = usePostApiData({
     onSuccessScreen: 'Planner',
@@ -50,7 +57,7 @@ const useFormikIsComplete = ({ isComplete }: useFormikStepsInterface) => {
     enableReinitialize: true,
   })
 
-  return { postApiIsLoading, formik }
+  return { postApiIsLoading, formik, isCompleteError }
 }
 
 export default useFormikIsComplete

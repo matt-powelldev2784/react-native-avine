@@ -1,4 +1,10 @@
-import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  getDoc,
+} from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
 
@@ -26,9 +32,37 @@ export const toggleInvoiceIsPaid = async ({
       plannerDate,
     )
 
+    const invoiceDocRef = doc(
+      db,
+      'users',
+      auth.currentUser.uid,
+      'invoices',
+      jobId,
+    )
+
+    // only allow invoice to be toggled if job is complete
+    const plannerDoc = await getDoc(plannerDateDocRef)
+    if (!plannerDoc.exists()) {
+      throw new Error(
+        `Error updating job is complete status at toggleInvoiceIsPaid route: planner date doc does not exist`,
+      )
+    }
+
+    const completeJobs = plannerDoc.data().completedJobs
+    const jobIsComplete = completeJobs ? completeJobs.includes(jobId) : false
+
+
+    if (jobIsComplete === false) {
+      throw new Error('You cannot toggle a job as paid if it is not complete')
+    }
+
+    // toggle invoice is paid status
     if (isPaid === true) {
       await updateDoc(plannerDateDocRef, {
         invoicedJobs: arrayUnion(jobId),
+      })
+      await updateDoc(invoiceDocRef, {
+        isPaid: true,
       })
       return {
         message: `Invoice for job id ${jobId} set to unpaid`,
@@ -40,6 +74,9 @@ export const toggleInvoiceIsPaid = async ({
       await updateDoc(plannerDateDocRef, {
         invoicedJobs: arrayRemove(jobId),
       })
+      await updateDoc(invoiceDocRef, {
+        isPaid: false,
+      })
       return {
         message: `Invoice for job id ${jobId} set to paid`,
         isPaid: false,
@@ -47,7 +84,7 @@ export const toggleInvoiceIsPaid = async ({
     }
   } catch (error) {
     throw new Error(
-      `Error updating job is complete status at toggleInvoiceIsPaid route: ${error}`,
+      `Error updating invoice is paid status at toggleInvoiceIsPaid route: ${error}`,
     )
   }
 }

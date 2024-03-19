@@ -19,15 +19,15 @@ import EditJob from './jobs/EditJob'
 
 //planner
 import Planner from './planner/Planner'
-import ScheduleRound from './planner/ScheduleRound'
 
 //rounds
 import Rounds from './rounds/Rounds'
 import AddRound from './rounds/AddRound'
 import EditRound from './rounds/EditRound'
 
-//others
-import SplashScreen from './auth/SplashScreen'
+//invoices
+import Invoices from './invoices/DueInvoices'
+import InvoiceCardView from './invoices/InvoiceCardView'
 
 export {
   Clients,
@@ -40,8 +40,8 @@ export {
   AddRound,
   EditRound,
   Planner,
-  ScheduleRound,
-  SplashScreen,
+  Invoices,
+  InvoiceCardView,
   SignInScreen,
   SignOutScreen,
   Home,

@@ -37,7 +37,7 @@ const NavBar = () => {
       <NavBarItem
         buttonText="Invoices"
         imageSource={require('../../../../../assets/pay.png')}
-        routeFunction={routeFunctions.plannerNavigation}
+        routeFunction={routeFunctions.invoicesNavigation}
       />
     </SafeAreaView>
   )

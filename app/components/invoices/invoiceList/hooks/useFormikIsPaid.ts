@@ -1,24 +1,28 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import usePostApiData from '../../../../../../utils/hooks/usePostApiData'
-import { formatDateForDb } from '../../../../../../utils/formatDateForDb'
-import { usePlannerContext } from '../../../../../../screens/planner/plannerContext/usePlannerContext'
-import { toggleInvoiceIsPaid } from '../../../../../../db/jobs/toggleInvoiceIsPaid'
+import usePostApiData from '../../../../utils/hooks/usePostApiData'
+import { toggleInvoiceIsPaid } from '../../../../db/jobs/toggleInvoiceIsPaid'
 
 interface useFormikStepsInterface {
   isPaid: boolean | null | undefined
   isComplete: boolean | null | undefined
+  invoiceId: string
+  plannerDate: string | null
 }
 
-const useFormikIsPaid = ({ isPaid, isComplete }: useFormikStepsInterface) => {
-  const { selectedDay, selectedJob } = usePlannerContext()
+const useFormikIsPaid = ({
+  isPaid,
+  isComplete,
+  invoiceId,
+  plannerDate,
+}: useFormikStepsInterface) => {
   const isPaidError = isComplete
     ? false
     : 'You cannot toggle a invoice as paid until the job is set to complete.'
 
   const { setApiFunction, postApiIsLoading } = usePostApiData({
-    onSuccessScreen: 'Planner',
-    refreshScreen: { screen: 'ScheduledJobView' },
+    onSuccessScreen: 'InvoiceCardView',
+    refreshScreen: { invoiceId },
   })
 
   const validationSchema = Yup.object().shape({
@@ -30,22 +34,19 @@ const useFormikIsPaid = ({ isPaid, isComplete }: useFormikStepsInterface) => {
       isPaid: isPaid,
     },
     onSubmit: async () => {
-      if (!selectedJob || !selectedDay) {
-        return
-      }
       if (typeof isPaid !== 'boolean') {
         return
       }
 
-      const relatedJobSuffix = selectedJob.recurringRound
-        ? 'recurringRound'
-        : 'oneOffRound'
+      if (!plannerDate) {
+        return
+      }
 
       setApiFunction(
         () => async () =>
           toggleInvoiceIsPaid({
-            jobId: `${selectedJob.roundId}@${selectedJob.jobId}@${relatedJobSuffix}`,
-            plannerDate: formatDateForDb(selectedDay),
+            jobId: invoiceId,
+            plannerDate,
             isPaid: !isPaid,
           }),
       )
