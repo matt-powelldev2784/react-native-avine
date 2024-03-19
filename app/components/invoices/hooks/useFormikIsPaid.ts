@@ -1,7 +1,7 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import usePostApiData from '../../../../utils/hooks/usePostApiData'
-import { toggleInvoiceIsPaid } from '../../../../db/jobs/toggleInvoiceIsPaid'
+import usePostApiData from '../../../utils/hooks/usePostApiData'
+import { toggleInvoiceIsPaid } from '../../../db/jobs/toggleInvoiceIsPaid'
 
 interface useFormikStepsInterface {
   isPaid: boolean | null | undefined
