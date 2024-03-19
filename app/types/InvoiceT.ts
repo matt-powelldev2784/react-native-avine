@@ -8,5 +8,6 @@ export interface InvoiceWithIdT {
   completedDate: string
   job: JobWithIdT
   price: string
+  description: string
   isPaid: boolean
 }
