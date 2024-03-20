@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import React from 'react'
 import { useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
@@ -11,6 +11,7 @@ import theme from '../../../utils/theme/theme'
 import DataLineItem from '../../planner/weekPlanner/components/scheduledJobCard/components/DataLineItem'
 import { convertPlannerDateToShortDate } from '../../../utils/convertPlannerDateToShortDate'
 import LongDataItem from '../../planner/weekPlanner/components/scheduledJobCard/components/LongDataItem'
+import IconButton from '../../../ui/iconButton/IconButton'
 
 interface InvoiceCardProps {
   invoiceId: string
@@ -60,6 +61,22 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
 
           <View style={styles.dateTextContainer}>
             <Text style={styles.dateText}>{shortDateString}</Text>
+          </View>
+
+          <View style={styles.roundIconsContainer}>
+            <IconButton
+              size={34}
+              imgSource={require('../../../../assets/download_blue.png')}
+              onPress={() => {}}
+            />
+
+            <Text />
+
+            <IconButton
+              size={34}
+              imgSource={require('../../../../assets/edit_white.png')}
+              onPress={() => {}}
+            />
           </View>
         </View>
 
@@ -124,6 +141,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
+  },
+  roundIconsContainer: {
+    position: 'absolute',
+    top: 8,
+    paddingHorizontal: 8,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: Platform.OS === 'web' ? '96%' : '100%',
+    height: 40,
   },
   dateTextContainer: {
     borderRadius: 12,
