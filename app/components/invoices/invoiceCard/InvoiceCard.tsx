@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import React from 'react'
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
 import { useGetInvoiceData } from '../hooks/getInvoiceData'
 import { Loading } from '../../../ui'
@@ -12,6 +12,7 @@ import DataLineItem from '../../planner/weekPlanner/components/scheduledJobCard/
 import { convertPlannerDateToShortDate } from '../../../utils/convertPlannerDateToShortDate'
 import LongDataItem from '../../planner/weekPlanner/components/scheduledJobCard/components/LongDataItem'
 import IconButton from '../../../ui/iconButton/IconButton'
+import { StackNavigationProp } from '@react-navigation/stack'
 
 interface InvoiceCardProps {
   invoiceId: string
@@ -21,6 +22,7 @@ type DueInvoiceCardRouteProp = RouteProp<RootStackParamList, 'DueInvoices'>
 
 const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
   // hooks
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const route = useRoute<DueInvoiceCardRouteProp>()
   const { invoiceData, isComplete, isPaid } = useGetInvoiceData({
     invoiceId,
@@ -33,12 +35,18 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
     plannerDate: invoiceData?.completedDate || null,
   })
 
+  // if data is null show loading state
   if (
     typeof isComplete !== 'boolean' ||
     typeof isPaid !== 'boolean' ||
     !invoiceData
   ) {
     return <Loading loadingText={'Loading job details...'} />
+  }
+
+  //functions
+  const handleNavigateToEditInvoice = () => {
+    navigation.navigate('EditInvoice', { invoiceId })
   }
 
   // variables
@@ -75,7 +83,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
             <IconButton
               size={34}
               imgSource={require('../../../../assets/edit_white.png')}
-              onPress={() => {}}
+              onPress={handleNavigateToEditInvoice}
             />
           </View>
         </View>

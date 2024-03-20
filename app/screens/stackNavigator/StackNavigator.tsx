@@ -4,6 +4,7 @@ import {
   Planner,
   Invoices,
   InvoiceCardView,
+  EditInvoice,
   Rounds,
   Jobs,
   SignInScreen,
@@ -51,6 +52,7 @@ export type RootStackParamList = {
   //invoices
   DueInvoices: { refresh?: boolean } | undefined
   InvoiceCardView: { invoiceId: string } | undefined
+  EditInvoice: { invoiceId: string } | undefined
 
   //jobs
   Jobs: { refresh?: boolean } | undefined
@@ -72,6 +74,7 @@ const StackNavigator = () => {
           {/* --------------------------  Invoice Screens  -------------------------- */}
           <Stack.Screen name="DueInvoices" component={Invoices} />
           <Stack.Screen name="InvoiceCardView" component={InvoiceCardView} />
+          <Stack.Screen name="EditInvoice" component={EditInvoice} />
 
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />
