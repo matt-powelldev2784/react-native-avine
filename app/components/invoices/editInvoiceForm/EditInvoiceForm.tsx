@@ -3,7 +3,7 @@ import React from 'react'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import { RouteProp, useRoute } from '@react-navigation/native'
 import InputField from '../../../ui/formElements/InputField'
-import useFormikInvoice from './hooks/useFormik'
+import useFormikInvoice from './hooks/useFormikInvoice'
 import { Loading } from '../../../ui'
 import FormFlowTitles from './components/FormFlowTitles'
 import { useGetClientOptions } from '../../Jobs/editJob/hooks/useFetchClients'
@@ -63,13 +63,13 @@ const EditInvoiceForm = () => {
           imageName={'notes'}
           height={200}
         />
-      </View>
 
-      <Button
-        onPress={handleSumbit}
-        text={'Update Invoice'}
-        isLoading={postApiIsLoading}
-      />
+        <Button
+          onPress={handleSumbit}
+          text={'Update Invoice'}
+          isLoading={postApiIsLoading}
+        />
+      </View>
     </ScrollView>
   )
 }

@@ -1,10 +1,9 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { updateJob } from '../../../../db/jobs/updateJob'
-import { getJob } from '../../../../db/jobs/getJob'
 import useGetApiData from '../../../../utils/hooks/useGetApiData'
 import usePostApiData from '../../../../utils/hooks/usePostApiData'
 import { getInvoice } from '../../../../db/invoice/getInvoice'
+import { updateInvoice } from '../../../../db/invoice/updateInvoice'
 
 export const validationSchema = Yup.object().shape({
   price: Yup.number().required('Price is required'),
@@ -28,14 +27,23 @@ const useFormikInvoice = ({ invoiceId }: useFormikStepsInterface) => {
 
   const formik = useFormik({
     initialValues: {
+      id: '',
       price: 0,
       description: '',
-      client: '',
-      ...data,
       clientId: data?.job?.clientId,
+      ...data,
     },
     onSubmit: async (values) => {
-      setApiFunction(() => async () => updateJob(values))
+      if (!values.clientId) return
+
+      const updatedValues = {
+        id: values.id,
+        price: Number(values.price),
+        description: values.description,
+        clientId: values.clientId,
+      }
+
+      setApiFunction(() => async () => updateInvoice(updatedValues))
     },
     validationSchema,
     enableReinitialize: true,
