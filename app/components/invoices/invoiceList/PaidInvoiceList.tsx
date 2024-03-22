@@ -5,13 +5,13 @@ import { Loading } from '../../../ui'
 import ErrorNoData from './errorNoData/ErrorNoData'
 import useGetApiData from '../../../utils/hooks/useGetApiData'
 import { useRoute } from '@react-navigation/native'
-import { getDueInvoices } from '../../../db/invoice/getDueInvoices'
 import { InvoiceWithIdT } from '../../../types/InvoiceT'
+import { getPaidInvoices } from '../../../db/invoice/getPaidInvoices'
 
 const PaidInvoiceList = () => {
   const route = useRoute()
   const { getApiIsLoading, data } = useGetApiData({
-    apiFunction: async () => getDueInvoices(),
+    apiFunction: async () => getPaidInvoices(),
     route,
   })
 
@@ -27,13 +27,13 @@ const PaidInvoiceList = () => {
 
   return (
     <View style={styles.listContainer}>
-      {/* <FlatList
+      <FlatList
         style={styles.cardsContainer}
         data={invoiceData}
         renderItem={({ item }) => <InvoiceListItem {...item} />}
         keyExtractor={(item) => item.id}
         ListFooterComponent={<View style={styles.flatlistFooter} />}
-      /> */}
+      />
     </View>
   )
 }
