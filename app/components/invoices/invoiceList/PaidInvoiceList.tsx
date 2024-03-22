@@ -5,25 +5,25 @@ import { Loading } from '../../../ui'
 import ErrorNoData from './errorNoData/ErrorNoData'
 import useGetApiData from '../../../utils/hooks/useGetApiData'
 import { useRoute } from '@react-navigation/native'
-import { getUnpaidInvoices } from '../../../db/invoice/getUnpaidInvoices'
+import { getDueInvoices } from '../../../db/invoice/getDueInvoices'
 import { InvoiceWithIdT } from '../../../types/InvoiceT'
 
 const PaidInvoiceList = () => {
-  // const route = useRoute()
-  // const { getApiIsLoading, data } = useGetApiData({
-  //   apiFunction: async () => getUnpaidInvoices(),
-  //   route,
-  // })
+  const route = useRoute()
+  const { getApiIsLoading, data } = useGetApiData({
+    apiFunction: async () => getDueInvoices(),
+    route,
+  })
 
-  // const invoiceData = data as InvoiceWithIdT[]
+  const invoiceData = data as InvoiceWithIdT[]
 
-  // if (getApiIsLoading) {
-  //   return <Loading loadingText={'Loading jobs list...'} />
-  // }
+  if (getApiIsLoading) {
+    return <Loading loadingText={'Loading jobs list...'} />
+  }
 
-  // if (!invoiceData || invoiceData.length === 0) {
-  //   return <ErrorNoData />
-  // }
+  if (!invoiceData || invoiceData.length === 0) {
+    return <ErrorNoData />
+  }
 
   return (
     <View style={styles.listContainer}>

@@ -5,13 +5,13 @@ import { Loading } from '../../../ui'
 import ErrorNoData from './errorNoData/ErrorNoData'
 import useGetApiData from '../../../utils/hooks/useGetApiData'
 import { useRoute } from '@react-navigation/native'
-import { getUnpaidInvoices } from '../../../db/invoice/getUnpaidInvoices'
+import { getDueInvoices } from '../../../db/invoice/getDueInvoices'
 import { InvoiceWithIdT } from '../../../types/InvoiceT'
 
 const DueInvoiceList = () => {
   const route = useRoute()
   const { getApiIsLoading, data } = useGetApiData({
-    apiFunction: async () => getUnpaidInvoices(),
+    apiFunction: async () => getDueInvoices(),
     route,
   })
 
