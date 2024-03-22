@@ -186,7 +186,8 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     textAlign: 'center',
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 16,
+    marginTop: 12,
   },
 })
 
