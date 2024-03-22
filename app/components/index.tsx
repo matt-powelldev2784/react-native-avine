@@ -26,29 +26,33 @@ import ScheduleRoundForm from './planner/scheduleRoundForm/ScheduleRoundForm'
 import ScheduledJobCard from './planner/weekPlanner/components/scheduledJobCard/ScheduledJobCard'
 
 // invoice
-import UnpaidInvoices from './invoices/invoiceList/UnpaidInvoices'
+import DueInvoiceList from './invoices/invoiceList/DueInvoiceList'
 import InvoiceCard from './invoices/invoiceCard/InvoiceCard'
+import EditInvoiceForm from './invoices/editInvoiceForm/EditInvoiceForm'
+import PaidInvoiceList from './invoices/invoiceList/PaidInvoiceList'
 
- //otheres
+//otheres
 
- export {
-   AddClientForm,
-   EditClientForm,
-   JobList,
-   AddJobForm,
-   EditJobForm,
-   RoundList,
-   AddRoundForm,
-   EditRoundForm,
-   WeekPlanner,
-   UnpaidInvoices,
-   InvoiceCard,
-   ScheduleRoundForm,
-   ScheduledJobCard,
-   ScreenMenu,
-   PlanMeLogo,
-   Dashboard,
-   ServerError,
-   SignIn,
-   SignOut,
- }
+export {
+  AddClientForm,
+  EditClientForm,
+  JobList,
+  AddJobForm,
+  EditJobForm,
+  RoundList,
+  AddRoundForm,
+  EditRoundForm,
+  WeekPlanner,
+  DueInvoiceList,
+  PaidInvoiceList,
+  InvoiceCard,
+  EditInvoiceForm,
+  ScheduleRoundForm,
+  ScheduledJobCard,
+  ScreenMenu,
+  PlanMeLogo,
+  Dashboard,
+  ServerError,
+  SignIn,
+  SignOut,
+}

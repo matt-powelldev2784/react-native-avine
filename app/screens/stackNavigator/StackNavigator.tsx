@@ -2,8 +2,10 @@ import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
   Planner,
-  Invoices,
+  DueInvoices,
+  PaidInvoices,
   InvoiceCardView,
+  EditInvoice,
   Rounds,
   Jobs,
   SignInScreen,
@@ -50,7 +52,9 @@ export type RootStackParamList = {
 
   //invoices
   DueInvoices: { refresh?: boolean } | undefined
+  PaidInvoices: { refresh?: boolean } | undefined
   InvoiceCardView: { invoiceId: string } | undefined
+  EditInvoice: { invoiceId: string } | undefined
 
   //jobs
   Jobs: { refresh?: boolean } | undefined
@@ -70,8 +74,10 @@ const StackNavigator = () => {
       {userInfo ? (
         <>
           {/* --------------------------  Invoice Screens  -------------------------- */}
-          <Stack.Screen name="DueInvoices" component={Invoices} />
+          <Stack.Screen name="DueInvoices" component={DueInvoices} />
+          <Stack.Screen name="PaidInvoices" component={PaidInvoices} />
           <Stack.Screen name="InvoiceCardView" component={InvoiceCardView} />
+          <Stack.Screen name="EditInvoice" component={EditInvoice} />
 
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />

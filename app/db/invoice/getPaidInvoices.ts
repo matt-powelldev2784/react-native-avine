@@ -1,18 +1,18 @@
 import { doc, collection, getDocs, query, where } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
-import { InvoiceWithIdT } from './../../types/InvoiceT'
+import { InvoiceWithIdT } from '../../types/InvoiceT'
 import { authError } from '../authError'
 
-export const getUnpaidInvoices = async () => {
+export const getPaidInvoices = async () => {
   if (!auth.currentUser) {
-    return authError({ filename: 'getUnpaidInvoices' })
+    return authError({ filename: 'getDueInvoices' })
   }
 
   try {
     const userDoc = doc(db, 'users', auth.currentUser.uid)
     const invoiceCollection = collection(userDoc, 'invoices')
 
-    const q = query(invoiceCollection, where('isPaid', '==', false))
+    const q = query(invoiceCollection, where('isPaid', '==', true))
     const querySnapshot = await getDocs(q)
 
     const invoices = querySnapshot.docs.map((invoice) => ({
@@ -35,7 +35,7 @@ export const getUnpaidInvoices = async () => {
     return sortedInvoices
   } catch (error) {
     throw new Error(
-      `Error getting unpaid invoices at getUnpaidInvoices route: ${error}`,
+      `Error getting unpaid invoices at getPaidInvoices route: ${error}`,
     )
   }
 }

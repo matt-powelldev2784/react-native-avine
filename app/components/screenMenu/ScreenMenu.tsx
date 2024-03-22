@@ -82,12 +82,12 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
     marginLeft: 8,
   },
   pageTitle: {
-    fontSize: 24,
+    fontSize: 20,
     color: 'white',
     marginTop: 2,
     marginBottom: 2,

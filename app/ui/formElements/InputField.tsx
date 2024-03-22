@@ -19,6 +19,7 @@ interface InputFieldProps {
   title: string
   keyboardType?: KeyboardTypeOptions
   imageName: keyof typeof inputIcons
+  height?: number
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -28,7 +29,10 @@ const InputField: React.FC<InputFieldProps> = ({
   title,
   keyboardType,
   imageName,
+  height,
 }) => {
+  const cssHeight = height ? height : 40
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{title.toUpperCase()}</Text>
@@ -44,8 +48,10 @@ const InputField: React.FC<InputFieldProps> = ({
           formik.touched[name] && formik.errors[name]
             ? styles.errorInput
             : styles.input,
+          { height: cssHeight || null },
         ]}
         keyboardType={keyboardType !== undefined ? keyboardType : 'default'}
+        multiline={height ? true : false}
       />
       {formik.touched[name] && formik.errors[name] ? (
         <Text style={styles.errorText}>{String(formik.errors[name])}</Text>
