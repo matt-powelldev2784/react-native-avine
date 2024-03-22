@@ -80,11 +80,13 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
 
             <Text />
 
-            <IconButton
-              size={34}
-              imgSource={require('../../../../assets/edit_white.png')}
-              onPress={handleNavigateToEditInvoice}
-            />
+            {!isPaid ? (
+              <IconButton
+                size={34}
+                imgSource={require('../../../../assets/edit_white.png')}
+                onPress={handleNavigateToEditInvoice}
+              />
+            ) : null}
           </View>
         </View>
 
