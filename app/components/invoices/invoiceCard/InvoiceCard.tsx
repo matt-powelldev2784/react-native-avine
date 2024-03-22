@@ -102,6 +102,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
         </View>
 
         <View style={styles.switchWrapper}>
+          <View style={styles.line} />
           <DataSwitchItem
             name={'Invoice Paid'}
             value={isPaid}
@@ -110,6 +111,13 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
             error={isPaidError || false}
           />
         </View>
+
+        {isPaid ? (
+          <Text style={styles.warningText}>
+            If you wish to edit this invoice please set the status back not
+            paid.
+          </Text>
+        ) : null}
       </View>
 
       <View style={{ height: 100 }} />
@@ -131,7 +139,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     backgroundColor: 'white',
     borderRadius: 12,
-
     overflow: 'hidden',
     borderWidth: 1,
     borderStyle: 'solid',
@@ -179,6 +186,11 @@ const styles = StyleSheet.create({
     flexGrow: 2,
     padding: 8,
     marginBottom: 16,
+    marginTop: 8,
+  },
+  line: {
+    height: 1,
+    backgroundColor: theme.colors.primary,
   },
   infoWrapper: { padding: 8, marginBottom: 24, width: '100%' },
   infoTitle: {
@@ -188,6 +200,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     marginTop: 12,
+  },
+  warningText: {
+    fontSize: 14,
+    color: theme.colors.primary,
+    textAlign: 'center',
+    marginBottom: 16,
+    marginHorizontal: 8,
   },
 })
 
