@@ -12,7 +12,7 @@ const Rounds = () => {
     <>
       <Dashboard>
         <ScreenMenu
-          title={'Rounds'}
+          title={'Round List'}
           navigateTo={'AddRound'}
           buttonText="Add Round"
           bgColor={theme.colors.roundPrimary}
