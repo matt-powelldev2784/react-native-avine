@@ -8,32 +8,32 @@ import { useRoute } from '@react-navigation/native'
 import { getUnpaidInvoices } from '../../../db/invoice/getUnpaidInvoices'
 import { InvoiceWithIdT } from '../../../types/InvoiceT'
 
-const UnpaidInvoices = () => {
-  const route = useRoute()
-  const { getApiIsLoading, data } = useGetApiData({
-    apiFunction: async () => getUnpaidInvoices(),
-    route,
-  })
+const PaidInvoiceList = () => {
+  // const route = useRoute()
+  // const { getApiIsLoading, data } = useGetApiData({
+  //   apiFunction: async () => getUnpaidInvoices(),
+  //   route,
+  // })
 
-  const invoiceData = data as InvoiceWithIdT[]
+  // const invoiceData = data as InvoiceWithIdT[]
 
-  if (getApiIsLoading) {
-    return <Loading loadingText={'Loading jobs list...'} />
-  }
+  // if (getApiIsLoading) {
+  //   return <Loading loadingText={'Loading jobs list...'} />
+  // }
 
-  if (!invoiceData || invoiceData.length === 0) {
-    return <ErrorNoData />
-  }
+  // if (!invoiceData || invoiceData.length === 0) {
+  //   return <ErrorNoData />
+  // }
 
   return (
     <View style={styles.listContainer}>
-      <FlatList
+      {/* <FlatList
         style={styles.cardsContainer}
         data={invoiceData}
         renderItem={({ item }) => <InvoiceListItem {...item} />}
         keyExtractor={(item) => item.id}
         ListFooterComponent={<View style={styles.flatlistFooter} />}
-      />
+      /> */}
     </View>
   )
 }
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default UnpaidInvoices
+export default PaidInvoiceList
