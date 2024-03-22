@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import theme from '../../../../../../utils/theme/theme'
 import { CustomSwitch } from '../../../../../../ui'
 import { FormikProps } from 'formik'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 interface DataSwitchProps {
   name: string
@@ -19,12 +20,45 @@ const DataSwitchItem = ({
   formik,
   error,
 }: DataSwitchProps) => {
+  // state
+  const [displayInfoText, setDisplayInfoText] = useState(false)
+
+  //functions
+  const handleInfoPress = () => {
+    setDisplayInfoText(true)
+    setTimeout(() => {
+      setDisplayInfoText(false)
+    }, 8000)
+  }
+
+  const handleToggle = () => {
+    if (error) {
+      handleInfoPress()
+    }
+    formik.handleSubmit()
+  }
+
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
-          {name}
-        </Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
+            {name}
+          </Text>
+
+          {error ? (
+            <TouchableOpacity onPress={handleInfoPress}>
+              <Image
+                source={require('../../../../../../../assets/info.png')}
+                style={{ width: 15, height: 15 }}
+              />
+            </TouchableOpacity>
+          ) : null}
+
+          {displayInfoText ? (
+            <Text style={styles.errorText}>{error}</Text>
+          ) : null}
+        </View>
 
         <View style={styles.rightContainer}>
           {isLoading ? (
@@ -34,22 +68,10 @@ const DataSwitchItem = ({
           <CustomSwitch
             value={value}
             disabled={isLoading}
-            onValueChange={() => {
-              formik.handleSubmit()
-            }}
+            onValueChange={handleToggle}
           />
         </View>
       </View>
-
-      {error ? (
-        <View style={styles.errorContainer}>
-          <Image
-            source={require('../../../../../../../assets/info.png')}
-            style={{ width: 15, height: 15 }}
-          />
-          <Text style={styles.errorText}>{error}</Text>
-        </View>
-      ) : null}
 
       <View style={styles.line} />
     </>
@@ -64,6 +86,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  textContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
   rightContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -74,16 +101,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.colors.primary,
   },
-  errorContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 4,
-    marginBottom: 16,
-  },
   errorText: {
+    position: 'absolute',
+    backgroundColor: theme.colors.backgroundGrey,
     textAlign: 'center',
     fontSize: 10,
+    padding: 4,
+    borderRadius: 4,
   },
   line: {
     height: 1,
