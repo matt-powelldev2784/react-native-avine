@@ -1,3 +1,4 @@
+import { registerRootComponent } from 'expo'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
@@ -33,4 +34,4 @@ const App = () => {
   )
 }
 
-export default App
+registerRootComponent(App)
