@@ -13,6 +13,8 @@ import { convertPlannerDateToShortDate } from '../../../utils/convertPlannerDate
 import LongDataItem from '../../planner/weekPlanner/components/scheduledJobCard/components/LongDataItem'
 import IconButton from '../../../ui/iconButton/IconButton'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { printToPdf } from '../invoicePdf/native/printToPdf'
+import { cretateInvoiceHtml } from '../invoicePdf/native/createInvoiceHtml'
 
 interface InvoiceCardProps {
   invoiceId: string
@@ -48,6 +50,26 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
   const handleNavigateToEditInvoice = () => {
     navigation.navigate('EditInvoice', { invoiceId })
   }
+  const handleDownloadInvoice = () => {
+    const invoiceData = {
+      companyName: 'A Touch Of Glass',
+      companyAddress: '102a Beddington Gardens',
+      companyTown: 'Carsahlton',
+      companyPostcode: 'SM5 3HQ',
+      companyTel: '0208 666 9999',
+      clientName: 'John Doe',
+      clientAddress: '34 Diceland Road',
+      clientTown: 'Carsahlton',
+      clientPostcode: 'SM7 2ET  ',
+      invoiceNum: 'INV123456',
+      price: '£1000.00',
+      description:
+        'Web development services. Web development services. Web development services. Web development services. Web development services. Web development services. Web development services. Web development services. Web development services',
+    }
+
+    const html = cretateInvoiceHtml(invoiceData)
+    printToPdf(html)
+  }
 
   // variables
   const shortDateString = convertPlannerDateToShortDate(
@@ -75,7 +97,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
             <IconButton
               size={34}
               imgSource={require('../../../../assets/download_blue.png')}
-              onPress={() => {}}
+              onPress={handleDownloadInvoice}
             />
 
             <Text />
