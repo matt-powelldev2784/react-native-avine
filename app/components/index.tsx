@@ -25,7 +25,8 @@ import WeekPlanner from './planner/weekPlanner/WeekPlanner'
 import ScheduleRoundForm from './planner/scheduleRoundForm/ScheduleRoundForm'
 import ScheduledJobCard from './planner/weekPlanner/components/scheduledJobCard/ScheduledJobCard'
 
-// invoice
+//invoices
+import AddCompanyInfoForm from './invoices/addCompanyInfoForm/AddCompanyInfoForm'
 import DueInvoiceList from './invoices/invoiceList/DueInvoiceList'
 import InvoiceCard from './invoices/invoiceCard/InvoiceCard'
 import EditInvoiceForm from './invoices/editInvoiceForm/EditInvoiceForm'
@@ -34,6 +35,7 @@ import PaidInvoiceList from './invoices/invoiceList/PaidInvoiceList'
 //otheres
 
 export {
+  AddCompanyInfoForm,
   AddClientForm,
   EditClientForm,
   JobList,

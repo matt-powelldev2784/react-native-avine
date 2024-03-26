@@ -26,12 +26,14 @@ import AddRound from './rounds/AddRound'
 import EditRound from './rounds/EditRound'
 
 //invoices
+import AddCompanyInfo from './invoices/AddCompanyInfo'
 import DueInvoices from './invoices/DueInvoices'
 import PaidInvoices from './invoices/PaidInvoices'
 import InvoiceCardView from './invoices/InvoiceCardView'
 import EditInvoice from './invoices/EditInvoice'
 
 export {
+  AddCompanyInfo,
   Clients,
   AddClient,
   EditClient,
