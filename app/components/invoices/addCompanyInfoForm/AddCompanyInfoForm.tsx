@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Image, ScrollView, StyleSheet } from 'react-native'
+import { View, Image, ScrollView, StyleSheet, Text } from 'react-native'
 import * as DocumentPicker from 'expo-document-picker'
 import { uploadCompanyLogo } from '../../../db/user/uploadCompanyLogo'
 import { getCompanyLogo } from '../../../db/user/getCompanyLogo'
@@ -12,10 +12,12 @@ import { handleFormStepBack } from '../../../utils/handleFormStepBack'
 import FormFlowTitles from './components/FormFlowTitles'
 import InputField from '../../../ui/formElements/InputField'
 import theme from '../../../utils/theme/theme'
+import CustomButton from '../../../ui/button/CustomButton'
+import usePostApiData from '../../../utils/hooks/usePostApiData'
 
 const AddCompanyInfoForm = () => {
   //state
-  const [activeStep, setActiveStep] = useState(0)
+  const [activeStep, setActiveStep] = useState(1)
   const [logoUrl, setLogoUrl] = useState(null)
 
   //hooks
@@ -40,23 +42,13 @@ const AddCompanyInfoForm = () => {
   //variables
   const buttonsStyle = isLargeWeb ? 'row' : 'column'
 
-  // useEffect(() => {
-  //   const fetchLogoUrl = async () => {
-  //     const url = await getCompanyLogo()
-  //     console.log('url', url)
-  //     setLogoUrl(url)
-  //   }
-
-  //   fetchLogoUrl()
-  // }, [logoUrl])
-
   const selectOneFile = async () => {
     try {
-      const res = await DocumentPicker.getDocumentAsync({
+      const setLogo = await DocumentPicker.getDocumentAsync({
         type: 'image/jpeg', // Allowing only jpg images
       })
-      if (!res.canceled) {
-        await uploadCompanyLogo(res.assets[0].uri)
+      if (!setLogo.canceled) {
+        await uploadCompanyLogo(setLogo.assets[0].uri)
         const url = await getCompanyLogo()
         setLogoUrl(url)
       }
@@ -122,47 +114,60 @@ const AddCompanyInfoForm = () => {
             />
           </>
         ) : null}
-      </View>
 
-      {/*********************  Step 2 ***************************/}
-      {activeStep === 1 ? (
+        {/*********************  Step 2 ***************************/}
+        {activeStep === 1 ? (
+          <CustomButton onPress={selectOneFile} isLoading={postApiIsLoading}>
+            {logoUrl ? (
+              <View style={styles.logoContainer}>
+                <Image
+                  source={{ uri: logoUrl }}
+                  style={styles.logoPreview}
+                  resizeMode="contain"
+                />
+              </View>
+            ) : (
+              <View style={styles.logoPreviewContainer}>
+                <Image
+                  source={require('../../../../assets/addImage.png')}
+                  style={{
+                    width: 40,
+                    height: 40,
+                  }}
+                />
+                <Text style={styles.logoPreviewText}>
+                  Click here to upload a company logo
+                </Text>
+              </View>
+            )}
+          </CustomButton>
+        ) : null}
+
+        {/*********************  buttons ***************************/}
         <View style={styles.buttonContainer}>
-          <Button
-            text="Select Image"
-            onPress={selectOneFile}
-            isLoading={postApiIsLoading}
-          />
-          {logoUrl && (
-            <Image
-              source={{ uri: logoUrl }}
-              style={{ width: 200, height: 200 }}
-            />
-          )}
-        </View>
-      ) : null}
+          <View
+            style={[styles.buttonContainer, { flexDirection: buttonsStyle }]}
+          >
+            {activeStep > 0 ? (
+              <Button
+                onPress={handleStepBack}
+                text="Go Back"
+                backgroundColor={theme.colors.buttonSecondary}
+              />
+            ) : null}
 
-      {/*********************  buttons ***************************/}
-      <View style={styles.buttonContainer}>
-        <View style={[styles.buttonContainer, { flexDirection: buttonsStyle }]}>
-          {activeStep > 0 ? (
-            <Button
-              onPress={handleStepBack}
-              text="Go Back"
-              backgroundColor={theme.colors.buttonSecondary}
-            />
-          ) : null}
+            {activeStep >= 0 && activeStep < 1 ? (
+              <Button onPress={moveToNextStep} text="Next" />
+            ) : null}
 
-          {activeStep >= 0 && activeStep < 1 ? (
-            <Button onPress={moveToNextStep} text="Next" />
-          ) : null}
-
-          {activeStep === 1 ? (
-            <Button
-              onPress={handleSumbmitPress}
-              text="Add Company Infomation"
-              isLoading={postApiIsLoading}
-            />
-          ) : null}
+            {activeStep === 1 ? (
+              <Button
+                onPress={handleSumbmitPress}
+                text="Submit Company Info"
+                isLoading={postApiIsLoading}
+              />
+            ) : null}
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -189,6 +194,33 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     backgroundColor: 'white',
   },
+  logoPreviewContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    width: 300,
+    height: 150,
+    backgroundColor: theme.colors.backgroundGrey,
+  },
+  logoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 300,
+    height: 150,
+  },
+  logoPreview: {
+    width: '100%',
+    height: '100%',
+  },
+  logoPreviewText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: theme.colors.primary,
+    textAlign: 'center',
+    paddingHorizontal: 48,
+  },
   buttonContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -197,6 +229,7 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 600,
     gap: 8,
+    marginTop: 16,
   },
   button: {
     alignItems: 'center',
