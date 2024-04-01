@@ -20,7 +20,6 @@ const AddCompanyInfo = () => {
           style={{
             flex: 1,
             width: '100%',
-            backgroundColor: theme.colors.backgroundGrey,
           }}
           data={childrenArray}
           renderItem={({ item }) => <View>{item}</View>}
