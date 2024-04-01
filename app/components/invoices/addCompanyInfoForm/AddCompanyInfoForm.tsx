@@ -14,7 +14,7 @@ import { useSelectImage } from './hooks/useSelectImage'
 
 const AddCompanyInfoForm = () => {
   //state
-  const [activeStep, setActiveStep] = useState(1)
+  const [activeStep, setActiveStep] = useState(0)
 
   //hooks
   const { postApiIsLoading, formik } = useFormikSteps({
@@ -25,7 +25,7 @@ const AddCompanyInfoForm = () => {
     setActiveStep,
   })
   const { logoUrl, uploadImageIsLoading, handleSelectImage, uploadImageError } =
-    useSelectImage()
+    useSelectImage({ formik })
 
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)

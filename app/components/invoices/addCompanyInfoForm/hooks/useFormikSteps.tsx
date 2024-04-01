@@ -1,6 +1,7 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import usePostApiData from '../../../../utils/hooks/usePostApiData'
+import { addCompanyDetails } from '../../../../db/user/addCompanyDetails'
 
 export const stepOneSchema = Yup.object().shape({
   companyName: Yup.string().required('Compnay name is required'),
@@ -14,6 +15,10 @@ export const stepOneSchema = Yup.object().shape({
     .positive(),
 })
 
+export const stepTwoSchema = Yup.object().shape({
+  logoUrl: Yup.string().required('Logo is required'),
+})
+
 interface useFormikStepsProps {
   activeStep: number
 }
@@ -21,12 +26,13 @@ interface useFormikStepsProps {
 const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
   const validationSchemas: { [key: number]: Yup.ObjectSchema<any, any> } = {
     0: stepOneSchema,
+    1: stepTwoSchema,
   }
 
   const validationSchema = validationSchemas[activeStep]
 
   const { postApiIsLoading, setApiFunction } = usePostApiData({
-    onSuccessScreen: 'Clients',
+    onSuccessScreen: 'DueInvoices',
     refreshScreen: { refresh: true },
   })
 
@@ -38,9 +44,11 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
       county: '',
       postcode: '',
       contactTel: 0,
+      logoUrl: '',
+      companyDetailsProvided: true,
     },
     onSubmit: async (values) => {
-      // setApiFunction(() => async () => addClient(values))
+      setApiFunction(() => async () => addCompanyDetails(values))
     },
     validationSchema,
   })

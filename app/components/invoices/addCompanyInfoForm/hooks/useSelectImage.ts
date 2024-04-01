@@ -3,8 +3,13 @@ import { useState } from 'react'
 import * as DocumentPicker from 'expo-document-picker'
 import { uploadCompanyLogo } from '../../../../db/user/uploadCompanyLogo'
 import { getCompanyLogo } from '../../../../db/user/getCompanyLogo'
+import { FormikProps } from 'formik'
 
-export const useSelectImage = () => {
+interface useSelectImageProps {
+  formik: FormikProps<any>
+}
+
+export const useSelectImage = ({ formik }: useSelectImageProps) => {
   const [logoUrl, setLogoUrl] = useState(null)
   const [uploadImageIsLoading, setUploadImageIsLoading] = useState(false)
   const [uploadImageError, setUploadImageError] = useState(false)
@@ -22,6 +27,7 @@ export const useSelectImage = () => {
         await uploadCompanyLogo(setLogo.assets[0].uri)
         const url = await getCompanyLogo()
         setLogoUrl(url)
+        formik.setFieldValue('logoUrl', url)
         setUploadImageIsLoading(false)
       }
     } catch (error) {
