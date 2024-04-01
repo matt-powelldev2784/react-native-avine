@@ -1,8 +1,5 @@
 import React, { useState } from 'react'
 import { View, Image, ScrollView, StyleSheet, Text } from 'react-native'
-import * as DocumentPicker from 'expo-document-picker'
-import { uploadCompanyLogo } from '../../../db/user/uploadCompanyLogo'
-import { getCompanyLogo } from '../../../db/user/getCompanyLogo'
 import useFormikSteps from './hooks/useFormikSteps'
 import Button from '../../../ui/button/Button'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
@@ -13,14 +10,11 @@ import FormFlowTitles from './components/FormFlowTitles'
 import InputField from '../../../ui/formElements/InputField'
 import theme from '../../../utils/theme/theme'
 import CustomButton from '../../../ui/button/CustomButton'
-
+import { useSelectImage } from './hooks/useSelectImage'
 
 const AddCompanyInfoForm = () => {
   //state
   const [activeStep, setActiveStep] = useState(1)
-  const [logoUrl, setLogoUrl] = useState(null)
-  const [uploadImageIsLoading, setUploadImageIsLoading] =
-    useState<boolean>(false)
 
   //hooks
   const { postApiIsLoading, formik } = useFormikSteps({
@@ -30,6 +24,9 @@ const AddCompanyInfoForm = () => {
     formik,
     setActiveStep,
   })
+  const { logoUrl, uploadImageIsLoading, handleSelectImage, uploadImageError } =
+    useSelectImage()
+
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
 
@@ -43,23 +40,6 @@ const AddCompanyInfoForm = () => {
 
   //variables
   const buttonsStyle = isLargeWeb ? 'row' : 'column'
-
-  const hanldeSelectImage = async () => {
-    try {
-      const setLogo = await DocumentPicker.getDocumentAsync({
-        type: 'image/jpeg', // Allowing only jpg images
-      })
-      if (!setLogo.canceled) {
-        setUploadImageIsLoading(true)
-        await uploadCompanyLogo(setLogo.assets[0].uri)
-        const url = await getCompanyLogo()
-        setLogoUrl(url)
-        setUploadImageIsLoading(false)
-      }
-    } catch (error) {
-      console.error('File selection error: ', error)
-    }
-  }
 
   return (
     <ScrollView
@@ -125,10 +105,10 @@ const AddCompanyInfoForm = () => {
             style={uploadImageIsLoading ? styles.imageUploadContainer : null}
           >
             <CustomButton
-              onPress={hanldeSelectImage}
+              onPress={handleSelectImage}
               isLoading={uploadImageIsLoading}
             >
-              {logoUrl ? (
+              {logoUrl && !uploadImageError ? (
                 <View style={styles.logoContainer}>
                   <Image
                     source={{ uri: logoUrl }}
@@ -150,6 +130,12 @@ const AddCompanyInfoForm = () => {
                   </Text>
                 </View>
               )}
+
+              {uploadImageError ? (
+                <Text style={styles.errorText}>
+                  Error uploading image, try again
+                </Text>
+              ) : null}
             </CustomButton>
           </View>
         ) : null}
@@ -273,6 +259,10 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     color: theme.colors.primary,
+  },
+  errorText: {
+    fontSize: 14,
+    color: 'red',
   },
 })
 
