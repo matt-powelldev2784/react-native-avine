@@ -5,6 +5,7 @@ import {
   View,
 } from 'react-native'
 import React from 'react'
+import theme from '../../utils/theme/theme'
 
 interface ButtoMdProps {
   onPress: () => void
@@ -30,7 +31,9 @@ const CustomButton = ({
     >
       {!isLoading ? <View style={styles.buttonText}>{children}</View> : null}
 
-      {isLoading ? <ActivityIndicator size="small" color={'white'} /> : null}
+      {isLoading ? (
+        <ActivityIndicator size="small" color={theme.colors.primary} />
+      ) : null}
     </TouchableOpacity>
   )
 }
@@ -39,9 +42,11 @@ export default CustomButton
 
 const styles = StyleSheet.create({
   button: {
+    height: '100%',
+    width: '100%',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
   },
   buttonText: {
     alignItems: 'center',

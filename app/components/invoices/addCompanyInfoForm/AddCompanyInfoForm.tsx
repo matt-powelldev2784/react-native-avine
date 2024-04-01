@@ -13,12 +13,14 @@ import FormFlowTitles from './components/FormFlowTitles'
 import InputField from '../../../ui/formElements/InputField'
 import theme from '../../../utils/theme/theme'
 import CustomButton from '../../../ui/button/CustomButton'
-import usePostApiData from '../../../utils/hooks/usePostApiData'
+
 
 const AddCompanyInfoForm = () => {
   //state
   const [activeStep, setActiveStep] = useState(1)
   const [logoUrl, setLogoUrl] = useState(null)
+  const [uploadImageIsLoading, setUploadImageIsLoading] =
+    useState<boolean>(false)
 
   //hooks
   const { postApiIsLoading, formik } = useFormikSteps({
@@ -42,15 +44,17 @@ const AddCompanyInfoForm = () => {
   //variables
   const buttonsStyle = isLargeWeb ? 'row' : 'column'
 
-  const selectOneFile = async () => {
+  const hanldeSelectImage = async () => {
     try {
       const setLogo = await DocumentPicker.getDocumentAsync({
         type: 'image/jpeg', // Allowing only jpg images
       })
       if (!setLogo.canceled) {
+        setUploadImageIsLoading(true)
         await uploadCompanyLogo(setLogo.assets[0].uri)
         const url = await getCompanyLogo()
         setLogoUrl(url)
+        setUploadImageIsLoading(false)
       }
     } catch (error) {
       console.error('File selection error: ', error)
@@ -117,30 +121,37 @@ const AddCompanyInfoForm = () => {
 
         {/*********************  Step 2 ***************************/}
         {activeStep === 1 ? (
-          <CustomButton onPress={selectOneFile} isLoading={postApiIsLoading}>
-            {logoUrl ? (
-              <View style={styles.logoContainer}>
-                <Image
-                  source={{ uri: logoUrl }}
-                  style={styles.logoPreview}
-                  resizeMode="contain"
-                />
-              </View>
-            ) : (
-              <View style={styles.logoPreviewContainer}>
-                <Image
-                  source={require('../../../../assets/addImage.png')}
-                  style={{
-                    width: 40,
-                    height: 40,
-                  }}
-                />
-                <Text style={styles.logoPreviewText}>
-                  Click here to upload a company logo
-                </Text>
-              </View>
-            )}
-          </CustomButton>
+          <View
+            style={uploadImageIsLoading ? styles.imageUploadContainer : null}
+          >
+            <CustomButton
+              onPress={hanldeSelectImage}
+              isLoading={uploadImageIsLoading}
+            >
+              {logoUrl ? (
+                <View style={styles.logoContainer}>
+                  <Image
+                    source={{ uri: logoUrl }}
+                    style={styles.logoPreview}
+                    resizeMode="contain"
+                  />
+                </View>
+              ) : (
+                <View style={styles.logoPreviewContainer}>
+                  <Image
+                    source={require('../../../../assets/addImage.png')}
+                    style={{
+                      width: 40,
+                      height: 40,
+                    }}
+                  />
+                  <Text style={styles.logoPreviewText}>
+                    Click here to upload a company logo
+                  </Text>
+                </View>
+              )}
+            </CustomButton>
+          </View>
         ) : null}
 
         {/*********************  buttons ***************************/}
@@ -193,6 +204,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 24,
     backgroundColor: 'white',
+  },
+  imageUploadContainer: {
+    width: 300,
+    height: 150,
+    backgroundColor: theme.colors.backgroundGrey,
   },
   logoPreviewContainer: {
     display: 'flex',
