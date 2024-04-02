@@ -35,5 +35,11 @@ export const useSelectImage = ({ formik }: useSelectImageProps) => {
     }
   }
 
-  return { logoUrl, uploadImageIsLoading, uploadImageError, handleSelectImage }
+  return {
+    logoUrl,
+    setLogoUrl,
+    uploadImageIsLoading,
+    uploadImageError,
+    handleSelectImage,
+  }
 }

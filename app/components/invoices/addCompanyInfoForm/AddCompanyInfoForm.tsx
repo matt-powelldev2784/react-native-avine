@@ -11,10 +11,12 @@ import InputField from '../../../ui/formElements/InputField'
 import theme from '../../../utils/theme/theme'
 import CustomButton from '../../../ui/button/CustomButton'
 import { useSelectImage } from './hooks/useSelectImage'
+import { CustomSwitch } from '../../../ui'
 
 const AddCompanyInfoForm = () => {
   //state
   const [activeStep, setActiveStep] = useState(0)
+  const [logoUploadDeclined, setlogoUploadDeclined] = useState<boolean>(false)
 
   //hooks
   const { postApiIsLoading, formik } = useFormikSteps({
@@ -24,8 +26,13 @@ const AddCompanyInfoForm = () => {
     formik,
     setActiveStep,
   })
-  const { logoUrl, uploadImageIsLoading, handleSelectImage, uploadImageError } =
-    useSelectImage({ formik })
+  const {
+    logoUrl,
+    setLogoUrl,
+    uploadImageIsLoading,
+    handleSelectImage,
+    uploadImageError,
+  } = useSelectImage({ formik })
 
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
@@ -34,8 +41,21 @@ const AddCompanyInfoForm = () => {
   const handleStepBack = () => {
     handleFormStepBack({ setActiveStep, activeStep })
   }
-  const handleSumbmitPress = () => {
+  const handleSumbmitPress = async () => {
     formik.handleSubmit()
+  }
+  const toggleDeclineLogoUpload = () => {
+    formik.setFieldValue('logoUploadDeclined', !logoUploadDeclined)
+
+    if (logoUploadDeclined) {
+      formik.setFieldValue('logoUrl', '')
+    }
+    if (!logoUploadDeclined) {
+      formik.setFieldValue('logoUrl', 'null')
+    }
+
+    setLogoUrl(null)
+    setlogoUploadDeclined((prev) => !prev)
   }
 
   //variables
@@ -104,39 +124,49 @@ const AddCompanyInfoForm = () => {
           <View
             style={uploadImageIsLoading ? styles.imageUploadContainer : null}
           >
-            <CustomButton
-              onPress={handleSelectImage}
-              isLoading={uploadImageIsLoading}
-            >
-              {logoUrl && !uploadImageError ? (
-                <View style={styles.logoContainer}>
-                  <Image
-                    source={{ uri: logoUrl }}
-                    style={styles.logoPreview}
-                    resizeMode="contain"
-                  />
-                </View>
-              ) : (
-                <View style={styles.logoPreviewContainer}>
-                  <Image
-                    source={require('../../../../assets/addImage.png')}
-                    style={{
-                      width: 40,
-                      height: 40,
-                    }}
-                  />
-                  <Text style={styles.logoPreviewText}>
-                    Click here to upload a company logo
-                  </Text>
-                </View>
-              )}
+            {logoUploadDeclined ? null : (
+              <CustomButton
+                onPress={handleSelectImage}
+                isLoading={uploadImageIsLoading}
+              >
+                {logoUrl && !uploadImageError ? (
+                  <View style={styles.logoContainer}>
+                    <Image
+                      source={{ uri: logoUrl }}
+                      style={styles.logoPreview}
+                      resizeMode="contain"
+                    />
+                  </View>
+                ) : (
+                  <View style={styles.logoPreviewContainer}>
+                    <Image
+                      source={require('../../../../assets/addImage.png')}
+                      style={{
+                        width: 40,
+                        height: 40,
+                      }}
+                    />
+                    <Text style={styles.logoPreviewText}>
+                      Click here to upload a company logo
+                    </Text>
+                  </View>
+                )}
 
-              {uploadImageError ? (
-                <Text style={styles.errorText}>
-                  Error uploading image, try again
-                </Text>
-              ) : null}
-            </CustomButton>
+                {uploadImageError ? (
+                  <Text style={styles.errorText}>
+                    Error uploading image, try again
+                  </Text>
+                ) : null}
+              </CustomButton>
+            )}
+
+            <View style={styles.toggleContainer}>
+              <Text style={styles.text}>Skip logo upload</Text>
+              <CustomSwitch
+                value={logoUploadDeclined}
+                onValueChange={toggleDeclineLogoUpload}
+              />
+            </View>
           </View>
         ) : null}
 
@@ -192,7 +222,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   imageUploadContainer: {
-    width: 300,
+    position: 'relative',
+    width: 282,
     height: 150,
     backgroundColor: theme.colors.backgroundGrey,
   },
@@ -201,7 +232,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    width: 300,
+    width: 282,
     height: 150,
     backgroundColor: theme.colors.backgroundGrey,
   },
@@ -209,7 +240,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 300,
+    width: 282,
     height: 150,
   },
   logoPreview: {
@@ -222,6 +253,19 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     textAlign: 'center',
     paddingHorizontal: 48,
+  },
+  toggleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    minWidth: 282,
+    padding: 8,
+    paddingHorizontal: 16,
+    marginTop: 16,
+    backgroundColor: theme.colors.formFlowSecondary,
+    borderRadius: 8,
+    overflow: 'hidden',
   },
   buttonContainer: {
     display: 'flex',

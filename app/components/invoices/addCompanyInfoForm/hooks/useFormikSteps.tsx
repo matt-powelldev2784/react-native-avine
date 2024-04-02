@@ -15,8 +15,10 @@ export const stepOneSchema = Yup.object().shape({
     .positive(),
 })
 
+// if upload is declined, logoUrl is not required
 export const stepTwoSchema = Yup.object().shape({
-  logoUrl: Yup.string().required('Logo is required'),
+  logoUploadDeclined: Yup.boolean(),
+  logoUrl: Yup.string().required().min(1, 'Please select a logo image'),
 })
 
 interface useFormikStepsProps {
@@ -45,6 +47,7 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
       postcode: '',
       contactTel: 0,
       logoUrl: '',
+      logoUploadDeclined: false,
       companyDetailsProvided: true,
     },
     onSubmit: async (values) => {
