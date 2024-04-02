@@ -15,7 +15,7 @@ import { CustomSwitch } from '../../../ui'
 
 const AddCompanyInfoForm = () => {
   //state
-  const [activeStep, setActiveStep] = useState(0)
+  const [activeStep, setActiveStep] = useState(1)
   const [logoUploadDeclined, setlogoUploadDeclined] = useState<boolean>(false)
 
   //hooks
@@ -122,7 +122,11 @@ const AddCompanyInfoForm = () => {
         {/*********************  Step 2 ***************************/}
         {activeStep === 1 ? (
           <View
-            style={uploadImageIsLoading ? styles.imageUploadContainer : null}
+            style={
+              uploadImageIsLoading
+                ? styles.imageUploadContainer
+                : styles.imageUploadContainerUploading
+            }
           >
             {logoUploadDeclined ? null : (
               <CustomButton
@@ -197,6 +201,8 @@ const AddCompanyInfoForm = () => {
           </View>
         </View>
       </View>
+
+      {!isLargeWeb ? <View style={{ height: 250 }} /> : null}
     </ScrollView>
   )
 }
@@ -220,12 +226,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 24,
     backgroundColor: 'white',
+    paddingBottom: 80,
   },
   imageUploadContainer: {
     position: 'relative',
-    width: 282,
-    height: 150,
+    width: '100%',
     backgroundColor: theme.colors.backgroundGrey,
+  },
+  imageUploadContainerUploading: {
+    position: 'relative',
+    width: '100%',
   },
   logoPreviewContainer: {
     display: 'flex',
