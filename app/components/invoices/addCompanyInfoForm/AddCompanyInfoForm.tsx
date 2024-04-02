@@ -11,7 +11,7 @@ import InputField from '../../../ui/formElements/InputField'
 import theme from '../../../utils/theme/theme'
 import CustomButton from '../../../ui/button/CustomButton'
 import { useSelectImage } from './hooks/useSelectImage'
-import { CustomSwitch } from '../../../ui'
+import DataSwitchItem from './components/DataSwitchItem'
 
 const AddCompanyInfoForm = () => {
   //state
@@ -132,6 +132,7 @@ const AddCompanyInfoForm = () => {
               <CustomButton
                 onPress={handleSelectImage}
                 isLoading={uploadImageIsLoading}
+                minHeight={150}
               >
                 {logoUrl && !uploadImageError ? (
                   <View style={styles.logoContainer}>
@@ -164,13 +165,14 @@ const AddCompanyInfoForm = () => {
               </CustomButton>
             )}
 
-            <View style={styles.toggleContainer}>
-              <Text style={styles.text}>Skip logo upload</Text>
-              <CustomSwitch
-                value={logoUploadDeclined}
-                onValueChange={toggleDeclineLogoUpload}
-              />
-            </View>
+            <DataSwitchItem
+              name={'Skip logo upload'}
+              value={logoUploadDeclined}
+              onTogglePress={toggleDeclineLogoUpload}
+              infoText={
+                'The logo will be used at the top of the your invoices. If you choose to skip, text will be used instead.'
+              }
+            />
           </View>
         ) : null}
 
@@ -231,7 +233,6 @@ const styles = StyleSheet.create({
   imageUploadContainer: {
     position: 'relative',
     width: '100%',
-    backgroundColor: theme.colors.backgroundGrey,
   },
   imageUploadContainerUploading: {
     position: 'relative',
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    width: 282,
+    width: 285,
     height: 150,
     backgroundColor: theme.colors.backgroundGrey,
   },
@@ -250,7 +251,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 282,
+    width: 285,
     height: 150,
   },
   logoPreview: {
@@ -277,6 +278,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
   },
+  toggleLabel: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   buttonContainer: {
     display: 'flex',
     alignItems: 'center',

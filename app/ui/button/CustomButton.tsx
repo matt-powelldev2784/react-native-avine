@@ -12,6 +12,7 @@ interface ButtoMdProps {
   backgroundColor?: string
   isLoading?: boolean
   children?: React.ReactNode
+  minHeight?: number
 }
 
 const CustomButton = ({
@@ -19,6 +20,7 @@ const CustomButton = ({
   backgroundColor,
   isLoading,
   children,
+  minHeight,
 }: ButtoMdProps) => {
   return (
     <TouchableOpacity
@@ -26,6 +28,7 @@ const CustomButton = ({
       style={[
         styles.button,
         backgroundColor ? { backgroundColor: backgroundColor } : null,
+        minHeight ? { minHeight: minHeight } : null,
       ]}
       disabled={isLoading}
     >
