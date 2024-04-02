@@ -15,7 +15,7 @@ import DataSwitchItem from './components/DataSwitchItem'
 
 const AddCompanyInfoForm = () => {
   //state
-  const [activeStep, setActiveStep] = useState(1)
+  const [activeStep, setActiveStep] = useState(0)
   const [logoUploadDeclined, setlogoUploadDeclined] = useState<boolean>(false)
 
   //hooks
