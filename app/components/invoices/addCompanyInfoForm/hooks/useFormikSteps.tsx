@@ -2,6 +2,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import usePostApiData from '../../../../utils/hooks/usePostApiData'
 import { addCompanyDetails } from '../../../../db/user/addCompanyDetails'
+import { removeLogoPreview } from '../../../../db/user/removeLogoPreview'
 
 export const stepOneSchema = Yup.object().shape({
   companyName: Yup.string().required('Compnay name is required'),
@@ -51,6 +52,7 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
       companyDetailsProvided: true,
     },
     onSubmit: async (values) => {
+      await removeLogoPreview()
       setApiFunction(() => async () => addCompanyDetails(values))
     },
     validationSchema,

@@ -1,4 +1,4 @@
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
 
@@ -8,11 +8,10 @@ export const removeLogoPreview = async () => {
   }
 
   try {
-    const userDoc = doc(db, 'users', auth.currentUser.uid)
-    const docSnap = await getDoc(userDoc)
+    const userDocRef = doc(db, 'users', auth.currentUser.uid)
 
-    if (docSnap.exists()) {
-      docSnap.data().getLogoPreview = ''
+    if (userDocRef) {
+      await updateDoc(userDocRef, { logoPreview: '' })
       return { success: true, message: 'Logo preview removed successfully' }
     }
 

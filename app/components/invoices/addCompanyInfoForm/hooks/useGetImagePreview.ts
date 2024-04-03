@@ -15,7 +15,6 @@ export const useGetImagePreview = ({
   const [logoUrl, setLogoUrl] = useState(null)
   const [getImageIsLoading, setGetImageIsLoading] = useState(false)
   const [getImageError, setGetImageError] = useState(false)
-  const loadingTime = refreshImage ? 5000 : 0
 
   useEffect(() => {
     const handleGetImage = async () => {
@@ -29,7 +28,7 @@ export const useGetImagePreview = ({
           setLogoUrl(url)
           formik.setFieldValue('logoUrl', url)
           setGetImageIsLoading(false)
-        }, loadingTime)
+        }, 5000)
       } catch (error) {
         setGetImageError(true)
         setGetImageIsLoading(false)
