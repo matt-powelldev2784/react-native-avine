@@ -1,27 +1,43 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, ActivityIndicator } from 'react-native'
 import React from 'react'
 import theme from '../../../../utils/theme/theme'
+import { useGetImagePreview } from '../hooks/useGetImagePreview'
+import { FormikProps } from 'formik'
 
 interface ImagePreviewProps {
-  logoUrl: string | null
+  formik: FormikProps<any>
+  refreshImage: boolean
 }
 
-const ImagePreview = ({ logoUrl }: ImagePreviewProps) => {
+const ImagePreview = ({ formik, refreshImage }: ImagePreviewProps) => {
+  const { logoUrl, getImageIsLoading, getImageError } = useGetImagePreview({
+    formik,
+    refreshImage,
+  })
+
   return (
     <View style={styles.logoContainer}>
-      {logoUrl ? (
+      {logoUrl && !getImageIsLoading ? (
         <Image
           source={{ uri: logoUrl }}
           style={styles.logoPreview}
           resizeMode="contain"
         />
-      ) : (
+      ) : null}
+
+      {!logoUrl && !getImageIsLoading ? (
         <View style={styles.logoPlaceholder}>
           <Text style={styles.placeholderText}>
             Logo preview will appear here.
           </Text>
         </View>
-      )}
+      ) : null}
+
+      {getImageIsLoading ? (
+        <View style={styles.logoPlaceholder}>
+          <ActivityIndicator size={'small'} color={theme.colors.primary} />
+        </View>
+      ) : null}
     </View>
   )
 }

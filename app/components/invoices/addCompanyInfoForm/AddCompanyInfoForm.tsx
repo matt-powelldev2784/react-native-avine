@@ -9,10 +9,11 @@ import { handleFormStepBack } from '../../../utils/handleFormStepBack'
 import FormFlowTitles from './components/FormFlowTitles'
 import InputField from '../../../ui/formElements/InputField'
 import theme from '../../../utils/theme/theme'
-import { useSelectImage } from './hooks/useSelectImage'
+import { useUploadImage } from './hooks/useUploadImage'
 import DataSwitchItem from './components/DataSwitchItem'
 import ImageSelector from './components/ImageSelector'
 import ImagePreview from './components/ImagePreview'
+import { removeLogoPreview } from '../../../db/user/removeLogoPreview'
 
 const AddCompanyInfoForm = () => {
   //state
@@ -28,12 +29,16 @@ const AddCompanyInfoForm = () => {
     setActiveStep,
   })
   const {
-    logoUrl,
-    setLogoUrl,
     uploadImageIsLoading,
     handleSelectImage,
     uploadImageError,
-  } = useSelectImage({ formik })
+    uploadImageSuccess,
+  } = useUploadImage()
+
+  const handleChangeImage = async () => {
+    await removeLogoPreview()
+    await handleSelectImage()
+  }
 
   const { isLargeWeb } = useDeviceType()
   useFormResetOnBlur(formik, setActiveStep)
@@ -55,7 +60,6 @@ const AddCompanyInfoForm = () => {
       formik.setFieldValue('logoUrl', 'null')
     }
 
-    setLogoUrl(null)
     setlogoUploadDeclined((prev) => !prev)
   }
 
@@ -126,10 +130,13 @@ const AddCompanyInfoForm = () => {
             {!logoUploadDeclined ? (
               <>
                 <ImageSelector
-                  onPress={handleSelectImage}
+                  onPress={handleChangeImage}
                   isLoading={uploadImageIsLoading}
                 />
-                <ImagePreview logoUrl={logoUrl} />
+                <ImagePreview
+                  refreshImage={uploadImageSuccess}
+                  formik={formik}
+                />
               </>
             ) : null}
 
