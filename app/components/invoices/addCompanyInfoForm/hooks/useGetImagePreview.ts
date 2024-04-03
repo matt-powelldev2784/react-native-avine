@@ -22,8 +22,8 @@ export const useGetImagePreview = ({
       try {
         setGetImageError(false)
         setLogoUrl(null)
-
         setGetImageIsLoading(true)
+
         setTimeout(async () => {
           const url = await getLogoPreview()
           setLogoUrl(url)
