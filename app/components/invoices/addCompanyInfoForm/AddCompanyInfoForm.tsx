@@ -17,7 +17,7 @@ import { removeLogoPreview } from '../../../db/user/removeLogoPreview'
 
 const AddCompanyInfoForm = () => {
   //state
-  const [activeStep, setActiveStep] = useState(1)
+  const [activeStep, setActiveStep] = useState(0)
   const [logoUploadDeclined, setlogoUploadDeclined] = useState<boolean>(false)
 
   //hooks
@@ -142,7 +142,7 @@ const AddCompanyInfoForm = () => {
 
             {uploadImageError ? (
               <Text style={styles.errorText}>
-                Error uploading image. Please try again
+                Error uploading image. Please try again.
               </Text>
             ) : null}
 

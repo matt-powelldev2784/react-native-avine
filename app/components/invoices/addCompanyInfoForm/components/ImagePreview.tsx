@@ -38,6 +38,14 @@ const ImagePreview = ({ formik, refreshImage }: ImagePreviewProps) => {
           <ActivityIndicator size={'small'} color={theme.colors.primary} />
         </View>
       ) : null}
+
+      {getImageError ? (
+        <View style={styles.logoPlaceholder}>
+          <Text style={styles.errorText}>
+            Error getting image preview. Please try uploading a the image again.
+          </Text>
+        </View>
+      ) : null}
     </View>
   )
 }
@@ -64,6 +72,11 @@ const styles = StyleSheet.create({
   placeholderText: {
     color: theme.colors.primary,
     fontWeight: 'bold',
+  },
+  errorText: {
+    fontSize: 14,
+    color: 'red',
+    textAlign: 'center',
   },
 })
 
