@@ -32,6 +32,7 @@ export const useSelectImage = ({ formik }: useSelectImageProps) => {
       }
     } catch (error) {
       setUploadImageError(true)
+      setUploadImageIsLoading(false)
     }
   }
 

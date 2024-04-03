@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Image, ScrollView, StyleSheet, Text } from 'react-native'
+import { View, ScrollView, StyleSheet, Text } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import Button from '../../../ui/button/Button'
 import { useMoveToNextStep } from './hooks/useMoveToNextStep'
@@ -9,13 +9,14 @@ import { handleFormStepBack } from '../../../utils/handleFormStepBack'
 import FormFlowTitles from './components/FormFlowTitles'
 import InputField from '../../../ui/formElements/InputField'
 import theme from '../../../utils/theme/theme'
-import CustomButton from '../../../ui/button/CustomButton'
 import { useSelectImage } from './hooks/useSelectImage'
 import DataSwitchItem from './components/DataSwitchItem'
+import ImageSelector from './components/ImageSelector'
+import ImagePreview from './components/ImagePreview'
 
 const AddCompanyInfoForm = () => {
   //state
-  const [activeStep, setActiveStep] = useState(0)
+  const [activeStep, setActiveStep] = useState(1)
   const [logoUploadDeclined, setlogoUploadDeclined] = useState<boolean>(false)
 
   //hooks
@@ -121,49 +122,22 @@ const AddCompanyInfoForm = () => {
 
         {/*********************  Step 2 ***************************/}
         {activeStep === 1 ? (
-          <View
-            style={
-              uploadImageIsLoading
-                ? styles.imageUploadContainer
-                : styles.imageUploadContainerUploading
-            }
-          >
-            {logoUploadDeclined ? null : (
-              <CustomButton
-                onPress={handleSelectImage}
-                isLoading={uploadImageIsLoading}
-                minHeight={150}
-              >
-                {logoUrl && !uploadImageError ? (
-                  <View style={styles.logoContainer}>
-                    <Image
-                      source={{ uri: logoUrl }}
-                      style={styles.logoPreview}
-                      resizeMode="contain"
-                    />
-                  </View>
-                ) : (
-                  <View style={styles.logoPreviewContainer}>
-                    <Image
-                      source={require('../../../../assets/addImage.png')}
-                      style={{
-                        width: 40,
-                        height: 40,
-                      }}
-                    />
-                    <Text style={styles.logoPreviewText}>
-                      Click here to upload a company logo
-                    </Text>
-                  </View>
-                )}
+          <View style={styles.step2Container}>
+            {!logoUploadDeclined ? (
+              <>
+                <ImageSelector
+                  onPress={handleSelectImage}
+                  isLoading={uploadImageIsLoading}
+                />
+                <ImagePreview logoUrl={logoUrl} />
+              </>
+            ) : null}
 
-                {uploadImageError ? (
-                  <Text style={styles.errorText}>
-                    Error uploading image, try again
-                  </Text>
-                ) : null}
-              </CustomButton>
-            )}
+            {uploadImageError ? (
+              <Text style={styles.errorText}>
+                Error uploading image. Please try again
+              </Text>
+            ) : null}
 
             <DataSwitchItem
               name={'Skip logo upload'}
@@ -230,13 +204,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingBottom: 80,
   },
+  step2Container: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
+    overflow: 'hidden',
+  },
   imageUploadContainer: {
-    position: 'relative',
     width: '100%',
   },
   imageUploadContainerUploading: {
-    position: 'relative',
     width: '100%',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'red',
   },
   logoPreviewContainer: {
     display: 'flex',

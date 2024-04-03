@@ -60,13 +60,13 @@ const DataSwitchItem = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderRadius: 8,
     backgroundColor: theme.colors.backgroundGrey,
     paddingVertical: 8,
+    width: '100%',
   },
   textContainer: {
     flexDirection: 'row',
