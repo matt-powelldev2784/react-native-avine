@@ -17,6 +17,7 @@ import { printToPdf } from '../invoicePdf/native/printToPdf'
 import { cretateInvoiceHtml } from '../invoicePdf/native/createInvoiceHtml'
 import { getCompanyLogo } from '../../../db/user/getCompanyLogo'
 import useGetApiData from '../../../utils/hooks/useGetApiData'
+import { isCompanyDetailsProvided } from '../../../db/user/isCompanyDetailsProvided'
 
 interface InvoiceCardProps {
   invoiceId: string
@@ -43,25 +44,31 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
     apiFunction: async () => getCompanyLogo(),
   })
 
+  const { data: companyDetailsProvided } = useGetApiData({
+    apiFunction: async () => isCompanyDetailsProvided(),
+  })
+
   // if data is null show loading state
   if (
     typeof isComplete !== 'boolean' ||
     typeof isPaid !== 'boolean' ||
-    !invoiceData ||
-    !companyLogo
+    !invoiceData
   ) {
     return <Loading loadingText={'Loading job details...'} />
   }
-
-  console.log('companyLogo', companyLogo)
 
   //functions
   const handleNavigateToEditInvoice = () => {
     navigation.navigate('EditInvoice', { invoiceId })
   }
   const handleDownloadInvoice = () => {
+    if (!companyDetailsProvided) {
+      navigation.navigate('AddCompanyInfo')
+      return
+    }
+
     const invoiceData = {
-      companyLogo: companyLogo,
+      companyLogo: companyLogo || '',
       companyName: 'A Touch Of Glass',
       companyAddress: '102a Beddington Gardens',
       companyTown: 'Carsahlton',
