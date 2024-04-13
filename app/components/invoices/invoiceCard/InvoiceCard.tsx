@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, Image, Platform } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
 import { useGetInvoiceData } from '../hooks/getInvoiceData'
-import { Loading } from '../../../ui'
+import { ConfirmModal, Loading } from '../../../ui'
 import useFormikIsPaid from '../hooks/useFormikIsPaid'
 import DataSwitchItem from '../../planner/weekPlanner/components/scheduledJobCard/components/DataSwitchItem'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
@@ -26,6 +26,9 @@ interface InvoiceCardProps {
 type DueInvoiceCardRouteProp = RouteProp<RootStackParamList, 'DueInvoices'>
 
 const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
+  // state
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
+
   // hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const route = useRoute<DueInvoiceCardRouteProp>()
@@ -63,7 +66,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
   }
   const handleDownloadInvoice = () => {
     if (!companyDetailsProvided) {
-      navigation.navigate('AddCompanyInfo')
+      setModalVisible(true)
       return
     }
 
@@ -158,6 +161,16 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
           </Text>
         ) : null}
       </View>
+
+      <ConfirmModal
+        visible={modalVisible}
+        onConfirm={() => navigation.navigate('AddCompanyInfo')}
+        onCancel={() => setModalVisible(false)}
+        modalText={
+          'You need to add your company details before downloading invoices'
+        }
+        confirmButtonText={'Add Details'}
+      />
 
       <View style={{ height: 100 }} />
     </View>
