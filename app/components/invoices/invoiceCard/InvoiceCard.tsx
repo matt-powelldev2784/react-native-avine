@@ -15,6 +15,8 @@ import IconButton from '../../../ui/iconButton/IconButton'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { printToPdf } from '../invoicePdf/native/printToPdf'
 import { cretateInvoiceHtml } from '../invoicePdf/native/createInvoiceHtml'
+import { getCompanyLogo } from '../../../db/user/getCompanyLogo'
+import useGetApiData from '../../../utils/hooks/useGetApiData'
 
 interface InvoiceCardProps {
   invoiceId: string
@@ -37,14 +39,21 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
     plannerDate: invoiceData?.completedDate || null,
   })
 
+  const { data: companyLogo } = useGetApiData({
+    apiFunction: async () => getCompanyLogo(),
+  })
+
   // if data is null show loading state
   if (
     typeof isComplete !== 'boolean' ||
     typeof isPaid !== 'boolean' ||
-    !invoiceData
+    !invoiceData ||
+    !companyLogo
   ) {
     return <Loading loadingText={'Loading job details...'} />
   }
+
+  console.log('companyLogo', companyLogo)
 
   //functions
   const handleNavigateToEditInvoice = () => {
@@ -52,6 +61,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
   }
   const handleDownloadInvoice = () => {
     const invoiceData = {
+      companyLogo: companyLogo,
       companyName: 'A Touch Of Glass',
       companyAddress: '102a Beddington Gardens',
       companyTown: 'Carsahlton',

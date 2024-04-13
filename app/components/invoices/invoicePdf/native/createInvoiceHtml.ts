@@ -1,4 +1,5 @@
 interface CreateInvoiceHtml {
+  companyLogo: string | null
   companyName: string
   companyAddress: string
   companyTown: string
@@ -14,6 +15,7 @@ interface CreateInvoiceHtml {
 }
 
 export const cretateInvoiceHtml = ({
+  companyLogo,
   companyName,
   companyAddress,
   companyTown,
@@ -45,7 +47,7 @@ export const cretateInvoiceHtml = ({
         }
         .invoice-header {
           text-align: center;
-          margin-top: 100px;
+          margin-top: 10px;
           margin-bottom: 50px;
         }
         .invoice-header h1 {
@@ -56,6 +58,11 @@ export const cretateInvoiceHtml = ({
         .invoice-header h2 {
           margin: 0;
           font-size: 1.5em;
+        }
+        .invoice-logo {
+          width: 285px;
+          height: 150px;
+          object-fit: contain;
         }
         .section-header {
           margin-top: 20px;
@@ -88,6 +95,7 @@ export const cretateInvoiceHtml = ({
     <body>
       <div class="invoice-box">
         <div class="invoice-header">
+        <img src="${companyLogo}" class="invoice-logo" />
           <h1>${companyName}</h1>
         </div>
 
