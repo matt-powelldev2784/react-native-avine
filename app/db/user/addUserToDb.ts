@@ -1,5 +1,5 @@
 import { doc, setDoc, getDoc } from 'firebase/firestore'
-import { db, auth } from '../../firebaseConfig'
+import { db, auth } from '../../../firebaseConfig'
 
 export const addUserToDb = async () => {
   if (auth.currentUser === null) {
@@ -14,6 +14,7 @@ export const addUserToDb = async () => {
     await setDoc(userDoc, {
       email: auth.currentUser.email,
       userId: auth.currentUser.uid,
+      companyDetailsProvided: false,
     })
   }
 }
