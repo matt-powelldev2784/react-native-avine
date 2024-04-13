@@ -12,7 +12,7 @@ export const getCompanyLogo = async () => {
     const docSnap = await getDoc(userDoc)
 
     if (docSnap.exists()) {
-      const downloadURL = docSnap.data().logo
+      const downloadURL = docSnap.data().logoUrl
       console.log('File available at', downloadURL)
       return downloadURL
     }
