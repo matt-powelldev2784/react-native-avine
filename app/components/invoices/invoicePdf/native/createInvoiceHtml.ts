@@ -1,36 +1,10 @@
-interface CreateInvoiceHtml {
-  companyLogo: string | null
-  companyName: string
-  companyAddress: string
-  companyTown: string
-  companyPostcode: string
-  companyTel: string
-  clientName: string
-  clientAddress: string
-  clientTown: string
-  clientPostcode: string
-  invoiceNum: string
-  price: string
-  description: string
-}
+import { getRelatedInvoiceData } from '../../../../db/invoice/getRelatedInvoiceData'
 
-export const cretateInvoiceHtml = ({
-  companyLogo,
-  companyName,
-  companyAddress,
-  companyTown,
-  companyPostcode,
-  companyTel,
-  clientName,
-  clientAddress,
-  clientTown,
-  clientPostcode,
-  invoiceNum,
-  price,
-  description,
-}: CreateInvoiceHtml) => {
-  const logoImage = `<img src="${companyLogo || ''}" class="invoice-logo" />`
-  const companyTitle = `<h1>${companyName}</h1>`
+export const cretateInvoiceHtml = async (invoiceId: string) => {
+  const { user, client, invoiceData } = await getRelatedInvoiceData(invoiceId)
+
+  const logoImage = `<img src="${user.logoUrl || ''}" class="invoice-logo" />`
+  const companyTitle = `<h1>${user.companyName}</h1>`
 
   const html = `
     <!DOCTYPE html>
@@ -98,18 +72,18 @@ export const cretateInvoiceHtml = ({
     <body>
       <div class="invoice-box">
         <div class="invoice-header">
-        ${companyLogo !== 'null' ? logoImage : companyTitle}
+        ${user.logoUrl !== 'null' ? logoImage : companyTitle}
         </div>
 
         <div class="details">
-        <h3>Invoice Number: ${invoiceNum}</h3>
+        <h3>Invoice Number: ${invoiceData.id || 'ADD INVOICE NUMBER'}</h3>
         
         <div>
           <p>
-          ${clientName}<br>
-          ${clientAddress}<br>
-          ${clientTown}<br>
-          ${clientPostcode} <br>
+          ${client.name}<br>
+          ${client.address}<br>
+          ${client.town}<br>
+          ${client.postcode} <br>
           </p>   
         </div>
        
@@ -122,8 +96,8 @@ export const cretateInvoiceHtml = ({
               <th>Price</th>
             </tr>
             <tr>
-              <td>${description}</td>
-              <td>${price}</td>
+              <td>${invoiceData.description}</td>
+              <td>${invoiceData.price}</td>
             </tr>
           </table>
         </div>
@@ -131,9 +105,11 @@ export const cretateInvoiceHtml = ({
 
       <div class="footer">
           <p>
-          ${companyName}, ${companyAddress}, ${companyTown}, ${companyPostcode}
+          ${user.companyName}, ${user.address}, ${user.town}, ${user.county}, ${
+            user.postcode
+          }
           <br>
-          ${companyTel}
+          ${user.contactTel}
           </p>   
         </div>
     </body>

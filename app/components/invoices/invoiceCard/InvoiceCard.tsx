@@ -15,7 +15,6 @@ import IconButton from '../../../ui/iconButton/IconButton'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { printToPdf } from '../invoicePdf/native/printToPdf'
 import { cretateInvoiceHtml } from '../invoicePdf/native/createInvoiceHtml'
-import { getCompanyLogo } from '../../../db/user/getCompanyLogo'
 import useGetApiData from '../../../utils/hooks/useGetApiData'
 import { isCompanyDetailsProvided } from '../../../db/user/isCompanyDetailsProvided'
 
@@ -42,11 +41,6 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
     invoiceId,
     plannerDate: invoiceData?.completedDate || null,
   })
-
-  const { data: companyLogo } = useGetApiData({
-    apiFunction: async () => getCompanyLogo(),
-  })
-
   const { data: companyDetailsProvided } = useGetApiData({
     apiFunction: async () => isCompanyDetailsProvided(),
   })
@@ -64,30 +58,13 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
   const handleNavigateToEditInvoice = () => {
     navigation.navigate('EditInvoice', { invoiceId })
   }
-  const handleDownloadInvoice = () => {
+  const handleDownloadInvoice = async () => {
     if (!companyDetailsProvided) {
       setModalVisible(true)
       return
     }
 
-    const invoiceData = {
-      companyLogo: companyLogo || '',
-      companyName: 'A Touch Of Glass',
-      companyAddress: '102a Beddington Gardens',
-      companyTown: 'Carsahlton',
-      companyPostcode: 'SM5 3HQ',
-      companyTel: '0208 666 9999',
-      clientName: 'John Doe',
-      clientAddress: '34 Diceland Road',
-      clientTown: 'Carsahlton',
-      clientPostcode: 'SM7 2ET  ',
-      invoiceNum: 'INV123456',
-      price: '£1000.00',
-      description:
-        'Web development services. Web development services. Web development services. Web development services. Web development services. Web development services. Web development services. Web development services. Web development services',
-    }
-
-    const html = cretateInvoiceHtml(invoiceData)
+    const html = await cretateInvoiceHtml(invoiceId)
     printToPdf(html)
   }
 
