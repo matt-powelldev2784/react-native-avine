@@ -29,6 +29,9 @@ export const cretateInvoiceHtml = ({
   price,
   description,
 }: CreateInvoiceHtml) => {
+  const logoImage = `<img src="${companyLogo || ''}" class="invoice-logo" />`
+  const companyTitle = `<h1>${companyName}</h1>`
+
   const html = `
     <!DOCTYPE html>
     <html>
@@ -95,8 +98,7 @@ export const cretateInvoiceHtml = ({
     <body>
       <div class="invoice-box">
         <div class="invoice-header">
-        <img src="${companyLogo}" class="invoice-logo" />
-          <h1>${companyName}</h1>
+        ${companyLogo !== 'null' ? logoImage : companyTitle}
         </div>
 
         <div class="details">
