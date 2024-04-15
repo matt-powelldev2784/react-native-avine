@@ -3,6 +3,7 @@ import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
 import { getJob } from '../jobs/getJob'
 import { convertPlannerDateToShortDate } from '../../utils/convertPlannerDateToShortDate'
+import { addInvoiceId } from './addInvoiceId'
 
 interface addInvoiceT {
   plannerId: string
@@ -32,7 +33,10 @@ export const addInvoice = async ({ plannerId, plannerDate }: addInvoiceT) => {
     const job = await getJob(jobId)
 
     if (!invoiceDoc.exists()) {
+      const newInvoiceId = await addInvoiceId()
+
       await setDoc(invoiceDocRef, {
+        invoiceId: newInvoiceId,
         relatedRound: roundId,
         relatedJob: jobId,
         roundType: roundType,

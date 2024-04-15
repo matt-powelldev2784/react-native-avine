@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, Image, Platform } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
 import { useGetInvoiceData } from '../hooks/getInvoiceData'
-import { Loading } from '../../../ui'
+import { ConfirmModal, Loading } from '../../../ui'
 import useFormikIsPaid from '../hooks/useFormikIsPaid'
 import DataSwitchItem from '../../planner/weekPlanner/components/scheduledJobCard/components/DataSwitchItem'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
@@ -13,6 +13,10 @@ import { convertPlannerDateToShortDate } from '../../../utils/convertPlannerDate
 import LongDataItem from '../../planner/weekPlanner/components/scheduledJobCard/components/LongDataItem'
 import IconButton from '../../../ui/iconButton/IconButton'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { printToPdf } from '../invoicePdf/native/printToPdf'
+import { cretateInvoiceHtml } from '../invoicePdf/native/createInvoiceHtml'
+import useGetApiData from '../../../utils/hooks/useGetApiData'
+import { isCompanyDetailsProvided } from '../../../db/user/isCompanyDetailsProvided'
 
 interface InvoiceCardProps {
   invoiceId: string
@@ -21,6 +25,9 @@ interface InvoiceCardProps {
 type DueInvoiceCardRouteProp = RouteProp<RootStackParamList, 'DueInvoices'>
 
 const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
+  // state
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
+
   // hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const route = useRoute<DueInvoiceCardRouteProp>()
@@ -33,6 +40,9 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
     isComplete,
     invoiceId,
     plannerDate: invoiceData?.completedDate || null,
+  })
+  const { data: companyDetailsProvided } = useGetApiData({
+    apiFunction: async () => isCompanyDetailsProvided(),
   })
 
   // if data is null show loading state
@@ -47,6 +57,15 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
   //functions
   const handleNavigateToEditInvoice = () => {
     navigation.navigate('EditInvoice', { invoiceId })
+  }
+  const handleDownloadInvoice = async () => {
+    if (!companyDetailsProvided) {
+      setModalVisible(true)
+      return
+    }
+
+    const html = await cretateInvoiceHtml(invoiceId)
+    printToPdf(html)
   }
 
   // variables
@@ -75,7 +94,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
             <IconButton
               size={34}
               imgSource={require('../../../../assets/download_blue.png')}
-              onPress={() => {}}
+              onPress={handleDownloadInvoice}
             />
 
             <Text />
@@ -119,6 +138,16 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
           </Text>
         ) : null}
       </View>
+
+      <ConfirmModal
+        visible={modalVisible}
+        onConfirm={() => navigation.navigate('AddCompanyInfo')}
+        onCancel={() => setModalVisible(false)}
+        modalText={
+          'You need to add your company details before downloading invoices'
+        }
+        confirmButtonText={'Add Details'}
+      />
 
       <View style={{ height: 100 }} />
     </View>
