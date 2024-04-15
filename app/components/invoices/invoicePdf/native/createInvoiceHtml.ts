@@ -76,7 +76,9 @@ export const cretateInvoiceHtml = async (invoiceId: string) => {
         </div>
 
         <div class="details">
-        <h3>Invoice Number: ${invoiceData.id || 'ADD INVOICE NUMBER'}</h3>
+        <h3>Invoice Number: ${
+          invoiceData.invoiceId || 'ADD INVOICE NUMBER'
+        }</h3>
         
         <div>
           <p>

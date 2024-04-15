@@ -44,7 +44,6 @@ export const toggleJobIsComplete = async ({
     const invoiedJobs = plannerDoc?.data()?.invoicedJobs
 
     const jobIsInvoiced = invoiedJobs ? invoiedJobs.includes(jobId) : false
- 
 
     if (jobIsInvoiced === true) {
       throw new Error(
