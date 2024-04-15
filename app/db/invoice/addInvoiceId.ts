@@ -13,8 +13,8 @@ export const addInvoiceId = async () => {
       db,
       'users',
       auth.currentUser.uid,
+      'counters',
       'invoiceCounter',
-      'counter',
     )
 
     // Run a transaction to increment the counter and use it as the new invoice number
@@ -23,7 +23,7 @@ export const addInvoiceId = async () => {
 
       //initialize the counter if it doesn't exist
       if (!counterDoc.exists()) {
-        await setDoc(counterDocRef, { count: 0 })
+        await setDoc(counterDocRef, { count: 1000 })
         counterDoc = await transaction.get(counterDocRef)
       }
 
@@ -37,7 +37,7 @@ export const addInvoiceId = async () => {
       }
 
       // Increment the count
-      const newCount = 1000 + counterData.count + 1 // Start at 1001
+      const newCount = counterData.count + 1 // Start at 1001
       transaction.update(counterDocRef, { count: newCount })
 
       return newCount
