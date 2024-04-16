@@ -164,7 +164,11 @@ const { isPaidApiIsLoading, formikIsPaid, isPaidError } = useFormikIsPaid({
 
       <div ref={invoiceTemplateRef}>
         {user && client && invoiceData && Platform.OS === 'web' && (
-          <CreateInvoice />
+          <CreateInvoice
+            user={user}
+            client={client}
+            invoiceData={invoiceData}
+          />
         )}
       </div>
     </View>
