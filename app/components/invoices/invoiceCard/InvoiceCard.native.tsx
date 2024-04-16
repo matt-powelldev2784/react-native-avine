@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, Platform } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
 import { useGetInvoiceData } from '../hooks/getInvoiceData'
@@ -13,8 +13,8 @@ import { convertPlannerDateToShortDate } from '../../../utils/convertPlannerDate
 import LongDataItem from '../../planner/weekPlanner/components/scheduledJobCard/components/LongDataItem'
 import IconButton from '../../../ui/iconButton/IconButton'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { CreateInvoice } from '../invoicePdf/web/CreateInvoice'
-import jsPDF from 'jspdf'
+import { printToPdf } from '../invoicePdf/native/printToPdf'
+import { cretateInvoiceHtml } from '../invoicePdf/native/createInvoiceHtml'
 
 interface InvoiceCardProps {
   invoiceId: string
@@ -27,19 +27,18 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
 
   // hooks
-  const invoiceTemplateRef = useRef<HTMLDivElement>(null)
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const route = useRoute<DueInvoiceCardRouteProp>()
   const { invoiceData, user, client, isComplete, isPaid } = useGetInvoiceData({
     invoiceId,
     route,
   })
-const { isPaidApiIsLoading, formikIsPaid, isPaidError } = useFormikIsPaid({
-  isPaid,
-  isComplete,
-  invoiceId,
-  plannerDate: invoiceData?.completedDate || null,
-})
+  const { isPaidApiIsLoading, formikIsPaid, isPaidError } = useFormikIsPaid({
+    isPaid,
+    isComplete,
+    invoiceId,
+    plannerDate: invoiceData?.completedDate || null,
+  })
 
   // if data is null show loading state
   if (
@@ -62,21 +61,8 @@ const { isPaidApiIsLoading, formikIsPaid, isPaidError } = useFormikIsPaid({
       return
     }
 
-    const doc = new jsPDF({
-      format: 'a4',
-      unit: 'px',
-    })
-
-    // Adding the fonts.
-    doc.setFont('Inter-Regular', 'normal')
-
-    if (invoiceTemplateRef.current !== null) {
-      doc.html(invoiceTemplateRef.current, {
-        async callback(doc) {
-          await doc.save('document')
-        },
-      })
-    }
+    const html = await cretateInvoiceHtml(invoiceId)
+    printToPdf(html)
   }
 
   // variables
@@ -161,12 +147,6 @@ const { isPaidApiIsLoading, formikIsPaid, isPaidError } = useFormikIsPaid({
       />
 
       <View style={{ height: 100 }} />
-
-      <div ref={invoiceTemplateRef}>
-        {user && client && invoiceData && Platform.OS === 'web' && (
-          <CreateInvoice />
-        )}
-      </div>
     </View>
   )
 }
