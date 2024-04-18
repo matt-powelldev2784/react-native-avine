@@ -30,7 +30,6 @@ export const CreateInvoice = ({
       padding: '30px',
       fontSize: '16px',
       lineHeight: '24px',
-      backgroundColor: 'white',
     },
     header: {
       textAlign: 'center' as const,

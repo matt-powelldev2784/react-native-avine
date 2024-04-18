@@ -7,12 +7,14 @@ interface CreateWebPdfProps {
   user: UserT
   client: ClientWithIdT
   invoiceData: InvoiceWithIdT
+  invoiceTemplateRef: React.RefObject<HTMLDivElement>
 }
 
 export const createWebPdf = async ({
   user,
   client,
   invoiceData,
+  invoiceTemplateRef,
 }: CreateWebPdfProps) => {
   console.log('client', client)
   console.log('invoiceData', invoiceData)
@@ -47,15 +49,14 @@ export const createWebPdf = async ({
       // Add the image to the PDF with the desired width and calculated height
       doc.addImage(base64data, 'JPEG', 0, 0, desiredWidth, desiredHeight)
 
-      // if (invoiceTemplateRef.current !== null) {
-      //   doc.html(invoiceTemplateRef.current, {
-      //     callback: function () {
-      //       doc.save('document.pdf')
-      //     },
-      //   })
-      // }
-
-      doc.save('document.pdf')
+      if (invoiceTemplateRef.current !== null) {
+        doc.html(invoiceTemplateRef.current.innerHTML, {
+          callback: function () {
+            // Save the PDF
+            doc.save('document.pdf')
+          },
+        })
+      }
     }
   }
 }

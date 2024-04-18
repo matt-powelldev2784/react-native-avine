@@ -62,7 +62,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
       return
     }
 
-    createWebPdf({ user, client, invoiceData })
+    createWebPdf({ user, client, invoiceData, invoiceTemplateRef })
   }
 
   // variables
