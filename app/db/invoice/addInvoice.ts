@@ -50,16 +50,16 @@ export const addInvoice = async ({ plannerId, plannerDate }: addInvoiceT) => {
       })
     }
 
-    if (invoiceDoc.exists()) {
-      await updateDoc(invoiceDocRef, {
-        relatedRound: roundId,
-        relatedJob: jobId,
-        roundType: roundType,
-        completedDate: plannerDate,
-        job: job,
-        isPaid: false,
-      })
-    }
+    // if (invoiceDoc.exists()) {
+    //   await updateDoc(invoiceDocRef, {
+    //     relatedRound: roundId,
+    //     relatedJob: jobId,
+    //     roundType: roundType,
+    //     completedDate: plannerDate,
+    //     job: job,
+    //     isPaid: false,
+    //   })
+    // }
   } catch (error) {
     throw new Error(`Error adding invoice at addInvoice route: ${error}`)
   }

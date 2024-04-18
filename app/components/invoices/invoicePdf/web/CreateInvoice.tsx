@@ -22,49 +22,51 @@ export const CreateInvoice = ({
 }: CreateInvoiceProps) => {
   const styles = {
     page: {
-      fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif',
+      fontFamily: 'Arial, sans-serif',
       color: '#555',
       width: convertMilimetersToPoints(210),
       height: convertMilimetersToPoints(297),
       margin: 'auto',
-      padding: '30px',
-      fontSize: '16px',
-      lineHeight: '24px',
+      padding: '3px',
+      fontSize: '4px',
+      maxWidth: '202px',
+      marginTop: '25px',
     },
     header: {
       textAlign: 'center' as const,
-      marginTop: '10px',
-      marginBottom: '50px',
+      marginTop: '1px',
+      marginBottom: '5px',
+      margin: 'auto',
     },
     logo: {
-      width: '285px',
-      height: '150px',
+      width: '28.5px',
+      height: '15px',
       objectFit: 'contain' as const,
     },
     details: {
-      marginBottom: '20px',
+      marginBottom: '4px',
+      margin: 'auto',
+      maxWidth: 185,
     },
     table: {
       width: '100%',
       borderCollapse: 'collapse' as const,
     },
     th: {
-      border: '1px solid #ddd',
-      padding: '8px',
-      backgroundColor: '#f2f2f2',
+      border: '0.2px solid #ddd',
       textAlign: 'left' as const,
     },
     td: {
-      border: '1px solid #ddd',
-      padding: '8px',
+      border: '0.2px solid #ddd',
     },
     footer: {
       textAlign: 'center' as const,
-      marginTop: '50px',
+      marginTop: '10px',
       color: '#656768',
       width: '100%',
     },
   }
+
 
   return (
     <div style={styles.page}>

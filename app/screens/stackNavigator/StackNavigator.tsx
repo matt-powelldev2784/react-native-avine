@@ -76,11 +76,12 @@ const StackNavigator = () => {
       {userInfo ? (
         <>
           {/* --------------------------  Invoice Screens  -------------------------- */}
-          <Stack.Screen name="AddCompanyInfo" component={AddCompanyInfo} />
+
           <Stack.Screen name="DueInvoices" component={DueInvoices} />
           <Stack.Screen name="PaidInvoices" component={PaidInvoices} />
           <Stack.Screen name="InvoiceCardView" component={InvoiceCardView} />
           <Stack.Screen name="EditInvoice" component={EditInvoice} />
+          <Stack.Screen name="AddCompanyInfo" component={AddCompanyInfo} />
 
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />
