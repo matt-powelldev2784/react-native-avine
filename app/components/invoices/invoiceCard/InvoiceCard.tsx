@@ -34,12 +34,12 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
     invoiceId,
     route,
   })
-const { isPaidApiIsLoading, formikIsPaid, isPaidError } = useFormikIsPaid({
-  isPaid,
-  isComplete,
-  invoiceId,
-  plannerDate: invoiceData?.completedDate || null,
-})
+  const { isPaidApiIsLoading, formikIsPaid, isPaidError } = useFormikIsPaid({
+    isPaid,
+    isComplete,
+    invoiceId,
+    plannerDate: invoiceData?.completedDate || null,
+  })
 
   // if data is null show loading state
   if (
@@ -64,21 +64,44 @@ const { isPaidApiIsLoading, formikIsPaid, isPaidError } = useFormikIsPaid({
 
     const doc = new jsPDF({
       format: 'a4',
-      unit: 'px',
+      unit: 'mm',
     })
 
-    // Adding the fonts.
     doc.setFont('Inter-Regular', 'normal')
 
-    if (invoiceTemplateRef.current !== null) {
-      doc.html(invoiceTemplateRef.current, {
-        async callback(doc) {
-          await doc.save('document')
-        },
-      })
-    }
-  }
+    // Fetch the image, convert it to a Blob and then to a base64 data URL
+    const response = await fetch(user.logoUrl)
+    const blob = await response.blob()
+    const reader = new FileReader()
+    reader.readAsDataURL(blob)
 
+    reader.onloadend = () => {
+      const base64data = reader.result as string
+
+      // Create a new image element using the native JavaScript API
+      const img = new window.Image()
+      img.src = base64data
+
+      img.onload = () => {
+        // calculate the aspect ratio of the image
+        const aspectRatio = img.width / img.height
+        const desiredHeight = 38
+        const desiredWidth = desiredHeight * aspectRatio
+
+        // Add the image to the PDF with the desired width and calculated height
+        doc.addImage(base64data, 'JPEG', 0, 0, desiredWidth, desiredHeight)
+        doc.save('document.pdf')
+      }
+    }
+
+    // if (invoiceTemplateRef.current !== null) {
+    //   doc.html(invoiceTemplateRef.current, {
+    //     callback: function () {
+    //       doc.save('document.pdf')
+    //     },
+    //   })
+    // }
+  }
   // variables
   const shortDateString = convertPlannerDateToShortDate(
     invoiceData?.completedDate,
@@ -164,11 +187,13 @@ const { isPaidApiIsLoading, formikIsPaid, isPaidError } = useFormikIsPaid({
 
       <div ref={invoiceTemplateRef}>
         {user && client && invoiceData && Platform.OS === 'web' && (
-          <CreateInvoice
-            user={user}
-            client={client}
-            invoiceData={invoiceData}
-          />
+          <>
+            <CreateInvoice
+              user={user}
+              client={client}
+              invoiceData={invoiceData}
+            />
+          </>
         )}
       </div>
     </View>
@@ -257,6 +282,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 16,
     marginHorizontal: 8,
+  },
+  logo: {
+    width: 285,
+    height: 150,
+    objectFit: 'contain' as const,
   },
 })
 

@@ -70,11 +70,12 @@ export const CreateInvoice = ({
   return (
     <div style={styles.page}>
       <div style={styles.header}>
-        {user.logoUrl !== 'null' ? (
+        {/* {user.logoUrl !== 'null' ? (
           <img src={user.logoUrl} style={styles.logo} />
         ) : (
           <h1>{user.companyName}</h1>
-        )}
+        )} */}
+        <div style={styles.logo}></div>
       </div>
 
       <div style={styles.details}>
