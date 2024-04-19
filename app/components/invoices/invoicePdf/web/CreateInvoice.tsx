@@ -30,6 +30,7 @@ export const CreateInvoice = ({
       padding: '3px',
       fontSize: '4px',
       maxWidth: '202px',
+      maxHeight: '260px',
       marginTop: '25px',
     },
     header: {
@@ -44,7 +45,6 @@ export const CreateInvoice = ({
       objectFit: 'contain' as const,
     },
     details: {
-      marginBottom: '4px',
       margin: 'auto',
       maxWidth: 185,
     },
@@ -53,11 +53,19 @@ export const CreateInvoice = ({
       borderCollapse: 'collapse' as const,
     },
     th: {
-      border: '0.2px solid #ddd',
+      borderTop: '0.05px solid #ddd',
+      borderLeft: '0.025px solid #ddd',
+      borderRight: '0.025px solid #ddd',
       textAlign: 'left' as const,
+      paddingTop: '2px',
+      paddingBottom: '3px',
+      paddingLeft: '2px',
     },
     td: {
-      border: '0.2px solid #ddd',
+      border: '0.05px solid #ddd',
+      paddingTop: '2px',
+      paddingBottom: '3px',
+      paddingLeft: '2px',
     },
     footer: {
       textAlign: 'center' as const,

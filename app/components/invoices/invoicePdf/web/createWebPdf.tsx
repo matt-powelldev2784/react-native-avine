@@ -14,6 +14,8 @@ export const createWebPdf = async ({ invoiceId }: CreateWebPdfProps) => {
     <CreateInvoice user={user} client={client} invoiceData={invoiceData} />,
   )
 
+  console.log('user', user)
+
   console.log('invoiceData', invoiceData)
 
   if (!user.logoUrl) return
@@ -40,7 +42,7 @@ export const createWebPdf = async ({ invoiceId }: CreateWebPdfProps) => {
     img.onload = () => {
       // calculate the aspect ratio of the image
       const aspectRatio = img.width / img.height
-      const desiredHeight = 38
+      const desiredHeight = 20
       const desiredWidth = desiredHeight * aspectRatio
 
       // calculate the starting position of the image to center it horizontally
