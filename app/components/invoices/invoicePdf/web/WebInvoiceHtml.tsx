@@ -75,6 +75,9 @@ export const WebInvoiceHtml = ({
       width: '100%',
       color: '#000000',
     },
+    blackText: {
+      color: '#000000',
+    },
   }
 
   return (
@@ -112,7 +115,9 @@ export const WebInvoiceHtml = ({
               </tr>
               <tr>
                 <td style={styles.td}>{invoiceData.description}</td>
-                <td style={styles.td}>{invoiceData.price.toString()}</td>
+                <td style={styles.td}>
+                  <p style={styles.blackText}>{invoiceData.price.toString()}</p>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -123,8 +128,7 @@ export const WebInvoiceHtml = ({
         <p>
           {user.companyName}, {user.address}, {user.town}, {user.county},{' '}
           {user.postcode}
-          <br />
-          {user.contactTel?.toString()}
+          <p style={styles.blackText}>{user.contactTel?.toString()}</p>
         </p>
       </div>
     </div>
