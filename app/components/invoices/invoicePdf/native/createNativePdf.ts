@@ -7,7 +7,7 @@ const convertMilimetersToPoints = (milimeters: number) => {
   return pointsRounded
 }
 
-export const printToPdf = async (html: string) => {
+export const createNativePdf = async (html: string) => {
   const { uri } = await Print.printToFileAsync({
     html,
     width: convertMilimetersToPoints(210),

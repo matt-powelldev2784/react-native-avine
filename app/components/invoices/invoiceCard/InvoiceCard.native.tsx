@@ -13,7 +13,8 @@ import { convertPlannerDateToShortDate } from '../../../utils/convertPlannerDate
 import LongDataItem from '../../planner/weekPlanner/components/scheduledJobCard/components/LongDataItem'
 import IconButton from '../../../ui/iconButton/IconButton'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { createWebPdf } from '../invoicePdf/web/createWebPdf'
+import { createNativePdf } from '../invoicePdf/native/createNativePdf'
+import { nativeInvoiceHtml } from '../invoicePdf/native/nativeInvoiceHtml'
 
 interface InvoiceCardProps {
   invoiceId: string
@@ -28,7 +29,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
   // hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const route = useRoute<DueInvoiceCardRouteProp>()
-  const { invoiceData, user, isComplete, isPaid } = useGetInvoiceData({
+  const { invoiceData, user, client, isComplete, isPaid } = useGetInvoiceData({
     invoiceId,
     route,
   })
@@ -43,7 +44,9 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
   if (
     typeof isComplete !== 'boolean' ||
     typeof isPaid !== 'boolean' ||
-    !invoiceData
+    !invoiceData ||
+    !user ||
+    !client
   ) {
     return <Loading loadingText={'Loading job details...'} />
   }
@@ -58,7 +61,8 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
       return
     }
 
-    createWebPdf({ invoiceId })
+    const html = await nativeInvoiceHtml(invoiceId)
+    createNativePdf(html)
   }
 
   // variables
@@ -229,11 +233,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 16,
     marginHorizontal: 8,
-  },
-  logo: {
-    width: 285,
-    height: 150,
-    objectFit: 'contain' as const,
   },
 })
 

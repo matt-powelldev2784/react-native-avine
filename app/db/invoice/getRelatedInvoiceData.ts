@@ -11,14 +11,10 @@ export const getRelatedInvoiceData = async (
     return authError({ filename: 'getRelatedInvoiceData' })
   }
 
-  console.log('getRelatedInvoiceData', getRelatedInvoiceData)
-
   try {
     const invoiceData = await getInvoice(invoiceId)
     const user = await getUser()
     const client = await getClient(invoiceData.job.clientId)
-
-    console.log('{ invoiceData, user, client }', { invoiceData, user, client })
 
     return { invoiceData, user, client }
   } catch (error) {

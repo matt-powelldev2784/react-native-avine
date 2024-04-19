@@ -1,8 +1,7 @@
 import { RouteProp } from '@react-navigation/native'
-import { getInvoice } from '../../../db/invoice/getInvoice'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
-import { InvoiceWithIdT } from '../../../types/InvoiceT'
 import useGetApiData from '../../../utils/hooks/useGetApiData'
+import { getRelatedInvoiceData } from '../../../db/invoice/getRelatedInvoiceData'
 
 type DueInvoiceCardRouteProp = RouteProp<RootStackParamList, 'DueInvoices'>
 
@@ -14,12 +13,14 @@ interface UseGetJobCardDataT {
 export const useGetInvoiceData = ({ invoiceId, route }: UseGetJobCardDataT) => {
   const { getApiIsLoading, data } = useGetApiData({
     route,
-    apiFunction: async () => getInvoice(invoiceId),
+    apiFunction: async () => getRelatedInvoiceData(invoiceId),
   })
 
-  const invoiceData = data as InvoiceWithIdT
+  const invoiceData = data?.invoiceData || null
+  const user = data?.user || null
+  const client = data?.client || null
   const isComplete = true
   const isPaid = invoiceData?.isPaid
 
-  return { getApiIsLoading, invoiceData, isComplete, isPaid }
+  return { getApiIsLoading, invoiceData, user, client, isComplete, isPaid }
 }
