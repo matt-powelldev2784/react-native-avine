@@ -1,6 +1,6 @@
 import { getRelatedInvoiceData } from '../../../../db/invoice/getRelatedInvoiceData'
 
-export const cretateInvoiceHtml = async (invoiceId: string) => {
+export const nativeInvoiceHtml = async (invoiceId: string) => {
   const { user, client, invoiceData } = await getRelatedInvoiceData(invoiceId)
 
   const logoImage = `<img src="${user.logoUrl || ''}" class="invoice-logo" />`

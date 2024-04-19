@@ -13,8 +13,8 @@ import { convertPlannerDateToShortDate } from '../../../utils/convertPlannerDate
 import LongDataItem from '../../planner/weekPlanner/components/scheduledJobCard/components/LongDataItem'
 import IconButton from '../../../ui/iconButton/IconButton'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { printToPdf } from '../invoicePdf/native/printToPdf'
-import { cretateInvoiceHtml } from '../invoicePdf/native/createInvoiceHtml'
+import { createNativePdf } from '../invoicePdf/native/createNativePdf'
+import { nativeInvoiceHtml } from '../invoicePdf/native/nativeInvoiceHtml'
 
 interface InvoiceCardProps {
   invoiceId: string
@@ -61,8 +61,8 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
       return
     }
 
-    const html = await cretateInvoiceHtml(invoiceId)
-    printToPdf(html)
+    const html = await nativeInvoiceHtml(invoiceId)
+    createNativePdf(html)
   }
 
   // variables
