@@ -22,7 +22,7 @@ export const WebInvoiceHtml = ({
 }: CreateInvoiceProps) => {
   const styles = {
     page: {
-      fontFamily: 'Arial, sans-serif',
+      fontFamily: 'helvetica, sans-serif',
       color: '#555',
       width: convertMilimetersToPoints(210),
       height: convertMilimetersToPoints(297),
@@ -47,6 +47,7 @@ export const WebInvoiceHtml = ({
     details: {
       margin: 'auto',
       maxWidth: 185,
+      color: '#000000',
     },
     table: {
       width: '100%',
@@ -64,14 +65,21 @@ export const WebInvoiceHtml = ({
     td: {
       border: '0.05px solid #ddd',
       paddingTop: '2px',
-      paddingBottom: '3px',
+      paddingBottom: '4px',
       paddingLeft: '2px',
+      color: '#000000',
+      textDecoration: 'none',
     },
     footer: {
       textAlign: 'center' as const,
       marginTop: '10px',
-      color: '#656768',
       width: '100%',
+      color: '#000000',
+      textDecoration: 'none',
+    },
+    blackText: {
+      color: '#000000',
+      textDecoration: 'none',
     },
   }
 
@@ -110,7 +118,7 @@ export const WebInvoiceHtml = ({
               </tr>
               <tr>
                 <td style={styles.td}>{invoiceData.description}</td>
-                <td style={styles.td}>{invoiceData.price}</td>
+                <td style={styles.td}>{`£${invoiceData.price.toString()}`}</td>
               </tr>
             </tbody>
           </table>
@@ -118,12 +126,10 @@ export const WebInvoiceHtml = ({
       </div>
 
       <div style={styles.footer}>
-        <p>
-          {user.companyName}, {user.address}, {user.town}, {user.county},{' '}
-          {user.postcode}
-          <br />
-          {user.contactTel}
-        </p>
+        {user.companyName}, {user.address}, {user.town}, {user.county},{' '}
+        {user.postcode}
+        <br />
+        {user.contactTel?.toString()}
       </div>
     </div>
   )

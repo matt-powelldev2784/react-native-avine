@@ -18,7 +18,7 @@ const DueInvoiceList = () => {
   const invoiceData = data as InvoiceWithIdT[]
 
   if (getApiIsLoading) {
-    return <Loading loadingText={'Loading jobs list...'} />
+    return <Loading loadingText={'Loading invoice list...'} />
   }
 
   if (!invoiceData || invoiceData.length === 0) {

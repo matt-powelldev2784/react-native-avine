@@ -21,7 +21,8 @@ export const createWebPdf = async ({ invoiceId }: CreateWebPdfProps) => {
     unit: 'mm',
   })
 
-  doc.setFont('Inter-Regular', 'normal')
+
+ doc.setFont('helvetica', 'normal')
 
   // Fetch the image, convert it to a Blob and then to a base64 data URL
   const response = await fetch(user.logoUrl)
