@@ -2,7 +2,7 @@ import React from 'react'
 import jsPDF from 'jspdf'
 import { getRelatedInvoiceData } from '../../../../db/invoice/getRelatedInvoiceData'
 import { renderToString } from 'react-dom/server'
-import { CreateInvoice } from './CreateInvoice'
+import { WebInvoiceHtml } from './WebInvoiceHtml'
 
 interface CreateWebPdfProps {
   invoiceId: string
@@ -11,12 +11,8 @@ interface CreateWebPdfProps {
 export const createWebPdf = async ({ invoiceId }: CreateWebPdfProps) => {
   const { user, client, invoiceData } = await getRelatedInvoiceData(invoiceId)
   const invoiceHtml = renderToString(
-    <CreateInvoice user={user} client={client} invoiceData={invoiceData} />,
+    <WebInvoiceHtml user={user} client={client} invoiceData={invoiceData} />,
   )
-
-  console.log('user', user)
-
-  console.log('invoiceData', invoiceData)
 
   if (!user.logoUrl) return
 

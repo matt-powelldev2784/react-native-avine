@@ -15,7 +15,7 @@ const convertMilimetersToPoints = (milimeters: number) => {
   return pointsRounded
 }
 
-export const CreateInvoice = ({
+export const WebInvoiceHtml = ({
   user,
   client,
   invoiceData,
@@ -74,7 +74,6 @@ export const CreateInvoice = ({
       width: '100%',
     },
   }
-
 
   return (
     <div style={styles.page}>
