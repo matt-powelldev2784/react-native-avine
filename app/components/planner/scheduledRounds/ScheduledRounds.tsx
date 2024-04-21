@@ -2,14 +2,14 @@ import { View, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import ScheduledRoundCard from './components/ScheduledRoundCard'
 import NoScheduledRounds from './components/NoScheduledRounds'
-import { usePlannerContext } from '../../../../../screens/planner/plannerContext/usePlannerContext'
-import useGetApiData from '../../../../../utils/hooks/useGetApiData'
-import { formatDateForDb } from '../../../../../utils/formatDateForDb'
-import { getRoundsByPlannerDate } from '../../../../../db/planner/getRoundsByPlannerDate/getRoundsByPlannerDate'
-import { Loading } from '../../../../../ui'
-import { RoundWithRecurringFlagT } from '../../../../../types/RoundT'
+import { usePlannerContext } from '../../../screens/planner/plannerContext/usePlannerContext'
+import useGetApiData from '../../../utils/hooks/useGetApiData'
+import { formatDateForDb } from '../../../utils/formatDateForDb'
+import { getRoundsByPlannerDate } from '../../../db/planner/getRoundsByPlannerDate/getRoundsByPlannerDate'
+import { Loading } from '../../../ui'
+import { RoundWithRecurringFlagT } from '../../../types/RoundT'
 import { useRoute } from '@react-navigation/native'
-import theme from '../../../../../utils/theme/theme'
+import theme from '../../../utils/theme/theme'
 
 interface ScheduledRoundsProps {
   addFooter?: boolean
@@ -40,8 +40,6 @@ const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
   if (!scheduledRounds || scheduledRounds.length === 0) {
     return <NoScheduledRounds />
   }
-
-  
 
   const scheduledRoundsJsx = scheduledRounds.map((round) => {
     return (

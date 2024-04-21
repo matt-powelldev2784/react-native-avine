@@ -7,11 +7,11 @@ import {
   Platform,
 } from 'react-native'
 import React, { useState } from 'react'
-import { RoundWithRecurringFlagT } from '../../../../../../types/RoundT'
-import { JobWithIdT } from '../../../../../../types/JobT'
-import theme from '../../../../../../utils/theme/theme'
+import { RoundWithRecurringFlagT } from '../../../../types/RoundT'
+import { JobWithIdT } from '../../../../types/JobT'
+import theme from '../../../../utils/theme/theme'
 import ScheduledListItem from './ScheduledJobListItem'
-import { ConfirmModal } from '../../../../../../ui'
+import { ConfirmModal } from '../../../../ui'
 import useHandleDelete from '../hooks/useHandleDelete'
 
 interface ScheduledRoundCardProps {
@@ -49,7 +49,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
         {/* ---------------------- Round Title ----------------------- */}
         <View style={styles.roundTitleContainer}>
           <Image
-            source={require('../../../../../../../assets/round_icon.png')}
+            source={require('../../../../../assets/round_icon.png')}
             style={{ width: 30, height: 30, margin: 8, marginTop: 20 }}
           />
 
@@ -64,7 +64,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
           <View style={styles.roundIconsContainer}>
             {recurringRound ? (
               <Image
-                source={require('../../../../../../../assets/repeat.png')}
+                source={require('../../../../../assets/repeat.png')}
                 style={{ width: 25, height: 25 }}
               />
             ) : (
@@ -73,7 +73,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
 
             <TouchableOpacity onPress={handleDeletePress}>
               <Image
-                source={require('../../../../../../../assets/bin.png')}
+                source={require('../../../../../assets/bin.png')}
                 style={{ width: 34, height: 34 }}
               />
             </TouchableOpacity>

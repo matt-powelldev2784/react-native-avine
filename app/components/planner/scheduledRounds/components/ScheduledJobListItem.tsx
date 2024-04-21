@@ -1,12 +1,12 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
-import theme from '../../../../../../utils/theme/theme'
-import { JobWithIdT } from '../../../../../../types/JobT'
+import theme from '../../../../utils/theme/theme'
+import { JobWithIdT } from '../../../../types/JobT'
 
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../../../screens/stackNavigator/StackNavigator'
-import { usePlannerContext } from '../../../../../../screens/planner/plannerContext/usePlannerContext'
+import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 
 interface ScheduledJobCardProps {
   job: JobWithIdT
@@ -51,7 +51,7 @@ const ScheduledJobListItem = ({
       <View style={styles.iconsConatiner}>
         <TouchableOpacity onPress={handleViewScheduledJobDetails}>
           <Image
-            source={require('../../../../../../../assets/edit.png')}
+            source={require('../../../../../assets/edit.png')}
             style={styles.image}
           />
         </TouchableOpacity>

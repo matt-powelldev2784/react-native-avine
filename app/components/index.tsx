@@ -23,7 +23,7 @@ import EditRoundForm from './rounds/editRound/EditRoundForm'
 //planner
 import WeekPlanner from './planner/weekPlanner/WeekPlanner'
 import ScheduleRoundForm from './planner/scheduleRoundForm/ScheduleRoundForm'
-import ScheduledJobCard from './planner/weekPlanner/components/scheduledJobCard/ScheduledJobCard'
+import ScheduledJobCard from './planner/scheduledJobCard/ScheduledJobCard'
 
 //invoices
 import AddCompanyInfoForm from './invoices/addCompanyInfoForm/AddCompanyInfoForm'

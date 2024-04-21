@@ -1,23 +1,20 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import usePostApiData from '../../../../../../utils/hooks/usePostApiData'
-import { toggleJobIsComplete } from '../../../../../../db/jobs/toggleJobIsComplete'
-import { formatDateForDb } from '../../../../../../utils/formatDateForDb'
-import { usePlannerContext } from '../../../../../../screens/planner/plannerContext/usePlannerContext'
+import usePostApiData from '../../../../utils/hooks/usePostApiData'
+import { formatDateForDb } from '../../../../utils/formatDateForDb'
+import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
+import { toggleInvoiceIsPaid } from '../../../../db/jobs/toggleInvoiceIsPaid'
 
 interface useFormikStepsInterface {
-  isComplete: boolean | null | undefined
   isPaid: boolean | null | undefined
+  isComplete: boolean | null | undefined
 }
 
-const useFormikIsComplete = ({
-  isComplete,
-  isPaid,
-}: useFormikStepsInterface) => {
+const useFormikIsPaid = ({ isPaid, isComplete }: useFormikStepsInterface) => {
   const { selectedDay, selectedJob } = usePlannerContext()
-  const isCompleteError = isPaid
-    ? 'You cannot toggle a job as incomplete if the invoice has been set to paid.'
-    : false
+  const isPaidError = isComplete
+    ? false
+    : 'You cannot toggle a invoice as paid until the job is set to complete.'
 
   const { setApiFunction, postApiIsLoading } = usePostApiData({
     onSuccessScreen: 'Planner',
@@ -25,18 +22,18 @@ const useFormikIsComplete = ({
   })
 
   const validationSchema = Yup.object().shape({
-    isComplete: Yup.boolean(),
+    isPaid: Yup.boolean(),
   })
 
   const formik = useFormik({
     initialValues: {
-      isComplete: isComplete,
+      isPaid: isPaid,
     },
     onSubmit: async () => {
       if (!selectedJob || !selectedDay) {
         return
       }
-      if (typeof isComplete !== 'boolean') {
+      if (typeof isPaid !== 'boolean') {
         return
       }
 
@@ -46,10 +43,10 @@ const useFormikIsComplete = ({
 
       setApiFunction(
         () => async () =>
-          toggleJobIsComplete({
+          toggleInvoiceIsPaid({
             jobId: `${selectedJob.roundId}@${selectedJob.jobId}@${relatedJobSuffix}`,
             plannerDate: formatDateForDb(selectedDay),
-            isComplete: !isComplete,
+            isPaid: !isPaid,
           }),
       )
     },
@@ -57,7 +54,10 @@ const useFormikIsComplete = ({
     enableReinitialize: true,
   })
 
-  return { postApiIsLoading, formik, isCompleteError }
+  const formikIsPaid = formik
+  const isPaidApiIsLoading = postApiIsLoading
+
+  return { isPaidApiIsLoading, formikIsPaid, isPaidError }
 }
 
-export default useFormikIsComplete
+export default useFormikIsPaid
