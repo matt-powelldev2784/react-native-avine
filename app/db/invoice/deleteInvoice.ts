@@ -3,13 +3,19 @@ import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
 
 interface addInvoiceT {
-  plannerId: string
+  plannerJobRef: string
+  plannerDate: string
 }
 
-export const deleteInvoice = async ({ plannerId }: addInvoiceT) => {
+export const deleteInvoice = async ({
+  plannerJobRef,
+  plannerDate,
+}: addInvoiceT) => {
   if (auth.currentUser === null) {
     return authError({ filename: 'deleteInvoice' })
   }
+
+  const invoiceDocId = `${plannerJobRef}@${plannerDate}`
 
   try {
     const invoiceDocRef = doc(
@@ -17,7 +23,7 @@ export const deleteInvoice = async ({ plannerId }: addInvoiceT) => {
       'users',
       auth.currentUser.uid,
       'invoices',
-      plannerId,
+      invoiceDocId,
     )
 
     if (!invoiceDocRef) {

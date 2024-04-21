@@ -23,6 +23,9 @@ export const toggleInvoiceIsPaid = async ({
     return authError({ filename: 'toggleInvoiceIsPaid' })
   }
 
+  console.log(jobId, plannerDate, isPaid)
+  console.log('`${jobId}@${plannerDate}`', `${jobId}@${plannerDate}`)
+
   try {
     const plannerDateDocRef = doc(
       db,
@@ -50,9 +53,6 @@ export const toggleInvoiceIsPaid = async ({
 
     const completeJobs = plannerDoc.data().completedJobs
     const jobIsComplete = completeJobs ? completeJobs.includes(jobId) : false
-
- 
-
 
     if (jobIsComplete === false) {
       throw new Error('You cannot toggle a job as paid if it is not complete')
