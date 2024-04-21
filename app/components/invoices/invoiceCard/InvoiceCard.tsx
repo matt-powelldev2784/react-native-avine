@@ -52,6 +52,10 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
   const handleNavigateToEditInvoice = () => {
     navigation.navigate('EditInvoice', { invoiceId })
   }
+  const handleAddCompanyDetails = () => {
+    setModalVisible(false)
+    navigation.navigate('AddCompanyInfo')
+  }
   const handleDownloadInvoice = async () => {
     if (!user.companyDetailsProvided) {
       setModalVisible(true)
@@ -134,7 +138,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
 
       <ConfirmModal
         visible={modalVisible}
-        onConfirm={() => navigation.navigate('AddCompanyInfo')}
+        onConfirm={handleAddCompanyDetails}
         onCancel={() => setModalVisible(false)}
         modalText={
           'You need to add your company details before downloading invoices'
