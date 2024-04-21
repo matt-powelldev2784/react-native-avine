@@ -126,7 +126,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
 
         {isPaid ? (
           <Text style={styles.warningText}>
-            If you wish to edit this invoice please set the status back not
+            If you wish to edit this invoice please set the status back to not
             paid.
           </Text>
         ) : null}

@@ -44,7 +44,7 @@ const useFormikIsPaid = ({ isPaid, isComplete }: useFormikStepsInterface) => {
       setApiFunction(
         () => async () =>
           toggleInvoiceIsPaid({
-            jobId: `${selectedJob.roundId}@${selectedJob.jobId}@${relatedJobSuffix}`,
+            plannerDocRef: `${selectedJob.roundId}@${selectedJob.jobId}@${relatedJobSuffix}`,
             plannerDate: formatDateForDb(selectedDay),
             isPaid: !isPaid,
           }),

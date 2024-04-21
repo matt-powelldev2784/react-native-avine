@@ -47,7 +47,7 @@ const useFormikIsComplete = ({
       setApiFunction(
         () => async () =>
           toggleJobIsComplete({
-            jobId: `${selectedJob.roundId}@${selectedJob.jobId}@${relatedJobSuffix}`,
+            plannerJobRef: `${selectedJob.roundId}@${selectedJob.jobId}@${relatedJobSuffix}`,
             plannerDate: formatDateForDb(selectedDay),
             isComplete: !isComplete,
           }),

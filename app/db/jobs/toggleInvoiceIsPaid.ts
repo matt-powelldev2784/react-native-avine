@@ -10,18 +10,21 @@ import { authError } from '../authError'
 
 interface toggleInvoiceIsPaidT {
   plannerDate: string
-  jobId: string
+  plannerDocRef: string
   isPaid: boolean
 }
 
 export const toggleInvoiceIsPaid = async ({
-  jobId,
+  plannerDocRef,
   plannerDate,
   isPaid,
 }: toggleInvoiceIsPaidT) => {
   if (auth.currentUser === null) {
     return authError({ filename: 'toggleInvoiceIsPaid' })
   }
+
+  console.log(plannerDocRef, plannerDate, isPaid)
+  console.log('`${jobId}@${plannerDate}`', `${plannerDocRef}@${plannerDate}`)
 
   try {
     const plannerDateDocRef = doc(
@@ -37,7 +40,7 @@ export const toggleInvoiceIsPaid = async ({
       'users',
       auth.currentUser.uid,
       'invoices',
-      jobId,
+      `${plannerDocRef}@${plannerDate}`,
     )
 
     // only allow invoice to be toggled if job is complete
@@ -49,8 +52,9 @@ export const toggleInvoiceIsPaid = async ({
     }
 
     const completeJobs = plannerDoc.data().completedJobs
-    const jobIsComplete = completeJobs ? completeJobs.includes(jobId) : false
-
+    const jobIsComplete = completeJobs
+      ? completeJobs.includes(plannerDocRef)
+      : false
 
     if (jobIsComplete === false) {
       throw new Error('You cannot toggle a job as paid if it is not complete')
@@ -59,26 +63,26 @@ export const toggleInvoiceIsPaid = async ({
     // toggle invoice is paid status
     if (isPaid === true) {
       await updateDoc(plannerDateDocRef, {
-        invoicedJobs: arrayUnion(jobId),
+        invoicedJobs: arrayUnion(plannerDocRef),
       })
       await updateDoc(invoiceDocRef, {
         isPaid: true,
       })
       return {
-        message: `Invoice for job id ${jobId} set to unpaid`,
+        message: `Invoice for planner doc ${plannerDocRef} set to unpaid`,
         isPaid: true,
       }
     }
 
     if (isPaid === false) {
       await updateDoc(plannerDateDocRef, {
-        invoicedJobs: arrayRemove(jobId),
+        invoicedJobs: arrayRemove(plannerDocRef),
       })
       await updateDoc(invoiceDocRef, {
         isPaid: false,
       })
       return {
-        message: `Invoice for job id ${jobId} set to paid`,
+        message: `Invoice for planner doc ${plannerDocRef} set to paid`,
         isPaid: false,
       }
     }

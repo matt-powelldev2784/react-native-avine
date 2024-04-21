@@ -1,4 +1,4 @@
-import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
+import { doc, setDoc, getDoc} from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
 import { getJob } from '../jobs/getJob'
@@ -6,26 +6,30 @@ import { convertPlannerDateToShortDate } from '../../utils/convertPlannerDateToS
 import { addInvoiceId } from './addInvoiceId'
 
 interface addInvoiceT {
-  plannerId: string
+  plannerJobRef: string
   plannerDate: string
 }
 
-export const addInvoice = async ({ plannerId, plannerDate }: addInvoiceT) => {
+export const addInvoice = async ({
+  plannerJobRef,
+  plannerDate,
+}: addInvoiceT) => {
   if (auth.currentUser === null) {
     return authError({ filename: 'addInvoice' })
   }
 
   try {
-    const roundId = plannerId.split('@')[0]
-    const jobId = plannerId.split('@')[1]
-    const roundType = plannerId.split('@')[2]
+    const roundId = plannerJobRef.split('@')[0]
+    const jobId = plannerJobRef.split('@')[1]
+    const roundType = plannerJobRef.split('@')[2]
+    const invoiceDocId = `${plannerJobRef}@${plannerDate}`
 
     const invoiceDocRef = doc(
       db,
       'users',
       auth.currentUser.uid,
       'invoices',
-      plannerId,
+      invoiceDocId,
     )
 
     const invoiceDoc = await getDoc(invoiceDocRef)

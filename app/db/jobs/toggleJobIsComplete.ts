@@ -12,12 +12,12 @@ import { deleteInvoice } from '../invoice/deleteInvoice'
 
 interface toggleJobIsCompleteT {
   plannerDate: string
-  jobId: string
+  plannerJobRef: string
   isComplete: boolean
 }
 
 export const toggleJobIsComplete = async ({
-  jobId,
+  plannerJobRef,
   plannerDate,
   isComplete,
 }: toggleJobIsCompleteT) => {
@@ -43,7 +43,9 @@ export const toggleJobIsComplete = async ({
 
     const invoiedJobs = plannerDoc?.data()?.invoicedJobs
 
-    const jobIsInvoiced = invoiedJobs ? invoiedJobs.includes(jobId) : false
+    const jobIsInvoiced = invoiedJobs
+      ? invoiedJobs.includes(plannerJobRef)
+      : false
 
     if (jobIsInvoiced === true) {
       throw new Error(
@@ -51,20 +53,32 @@ export const toggleJobIsComplete = async ({
       )
     }
 
+    console.log('plannerJobRef', plannerJobRef)
+    console.log('plannerDate', plannerDate)
+
     if (isComplete === true) {
       await updateDoc(plannerDateDocRef, {
-        completedJobs: arrayUnion(jobId),
+        completedJobs: arrayUnion(plannerJobRef),
       })
-      await addInvoice({ plannerId: jobId, plannerDate })
-      return { message: `Job id ${jobId} set to complete`, isComplete: true }
+      await addInvoice({
+        plannerJobRef,
+        plannerDate,
+      })
+      return {
+        message: `Job id ${plannerJobRef} set to complete`,
+        isComplete: true,
+      }
     }
 
     if (isComplete === false) {
       await updateDoc(plannerDateDocRef, {
-        completedJobs: arrayRemove(jobId),
+        completedJobs: arrayRemove(plannerJobRef),
       })
-      await deleteInvoice({ plannerId: jobId })
-      return { message: `Job id ${jobId} set to incomplete`, isComplete: false }
+      await deleteInvoice({ plannerJobRef, plannerDate })
+      return {
+        message: `Job id ${plannerJobRef} set to incomplete`,
+        isComplete: false,
+      }
     }
   } catch (error) {
     throw new Error(
