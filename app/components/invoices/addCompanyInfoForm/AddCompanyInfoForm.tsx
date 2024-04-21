@@ -73,6 +73,11 @@ const AddCompanyInfoForm = () => {
     >
       <FormFlowTitles activeStep={activeStep} />
 
+      <Text style={styles.textInfo}>
+        Add your company details here. They will appear on the pdf invoices
+        which will be generated for you.
+      </Text>
+
       <View style={styles.formContainer}>
         {/*********************  Step 1 ***************************/}
 
@@ -201,6 +206,12 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     paddingTop: 16,
+  },
+  textInfo: {
+    fontSize: 14,
+    color: theme.colors.primary,
+    textAlign: 'center',
+    paddingHorizontal: 16,
   },
   formContainer: {
     width: '90%',
