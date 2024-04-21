@@ -1,18 +1,18 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
-import { usePlannerContext } from '../../../../../screens/planner/plannerContext/usePlannerContext'
+import { usePlannerContext } from '../../../screens/planner/plannerContext/usePlannerContext'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
-import { RootStackParamList } from '../../../../../screens/stackNavigator/StackNavigator'
+import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import { useGetJobCardData } from './hooks/useGetJobCardData'
 import { StackNavigationProp } from '@react-navigation/stack'
 import useFormikIsComplete from './hooks/useFormikIsComplete'
-import theme from '../../../../../utils/theme/theme'
+import theme from '../../../utils/theme/theme'
 import { format } from 'date-fns'
 import DataLineItem from './components/DataLineItem'
 import DataSwitchItem from './components/DataSwitchItem'
 import LongDataItem from './components/LongDataItem'
-import { Loading } from '../../../../../ui'
+import { Loading } from '../../../ui'
 import useFormikIsPaid from './hooks/useFormikIsPaid'
 
 type ScheduledJobCardRouteProp = RouteProp<RootStackParamList, 'Planner'>
@@ -54,7 +54,7 @@ const ScheduledJobCard = () => {
       <View style={styles.cardContainer}>
         <View style={styles.titleContainer}>
           <Image
-            source={require('../../../../../../assets/clipboard_white.png')}
+            source={require('../../../../assets/clipboard_white.png')}
             style={{ width: 24, height: 32, margin: 8 }}
           />
 

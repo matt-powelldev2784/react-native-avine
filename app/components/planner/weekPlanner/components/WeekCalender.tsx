@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { format, startOfWeek, addDays } from 'date-fns'
-import DaySelector from '../daySelector/DaySelector'
-import theme from '../../../../../utils/theme/theme'
-import { getWeek } from '../../utils/getWeek'
-import { usePlannerContext } from '../../../../../screens/planner/plannerContext/usePlannerContext'
+import DaySelector from './DaySelector'
+import theme from '../../../../utils/theme/theme'
+import { getWeek } from '../utils/getWeek'
+import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 
 const WeekCalender = () => {
   const { displayWeek, setDisplayWeek, setSelectedDay } = usePlannerContext()
@@ -40,7 +40,7 @@ const WeekCalender = () => {
           <View style={styles.dayWrapper}>
             <TouchableOpacity onPress={handleMoveToPrevWeek}>
               <Image
-                source={require('../../../../../../assets/left_arrow.png')}
+                source={require('../../../../../assets/left_arrow.png')}
                 style={{ width: 25, height: 25, marginRight: 4 }}
               />
             </TouchableOpacity>
@@ -53,7 +53,7 @@ const WeekCalender = () => {
             {/* ---------------------- move to next week button ----------------------- */}
             <TouchableOpacity onPress={handleMoveToNextWeek}>
               <Image
-                source={require('../../../../../../assets/right_arrow.png')}
+                source={require('../../../../../assets/right_arrow.png')}
                 style={{ width: 25, height: 25, marginLeft: 4 }}
               />
             </TouchableOpacity>

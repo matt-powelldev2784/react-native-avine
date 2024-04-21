@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native'
 import React from 'react'
-import WeekCalender from './components/weekCalender/WeekCalender'
-import ScheduledRounds from './components/scheduledRounds/ScheduledRounds'
+import WeekCalender from './components/WeekCalender'
+import ScheduledRounds from '../scheduledRounds/ScheduledRounds'
 import { ScrollView } from 'react-native-gesture-handler'
 import theme from '../../../utils/theme/theme'
 

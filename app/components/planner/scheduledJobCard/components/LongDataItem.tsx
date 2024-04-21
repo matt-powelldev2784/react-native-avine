@@ -1,24 +1,24 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import theme from '../../../../../../utils/theme/theme'
+import theme from '../../../../utils/theme/theme'
 
 interface DataLineProps {
   name: string
   value: string | number
 }
 
-const DataLineItem = ({ name, value }: DataLineProps) => {
+const LongDataItem = ({ name, value }: DataLineProps) => {
   return (
     <>
       <View style={styles.container}>
         <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
           {name}
         </Text>
-        <Text style={styles.value} numberOfLines={1} ellipsizeMode="tail">
-          {value}
+        <View style={styles.line} />
+        <Text style={styles.value}>
+          {value === '' ? 'No notes available' : value}
         </Text>
       </View>
-      <View style={styles.line} />
     </>
   )
 }
@@ -26,10 +26,9 @@ const DataLineItem = ({ name, value }: DataLineProps) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 8,
-    paddingHorizontal: 8,
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
   name: {
     fontSize: 16,
@@ -38,13 +37,14 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 16,
     color: 'black',
-    maxWidth: '70%',
+    textAlign: 'center',
   },
   line: {
-    marginTop: 8,
+    marginVertical: 8,
     height: 1,
     backgroundColor: theme.colors.primary,
+    width: '100%',
   },
 })
 
-export default DataLineItem
+export default LongDataItem

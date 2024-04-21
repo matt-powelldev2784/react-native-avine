@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
-import theme from '../../../../../../utils/theme/theme'
-import { CustomSwitch } from '../../../../../../ui'
+import theme from '../../../../utils/theme/theme'
+import { CustomSwitch } from '../../../../ui'
 import { FormikProps } from 'formik'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
@@ -49,7 +49,7 @@ const DataSwitchItem = ({
           {error ? (
             <TouchableOpacity onPress={handleInfoPress}>
               <Image
-                source={require('../../../../../../../assets/info.png')}
+                source={require('../../../../../assets/info.png')}
                 style={{ width: 15, height: 15 }}
               />
             </TouchableOpacity>

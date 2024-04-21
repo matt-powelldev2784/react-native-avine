@@ -1,8 +1,8 @@
 import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
-import theme from '../../../../../../utils/theme/theme'
+import theme from '../../../../utils/theme/theme'
 
-const NoScheduledRounds = () => {
+const DataError = () => {
   return (
     <View style={styles.container}>
       <View style={styles.flexContainer}>
@@ -11,7 +11,8 @@ const NoScheduledRounds = () => {
           style={{ width: 50, height: 50, marginBottom: 8 }}
         />
 
-        <Text style={styles.primaryText}>No Rounds Scheduled</Text>
+        <Text style={styles.primaryText}>Server Error</Text>
+        <Text style={styles.secondaryText}>Unable to load data</Text>
       </View>
     </View>
   )
@@ -21,6 +22,8 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     width: '100%',
+    height: '100%',
+    overflow: 'hidden',
   },
   flexContainer: {
     alignItems: 'center',
@@ -37,7 +40,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: theme.colors.primary,
-    marginVertical: 16,
+    marginTop: 16,
   },
   secondaryText: {
     fontSize: 18,
@@ -66,4 +69,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default NoScheduledRounds
+export default DataError
