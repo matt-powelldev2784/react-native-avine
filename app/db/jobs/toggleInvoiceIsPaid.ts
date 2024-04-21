@@ -37,7 +37,7 @@ export const toggleInvoiceIsPaid = async ({
       'users',
       auth.currentUser.uid,
       'invoices',
-      jobId,
+      `${jobId}@${plannerDate}`,
     )
 
     // only allow invoice to be toggled if job is complete
@@ -50,6 +50,8 @@ export const toggleInvoiceIsPaid = async ({
 
     const completeJobs = plannerDoc.data().completedJobs
     const jobIsComplete = completeJobs ? completeJobs.includes(jobId) : false
+
+ 
 
 
     if (jobIsComplete === false) {

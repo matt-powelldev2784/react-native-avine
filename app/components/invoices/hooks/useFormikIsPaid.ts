@@ -42,10 +42,12 @@ const useFormikIsPaid = ({
         return
       }
 
+      const jobId = invoiceId.split('@').slice(0, -1).join('@')
+
       setApiFunction(
         () => async () =>
           toggleInvoiceIsPaid({
-            jobId: invoiceId,
+            jobId,
             plannerDate,
             isPaid: !isPaid,
           }),

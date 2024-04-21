@@ -55,7 +55,7 @@ export const toggleJobIsComplete = async ({
       await updateDoc(plannerDateDocRef, {
         completedJobs: arrayUnion(jobId),
       })
-      await addInvoice({ plannerId: jobId, plannerDate })
+      await addInvoice({ plannerId: `${jobId}@${plannerDate}`, plannerDate })
       return { message: `Job id ${jobId} set to complete`, isComplete: true }
     }
 
@@ -63,7 +63,7 @@ export const toggleJobIsComplete = async ({
       await updateDoc(plannerDateDocRef, {
         completedJobs: arrayRemove(jobId),
       })
-      await deleteInvoice({ plannerId: jobId })
+      await deleteInvoice({ plannerId: `${jobId}@${plannerDate}` })
       return { message: `Job id ${jobId} set to incomplete`, isComplete: false }
     }
   } catch (error) {
