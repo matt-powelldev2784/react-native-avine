@@ -9,14 +9,16 @@ export const uploadLogoPreview = async (fileUri: string) => {
   }
 
   try {
-    const storageRef = ref(
-      storage,
-      `images/${auth.currentUser.uid}/logo_preview.jpg`,
-    )
     const response = await fetch(fileUri)
     const blob = await response.blob()
+    const fileExtension = blob.type.split('/')[1]
+
+    const storageRef = ref(
+      storage,
+      `images/${auth.currentUser.uid}/logo_preview.${fileExtension}`,
+    )
     const metadata = {
-      contentType: 'image/jpeg',
+      contentType: blob.type,
     }
 
     // Upload the file to Firebase Storage

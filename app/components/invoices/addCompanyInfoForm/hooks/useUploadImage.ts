@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import * as DocumentPicker from 'expo-document-picker'
 import { uploadLogoPreview } from '../../../../db/user/uploadLogoPreview'
+import { Platform } from 'react-native'
 
 export const useUploadImage = () => {
   const [uploadImageIsLoading, setUploadImageIsLoading] = useState(false)
@@ -14,7 +15,7 @@ export const useUploadImage = () => {
       setUploadImageSuccess(false)
 
       const setLogo = await DocumentPicker.getDocumentAsync({
-        type: 'image/jpeg', // Allowing only jpg images
+        type: Platform.OS === 'web' ? 'image/jpeg,image/png,image/gif' : '*',
       })
 
       if (!setLogo.canceled) {
