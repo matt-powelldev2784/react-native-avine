@@ -14,7 +14,7 @@ export const useUploadImage = () => {
       setUploadImageSuccess(false)
 
       const setLogo = await DocumentPicker.getDocumentAsync({
-        type: 'image/jpeg', // Allowing only jpg images
+        type: 'image/jpeg,image/png,image/gif',
       })
 
       if (!setLogo.canceled) {

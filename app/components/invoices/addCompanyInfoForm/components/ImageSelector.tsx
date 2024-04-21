@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  View,
 } from 'react-native'
 import React from 'react'
 import theme from '../../../../utils/theme/theme'
@@ -27,9 +28,15 @@ const ImageSelector = ({ onPress, isLoading }: ImageSelectorProps) => {
               height: 40,
             }}
           />
-          <Text style={styles.imageSelectorText}>
-            Click here to upload logo
-          </Text>
+
+          <View style={styles.textView}>
+            <Text style={styles.imageSelectorText}>
+              Click here to upload logo
+            </Text>
+            <Text style={styles.imageSelectorTextSmall}>
+              jpg/png/gif images supported
+            </Text>
+          </View>
         </>
       )}
     </TouchableOpacity>
@@ -48,9 +55,16 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 8,
   },
+  textView: {
+    flexDirection: 'column',
+  },
   imageSelectorText: {
     fontSize: 14,
     fontWeight: 'bold',
+    color: theme.colors.primary,
+  },
+  imageSelectorTextSmall: {
+    fontSize: 12,
     color: theme.colors.primary,
   },
 })
