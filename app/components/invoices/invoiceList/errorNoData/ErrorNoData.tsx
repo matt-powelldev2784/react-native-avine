@@ -2,7 +2,11 @@ import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
 import theme from '../../../../utils/theme/theme'
 
-const ErrorNoData = () => {
+interface ErrorNoDataProps {
+  invoiceType: string
+}
+
+const ErrorNoData = ({ invoiceType }: ErrorNoDataProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.flexContainer}>
@@ -12,10 +16,21 @@ const ErrorNoData = () => {
         />
 
         <Text style={styles.primaryText}>No Invoice Data</Text>
-        <Text style={styles.secondaryText}>
-          You currenly have no unpaid invoices. When you complete a job in the
-          in the planner, an invoice will be created here.
-        </Text>
+
+        {invoiceType === 'due' ? (
+          <Text style={styles.secondaryText}>
+            You currenly have no {invoiceType} invoices. Invoices will appear
+            here once you have completed a job.
+          </Text>
+        ) : null}
+
+        {invoiceType === 'paid' ? (
+          <Text style={styles.secondaryText}>
+            You currenly have no {invoiceType} invoices. Invoices will appear
+            here once you have completed a job and set the invoice status to
+            paid.
+          </Text>
+        ) : null}
       </View>
     </View>
   )

@@ -22,7 +22,7 @@ const PaidInvoiceList = () => {
   }
 
   if (!invoiceData || invoiceData.length === 0) {
-    return <ErrorNoData />
+    return <ErrorNoData invoiceType={'paid'} />
   }
 
   return (

@@ -22,7 +22,7 @@ const DueInvoiceList = () => {
   }
 
   if (!invoiceData || invoiceData.length === 0) {
-    return <ErrorNoData />
+    return <ErrorNoData invoiceType={'due'} />
   }
 
   return (
