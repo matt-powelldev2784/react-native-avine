@@ -59,13 +59,6 @@ const AddRoundForm = () => {
               title="Round Name"
               imageName={'round'}
             />
-            <InputField
-              formik={formik}
-              name="location"
-              placeholder="Location"
-              title="Location"
-              imageName={'location'}
-            />
             <Dropdown
               formik={formik}
               name="frequency"
@@ -73,6 +66,13 @@ const AddRoundForm = () => {
               title="Round Frequency"
               options={freqencyArray}
               imageName={'calender'}
+            />
+            <InputField
+              formik={formik}
+              name="location"
+              placeholder="Location"
+              title="Location"
+              imageName={'location'}
             />
           </>
         ) : null}
@@ -157,6 +157,8 @@ const AddRoundForm = () => {
             </View>
           ) : null}
         </View>
+
+        {!isLargeWeb ? <View style={{ height: 250 }} /> : null}
       </View>
     </ScrollView>
   )
@@ -171,6 +173,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     width: '100%',
+    minHeight: 700,
     backgroundColor: 'white',
     paddingTop: 16,
   },
