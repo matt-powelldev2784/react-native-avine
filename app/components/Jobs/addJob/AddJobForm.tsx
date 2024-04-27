@@ -135,6 +135,14 @@ const AddJobForm = () => {
               title="Job Type"
               imageName={'diamond'}
             />
+            <Dropdown
+              formik={formik}
+              name="frequency"
+              placeholder="Requested Cleaning Frequency"
+              title="Requested Cleaning Frequency"
+              options={freqencyArray}
+              imageName={'calender'}
+            />
             <InputField
               formik={formik}
               name="time"
@@ -151,14 +159,7 @@ const AddJobForm = () => {
               keyboardType={Platform.OS === 'web' ? 'default' : 'numeric'}
               imageName={'poundSign'}
             />
-            <Dropdown
-              formik={formik}
-              name="frequency"
-              placeholder="Requested Cleaning Frequency"
-              title="Requested Cleaning Frequency"
-              options={freqencyArray}
-              imageName={'calender'}
-            />
+
             <InputField
               formik={formik}
               name="notes"

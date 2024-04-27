@@ -204,11 +204,11 @@ const EditJobForm = () => {
                 isLoading={postApiIsLoading}
               />
             ) : null}
+
+            {!isLargeWeb ? <View style={{ height: 250 }} /> : null}
           </View>
         </View>
       </View>
-
-      {!isLargeWeb ? <View style={{ height: 250 }} /> : null}
     </ScrollView>
   )
 }
