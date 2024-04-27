@@ -75,6 +75,13 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
+          {/* --------------------------  Invoice Screens  -------------------------- */}
+          <Stack.Screen name="AddCompanyInfo" component={AddCompanyInfo} />
+          <Stack.Screen name="DueInvoices" component={DueInvoices} />
+          <Stack.Screen name="PaidInvoices" component={PaidInvoices} />
+          <Stack.Screen name="InvoiceCardView" component={InvoiceCardView} />
+          <Stack.Screen name="EditInvoice" component={EditInvoice} />
+
           {/* --------------------------  Job Screens  ---------------------- */}
           <Stack.Screen name="Jobs" component={Jobs} />
           <Stack.Screen name="AddJob" component={AddJob} />
@@ -83,13 +90,6 @@ const StackNavigator = () => {
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Error" component={Error} />
-
-          {/* --------------------------  Invoice Screens  -------------------------- */}
-          <Stack.Screen name="AddCompanyInfo" component={AddCompanyInfo} />
-          <Stack.Screen name="DueInvoices" component={DueInvoices} />
-          <Stack.Screen name="PaidInvoices" component={PaidInvoices} />
-          <Stack.Screen name="InvoiceCardView" component={InvoiceCardView} />
-          <Stack.Screen name="EditInvoice" component={EditInvoice} />
 
           {/* --------------------------  Client Screens  ---------------------- */}
           <Stack.Screen name="Clients" component={Clients} />
