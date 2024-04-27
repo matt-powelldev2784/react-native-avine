@@ -1,6 +1,5 @@
-// useSelectImage.js
 import { useState } from 'react'
-import * as DocumentPicker from 'expo-document-picker'
+import DocumentPicker from 'react-native-document-picker'
 import { uploadLogoPreview } from '../../../../db/user/uploadLogoPreview'
 
 export const useUploadImage = () => {
@@ -13,20 +12,24 @@ export const useUploadImage = () => {
       setUploadImageError(false)
       setUploadImageSuccess(false)
 
-      const setLogo = await DocumentPicker.getDocumentAsync({
-        type: 'image/jpeg,image/png,image/gif',
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images],
       })
 
-      if (!setLogo.canceled) {
-        setUploadImageIsLoading(true)
-        await uploadLogoPreview(setLogo.assets[0].uri)
-        setUploadImageIsLoading(false)
-        setUploadImageSuccess(true)
-      }
-    } catch (error) {
-      setUploadImageError(true)
+      const imageFileUri = res[0].uri
+
+      setUploadImageIsLoading(true)
+      await uploadLogoPreview(imageFileUri)
       setUploadImageIsLoading(false)
-      setUploadImageSuccess(false)
+      setUploadImageSuccess(true)
+    } catch (error) {
+      if (DocumentPicker.isCancel(error)) {
+        // User cancelled the picker
+      } else {
+        setUploadImageError(true)
+        setUploadImageIsLoading(false)
+        setUploadImageSuccess(false)
+      }
     }
   }
 

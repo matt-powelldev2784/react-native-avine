@@ -15,6 +15,7 @@ const ImagePreview = ({ formik, refreshImage }: ImagePreviewProps) => {
     refreshImage,
   })
 
+
   return (
     <View style={styles.logoContainer}>
       {logoUrl && !getImageIsLoading ? (
