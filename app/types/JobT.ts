@@ -8,7 +8,7 @@ export interface JobT {
   price: number
   frequency: string
   contactName: string
-  contactTel: number
+  contactTel: number | string
   notes: string | null
   clientId: string
   isDeleted: boolean

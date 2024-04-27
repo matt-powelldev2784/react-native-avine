@@ -9,6 +9,7 @@ import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigat
 import theme from '../../../utils/theme/theme'
 import { addClientSeeds } from '../../../db/seeds/addClientSeeds'
 import Button from '../../../ui/button/Button'
+import { addJobSeeds } from '../../../db/seeds/addJobSeeds'
 
 const SignOut = () => {
   const { signOut } = useAuth()
@@ -29,6 +30,13 @@ const SignOut = () => {
       <Button
         onPress={addClientSeeds}
         text="Add Client Seeds"
+        isLoading={false}
+        backgroundColor={'red'}
+      />
+
+      <Button
+        onPress={addJobSeeds}
+        text="Add Job Seeds"
         isLoading={false}
         backgroundColor={'red'}
       />
