@@ -5,8 +5,8 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Platform,
   Image,
+  useWindowDimensions,
 } from 'react-native'
 import theme from '../../utils/theme/theme'
 import ModalButton from './ModalButton'
@@ -38,15 +38,19 @@ const ConfirmModal = ({
   cancelButtonText,
   isLoading,
 }: ConfirmModalProps) => {
+  const windowWidth = useWindowDimensions().width
+  const smallModal = windowWidth < 412
+  const modalWidth = smallModal ? 310 : 410
+
   return (
     <Modal
-      animationType="slide"
+      animationType="none"
       transparent={true}
       visible={visible}
       onRequestClose={onCancel}
     >
       <View style={styles.centeredView}>
-        <View style={styles.modalView}>
+        <View style={[styles.modalView, { maxWidth: modalWidth }]}>
           {/********************************** Close Button ***********************************/}
           <TouchableOpacity style={styles.closeButton} onPress={onCancel}>
             <Image
@@ -100,8 +104,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
-    backgroundColor: Platform.OS === 'web' ? '' : 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalView: {
     margin: 20,
@@ -112,7 +115,6 @@ const styles = StyleSheet.create({
     borderWidth: 8,
     borderStyle: 'solid',
     borderColor: '#337bae',
-    maxWidth: 400,
     paddingTop: 50,
   },
   buttonContainer: {
