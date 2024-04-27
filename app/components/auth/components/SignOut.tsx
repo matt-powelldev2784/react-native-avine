@@ -7,6 +7,8 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../utils/theme/theme'
+import { addClientSeeds } from '../../../db/seeds/addClientSeeds'
+import Button from '../../../ui/button/Button'
 
 const SignOut = () => {
   const { signOut } = useAuth()
@@ -22,6 +24,14 @@ const SignOut = () => {
       <TouchableOpacity style={styles.button} onPress={signOut}>
         <Text style={styles.buttonText}>Sign Out</Text>
       </TouchableOpacity>
+
+      {/* ------ Seeds ----------- */}
+      <Button
+        onPress={addClientSeeds}
+        text="Add Client Seeds"
+        isLoading={false}
+        backgroundColor={'red'}
+      />
 
       <TouchableOpacity
         style={styles.backButton}
