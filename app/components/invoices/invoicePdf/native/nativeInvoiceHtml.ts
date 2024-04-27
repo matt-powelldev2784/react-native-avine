@@ -99,7 +99,7 @@ export const nativeInvoiceHtml = async (invoiceId: string) => {
             </tr>
             <tr>
               <td>${invoiceData.description}</td>
-              <td>${invoiceData.price}</td>
+              <td>£${invoiceData.price}</td>
             </tr>
           </table>
         </div>
