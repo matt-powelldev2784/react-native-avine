@@ -15,17 +15,18 @@ export const useMoveToNextStep = ({
     })
   }
 
-  const moveToNextStep = () => {
-    setTimeout(() => {
+  const moveToNextStep = async () => {
+    const errors = await formik.validateForm()
+    const formIsValid = Object.keys(errors).length === 0
+
+    if (!formIsValid) {
+      console.log('errors', errors)
       setFieldsAsTouched()
-    }, 500)
+      return
+    }
 
-    const formIsTouched = Object.keys(formik.touched).length > 0
-    const formIsValid = Object.keys(formik.errors).length === 0
-
-    if (formIsValid && formIsTouched) {
+    if (formIsValid) {
       setActiveStep((prev) => prev + 1)
-      formik.setTouched({})
     }
   }
 

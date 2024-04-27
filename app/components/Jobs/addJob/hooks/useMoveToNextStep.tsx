@@ -21,13 +21,12 @@ export const useMoveToNextStep = ({
   }
 
   const moveToNextStep = async () => {
-    const formIsValid = Object.keys(formik.errors).length === 0
+    const errors = await formik.validateForm()
+    const formIsValid = Object.keys(errors).length === 0
 
-    setFieldsAsTouched()
-
-    const clientId = formik.values.clientId
-    if (!clientId) {
-      formik.setFieldError('clientId', 'Client is required')
+    if (!formIsValid) {
+      console.log('errors', errors)
+      setFieldsAsTouched()
       return
     }
 
@@ -43,7 +42,6 @@ export const useMoveToNextStep = ({
 
     if (formIsValid) {
       setActiveStep((prev) => prev + 1)
-      formik.setTouched({})
     }
   }
 

@@ -155,6 +155,13 @@ const AddCompanyInfoForm = () => {
                 'The logo will be used at the top of the your invoices. If you choose to skip, text will be used instead.'
               }
             />
+
+            {formik.errors.logoUrl && formik.submitCount > 0 ? (
+              <Text style={styles.errorText}>
+                You must select a logo or click the toggle to skip the logo
+                upload.
+              </Text>
+            ) : null}
           </View>
         ) : null}
 
@@ -316,6 +323,7 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 14,
     color: 'red',
+    textAlign: 'center',
   },
 })
 

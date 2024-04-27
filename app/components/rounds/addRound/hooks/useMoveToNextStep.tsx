@@ -18,23 +18,24 @@ export const useMoveToNextStep = ({
   }
 
   const moveToNextStep = async () => {
-    setFieldsAsTouched()
+     const errors = await formik.validateForm()
+     const formIsValid = Object.keys(errors).length === 0
 
-    const formHasBeenTouched = Object.keys(formik.touched).length > 0
+     if (!formIsValid) {
+       console.log('errors', errors)
+       setFieldsAsTouched()
+       return
+     }
 
-    await formik.validateForm()
+     const relatedJobs = formik.values.relatedJobs
+     if (activeStep > 0 && relatedJobs.length === 0) {
+       formik.setFieldError('relatedJobs', 'You must select at least one job')
+       return
+     }
 
-    const formIsValid = Object.keys(formik.errors).length === 0
-
-    const relatedJobs = formik.values.relatedJobs
-    if (activeStep > 0 && relatedJobs.length === 0) {
-      formik.setFieldError('relatedJobs', 'You must select at least one job')
-      return
-    }
-
-    if (formHasBeenTouched && formIsValid) {
-      setActiveStep((prev) => prev + 1)
-    }
+     if (formIsValid) {
+       setActiveStep((prev) => prev + 1)
+     }
   }
 
   return { moveToNextStep }

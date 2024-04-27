@@ -18,10 +18,15 @@ export const useMoveToNextStep = ({
   }
 
   const moveToNextStep = async () => {
-    setFieldsAsTouched()
-    await formik.validateForm()
+     const errors = await formik.validateForm()
+     const formIsValid = Object.keys(errors).length === 0
 
-    const formIsValid = Object.keys(formik.errors).length === 0
+     if (!formIsValid) {
+       console.log('errors', errors)
+       setFieldsAsTouched()
+       return
+     }
+
 
     const relatedJobs = formik.values.relatedJobs
     if (activeStep > 0 && relatedJobs.length === 0) {

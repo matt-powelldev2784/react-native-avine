@@ -28,15 +28,21 @@ export const WebInvoiceHtml = ({
       height: convertMilimetersToPoints(297),
       margin: 'auto',
       padding: '3px',
+      paddingTop: user.logoUrl === 'null' ? '10px' : '25px',
       fontSize: '4px',
       maxWidth: '202px',
       maxHeight: '260px',
-      marginTop: '25px',
     },
     header: {
       textAlign: 'center' as const,
-      marginTop: '1px',
       marginBottom: '5px',
+      marginHorizontal: 'auto',
+    },
+    companyName: {
+      width: '100%',
+      textAlign: 'center' as const,
+      maxWidth: '150px',
+      color: '#555',
       margin: 'auto',
     },
     logo: {
@@ -74,25 +80,22 @@ export const WebInvoiceHtml = ({
       textAlign: 'center' as const,
       marginTop: '10px',
       width: '100%',
-      color: '#000000',
-      textDecoration: 'none',
-    },
-    blackText: {
-      color: '#000000',
+      color: '#555',
       textDecoration: 'none',
     },
   }
 
   return (
     <div style={styles.page}>
-      <div style={styles.header}>
-        {/* {user.logoUrl !== 'null' ? (
-          <img src={user.logoUrl} style={styles.logo} />
-        ) : (
-          <h1>{user.companyName}</h1>
-        )} */}
-        <div style={styles.logo}></div>
-      </div>
+      {user.logoUrl === 'null' ? (
+        <h1 style={styles.companyName}>{user.companyName}</h1>
+      ) : null}
+
+      {user.logoUrl ? (
+        <div style={styles.header}>
+          <div style={styles.logo}></div>
+        </div>
+      ) : null}
 
       <div style={styles.details}>
         <h3>Invoice Number: {invoiceData.invoiceId || 'ADD INVOICE NUMBER'}</h3>

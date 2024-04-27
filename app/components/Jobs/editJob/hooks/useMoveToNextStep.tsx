@@ -21,30 +21,28 @@ export const useMoveToNextStep = ({
   }
 
   const moveToNextStep = async () => {
-    const formIsValid = Object.keys(formik.errors).length === 0
+      const errors = await formik.validateForm()
+      const formIsValid = Object.keys(errors).length === 0
 
-    setFieldsAsTouched()
-
-      const clientId = formik.values.clientId
-      if (!clientId) {
-        formik.setFieldError('clientId', 'Client is required')
+      if (!formIsValid) {
+        console.log('errors', errors)
+        setFieldsAsTouched()
         return
       }
 
-    if (toggleCopyClient && activeStep == 0) {
-      const clientDetails = await getClient(formik.values.clientId)
-      const { name, address, contactTel, town, postcode } = clientDetails
-      formik.setFieldValue('contactName', name)
-      formik.setFieldValue('address', address)
-      formik.setFieldValue('contactTel', contactTel)
-      formik.setFieldValue('town', town)
-      formik.setFieldValue('postcode', postcode)
-    }
+      if (toggleCopyClient && activeStep == 0) {
+        const clientDetails = await getClient(formik.values.clientId)
+        const { name, address, contactTel, town, postcode } = clientDetails
+        formik.setFieldValue('contactName', name)
+        formik.setFieldValue('address', address)
+        formik.setFieldValue('contactTel', contactTel)
+        formik.setFieldValue('town', town)
+        formik.setFieldValue('postcode', postcode)
+      }
 
-    if (formIsValid) {
-      setActiveStep((prev) => prev + 1)
-      formik.setTouched({})
-    }
+      if (formIsValid) {
+        setActiveStep((prev) => prev + 1)
+      }
   }
 
   return { moveToNextStep }

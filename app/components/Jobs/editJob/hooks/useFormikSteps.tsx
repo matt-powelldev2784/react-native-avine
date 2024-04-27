@@ -6,7 +6,9 @@ import useGetApiData from '../../../../utils/hooks/useGetApiData'
 import usePostApiData from '../../../../utils/hooks/usePostApiData'
 
 export const stepOneSchema = Yup.object().shape({
-  clientId: Yup.string().required('Client is required'),
+  clientId: Yup.string().required(
+    'A job must have a related client for invoicing purposesd',
+  ),
 })
 
 export const stepTwoSchema = Yup.object().shape({
