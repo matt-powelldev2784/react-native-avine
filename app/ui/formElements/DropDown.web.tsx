@@ -23,7 +23,7 @@ const Dropdown = ({
   imageName,
 }: DropdownProps) => {
   const handleChange = (option: any) => {
-    if (option) {
+    if (option[0]) {
       formik.setFieldValue(name, option[0].value)
     }
   }
