@@ -79,13 +79,6 @@ const EditRoundForm = () => {
               title="Round Name"
               imageName={'round'}
             />
-            <InputField
-              formik={formik}
-              name="location"
-              placeholder="Location"
-              title="Location"
-              imageName={'location'}
-            />
             <Dropdown
               formik={formik}
               name="frequency"
@@ -93,6 +86,13 @@ const EditRoundForm = () => {
               title="Round Frequency"
               options={freqencyArray}
               imageName={'calender'}
+            />
+            <InputField
+              formik={formik}
+              name="location"
+              placeholder="Location"
+              title="Location"
+              imageName={'location'}
             />
           </>
         ) : null}
@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     paddingTop: 16,
+    minHeight: 700,
   },
   formContainer: {
     width: '90%',

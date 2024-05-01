@@ -1,17 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import { FormikProps } from 'formik'
-import { MultiSelect } from 'react-native-element-dropdown'
+import Select from 'react-dropdown-select'
 import { inputIcons } from './inputIcons'
 import theme from '../../utils/theme/theme'
-
-// confirmUnqiueFiveDigitsPrefixAddedtoValue prop is added for dev to confirm
-// they have added a unique 5 digit prefix to item.value
-// this is to over come a bug in the react-native-element-dropdown library
-// which sets the key to the item.value
-// item.value might not always be unique and therfore the dropdown might not work as expected
-// the 5 digit prefix is used to make the key unique
-// the prefix is not displayed as a value to the user
 
 interface DropdownProps {
   formik: FormikProps<any>
@@ -23,6 +15,8 @@ interface DropdownProps {
   confirmUnqiueFiveDigitsPrefixAddedtoValue: boolean
 }
 
+type OptionsT = { label: string; value: string }
+
 const MultiSelectDropdown = ({
   formik,
   name,
@@ -32,9 +26,24 @@ const MultiSelectDropdown = ({
   imageName,
   confirmUnqiueFiveDigitsPrefixAddedtoValue,
 }: DropdownProps) => {
-  const handleChange = (item: any) => {
-    if (item) {
-      formik.setFieldValue(name, item)
+  const [selectedItems, setSelectedItems] = useState<OptionsT[]>([])
+
+  //set selected items to formik values if back button if used
+  if (selectedItems.length === 0 && formik.values[name].length > 0) {
+    options.filter((option) => {
+      if (formik.values[name].includes(option.label)) {
+        setSelectedItems((prev) => [...prev, option])
+      }
+    })
+  }
+
+  const handleChange = (selected: any) => {
+    setSelectedItems(selected)
+    if (selected) {
+      formik.setFieldValue(
+        name,
+        selected.map((item: any) => item.label),
+      )
     }
   }
 
@@ -43,50 +52,60 @@ const MultiSelectDropdown = ({
       <Image source={inputIcons[imageName]} style={styles.image} />
       <Text style={styles.label}>{title.toUpperCase()}</Text>
 
-      <MultiSelect
-        data={options}
-        labelField="value"
-        valueField="label"
-        value={formik.values[name]}
-        placeholder={placeholder}
-        placeholderStyle={styles.placeholder}
-        selectedStyle={{
-          backgroundColor: theme.colors.primary,
-        }}
-        selectedTextStyle={{ color: 'white' }}
+      <View></View>
+      <Select
+        options={options}
+        values={selectedItems}
         onChange={handleChange}
-        style={[
+        multi
+        placeholder={placeholder}
+        color={theme.colors.primary}
+        style={
           formik.touched[name] && formik.errors[name]
             ? styles.errorInput
-            : styles.input,
-        ]}
-        renderItem={(item, selected) => {
-          return (
-            <View
-              key={item.label}
-              style={selected ? styles.selectedRenderItem : styles.renderItem}
+            : styles.input
+        }
+        itemRenderer={({ item, methods }) => (
+          <View
+            key={item.label}
+            style={
+              formik.values[name].includes(item.label)
+                ? styles.selectedRenderItem
+                : styles.renderItem
+            }
+          >
+            <Text
+              onPress={() => {
+                methods.addItem(item)
+              }}
+              style={
+                formik.values[name].includes(item.label)
+                  ? styles.selectedRenderItemText
+                  : styles.renderItemText
+              }
             >
-              <Text style={selected ? styles.selectedRenderItemText : null}>
-                {confirmUnqiueFiveDigitsPrefixAddedtoValue
-                  ? item.value.substring(5)
-                  : item.value}
-              </Text>
-            </View>
-          )
-        }}
-        renderSelectedItem={(item, selected) => {
+              {confirmUnqiueFiveDigitsPrefixAddedtoValue
+                ? item.value.substring(5)
+                : item.value}
+            </Text>
+          </View>
+        )}
+        contentRenderer={() => {
           return (
-            <View style={styles.selectedItemBox}>
-              <Text style={styles.selectedBoxText}>
-                {confirmUnqiueFiveDigitsPrefixAddedtoValue
-                  ? item.value.substring(5)
-                  : item.value}
-                {selected ? null : null}
-              </Text>
+            <View>
+              <Text style={styles.placeholder}>Select Jobs To Add</Text>
             </View>
           )
         }}
       />
+
+      <View style={styles.valuesPreview}>
+        {selectedItems.map((item: OptionsT) => (
+          <Text key={item.value} style={styles.valuePreview}>
+            {item.value.substring(5)}
+          </Text>
+        ))}
+      </View>
 
       {formik.touched[name] && formik.errors[name] ? (
         <Text style={styles.errorText}>{String(formik.errors[name])}</Text>
@@ -108,9 +127,9 @@ const styles = StyleSheet.create({
   },
   label: {
     position: 'absolute',
-    fontSize: Platform.OS === 'web' ? 16 : 16,
+    fontSize: 16,
     marginBottom: 5,
-    top: Platform.OS === 'web' ? -22 : -20,
+    top: -22,
     color: theme.colors.primary,
     fontWeight: 'bold',
   },
@@ -118,9 +137,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 20,
     height: 20,
-    top: 9.5,
+    top: 8,
     left: 10,
-    zIndex: 10,
+    zIndex: 20,
   },
   input: {
     borderColor: theme.colors.primary,
@@ -128,39 +147,47 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     fontSize: 16,
     paddingLeft: 36,
-    zIndex: 0,
+    zIndex: 10,
     backgroundColor: 'white',
+    flexDirection: 'row',
+    height: 40,
+  },
+  placeholder: {
+    color: Platform.OS === 'web' ? '#828585' : '#bfbfbf',
+    fontSize: 16,
   },
   renderItem: {
     backgroundColor: 'white',
     height: 35,
-    fontSize: 18,
     paddingLeft: 36,
     justifyContent: 'center',
   },
   selectedRenderItem: {
     backgroundColor: theme.colors.primary,
+    color: 'white',
     height: 35,
-    fontSize: 18,
     paddingLeft: 36,
     justifyContent: 'center',
   },
+  renderItemText: {
+    fontSize: 16,
+  },
   selectedRenderItemText: {
     color: 'white',
+    fontSize: 16,
   },
-  selectedItemBox: {
+  valuesPreview: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  valuePreview: {
     backgroundColor: theme.colors.primary,
+    color: 'white',
     marginHorizontal: 5,
     marginVertical: 5,
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 8,
-  },
-  selectedBoxText: {
-    color: 'white',
-  },
-  placeholder: {
-    color: Platform.OS === 'web' ? '#828585' : '#bfbfbf',
   },
   errorInput: {
     height: 40,

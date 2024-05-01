@@ -73,9 +73,10 @@ const styles = StyleSheet.create({
   formContainer: {
     width: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     paddingTop: 6,
     backgroundColor: 'white',
+    minHeight: 700,
   },
   scheduleRoundInfo: {
     fontSize: 15,

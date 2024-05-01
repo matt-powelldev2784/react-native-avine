@@ -92,6 +92,13 @@ const EditJobForm = () => {
           <>
             <InputField
               formik={formik}
+              name="jobName"
+              placeholder="Job Name"
+              title="Job Name"
+              imageName={'wiper'}
+            />
+            <InputField
+              formik={formik}
               name="contactName"
               placeholder="Contact Name"
               title="Contact Name"
@@ -104,13 +111,6 @@ const EditJobForm = () => {
               title="Contact Telephone Number"
               keyboardType={'phone-pad'}
               imageName={'tel'}
-            />
-            <InputField
-              formik={formik}
-              name="jobName"
-              placeholder="Job Name"
-              title="Job Name"
-              imageName={'wiper'}
             />
             <InputField
               formik={formik}
@@ -204,11 +204,11 @@ const EditJobForm = () => {
                 isLoading={postApiIsLoading}
               />
             ) : null}
+
+            {!isLargeWeb ? <View style={{ height: 250 }} /> : null}
           </View>
         </View>
       </View>
-
-      {!isLargeWeb ? <View style={{ height: 250 }} /> : null}
     </ScrollView>
   )
 }
@@ -224,6 +224,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     paddingTop: 16,
+    minHeight: 700,
   },
   formContainer: {
     width: '90%',

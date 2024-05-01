@@ -3,7 +3,7 @@ export interface ClientT {
   address: string
   town: string
   postcode: string
-  contactTel: number
+  contactTel: string | number
   notes: string | null
   isDeleted: boolean
 }
