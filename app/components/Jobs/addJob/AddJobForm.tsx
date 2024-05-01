@@ -81,6 +81,13 @@ const AddJobForm = () => {
           <>
             <InputField
               formik={formik}
+              name="jobName"
+              placeholder="Job Name"
+              title="Job Name"
+              imageName={'wiper'}
+            />
+            <InputField
+              formik={formik}
               name="contactName"
               placeholder="Contact Name"
               title="Contact Name"
@@ -93,13 +100,6 @@ const AddJobForm = () => {
               title="Contact Telephone Number"
               keyboardType={'phone-pad'}
               imageName={'tel'}
-            />
-            <InputField
-              formik={formik}
-              name="jobName"
-              placeholder="Job Name"
-              title="Job Name"
-              imageName={'wiper'}
             />
             <InputField
               formik={formik}
