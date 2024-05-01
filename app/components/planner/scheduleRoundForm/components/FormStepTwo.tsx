@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
   dropdownContainer: {
     width: '90%',
     alignItems: 'center',
-    justifyContent: 'center',
     paddingTop: 24,
     backgroundColor: 'white',
     maxWidth: 600,

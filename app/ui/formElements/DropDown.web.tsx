@@ -85,9 +85,9 @@ const Dropdown = ({
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    zIndex: 1,
     marginTop: 8,
     width: '100%',
+    zIndex: 100,
   },
   label: {
     position: 'absolute',

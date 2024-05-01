@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
     paddingHorizontal: 8,
-    flex: 1,
   },
   scheduleRoundInfoText: {
     fontSize: 15,

@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   titleActive: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: 'bold',
     color: 'white',
     backgroundColor: theme.colors.primary,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   title: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: 'bold',
     color: theme.colors.primary,
     backgroundColor: theme.colors.formFlowSecondary,

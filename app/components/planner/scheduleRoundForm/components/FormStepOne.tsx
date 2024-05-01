@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     backgroundColor: 'white',
     maxWidth: 600,
+    zIndex: 100,
   },
 })
 
