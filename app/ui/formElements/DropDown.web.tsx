@@ -53,8 +53,9 @@ const Dropdown = ({
           backgroundColor: 'white',
           fontFamily:
             '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          height: 40,
         }}
-        contentRenderer={({ props, state, methods }) => {
+        contentRenderer={({ props, state }) => {
           const isEmpty = !state.values.length
           const { placeholder } = props
           return (
