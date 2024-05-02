@@ -8,9 +8,10 @@ import useGetApiData from '../../../utils/hooks/useGetApiData'
 import { useRoute } from '@react-navigation/native'
 import { getAllClients } from '../../../db/clients/getAllClients'
 import { ClientWithIdT } from '../../../types/ClientT'
-import ClientCard from './clientCard/ClientCard'
+import ClientListItem from './clientListItem/ClientListItem'
 
 const ClientList = () => {
+  // hooks
   const route = useRoute()
   const { isSmallWeb, isLargeWeb, isNative } = useDeviceType()
   const { getApiIsLoading, data } = useGetApiData({
@@ -18,6 +19,7 @@ const ClientList = () => {
     route,
   })
 
+  // variables
   const clientData = data as ClientWithIdT[]
 
   if (getApiIsLoading) {
@@ -28,7 +30,7 @@ const ClientList = () => {
     return <ErrorNoData />
   }
   const ClientCards = clientData.map((client) => {
-    return <ClientCard {...client} key={client.id} />
+    return <ClientListItem {...client} key={client.id} />
   })
 
   return (
@@ -45,7 +47,7 @@ const ClientList = () => {
         <FlatList
           style={styles.smallDeviceCards}
           data={clientData}
-          renderItem={({ item }) => <ClientCard {...item} />}
+          renderItem={({ item }) => <ClientListItem {...item} />}
           keyExtractor={(item) => item.id}
           ListFooterComponent={<View style={styles.flatlistFooter} />}
         />
@@ -63,11 +65,10 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.backgroundGrey,
   },
   largeWebCards: {
-    display: 'grid' as any,
-    gridTemplateColumns: 'repeat(auto-fill, minmax(330px, 1fr))' as any,
-    width: '100vw' as any,
     justifyItems: 'center',
     alignItems: 'center',
+    width: '100%',
+    maxWidth: 700,
     gap: 20,
     padding: 20,
   },
