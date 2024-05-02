@@ -49,7 +49,7 @@ const DataSwitchItem = ({
           {error ? (
             <TouchableOpacity onPress={handleInfoPress}>
               <Image
-                source={require('../../../../../assets/info.png')}
+                source={require('../../../assets/info.png')}
                 style={{ width: 15, height: 15 }}
               />
             </TouchableOpacity>
