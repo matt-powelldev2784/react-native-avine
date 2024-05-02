@@ -9,7 +9,6 @@ import { ConfirmModal } from '../../../../ui'
 import { deleteClient } from '../../../../db/clients/deleteClient'
 import { ClientWithIdT } from '../../../../types/ClientT'
 import usePostApiData from '../../../../utils/hooks/usePostApiData'
-import { useDeviceType } from '../../../../utils/deviceTypes'
 
 const ClientListItem = ({ id, name, contactTel }: ClientWithIdT) => {
   // state
@@ -33,7 +32,7 @@ const ClientListItem = ({ id, name, contactTel }: ClientWithIdT) => {
     navigation.navigate('EditClient', { clientId: id })
   }
   const handleViewClientPress = () => {
-    // navigation.navigate('ClientCard', { clientId: id })
+     navigation.navigate('ClientCardView', { clientId: id })
   }
 
   //variables

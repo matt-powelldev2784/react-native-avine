@@ -20,6 +20,7 @@ import {
   Clients,
   AddClient,
   EditClient,
+  ClientCardView,
 } from '../../screens'
 import { useAuth } from '../../components/auth/AuthProvider'
 
@@ -37,6 +38,7 @@ export type RootStackParamList = {
   Clients: { refresh?: boolean } | undefined
   AddClient: undefined
   EditClient: { clientId: string } | undefined
+  ClientCardView: { clientId: string } | undefined
 
   //rounds
   Rounds: { refresh?: boolean } | undefined
@@ -79,6 +81,7 @@ const StackNavigator = () => {
           <Stack.Screen name="Clients" component={Clients} />
           <Stack.Screen name="AddClient" component={AddClient} />
           <Stack.Screen name="EditClient" component={EditClient} />
+          <Stack.Screen name="ClientCardView" component={ClientCardView} />
 
           {/* --------------------------  Invoice Screens  -------------------------- */}
           <Stack.Screen name="DueInvoices" component={DueInvoices} />

@@ -7,6 +7,7 @@ import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 
 //clients
+import ClientCard from './clients/clientList/clientCard/ClientCard'
 import AddClientForm from './clients/addClient/AddClientForm'
 import EditClientForm from './clients/editClient/EditClientForm'
 
@@ -36,6 +37,7 @@ import PaidInvoiceList from './invoices/invoiceList/PaidInvoiceList'
 //otheres
 
 export {
+  ClientCard,
   AddCompanyInfoForm,
   AddClientForm,
   EditClientForm,
