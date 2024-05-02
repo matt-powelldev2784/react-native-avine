@@ -1,20 +1,39 @@
-import { View, Text, StyleSheet, Platform } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Platform, Image } from 'react-native'
+import React, { useState } from 'react'
 import { getClient } from '../../../../db/clients/getClient'
-import { Loading } from '../../../../ui'
+import { ConfirmModal, Loading } from '../../../../ui'
 import useGetApiData from '../../../../utils/hooks/useGetApiData'
 import theme from '../../../../utils/theme/theme'
+import DataLineItem from '../../../../ui/dataItems/DataLineItem'
+import LongDataItem from '../../../../ui/dataItems/LongDataItem'
+import { deleteClient } from '../../../../db/clients/deleteClient'
+import usePostApiData from '../../../../utils/hooks/usePostApiData'
+import IconButton from '../../../../ui/iconButton/IconButton'
 
 interface ClientCardProps {
   clientId: string
 }
 
 const ClientCard = ({ clientId }: ClientCardProps) => {
-  console.log('clientId', clientId)
+  //state
+  const [modalVisible, setModalVisible] = useState(false)
 
+  //hooks
   const { getApiIsLoading, data: clientData } = useGetApiData({
     apiFunction: async () => getClient(clientId),
   })
+  const { postApiIsLoading, setApiFunction } = usePostApiData({
+    onSuccessScreen: 'Clients',
+    refreshScreen: { refresh: true },
+  })
+
+  //functions
+  const handleDeleteClientPress = () => {
+    setModalVisible(true)
+  }
+  const handleConfirmDeleteClientPress = async () => {
+    setApiFunction(() => async () => deleteClient(clientId))
+  }
 
   // if data is null show loading state
   if (getApiIsLoading || !clientData) {
@@ -26,18 +45,50 @@ const ClientCard = ({ clientId }: ClientCardProps) => {
       <View style={styles.cardContainer}>
         {/* --------------------------  Title Conatiner Blue  -------------------------- */}
         <View style={styles.titleContainer}>
+          <Image
+            source={require('../../../../../assets/person_white.png')}
+            style={{ width: 27, height: 32, margin: 8 }}
+          />
+
           <Text style={styles.titleText} numberOfLines={1} ellipsizeMode="tail">
             {clientData.name}
           </Text>
+
+          <View style={styles.roundIconsContainer}>
+            <IconButton
+              onPress={handleDeleteClientPress}
+              imgSource={require('../../../../../assets/bin_white.png')}
+              size={35}
+              width={20}
+              height={25}
+            />
+
+            <Text />
+          </View>
         </View>
 
         {/* --------------------------  Info Conatiner White  -------------------------- */}
         <View style={styles.infoWrapper}>
           <Text style={styles.infoTitle}>Client Details:</Text>
+          <DataLineItem name={'Contact Name'} value={clientData.name} />
+          <DataLineItem name={'Address'} value={clientData.address} />
+          <DataLineItem name={'Town'} value={clientData.town} />
+          <DataLineItem name={'Contact Name'} value={clientData.postcode} />
+          <DataLineItem name={'Address'} value={clientData.contactTel} />
+          <LongDataItem name={'Notes'} value={clientData.notes || ''} />
         </View>
       </View>
 
       <View style={{ height: 100 }} />
+
+      <ConfirmModal
+        modalText={`Are you sure you want to delete client ${clientData.name}?`}
+        modalText2={`${clientData.name} will be deleted from view but will still be accessible for previously created jobs and invoices.`}
+        onConfirm={handleConfirmDeleteClientPress}
+        onCancel={() => setModalVisible(false)}
+        visible={modalVisible}
+        isLoading={postApiIsLoading}
+      />
     </View>
   )
 }

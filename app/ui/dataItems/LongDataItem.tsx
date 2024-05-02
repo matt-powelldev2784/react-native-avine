@@ -25,14 +25,15 @@ const LongDataItem = ({ name, value }: DataLineProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 8,
+    marginTop: 32,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
   },
   name: {
-    fontSize: 16,
+    fontSize: 20,
     color: theme.colors.primary,
+    fontWeight: 'bold',
   },
   value: {
     fontSize: 16,
