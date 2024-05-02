@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import theme from '../../../../utils/theme/theme'
+import theme from '../../utils/theme/theme'
 
 interface DataLineProps {
   name: string

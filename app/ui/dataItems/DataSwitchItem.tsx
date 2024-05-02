@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
-import theme from '../../../../utils/theme/theme'
-import { CustomSwitch } from '../../../../ui'
+import theme from '../../utils/theme/theme'
+import { CustomSwitch } from '..'
 import { FormikProps } from 'formik'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
