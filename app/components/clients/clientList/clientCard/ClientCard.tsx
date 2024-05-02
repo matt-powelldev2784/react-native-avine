@@ -81,6 +81,7 @@ const ClientCard = ({ clientId }: ClientCardProps) => {
 
       <View style={{ height: 100 }} />
 
+      {/* --------------------------------  Confirm Modal --------------------------------- */}
       <ConfirmModal
         modalText={`Are you sure you want to delete client ${clientData.name}?`}
         modalText2={`${clientData.name} will be deleted from view but will still be accessible for previously created jobs and invoices.`}
