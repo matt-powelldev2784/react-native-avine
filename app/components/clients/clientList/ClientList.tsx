@@ -9,11 +9,12 @@ import { useRoute } from '@react-navigation/native'
 import { getAllClients } from '../../../db/clients/getAllClients'
 import { ClientWithIdT } from '../../../types/ClientT'
 import ClientListItem from './clientListItem/ClientListItem'
+import ClientListWebView from './ClientWebView/ClientListWebView'
 
 const ClientList = () => {
   // hooks
   const route = useRoute()
-  const { isSmallWeb, isLargeWeb, isNative } = useDeviceType()
+  const { isLargeWeb, isNative } = useDeviceType()
   const { getApiIsLoading, data } = useGetApiData({
     apiFunction: async () => getAllClients(),
     route,
@@ -29,19 +30,14 @@ const ClientList = () => {
   if (!clientData || clientData.length === 0) {
     return <ErrorNoData />
   }
-  const ClientCards = clientData.map((client) => {
-    return <ClientListItem {...client} key={client.id} />
-  })
 
   return (
     <View style={styles.listContainer}>
-      {clientData && isLargeWeb ? (
-        <View style={styles.largeWebCards}>{ClientCards}</View>
-      ) : null}
+      {clientData && isLargeWeb ? <ClientListWebView /> : null}
 
-      {clientData && isSmallWeb ? (
+      {/* {clientData && isSmallWeb ? (
         <View style={styles.smallDeviceCards}>{ClientCards}</View>
-      ) : null}
+      ) : null} */}
 
       {clientData && isNative ? (
         <FlatList
@@ -62,15 +58,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: '100%',
+    height: '100%',
     backgroundColor: theme.colors.backgroundGrey,
-  },
-  largeWebCards: {
-    justifyItems: 'center',
-    alignItems: 'center',
-    width: '100%',
-    maxWidth: 700,
-    gap: 20,
-    padding: 20,
   },
   smallDeviceCards: {
     width: '100%',
