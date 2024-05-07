@@ -47,15 +47,15 @@ const ClientListWebView = () => {
             name="name"
             placeholder="Seach Term"
             title="Search Term"
-            imageName={'person'}
+            imageName={'search'}
           />
           <Dropdown
             formik={formik}
             name="searchField"
             placeholder="Search By"
             title="Search By"
-            options={[{ label: 'name', value: 'Name' }]}
-            imageName={'person'}
+            options={[{ label: 'Name', value: 'name' }]}
+            imageName={'notes'}
           />
 
           <View style={styles.buttonContainer}>
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     height: '100%',
     maxWidth: 1200,
     flex: 1,
-    marginTop: 20,
+    marginTop: 12,
     paddingVertical: 20,
     paddingHorizontal: 12,
   },
