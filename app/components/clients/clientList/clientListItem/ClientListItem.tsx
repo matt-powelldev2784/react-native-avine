@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    maxWidth: 800,
     width: '100%',
+    maxWidth: 800,
   },
   container: {
     flexDirection: 'row',
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     height: 70,
     overflow: 'hidden',
     width: '100%',
+    flex: 1,
   },
   cardLeftBorder: {
     position: 'absolute',

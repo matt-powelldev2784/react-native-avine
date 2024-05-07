@@ -18,7 +18,7 @@ const ClientListWebView = () => {
     data,
   } = usePostApiData({})
 
-  const handleSearchPress = () => {
+  const handleSearchAllClientsPress = () => {
     setApiFunction(() => async () => getAllClients())
   }
 
@@ -39,31 +39,43 @@ const ClientListWebView = () => {
 
   return (
     <View style={styles.largeWebContainer}>
-      <View style={styles.largeWebSearch}>
-        <Text style={styles.searchTitle}>Search Clients</Text>
-        <InputField
-          formik={formik}
-          name="name"
-          placeholder="Seach Term"
-          title="Search Term"
-          imageName={'person'}
-        />
-        <Dropdown
-          formik={formik}
-          name="searchField"
-          placeholder="Search By"
-          title="Search By"
-          options={[{ label: 'name', value: 'Name' }]}
-          imageName={'person'}
-        />
-        <Button
-          onPress={handleSearchPress}
-          text="Search"
-          isLoading={searchApiIsLoading}
-        />
+      <View style={styles.largeWebSearchContainer}>
+        <View style={styles.largeWebSearch}>
+          <Text style={styles.searchTitle}>Search Clients</Text>
+          <InputField
+            formik={formik}
+            name="name"
+            placeholder="Seach Term"
+            title="Search Term"
+            imageName={'person'}
+          />
+          <Dropdown
+            formik={formik}
+            name="searchField"
+            placeholder="Search By"
+            title="Search By"
+            options={[{ label: 'name', value: 'Name' }]}
+            imageName={'person'}
+          />
+
+          <View style={styles.buttonContainer}>
+            <Button
+              onPress={handleSearchAllClientsPress}
+              text="Find All Clients"
+              isLoading={searchApiIsLoading}
+              backgroundColor={theme.colors.buttonSecondary}
+            />
+            <Button
+              onPress={handleSearchAllClientsPress}
+              text="Search"
+              isLoading={searchApiIsLoading}
+            />
+          </View>
+        </View>
       </View>
 
       <View style={styles.largeWebCards}>{ClientCards}</View>
+      <View style={styles.footer} />
     </View>
   )
 }
@@ -74,23 +86,31 @@ const styles = StyleSheet.create({
   largeWebContainer: {
     flexDirection: 'row',
     justifyItems: 'center',
-    alignItems: 'flex-start',
+    alignItems: 'center',
+    flexWrap: 'wrap',
     gap: 40,
     width: '100%',
     height: '100%',
     maxWidth: 1200,
     flex: 1,
     marginTop: 20,
-    padding: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 12,
+  },
+  largeWebSearchContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   largeWebSearch: {
-    position: 'relative',
     flexDirection: 'column',
     alignItems: 'center',
-    maxWidth: 700,
-    width: '30%',
+    justifyContent: 'center',
+    flex: 1,
+    maxWidth: 600,
+    minWidth: 300,
+    width: '95%',
     height: '100%',
-    minHeight: 1000,
     backgroundColor: theme.colors.backgroundGrey,
   },
   searchTitle: {
@@ -99,11 +119,27 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 32,
     width: '100%',
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '100%',
+    maxWidth: 600,
+    gap: 8,
   },
   largeWebCards: {
     flex: 1,
     width: '100%',
     height: '100%',
     alignItems: 'center',
+  },
+  footer: {
+    height: 40,
+    width: '100%',
+    minWidth: 300,
   },
 })

@@ -13,33 +13,17 @@ import ClientListWebView from './ClientWebView/ClientListWebView'
 
 const ClientList = () => {
   // hooks
-  const route = useRoute()
-  const { isLargeWeb, isNative } = useDeviceType()
-  const { getApiIsLoading, data } = useGetApiData({
-    apiFunction: async () => getAllClients(),
-    route,
-  })
-
-  // variables
-  const clientData = data as ClientWithIdT[]
-
-  if (getApiIsLoading) {
-    return <Loading loadingText={'Loading client list...'} />
-  }
-
-  if (!clientData || clientData.length === 0) {
-    return <ErrorNoData />
-  }
+  const { isLargeWeb, isNative, isSmallWeb } = useDeviceType()
 
   return (
     <View style={styles.listContainer}>
-      {clientData && isLargeWeb ? <ClientListWebView /> : null}
+      {isLargeWeb || isSmallWeb ? <ClientListWebView /> : null}
 
       {/* {clientData && isSmallWeb ? (
         <View style={styles.smallDeviceCards}>{ClientCards}</View>
       ) : null} */}
 
-      {clientData && isNative ? (
+      {/* {clientData && isNative ? (
         <FlatList
           style={styles.smallDeviceCards}
           data={clientData}
@@ -47,7 +31,7 @@ const ClientList = () => {
           keyExtractor={(item) => item.id}
           ListFooterComponent={<View style={styles.flatlistFooter} />}
         />
-      ) : null}
+      ) : null} */}
     </View>
   )
 }
