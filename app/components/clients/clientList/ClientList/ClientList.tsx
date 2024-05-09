@@ -38,9 +38,9 @@ const ClientListWebView = () => {
     : null
 
   return (
-    <View style={styles.largeWebContainer}>
-      <View style={styles.largeWebSearchContainer}>
-        <View style={styles.largeWebSearch}>
+    <View style={styles.container}>
+      <View style={styles.searchContainer}>
+        <View style={styles.searchBox}>
           <Text style={styles.searchTitle}>Search Clients</Text>
           <InputField
             formik={formik}
@@ -75,6 +75,7 @@ const ClientListWebView = () => {
       </View>
 
       <View style={styles.largeWebCards}>{ClientCards}</View>
+
       <View style={styles.footer} />
     </View>
   )
@@ -83,7 +84,7 @@ const ClientListWebView = () => {
 export default ClientListWebView
 
 const styles = StyleSheet.create({
-  largeWebContainer: {
+  container: {
     flexDirection: 'row',
     justifyItems: 'center',
     alignItems: 'center',
@@ -97,12 +98,12 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 12,
   },
-  largeWebSearchContainer: {
+  searchContainer: {
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  largeWebSearch: {
+  searchBox: {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',

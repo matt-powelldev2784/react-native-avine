@@ -19,7 +19,7 @@ const ClientListItem = ({ id, name, contactTel }: ClientWithIdT) => {
   }
 
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper]}>
       <View style={styles.container}>
         <View style={styles.cardLeftBorder}></View>
 
@@ -50,11 +50,11 @@ const ClientListItem = ({ id, name, contactTel }: ClientWithIdT) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    flexDirection: 'column',
+    position: 'relative',
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    maxWidth: 800,
   },
   container: {
     flexDirection: 'row',
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.primary,
     height: 70,
     overflow: 'hidden',
+    maxWidth: 800,
     width: '100%',
     flex: 1,
   },

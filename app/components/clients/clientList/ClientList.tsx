@@ -1,37 +1,13 @@
-import { View, FlatList, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React from 'react'
-import { Loading } from '../../../ui'
-import { useDeviceType } from '../../../utils/deviceTypes'
-import ErrorNoData from './errorNoData/ErrorNoData'
 import theme from '../../../utils/theme/theme'
-import useGetApiData from '../../../utils/hooks/useGetApiData'
-import { useRoute } from '@react-navigation/native'
-import { getAllClients } from '../../../db/clients/getAllClients'
-import { ClientWithIdT } from '../../../types/ClientT'
-import ClientListItem from './clientListItem/ClientListItem'
-import ClientListWebView from './ClientWebView/ClientListWebView'
+
+import ClientListWebView from './ClientList/ClientList'
 
 const ClientList = () => {
-  // hooks
-  const { isLargeWeb, isNative, isSmallWeb } = useDeviceType()
-
   return (
     <View style={styles.listContainer}>
-      {isLargeWeb || isSmallWeb ? <ClientListWebView /> : null}
-
-      {/* {clientData && isSmallWeb ? (
-        <View style={styles.smallDeviceCards}>{ClientCards}</View>
-      ) : null} */}
-
-      {/* {clientData && isNative ? (
-        <FlatList
-          style={styles.smallDeviceCards}
-          data={clientData}
-          renderItem={({ item }) => <ClientListItem {...item} />}
-          keyExtractor={(item) => item.id}
-          ListFooterComponent={<View style={styles.flatlistFooter} />}
-        />
-      ) : null} */}
+      <ClientListWebView />
     </View>
   )
 }
