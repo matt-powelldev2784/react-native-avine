@@ -9,6 +9,13 @@ import Button from '../../../ui/button/Button'
 import theme from '../../../utils/theme/theme'
 import usePostApiData from '../../../utils/hooks/usePostApiData'
 import { getAllClients } from '../../../db/clients/getAllClients'
+import { DocumentSnapshot } from 'firebase/firestore'
+import { useLastVisible } from '../../../utils/hooks/useLastVisible'
+
+interface ClientDataT {
+  lastVisible: DocumentSnapshot
+  clients: ClientWithIdT[]
+}
 
 const ClientList = () => {
   //hooks
@@ -16,11 +23,8 @@ const ClientList = () => {
     postApiIsLoading: searchApiIsLoading,
     setApiFunction,
     data,
-  } = usePostApiData({})
-
-  const handleSearchAllClientsPress = () => {
-    setApiFunction(() => async () => getAllClients())
-  }
+  } = usePostApiData<ClientDataT>({})
+  const lastVisibleDocument = useLastVisible(data)
 
   // temp
   const activeStep = 1
@@ -28,8 +32,17 @@ const ClientList = () => {
     activeStep,
   })
 
+  //functions
+  const handleSearchAllClientsPress = () => {
+    setApiFunction(() => async () => getAllClients())
+  }
+
+  const handleNextClientsPress = () => {
+    setApiFunction(() => async () => getAllClients(lastVisibleDocument))
+  }
+
   //variables
-  const clientData = data as ClientWithIdT[] | null
+  const clientData = data?.clients as ClientWithIdT[]
 
   return (
     <View style={styles.container}>
@@ -60,7 +73,7 @@ const ClientList = () => {
               backgroundColor={theme.colors.buttonSecondary}
             />
             <Button
-              onPress={handleSearchAllClientsPress}
+              onPress={handleNextClientsPress}
               text="Search"
               isLoading={searchApiIsLoading}
             />
