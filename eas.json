@@ -12,6 +12,15 @@
         "buildConfiguration": "Debug"
       }
     },
+    "development-simulator": {
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
+      "android": {
+        "gradleCommand": ":app:assembleDebug"
+      }
+    },
     "preview": {
       "distribution": "internal",
       "ios": {
