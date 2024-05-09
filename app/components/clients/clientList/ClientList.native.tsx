@@ -1,16 +1,16 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, FlatList } from 'react-native'
 import React from 'react'
-import InputField from '../../../../ui/formElements/InputField'
-import Dropdown from '../../../../ui/formElements/DropDown'
-import useFormikSteps from '../../addClient/hooks/useFormikSteps'
-import ClientListItem from '../clientListItem/ClientListItem'
-import { ClientWithIdT } from '../../../../types/ClientT'
-import Button from '../../../../ui/button/Button'
-import theme from '../../../../utils/theme/theme'
-import usePostApiData from '../../../../utils/hooks/usePostApiData'
-import { getAllClients } from '../../../../db/clients/getAllClients'
+import InputField from '../../../ui/formElements/InputField'
+import Dropdown from '../../../ui/formElements/DropDown'
+import useFormikSteps from '../addClient/hooks/useFormikSteps'
+import ClientListItem from './clientListItem/ClientListItem'
+import { ClientWithIdT } from '../../../types/ClientT'
+import Button from '../../../ui/button/Button'
+import theme from '../../../utils/theme/theme'
+import usePostApiData from '../../../utils/hooks/usePostApiData'
+import { getAllClients } from '../../../db/clients/getAllClients'
 
-const ClientListWebView = () => {
+const ClientList = () => {
   //hooks
   const {
     postApiIsLoading: searchApiIsLoading,
@@ -30,12 +30,6 @@ const ClientListWebView = () => {
 
   //variables
   const clientData = data as ClientWithIdT[] | null
-  const clientDataHasLength = clientData && clientData.length > 0
-  const ClientCards = clientDataHasLength
-    ? clientData.map((client) => {
-        return <ClientListItem {...client} key={client.id} />
-      })
-    : null
 
   return (
     <View style={styles.container}>
@@ -74,25 +68,30 @@ const ClientListWebView = () => {
         </View>
       </View>
 
-      <View style={styles.largeWebCards}>{ClientCards}</View>
-
-      <View style={styles.footer} />
+      <View style={[styles.cards]}>
+        {clientData && (
+          <FlatList
+            style={{ width: '100%' }}
+            data={clientData}
+            renderItem={({ item }) => <ClientListItem {...item} />}
+            keyExtractor={(item) => item.id}
+            ListFooterComponent={<View style={styles.footer} />}
+          />
+        )}
+      </View>
     </View>
   )
 }
 
-export default ClientListWebView
+export default ClientList
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyItems: 'center',
     alignItems: 'center',
-    flexWrap: 'wrap',
     gap: 40,
     width: '100%',
-    height: '100%',
-    maxWidth: 1200,
     flex: 1,
     marginTop: 12,
     paddingVertical: 20,
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    maxWidth: 600,
+    maxWidth: 400,
     minWidth: 300,
     width: '95%',
     height: '100%',
@@ -132,11 +131,11 @@ const styles = StyleSheet.create({
     maxWidth: 600,
     gap: 8,
   },
-  largeWebCards: {
+  cards: {
     flex: 1,
     width: '100%',
-    height: '100%',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   footer: {
     height: 40,

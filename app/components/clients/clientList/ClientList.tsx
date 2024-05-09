@@ -1,53 +1,145 @@
-import { View, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
+import InputField from '../../../ui/formElements/InputField'
+import Dropdown from '../../../ui/formElements/DropDown'
+import useFormikSteps from '../addClient/hooks/useFormikSteps'
+import ClientListItem from './clientListItem/ClientListItem'
+import { ClientWithIdT } from '../../../types/ClientT'
+import Button from '../../../ui/button/Button'
 import theme from '../../../utils/theme/theme'
-
-import ClientListWebView from './ClientList/ClientList'
+import usePostApiData from '../../../utils/hooks/usePostApiData'
+import { getAllClients } from '../../../db/clients/getAllClients'
 
 const ClientList = () => {
+  //hooks
+  const {
+    postApiIsLoading: searchApiIsLoading,
+    setApiFunction,
+    data,
+  } = usePostApiData({})
+
+  const handleSearchAllClientsPress = () => {
+    setApiFunction(() => async () => getAllClients())
+  }
+
+  // temp
+  const activeStep = 1
+  const { formik } = useFormikSteps({
+    activeStep,
+  })
+
+  //variables
+  const clientData = data as ClientWithIdT[] | null
+  const clientDataHasLength = clientData && clientData.length > 0
+  const ClientCards = clientDataHasLength
+    ? clientData.map((client) => {
+        return <ClientListItem {...client} key={client.id} />
+      })
+    : null
+
   return (
-    <View style={styles.listContainer}>
-      <ClientListWebView />
+    <View style={styles.container}>
+      <View style={styles.searchContainer}>
+        <View style={styles.searchBox}>
+          <Text style={styles.searchTitle}>Search Clients</Text>
+          <InputField
+            formik={formik}
+            name="name"
+            placeholder="Seach Term"
+            title="Search Term"
+            imageName={'search'}
+          />
+          <Dropdown
+            formik={formik}
+            name="searchField"
+            placeholder="Search By"
+            title="Search By"
+            options={[{ label: 'Name', value: 'name' }]}
+            imageName={'notes'}
+          />
+
+          <View style={styles.buttonContainer}>
+            <Button
+              onPress={handleSearchAllClientsPress}
+              text="Find All Clients"
+              isLoading={searchApiIsLoading}
+              backgroundColor={theme.colors.buttonSecondary}
+            />
+            <Button
+              onPress={handleSearchAllClientsPress}
+              text="Search"
+              isLoading={searchApiIsLoading}
+            />
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.largeWebCards}>{ClientCards}</View>
+
+      <View style={styles.footer} />
     </View>
   )
 }
 
+export default ClientList
+
 const styles = StyleSheet.create({
-  listContainer: {
-    flex: 1,
+  container: {
+    flexDirection: 'row',
+    justifyItems: 'center',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    gap: 40,
     width: '100%',
+    height: '100%',
+    flex: 1,
+    marginTop: 12,
+    paddingVertical: 20,
+    paddingHorizontal: 12,
+  },
+  searchContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  searchBox: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    maxWidth: 600,
+    minWidth: 300,
+    width: '95%',
     height: '100%',
     backgroundColor: theme.colors.backgroundGrey,
   },
-  smallDeviceCards: {
+  searchTitle: {
+    color: theme.colors.primary,
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 32,
     width: '100%',
-    paddingTop: 10,
-    paddingBottom: 70,
-    paddingHorizontal: '2.5%',
+    textAlign: 'center',
   },
-  flatlistFooter: {
-    height: 20,
-  },
-  button: {
+  buttonContainer: {
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    paddingVertical: 8,
-    paddingHorizontal: 32,
-    backgroundColor: theme.colors.primary,
-    borderRadius: 8,
+    flexWrap: 'wrap',
     width: '100%',
-    maxWidth: 270,
-    margin: 8,
-    gap: 4,
+    maxWidth: 600,
+    gap: 8,
   },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
+  largeWebCards: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+  },
+  footer: {
+    height: 40,
+    width: '100%',
+    minWidth: 300,
   },
 })
-
-export default ClientList
