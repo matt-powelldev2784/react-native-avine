@@ -10,10 +10,10 @@ import theme from '../../../utils/theme/theme'
 import usePostApiData from '../../../utils/hooks/usePostApiData'
 import { getAllClients } from '../../../db/clients/getAllClients'
 import { DocumentSnapshot } from 'firebase/firestore'
-import { useLastVisible } from '../../../utils/hooks/useLastVisible'
+import { useClientData } from './hooks/useClientData'
 
 interface ClientDataT {
-  lastVisible: DocumentSnapshot
+  lastVisible: DocumentSnapshot | null
   clients: ClientWithIdT[]
 }
 
@@ -24,7 +24,8 @@ const ClientList = () => {
     setApiFunction,
     data,
   } = usePostApiData<ClientDataT>({})
-  const lastVisibleDocument = useLastVisible(data)
+  const { clientData, lastVisible, setClientData, setLastVisible } =
+    useClientData(data)
 
   // temp
   const activeStep = 1
@@ -36,16 +37,18 @@ const ClientList = () => {
   const handleSearchAllClientsPress = () => {
     setApiFunction(() => async () => getAllClients())
   }
-
   const handleNextClientsPress = () => {
-    setApiFunction(() => async () => getAllClients(lastVisibleDocument))
+    setApiFunction(() => async () => getAllClients(lastVisible))
+  }
+  const resetSearchForm = () => {
+    setClientData([])
+    setLastVisible(null)
   }
 
   //variables
-  const clientData = data?.clients as ClientWithIdT[]
-  const clientDataHasLength = clientData && clientData.length > 0
+  const clientDataHasLength = clientData.length > 0
   const ClientCards = clientDataHasLength
-    ? clientData.map((client) => {
+    ? clientData.map((client: ClientWithIdT) => {
         return <ClientListItem {...client} key={client.id} />
       })
     : null
@@ -87,7 +90,25 @@ const ClientList = () => {
         </View>
       </View>
 
-      <View style={styles.largeWebCards}>{ClientCards}</View>
+      <View style={styles.largeWebCards}>
+        {ClientCards}
+
+        {clientDataHasLength ? (
+          <View style={styles.buttonContainer}>
+            <Button
+              onPress={resetSearchForm}
+              text="Reset Search Form"
+              isLoading={false}
+              backgroundColor={theme.colors.buttonSecondary}
+            />
+            <Button
+              onPress={handleNextClientsPress}
+              text="Next 10 Results"
+              isLoading={searchApiIsLoading}
+            />
+          </View>
+        ) : null}
+      </View>
 
       <View style={styles.footer} />
     </View>
