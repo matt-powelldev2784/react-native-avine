@@ -10,7 +10,7 @@ import theme from '../../../utils/theme/theme'
 import usePostApiData from '../../../utils/hooks/usePostApiData'
 import { getAllClients } from '../../../db/clients/getAllClients'
 import { DocumentSnapshot } from 'firebase/firestore'
-import { useLastVisible } from '../../../utils/hooks/useLastVisible'
+import { useClientData } from './hooks/useClientData'
 
 interface ClientDataT {
   lastVisible: DocumentSnapshot
@@ -24,7 +24,8 @@ const ClientList = () => {
     setApiFunction,
     data,
   } = usePostApiData<ClientDataT>({})
-  const lastVisibleDocument = useLastVisible(data)
+  const { clientData, lastVisible, setClientData, setLastVisible } =
+    useClientData(data)
 
   // temp
   const activeStep = 1
@@ -36,13 +37,16 @@ const ClientList = () => {
   const handleSearchAllClientsPress = () => {
     setApiFunction(() => async () => getAllClients())
   }
-
   const handleNextClientsPress = () => {
-    setApiFunction(() => async () => getAllClients(lastVisibleDocument))
+    setApiFunction(() => async () => getAllClients(lastVisible))
+  }
+  const resetSearchForm = () => {
+    setClientData([])
+    setLastVisible(null)
   }
 
   //variables
-  const clientData = data?.clients as ClientWithIdT[]
+  const clientDataHasLength = clientData.length > 0
 
   return (
     <View style={styles.container}>
@@ -82,13 +86,27 @@ const ClientList = () => {
       </View>
 
       <View style={[styles.cards]}>
-        {clientData && (
+        {clientDataHasLength && (
           <FlatList
-            style={{ width: '100%' }}
+            style={{ width: '100%', marginBottom: 40 }}
             data={clientData}
             renderItem={({ item }) => <ClientListItem {...item} />}
             keyExtractor={(item) => item.id}
-            ListFooterComponent={<View style={styles.footer} />}
+            ListFooterComponent={
+              <View style={styles.buttonContainer}>
+                <Button
+                  onPress={resetSearchForm}
+                  text="Reset Search Form"
+                  isLoading={false}
+                  backgroundColor={theme.colors.buttonSecondary}
+                />
+                <Button
+                  onPress={handleNextClientsPress}
+                  text="Next 10 Results"
+                  isLoading={searchApiIsLoading}
+                />
+              </View>
+            }
           />
         )}
       </View>
@@ -103,7 +121,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyItems: 'center',
     alignItems: 'center',
-    gap: 40,
     width: '100%',
     flex: 1,
     marginTop: 12,
@@ -114,6 +131,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 40,
   },
   searchBox: {
     flexDirection: 'column',
