@@ -9,12 +9,14 @@ interface ClientDataT {
   setLastVisibleDocument: Dispatch<
     SetStateAction<DocumentSnapshot<DocumentData, DocumentData> | null>
   >
+  docCount: number | null
 }
 
 export const useClientData = (data: any): ClientDataT => {
   const [lastVisibleDocument, setLastVisibleDocument] =
     useState<DocumentSnapshot | null>(null)
   const [clientData, setClientData] = useState<ClientWithIdT[]>([])
+  const [docCount, setDocCount] = useState<number | null>(null)
 
   useEffect(() => {
     if (data?.lastVisible) {
@@ -25,6 +27,9 @@ export const useClientData = (data: any): ClientDataT => {
       const clients = data.clients as ClientWithIdT[]
       setClientData((prev) => [...prev, ...clients])
     }
+    if (data?.count) {
+      setDocCount(data.count)
+    }
   }, [data])
 
   return {
@@ -32,5 +37,6 @@ export const useClientData = (data: any): ClientDataT => {
     lastVisibleDocument,
     setClientData,
     setLastVisibleDocument,
+    docCount,
   }
 }

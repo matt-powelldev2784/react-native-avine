@@ -29,6 +29,7 @@ const ClientList = () => {
     lastVisibleDocument,
     setClientData,
     setLastVisibleDocument,
+    docCount,
   } = useClientData(data)
 
   // temp
@@ -56,6 +57,7 @@ const ClientList = () => {
         return <ClientListItem {...client} key={client.id} />
       })
     : null
+  const allDataReturned = docCount === clientData.length
 
   return (
     <View style={styles.container}>
@@ -107,8 +109,10 @@ const ClientList = () => {
             />
             <Button
               onPress={handleNextClientsPress}
-              text="Next 10 Results"
+              text={allDataReturned ? 'No More Results' : 'Next 10 Results'}
               isLoading={searchApiIsLoading}
+              opacity={allDataReturned ? 0.75 : 1}
+              disabled={allDataReturned}
             />
           </View>
         ) : null}

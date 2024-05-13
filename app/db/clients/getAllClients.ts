@@ -7,6 +7,7 @@ import {
   limit,
   startAfter,
   orderBy,
+  getCountFromServer,
 } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
@@ -24,6 +25,7 @@ export const getAllClients = async (
     const userDoc = doc(db, 'users', auth.currentUser.uid)
     const clientsCollection = collection(userDoc, 'clients')
 
+    //get clients data
     let q
     if (lastVisible) {
       q = query(
@@ -51,9 +53,19 @@ export const getAllClients = async (
 
     const sortedClients = clients.sort((a, b) => a.name.localeCompare(b.name))
 
+    // get document count
+    const countQuery = query(
+      clientsCollection,
+      where('isDeleted', '!=', true),
+      orderBy('name'),
+    )
+    const snapshot = await getCountFromServer(countQuery)
+    const count = snapshot.data().count
+
     const data = {
       clients: sortedClients,
       lastVisible: querySnapshot.docs[querySnapshot.docs.length - 1],
+      count,
     }
 
     return data
