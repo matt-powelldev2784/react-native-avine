@@ -14,7 +14,19 @@ export const addClient = async (clientInfo: ClientT) => {
     const clientsCollection = collection(userDoc, 'clients')
     const clientDoc = doc(clientsCollection)
 
-    await setDoc(clientDoc, { ...clientInfo, isDeleted: false })
+    await setDoc(clientDoc, {
+      name: clientInfo.name,
+      address: clientInfo.address,
+      town: clientInfo.town,
+      postcode: clientInfo.postcode,
+      contactTel: clientInfo.contactTel,
+      notes: clientInfo.notes,
+      isDeleted: false,
+      _searchName: clientInfo.name.toLowerCase(),
+      _searchAddress: clientInfo.address.toLowerCase(),
+      _searchTown: clientInfo.town.toLowerCase(),
+      _searchPostcode: clientInfo.postcode.toLowerCase(),
+    })
     const client = await getDoc(clientDoc)
 
     return { id: client.id, ...client.data() }

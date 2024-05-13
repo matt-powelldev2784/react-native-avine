@@ -29,6 +29,9 @@ export const searchClients = async ({
     return authError({ filename: 'searchClients' })
   }
 
+  console.log('searchTerm', searchTerm)
+  console.log('searchField', searchField)
+
   try {
     const userDoc = doc(db, 'users', auth.currentUser.uid)
     const clientsCollection = collection(userDoc, 'clients')

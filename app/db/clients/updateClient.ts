@@ -27,6 +27,10 @@ try {
     contactTel: clientData.contactTel,
     notes: clientData.notes,
     isDeleted: clientData.isDeleted,
+    _searchName: clientData.name.toLowerCase(),
+    _searchAddress: clientData.address.toLowerCase(),
+    _searchTown: clientData.town.toLowerCase(),
+    _searchPostcode: clientData.postcode.toLowerCase(),
   })
 
   const updatedClient = await getDoc(clientDocRef)

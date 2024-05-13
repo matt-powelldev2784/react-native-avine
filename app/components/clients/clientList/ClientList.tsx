@@ -63,7 +63,7 @@ const ClientList = () => {
             name="searchField"
             placeholder="Search By"
             title="Search By"
-            options={[{ label: 'Name', value: 'name' }]}
+            options={[{ label: 'Name', value: '_searchName' }]}
             imageName={'notes'}
           />
 
