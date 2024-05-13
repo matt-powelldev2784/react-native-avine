@@ -2,48 +2,34 @@ import { View, Text, StyleSheet, FlatList } from 'react-native'
 import React from 'react'
 import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
-import useFormikSteps from '../addClient/hooks/useFormikSteps'
 import ClientListItem from './clientListItem/ClientListItem'
-import { ClientWithIdT } from '../../../types/ClientT'
 import Button from '../../../ui/button/Button'
 import theme from '../../../utils/theme/theme'
-import usePostApiData from '../../../utils/hooks/usePostApiData'
-import { getAllClients } from '../../../db/clients/getAllClients'
-import { DocumentSnapshot } from 'firebase/firestore'
-import { useClientData } from './hooks/useClientData'
-
-interface ClientDataT {
-  lastVisible: DocumentSnapshot
-  clients: ClientWithIdT[]
-}
+import useFormikSearch from './hooks/useFormikSearch'
 
 const ClientList = () => {
-  //hooks
   const {
-    postApiIsLoading: searchApiIsLoading,
-    setApiFunction,
-    data,
-  } = usePostApiData<ClientDataT>({})
-  const {
+    searchApiIsLoading,
+    formik,
     clientData,
-    lastVisibleDocument,
     setClientData,
     setLastVisibleDocument,
     docCount,
-  } = useClientData(data)
-
-  // temp
-  const activeStep = 1
-  const { formik } = useFormikSteps({
-    activeStep,
-  })
+  } = useFormikSearch()
 
   //functions
   const handleSearchAllClientsPress = () => {
-    setApiFunction(() => async () => getAllClients())
+    formik.setFieldValue('findAll', true)
+    resetSearchForm()
+    formik.handleSubmit()
   }
-  const handleNextClientsPress = () => {
-    setApiFunction(() => async () => getAllClients(lastVisibleDocument))
+  const handleSearchPress = async () => {
+    formik.setFieldValue('findAll', false)
+    resetSearchForm()
+    formik.handleSubmit()
+  }
+  const handleMoreResultsPress = async () => {
+    formik.handleSubmit()
   }
   const resetSearchForm = () => {
     setClientData([])
@@ -61,7 +47,7 @@ const ClientList = () => {
           <Text style={styles.searchTitle}>Search Clients</Text>
           <InputField
             formik={formik}
-            name="name"
+            name="searchTerm"
             placeholder="Seach Term"
             title="Search Term"
             imageName={'search'}
@@ -83,7 +69,7 @@ const ClientList = () => {
               backgroundColor={theme.colors.buttonSecondary}
             />
             <Button
-              onPress={handleNextClientsPress}
+              onPress={handleSearchPress}
               text="Search"
               isLoading={searchApiIsLoading}
             />
@@ -107,7 +93,7 @@ const ClientList = () => {
                   backgroundColor={theme.colors.buttonSecondary}
                 />
                 <Button
-                  onPress={handleNextClientsPress}
+                  onPress={handleMoreResultsPress}
                   text={allDataReturned ? 'No More Results' : 'Next 10 Results'}
                   isLoading={searchApiIsLoading}
                   opacity={allDataReturned ? 0.75 : 1}

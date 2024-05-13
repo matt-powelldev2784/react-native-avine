@@ -14,11 +14,19 @@ import { authError } from '../authError'
 import { ClientWithIdT } from '../../types/ClientT'
 import { DocumentSnapshot } from 'firebase/firestore'
 
-export const getAllClients = async (
-  lastVisibleDocument: DocumentSnapshot | null = null,
-) => {
+interface SearchClientsT {
+  searchField: string
+  searchTerm: string
+  lastVisible: DocumentSnapshot | null
+}
+
+export const searchClients = async ({
+  searchField,
+  searchTerm,
+  lastVisible = null,
+}: SearchClientsT) => {
   if (!auth.currentUser) {
-    return authError({ filename: 'getAllClients' })
+    return authError({ filename: 'searchClients' })
   }
 
   try {
@@ -27,17 +35,19 @@ export const getAllClients = async (
 
     //get clients data
     let q
-    if (lastVisibleDocument) {
+    if (lastVisible) {
       q = query(
         clientsCollection,
+        where(searchField, '==', searchTerm),
         where('isDeleted', '!=', true),
         orderBy('name'),
-        startAfter(lastVisibleDocument),
+        startAfter(lastVisible),
         limit(10),
       )
     } else {
       q = query(
         clientsCollection,
+        where(searchField, '==', searchTerm),
         where('isDeleted', '!=', true),
         orderBy('name'),
         limit(10),
@@ -56,6 +66,7 @@ export const getAllClients = async (
     // get document count
     const countQuery = query(
       clientsCollection,
+      where(searchField, '==', searchTerm),
       where('isDeleted', '!=', true),
       orderBy('name'),
     )
@@ -70,6 +81,6 @@ export const getAllClients = async (
 
     return data
   } catch (error) {
-    throw new Error(`Error getting user jobs at getAllClients route: ${error}`)
+    throw new Error(`Error getting clients at searchClients route: ${error}`)
   }
 }
