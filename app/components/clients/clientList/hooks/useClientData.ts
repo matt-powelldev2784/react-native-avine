@@ -3,22 +3,23 @@ import { DocumentSnapshot, DocumentData } from 'firebase/firestore'
 import { ClientWithIdT } from '../../../../types/ClientT'
 
 interface ClientDataT {
-  lastVisible: DocumentSnapshot | null
+  lastVisibleDocument: DocumentSnapshot | null
   clientData: ClientWithIdT[]
   setClientData: Dispatch<SetStateAction<ClientWithIdT[]>>
-  setLastVisible: Dispatch<
+  setLastVisibleDocument: Dispatch<
     SetStateAction<DocumentSnapshot<DocumentData, DocumentData> | null>
   >
 }
 
 export const useClientData = (data: any): ClientDataT => {
-  const [lastVisible, setLastVisible] = useState<DocumentSnapshot | null>(null)
+  const [lastVisibleDocument, setLastVisibleDocument] =
+    useState<DocumentSnapshot | null>(null)
   const [clientData, setClientData] = useState<ClientWithIdT[]>([])
 
   useEffect(() => {
     if (data?.lastVisible) {
       const lastRecord = data.lastVisible as DocumentSnapshot
-      setLastVisible(lastRecord)
+      setLastVisibleDocument(lastRecord)
     }
     if (data?.clients) {
       const clients = data.clients as ClientWithIdT[]
@@ -26,5 +27,10 @@ export const useClientData = (data: any): ClientDataT => {
     }
   }, [data])
 
-  return { clientData, lastVisible, setClientData, setLastVisible }
+  return {
+    clientData,
+    lastVisibleDocument,
+    setClientData,
+    setLastVisibleDocument,
+  }
 }

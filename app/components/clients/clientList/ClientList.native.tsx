@@ -24,8 +24,12 @@ const ClientList = () => {
     setApiFunction,
     data,
   } = usePostApiData<ClientDataT>({})
-  const { clientData, lastVisible, setClientData, setLastVisible } =
-    useClientData(data)
+  const {
+    clientData,
+    lastVisibleDocument,
+    setClientData,
+    setLastVisibleDocument,
+  } = useClientData(data)
 
   // temp
   const activeStep = 1
@@ -38,11 +42,11 @@ const ClientList = () => {
     setApiFunction(() => async () => getAllClients())
   }
   const handleNextClientsPress = () => {
-    setApiFunction(() => async () => getAllClients(lastVisible))
+    setApiFunction(() => async () => getAllClients(lastVisibleDocument))
   }
   const resetSearchForm = () => {
     setClientData([])
-    setLastVisible(null)
+    setLastVisibleDocument(null)
   }
 
   //variables
