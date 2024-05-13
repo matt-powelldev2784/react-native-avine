@@ -3,7 +3,7 @@ import usePostApiData from '../../../../utils/hooks/usePostApiData'
 import { searchClients } from '../../../../db/clients/searchClients'
 import { DocumentSnapshot } from 'firebase/firestore'
 import { ClientWithIdT } from '../../../../types/ClientT'
-import { getAllClients } from '../../../../db/clients/getAllClients'
+import { getAllClientsLimit } from '../../../../db/clients/getAllClientsLimit'
 import { useClientData } from './useClientData'
 
 interface ClientDataT {
@@ -34,7 +34,9 @@ const useFormikSearch = () => {
     },
     onSubmit: async (values) => {
       formik.values.findAll
-        ? setApiFunction(() => async () => getAllClients(lastVisibleDocument))
+        ? setApiFunction(
+            () => async () => getAllClientsLimit(lastVisibleDocument),
+          )
         : setApiFunction(
             () => async () =>
               searchClients({
