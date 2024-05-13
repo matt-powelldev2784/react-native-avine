@@ -29,7 +29,7 @@ const useFormikSearch = () => {
   const formik = useFormik({
     initialValues: {
       searchTerm: '',
-      searchField: 'Name',
+      searchField: 'name',
       findAll: true,
     },
     onSubmit: async (values) => {
