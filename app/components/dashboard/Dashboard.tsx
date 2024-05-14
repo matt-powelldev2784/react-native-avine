@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   navConatinerSmallScreen: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    gap: 16,
+    gap: 20,
   },
   logoContainerLargeScreen: {
     flexDirection: 'row',

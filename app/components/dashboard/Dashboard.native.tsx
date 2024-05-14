@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   navConatiner: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    gap: 16,
+    gap: 20,
   },
   page: {
     flex: 1,
