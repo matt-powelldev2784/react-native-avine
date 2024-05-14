@@ -1,7 +1,6 @@
 import React from 'react'
-import { Dashboard, ScreenMenu } from '../../components'
+import { Dashboard, ScreenMenu, ClientList } from '../../components'
 import theme from '../../utils/theme/theme'
-import ClientList from '../../components/clients/clientList/ClientList'
 import { FlatList, View } from 'react-native'
 
 const Client = () => {
@@ -22,6 +21,7 @@ const Client = () => {
           style={{
             flex: 1,
             width: '100%',
+            height: '100%',
             backgroundColor: theme.colors.backgroundGrey,
           }}
           data={childrenArray}

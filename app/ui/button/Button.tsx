@@ -12,6 +12,8 @@ interface ButtoMdProps {
   backgroundColor?: string
   text: string
   isLoading?: boolean
+  disabled?: boolean
+  opacity?: number
 }
 
 const Button = ({
@@ -19,6 +21,8 @@ const Button = ({
   backgroundColor,
   text,
   isLoading,
+  disabled,
+  opacity,
 }: ButtoMdProps) => {
   return (
     <TouchableOpacity
@@ -26,8 +30,9 @@ const Button = ({
       style={[
         styles.button,
         backgroundColor ? { backgroundColor: backgroundColor } : null,
+        opacity ? { opacity: opacity } : null,
       ]}
-      disabled={isLoading}
+      disabled={isLoading || disabled}
     >
       {!isLoading ? <Text style={styles.buttonText}>{text}</Text> : null}
 

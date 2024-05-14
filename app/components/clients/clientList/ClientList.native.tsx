@@ -1,9 +1,8 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, FlatList } from 'react-native'
 import React from 'react'
 import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
 import ClientListItem from './clientListItem/ClientListItem'
-import { ClientWithIdT } from '../../../types/ClientT'
 import Button from '../../../ui/button/Button'
 import theme from '../../../utils/theme/theme'
 import useFormikSearch from './hooks/useFormikSearch'
@@ -39,11 +38,6 @@ const ClientList = () => {
 
   //variables
   const clientDataHasLength = clientData.length > 0
-  const ClientCards = clientDataHasLength
-    ? clientData.map((client: ClientWithIdT) => {
-        return <ClientListItem {...client} key={client.id} />
-      })
-    : null
   const allDataReturned = docCount === clientData.length
 
   return (
@@ -83,29 +77,33 @@ const ClientList = () => {
         </View>
       </View>
 
-      <View style={styles.largeWebCards}>
-        {ClientCards}
-
-        {clientDataHasLength ? (
-          <View style={styles.buttonContainer}>
-            <Button
-              onPress={resetSearchForm}
-              text="Reset Search Form"
-              isLoading={false}
-              backgroundColor={theme.colors.buttonSecondary}
-            />
-            <Button
-              onPress={handleMoreResultsPress}
-              text={allDataReturned ? 'No More Results' : 'Next 10 Results'}
-              isLoading={searchApiIsLoading}
-              opacity={allDataReturned ? 0.75 : 1}
-              disabled={allDataReturned}
-            />
-          </View>
-        ) : null}
+      <View style={[styles.cards]}>
+        {clientDataHasLength && (
+          <FlatList
+            style={{ width: '100%', marginBottom: 40 }}
+            data={clientData}
+            renderItem={({ item }) => <ClientListItem {...item} />}
+            keyExtractor={(item) => item.id}
+            ListFooterComponent={
+              <View style={styles.buttonContainer}>
+                <Button
+                  onPress={resetSearchForm}
+                  text="Reset Search Form"
+                  isLoading={false}
+                  backgroundColor={theme.colors.buttonSecondary}
+                />
+                <Button
+                  onPress={handleMoreResultsPress}
+                  text={allDataReturned ? 'No More Results' : 'Next 10 Results'}
+                  isLoading={searchApiIsLoading}
+                  opacity={allDataReturned ? 0.75 : 1}
+                  disabled={allDataReturned}
+                />
+              </View>
+            }
+          />
+        )}
       </View>
-
-      <View style={styles.footer} />
     </View>
   )
 }
@@ -114,13 +112,10 @@ export default ClientList
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyItems: 'center',
     alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: 40,
     width: '100%',
-    height: '100%',
     flex: 1,
     marginTop: 12,
     paddingVertical: 20,
@@ -130,13 +125,14 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 40,
   },
   searchBox: {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    maxWidth: 600,
+    maxWidth: 400,
     minWidth: 300,
     width: '95%',
     height: '100%',
@@ -160,11 +156,11 @@ const styles = StyleSheet.create({
     maxWidth: 600,
     gap: 8,
   },
-  largeWebCards: {
+  cards: {
     flex: 1,
     width: '100%',
-    height: '100%',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   footer: {
     height: 40,

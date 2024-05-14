@@ -1,31 +1,27 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Platform, Image } from 'react-native'
 import React, { useState } from 'react'
-import { useDeviceType } from '../../../../utils/deviceTypes'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
-import { ConfirmModal } from '../../../../ui'
+import { getClient } from '../../../../db/clients/getClient'
+import { ConfirmModal, Loading } from '../../../../ui'
+import useGetApiData from '../../../../utils/hooks/useGetApiData'
 import theme from '../../../../utils/theme/theme'
-import ShortNameText from '../../../../utils/shortNameText/ShortNameText'
-import IconButton from '../../../../ui/iconButton/IconButton'
-import usePostApiData from '../../../../utils/hooks/usePostApiData'
-import { ClientWithIdT } from '../../../../types/ClientT'
+import DataLineItem from '../../../../ui/dataItems/DataLineItem'
+import LongDataItem from '../../../../ui/dataItems/LongDataItem'
 import { deleteClient } from '../../../../db/clients/deleteClient'
+import usePostApiData from '../../../../utils/hooks/usePostApiData'
+import IconButton from '../../../../ui/iconButton/IconButton'
 
-const ClientCard = ({
-  id,
-  name,
-  address,
-  town,
-  postcode,
-  contactTel,
-}: ClientWithIdT) => {
-  // state
+interface ClientCardProps {
+  clientId: string
+}
+
+const ClientCard = ({ clientId }: ClientCardProps) => {
+  //state
   const [modalVisible, setModalVisible] = useState(false)
 
   //hooks
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { isLargeWeb } = useDeviceType()
+  const { getApiIsLoading, data: clientData } = useGetApiData({
+    apiFunction: async () => getClient(clientId),
+  })
   const { postApiIsLoading, setApiFunction } = usePostApiData({
     onSuccessScreen: 'Clients',
     refreshScreen: { refresh: true },
@@ -36,66 +32,59 @@ const ClientCard = ({
     setModalVisible(true)
   }
   const handleConfirmDeleteClientPress = async () => {
-    setApiFunction(() => async () => deleteClient(id))
+    setApiFunction(() => async () => deleteClient(clientId))
   }
-  const handleEditClientPress = () => {
-    navigation.navigate('EditClient', { clientId: id })
+
+  // if data is null show loading state
+  if (getApiIsLoading || !clientData) {
+    return <Loading loadingText={'Loading client details...'} />
   }
 
   return (
-    <View style={isLargeWeb ? styles.cardLargeWeb : styles.cardSmallScreen}>
-      <ShortNameText text={name} />
+    <View style={styles.cardWrapperWeb}>
+      <View style={styles.cardContainer}>
+        {/* --------------------------  Title Conatiner Blue  -------------------------- */}
+        <View style={styles.titleContainer}>
+          <Image
+            source={require('../../../../../assets/person_white.png')}
+            style={{ width: 27, height: 32, margin: 8 }}
+          />
 
-      <View style={styles.leftContainer}>
-        <View>
-          <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-            {name}
+          <Text style={styles.titleText} numberOfLines={1} ellipsizeMode="tail">
+            {clientData.name}
           </Text>
-          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            {address}
-          </Text>
-          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            {town}
-          </Text>
-          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            {postcode}
-          </Text>
+
+          <View style={styles.roundIconsContainer}>
+            <IconButton
+              onPress={handleDeleteClientPress}
+              imgSource={require('../../../../../assets/bin_white.png')}
+              size={35}
+              width={20}
+              height={25}
+            />
+
+            <Text />
+          </View>
         </View>
 
-        <View>
-          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-            {contactTel}
-          </Text>
+        {/* --------------------------  Info Conatiner White  -------------------------- */}
+        <View style={styles.infoWrapper}>
+          <Text style={styles.infoTitle}>Client Details:</Text>
+          <DataLineItem name={'Contact Name'} value={clientData.name} />
+          <DataLineItem name={'Address'} value={clientData.address} />
+          <DataLineItem name={'Town'} value={clientData.town} />
+          <DataLineItem name={'Contact Name'} value={clientData.postcode} />
+          <DataLineItem name={'Address'} value={clientData.contactTel} />
+          <LongDataItem name={'Notes'} value={clientData.notes || ''} />
         </View>
       </View>
 
-      <View style={styles.rightContainer}>
-        <View style={styles.rightText}>
-          <Text
-            style={styles.text}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          ></Text>
-        </View>
+      <View style={{ height: 100 }} />
 
-        <View style={styles.buttons}>
-          <IconButton
-            onPress={handleEditClientPress}
-            imgSource={require('../../../../../assets/pen.png')}
-            size={35}
-          />
-
-          <IconButton
-            onPress={handleDeleteClientPress}
-            imgSource={require('../../../../../assets/bin.png')}
-            size={35}
-          />
-        </View>
-      </View>
-
+      {/* --------------------------------  Confirm Modal --------------------------------- */}
       <ConfirmModal
-        modalText={`Are you sure you want to delete client ${name}?`}
-        modalText2={`${name} will be deleted from view but will still be accessible for previously created jobs and invoices.`}
+        modalText={`Are you sure you want to delete client ${clientData.name}?`}
+        modalText2={`${clientData.name} will be deleted from view but will still be accessible for previously created jobs and invoices.`}
         onConfirm={handleConfirmDeleteClientPress}
         onCancel={() => setModalVisible(false)}
         visible={modalVisible}
@@ -106,66 +95,87 @@ const ClientCard = ({
 }
 
 const styles = StyleSheet.create({
-  cardSmallScreen: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: theme.colors.secondary,
-    borderRadius: 12,
+  cardWrapperWeb: {
+    width: '100%',
+    padding: 12,
+    backgroundColor: theme.colors.backgroundGrey,
+    alignItems: 'center',
+  },
+  cardContainer: {
+    marginTop: 8,
+    width: '100%',
+    maxWidth: 700,
     marginBottom: 8,
+    backgroundColor: 'white',
+    borderRadius: 12,
+    overflow: 'hidden',
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: theme.colors.primary,
-    height: 130,
+  },
+  titleContainer: {
+    padding: 16,
     overflow: 'hidden',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.primary,
     width: '100%',
   },
-  cardLargeWeb: {
+  titleText: {
+    color: theme.colors.secondary,
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  roundIconsContainer: {
+    position: 'absolute',
+    top: 8,
+    paddingHorizontal: 8,
+    overflow: 'hidden',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    width: Platform.OS === 'web' ? '96%' : '100%',
+    height: 40,
+  },
+  dateTextContainer: {
     borderRadius: 12,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: theme.colors.primary,
-    height: 130,
-    overflow: 'hidden',
-    width: '100%',
-    backgroundColor: theme.colors.secondary,
+    backgroundColor: 'white',
+    margin: 8,
   },
-  leftContainer: {
-    flex: 1,
+  dateText: {
+    color: theme.colors.primary,
+    fontSize: 16,
+    fontWeight: 'bold',
+    padding: 8,
+  },
+  switchWrapper: {
     justifyContent: 'space-between',
     flexGrow: 2,
     padding: 8,
+    marginBottom: 16,
+    marginTop: 8,
   },
-  leftInfo: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    flexGrow: 2,
+  line: {
+    height: 1,
+    backgroundColor: theme.colors.primary,
   },
-  rightContainer: {
-    flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'space-between',
-    padding: 8,
-  },
-  rightText: {
-    flex: 1,
-    alignItems: 'flex-end',
-  },
-  title: {
+  infoWrapper: { padding: 8, marginBottom: 24, width: '100%' },
+  infoTitle: {
     fontSize: 20,
     color: theme.colors.primary,
-    marginBottom: 2,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: 16,
+    marginTop: 12,
   },
-  text: {
-    fontSize: 16,
-    color: 'black',
-    marginBottom: 0,
-  },
-  buttons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  warningText: {
+    fontSize: 14,
+    color: theme.colors.primary,
+    textAlign: 'center',
+    marginBottom: 16,
+    marginHorizontal: 8,
   },
 })
 

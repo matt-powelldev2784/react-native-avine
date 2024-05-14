@@ -24,6 +24,6 @@ export const getAllClients = async () => {
 
     return sortedClients
   } catch (error) {
-    throw new Error(`Error getting user jobs at getAllClients route: ${error}`)
+    throw new Error(`Error getting cleints at getAllClients route: ${error}`)
   }
 }

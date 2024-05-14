@@ -5,10 +5,13 @@ import Dashboard from './dashboard/Dashboard'
 import ServerError from './serverError/ServerError'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
+import Welcome from './welcome/Welcome'
 
 //clients
+import ClientCard from './clients/clientList/clientCard/ClientCard'
 import AddClientForm from './clients/addClient/AddClientForm'
 import EditClientForm from './clients/editClient/EditClientForm'
+import ClientList from './clients/clientList/ClientList'
 
 //jobs
 import JobList from './Jobs/jobsList/JobList'
@@ -36,6 +39,8 @@ import PaidInvoiceList from './invoices/invoiceList/PaidInvoiceList'
 //otheres
 
 export {
+  ClientList,
+  ClientCard,
   AddCompanyInfoForm,
   AddClientForm,
   EditClientForm,
@@ -58,4 +63,5 @@ export {
   ServerError,
   SignIn,
   SignOut,
+  Welcome,
 }

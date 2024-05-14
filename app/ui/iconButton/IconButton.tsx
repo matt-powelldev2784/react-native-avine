@@ -5,12 +5,23 @@ interface IconButtonProps {
   onPress: () => void
   imgSource: any
   size: number
+  width?: number
+  height?: number
 }
 
-const IconButton = ({ onPress, imgSource, size }: IconButtonProps) => {
+const IconButton = ({
+  onPress,
+  imgSource,
+  size,
+  width,
+  height,
+}: IconButtonProps) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <Image source={imgSource} style={{ width: size, height: size }} />
+      <Image
+        source={imgSource}
+        style={{ width: width || size, height: height || size }}
+      />
     </TouchableOpacity>
   )
 }

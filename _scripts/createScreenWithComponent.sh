@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Input parameters
-folderName="invoices"
-ScreenName="AddCompanyInfo"
-ComponentName="AddCompanyInfoForm"
-componentFolderName="addCompanyInfoForm"
+folderName="clients"
+ScreenName="ClientCardView"
+ComponentName="ClientCard"
+componentFolderName="clientCard"
 navigateTo="navigateTo"
 buttonText="buttonText"
-screenTitle="Add Company Information"
-importComment="invoices"
+screenTitle="Client Details"
+importComment="clients"
 
 # Create the directory if it doesn't exist
 mkdir -p "./app/screens/$folderName"
