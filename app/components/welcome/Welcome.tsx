@@ -24,7 +24,11 @@ const Welcome = () => {
           application built to make life easy for window cleaning professionals.
         </Text>
 
-        <Text style={styles.primaryText}>To get started:</Text>
+        <Text style={styles.primaryText}>To get started follow steps 1-6.</Text>
+
+        <Text style={styles.tertiaryText}>
+          Navigate back to this home page after each step.
+        </Text>
 
         <View style={styles.instructionWrapper}>
           {/* -------------------- 1. Add Client ---------------------------- */}
@@ -116,10 +120,10 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     maxWidth: 950,
   },
-
   primaryText: {
     fontSize: 24,
     fontWeight: 'bold',
+    textAlign: 'center',
     color: theme.colors.primary,
     marginTop: 16,
   },
@@ -130,6 +134,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginHorizontal: 12,
     maxWidth: 800,
+  },
+  tertiaryText: {
+    fontSize: 16,
+    color: theme.colors.primary,
+    textAlign: 'center',
+    marginHorizontal: 8,
+    maxWidth: 800,
+    marginBottom: 4,
   },
   button: {
     alignItems: 'center',
