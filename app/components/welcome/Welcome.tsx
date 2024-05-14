@@ -20,15 +20,19 @@ const Welcome = () => {
         </Text>
 
         <Text style={styles.secondaryText}>
-          Welcome to PlanMe. A intuitive database, planner and invoicing
+          Welcome to PlanMe. An intuitive database, planner and invoicing
           application built to make life easy for window cleaning professionals.
         </Text>
 
-        <Text style={styles.primaryText}>To get started follow steps 1-6.</Text>
+        <View style={styles.instructions}>
+          <Text style={styles.primaryText}>
+            To get started follow steps 1-6.
+          </Text>
 
-        <Text style={styles.tertiaryText}>
-          Navigate back to this home page after each step.
-        </Text>
+          <Text style={styles.tertiaryText}>
+            Navigate back to this home page after each step.
+          </Text>
+        </View>
 
         <View style={styles.instructionWrapper}>
           {/* -------------------- 1. Add Client ---------------------------- */}
@@ -110,6 +114,11 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     margin: 4,
   },
+  instructions: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 16,
+  },
   instructionWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -136,7 +145,7 @@ const styles = StyleSheet.create({
     maxWidth: 800,
   },
   tertiaryText: {
-    fontSize: 16,
+    fontSize: 15,
     color: theme.colors.primary,
     textAlign: 'center',
     marginHorizontal: 8,
