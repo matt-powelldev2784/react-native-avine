@@ -21,12 +21,27 @@ const Dashboard = ({ children }: DashboardProps) => {
       <View style={styles.headerNative}>
         <PlanMeLogo width={175} height={45} />
 
-        <TouchableOpacity onPress={() => navigation.navigate('SignOut')}>
-          <Image
-            source={require('../../../assets/settings.png')}
-            style={{ width: 25, height: 25 }}
-          />
-        </TouchableOpacity>
+        <View style={styles.navConatiner}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('Home')}
+          >
+            <Image
+              source={require('../../../assets/home.png')}
+              style={{ width: 25, height: 25 }}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('SignOut')}
+          >
+            <Image
+              source={require('../../../assets/settings.png')}
+              style={{ width: 25, height: 25 }}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* -------------------------- Children for Main View --------------------------  */}
@@ -53,6 +68,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
+  },
+  navConatiner: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: 16,
   },
   page: {
     flex: 1,

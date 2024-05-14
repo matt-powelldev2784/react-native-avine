@@ -18,7 +18,7 @@ const NavBar = () => {
       alignItems: 'center',
       justifyContent: 'space-around',
       backgroundColor: theme.colors.primary,
-      gap: isLargeWeb ? 20 : 0,
+      gap: isLargeWeb ? 18 : 0,
       paddingTop: 8,
       paddingBottom: 6,
       width: isLargeWeb ? 'auto' : '100%',
@@ -38,6 +38,16 @@ const NavBar = () => {
 
   return (
     <SafeAreaView edges={['right', 'bottom', 'left']} style={styles.nav}>
+      {isLargeWeb && (
+        <>
+          <NavBarItem
+            buttonText="Home"
+            imageSource={require('../../../../../assets/home.png')}
+            routeFunction={routeFunctions.home}
+          />
+        </>
+      )}
+
       <NavBarItem
         buttonText="Clients"
         imageSource={require('../../../../../assets/customers.png')}
