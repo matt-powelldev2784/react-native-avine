@@ -13,6 +13,7 @@ import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
 import { ClientWithIdT } from '../../types/ClientT'
 import { DocumentSnapshot } from 'firebase/firestore'
+import { splitStringToLowerCaseArray } from '../../utils/splitStringToLowerCaseArray'
 
 interface SearchClientsT {
   searchField: string
@@ -29,19 +30,18 @@ export const searchClients = async ({
     return authError({ filename: 'searchClients' })
   }
 
-  console.log('searchTerm', searchTerm)
-  console.log('searchField', searchField)
 
   try {
     const userDoc = doc(db, 'users', auth.currentUser.uid)
     const clientsCollection = collection(userDoc, 'clients')
+    const searchTerms = splitStringToLowerCaseArray(searchTerm)
 
     //get clients data
     let q
     if (lastVisible) {
       q = query(
         clientsCollection,
-        where(searchField, '==', searchTerm),
+        where(searchField, 'array-contains-any', searchTerms),
         where('isDeleted', '!=', true),
         orderBy('name'),
         startAfter(lastVisible),
@@ -50,7 +50,7 @@ export const searchClients = async ({
     } else {
       q = query(
         clientsCollection,
-        where(searchField, '==', searchTerm),
+        where(searchField, 'array-contains-any', searchTerms),
         where('isDeleted', '!=', true),
         orderBy('name'),
         limit(10),
@@ -69,7 +69,7 @@ export const searchClients = async ({
     // get document count
     const countQuery = query(
       clientsCollection,
-      where(searchField, '==', searchTerm),
+      where(searchField, 'array-contains-any', searchTerms),
       where('isDeleted', '!=', true),
       orderBy('name'),
     )

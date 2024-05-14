@@ -2,6 +2,7 @@ import { doc, setDoc, collection, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { ClientT } from '../../types/ClientT'
 import { authError } from '../authError'
+import { splitStringToLowerCaseArray } from '../../utils/splitStringToLowerCaseArray'
 
 export const addClient = async (clientInfo: ClientT) => {
   if (!auth.currentUser) {
@@ -22,10 +23,10 @@ export const addClient = async (clientInfo: ClientT) => {
       contactTel: clientInfo.contactTel,
       notes: clientInfo.notes,
       isDeleted: false,
-      _searchName: clientInfo.name.toLowerCase(),
-      _searchAddress: clientInfo.address.toLowerCase(),
-      _searchTown: clientInfo.town.toLowerCase(),
-      _searchPostcode: clientInfo.postcode.toLowerCase(),
+      _searchName: splitStringToLowerCaseArray(clientInfo.name),
+      _searchAddress: splitStringToLowerCaseArray(clientInfo.address),
+      _searchTown: splitStringToLowerCaseArray(clientInfo.town),
+      _searchPostcode: splitStringToLowerCaseArray(clientInfo.postcode),
     })
     const client = await getDoc(clientDoc)
 
