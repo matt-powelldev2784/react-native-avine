@@ -68,7 +68,7 @@ const Welcome = () => {
             text="Set Job To Complete"
             secondaryText="Click here to go to the planner. Click on a job in the planner and set to complete."
             navigateTo="Planner"
-            backgroundColor={theme.colors.plannerPrimary}
+            backgroundColor={theme.colors.primary}
           />
           {/* -------------------- 5. Invoice Job ---------------------------- */}
           <InstructionBox
