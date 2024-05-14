@@ -20,8 +20,8 @@ const Welcome = () => {
         </Text>
 
         <Text style={styles.secondaryText}>
-          Welcome to PlanMe. A free database, planner and invoicing application
-          built to make life easy for window cleaning professionals.
+          Welcome to PlanMe. A intuitive database, planner and invoicing
+          application built to make life easy for window cleaning professionals.
         </Text>
 
         <Text style={styles.primaryText}>To get started:</Text>
