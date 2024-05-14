@@ -5,6 +5,7 @@ import Dashboard from './dashboard/Dashboard'
 import ServerError from './serverError/ServerError'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
+import Welcome from './welcome/Welcome'
 
 //clients
 import ClientCard from './clients/clientList/clientCard/ClientCard'
@@ -62,4 +63,5 @@ export {
   ServerError,
   SignIn,
   SignOut,
+  Welcome,
 }

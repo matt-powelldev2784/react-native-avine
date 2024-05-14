@@ -78,8 +78,8 @@ const StackNavigator = () => {
       {userInfo ? (
         <>
           {/* --------------------------  Misc Screens  -------------------------- */}
-          <Stack.Screen name="Error" component={Error} />
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Error" component={Error} />
 
           {/* --------------------------  Client Screens  ---------------------- */}
           <Stack.Screen name="Clients" component={Clients} />
