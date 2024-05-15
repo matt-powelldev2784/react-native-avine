@@ -11,12 +11,12 @@ const ClientMenuScreen = () => {
   return (
     <>
       <Dashboard>
-        <ScreenMenu
-          title={'Clients'}
+        {/* <ScreenMenu
+          title={'Client Database'}
           navigateTo={'AddClient'}
           buttonText="Add Client"
           bgColor={theme.colors.clientPrimary}
-        />
+        /> */}
         <FlatList
           style={{
             flex: 1,
