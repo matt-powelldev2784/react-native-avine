@@ -12,6 +12,7 @@ import ClientCard from './clients/clientList/clientCard/ClientCard'
 import AddClientForm from './clients/addClient/AddClientForm'
 import EditClientForm from './clients/editClient/EditClientForm'
 import ClientList from './clients/clientList/ClientList'
+import ClientsMenu from './clients/clientMenu/ClientsMenu'
 
 //jobs
 import JobList from './Jobs/jobsList/JobList'
@@ -39,6 +40,7 @@ import PaidInvoiceList from './invoices/invoiceList/PaidInvoiceList'
 //otheres
 
 export {
+  ClientsMenu,
   ClientList,
   ClientCard,
   AddCompanyInfoForm,
