@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   titleText: {
-    color: theme.colors.secondary,
+    color: theme.colors.white,
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,

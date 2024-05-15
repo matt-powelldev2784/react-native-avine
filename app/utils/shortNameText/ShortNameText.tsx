@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
   },
   jobShortNameText: {
-    color: theme.colors.secondary,
+    color: theme.colors.white,
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',

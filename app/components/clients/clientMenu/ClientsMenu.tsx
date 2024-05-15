@@ -46,7 +46,7 @@ const ClientsMenu = () => {
                 fontSize: 34,
               }}
             >
-              Client{' '}
+              Add client or search client{' '}
               <span style={{ color: theme.colors.secondary }}>Database</span>
             </Text>
           </View>
@@ -64,7 +64,7 @@ const ClientsMenu = () => {
         {/* -------------------- 1. Add Client ---------------------------- */}
         <InstructionBox
           number="2"
-          text="View Clients"
+          text="Search Clients"
           secondaryText="Click here to add a client. Every job requires a client for invoicing purposes."
           navigateTo="AddClient"
           backgroundColor={theme.colors.primary}

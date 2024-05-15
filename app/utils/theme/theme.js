@@ -1,7 +1,8 @@
 const theme = {
   colors: {
     primary: '#337bae',
-    secondary: 'white',
+    secondary: '#ffd600',
+    white: 'white',
     backgroundGrey: '#EEEEEE',
     buttonSecondary: '#8c8c8c',
     formFlowSecondary: '#f1f2f2',

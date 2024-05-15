@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     height: 40,
   },
   roundTimeText: {
-    color: theme.colors.secondary,
+    color: theme.colors.white,
     borderRaadiusBottomLeft: 20,
     borderRadiusBottomRight: 12,
     fontSize: 10,
