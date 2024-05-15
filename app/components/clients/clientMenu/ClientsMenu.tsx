@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import theme from '../../../utils/theme/theme'
 import { useDeviceType } from '../../../utils/deviceTypes'
@@ -6,6 +6,7 @@ import MenuCard from './components/MenuCard'
 
 const ClientsMenu = () => {
   const { isLargeWeb } = useDeviceType()
+  const menuCardContainerMargin = isLargeWeb ? { marginTop: 50 } : null
 
   return (
     <View style={styles.container}>
@@ -16,31 +17,34 @@ const ClientsMenu = () => {
             source={require('../../../../assets/clients.jpg')}
             style={{ width: '100%', height: 400, marginBottom: 8 }}
           />
-          <View style={styles.headerTextContainer}>
-            <Text style={styles.headerText}>
-              Add client or search client{' '}
-              <span style={{ color: theme.colors.secondary }}>Database</span>
-            </Text>
-          </View>
+        </View>
+      ) : null}
+
+      {!isLargeWeb ? (
+        <View style={styles.headerContainerSmall}>
+          <Image
+            source={require('../../../../assets/clients.jpg')}
+            style={{ width: '100%', height: 100, marginBottom: 8 }}
+          />
         </View>
       ) : null}
 
       {/* -------------------- Menu Cards ---------------------------- */}
-      <View style={styles.menuCardContainer}>
+      <View style={[styles.menuCardContainer, menuCardContainerMargin]}>
         <MenuCard
-          number="1"
+          image={require('../../../../assets/plus.png')}
           text="Add Client"
           secondaryText="Click here to add a client. Every job requires a client for invoicing purposes."
           navigateTo="AddClient"
-          backgroundColor={theme.colors.primary}
+          backgroundColor={theme.colors.clientPrimary}
         />
 
         <MenuCard
-          number="2"
+          image={require('../../../../assets/search_white.png')}
           text="Search Clients"
-          secondaryText="Click here to add a client. Every job requires a client for invoicing purposes."
-          navigateTo="AddClient"
-          backgroundColor={theme.colors.primary}
+          secondaryText="Click here to search the client database and view existing client details."
+          navigateTo="Clients"
+          backgroundColor={theme.colors.clientPrimary}
         />
       </View>
 
@@ -57,7 +61,6 @@ const styles = StyleSheet.create({
     justifyItems: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
-    gap: 40,
     width: '100%',
     height: '100%',
     flex: 1,
@@ -72,21 +75,15 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
-  headerText: {
-    textAlign: 'center',
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 34,
-  },
-  headerTextContainer: {
-    position: 'absolute',
-    height: 60,
-    transform: [{ translateY: 170 }],
-    maxWidth: '80%',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+  headerContainerSmall: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 40,
+    width: '100%',
+    height: 100,
     borderRadius: 12,
-    paddingTop: 8,
-    paddingHorizontal: 16,
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   menuCardContainer: {
     flexDirection: 'row',
@@ -94,10 +91,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
     gap: 16,
-    marginTop: 8,
+    marginTop: 20,
     marginBottom: 50,
     width: '100%',
     maxWidth: 950,
+    paddingHorizontal: 16,
   },
   footer: {
     height: 40,

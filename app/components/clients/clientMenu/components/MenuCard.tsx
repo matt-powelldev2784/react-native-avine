@@ -1,11 +1,17 @@
-import { Text, TouchableOpacity, StyleSheet } from 'react-native'
+import {
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  ImageSourcePropType,
+} from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 
 interface InstructionBoxProps {
-  number: string
+  image: ImageSourcePropType
   text: string
   secondaryText: string
   navigateTo: keyof RootStackParamList
@@ -13,7 +19,7 @@ interface InstructionBoxProps {
 }
 
 const MenuCard = ({
-  number,
+  image,
   text,
   secondaryText,
   navigateTo,
@@ -28,7 +34,8 @@ const MenuCard = ({
       onPress={() => navigation.navigate(navigateTo)}
       style={[styles.instructionConatiner, backgroundStyle]}
     >
-      <Text style={styles.instructionNumber}>{number}</Text>
+      <Image source={image} style={{ width: 30, height: 30 }} />
+
       <Text style={styles.primaryText}>{text}</Text>
       <Text style={styles.secondaryText}>{secondaryText}</Text>
     </TouchableOpacity>
@@ -62,7 +69,7 @@ const styles = StyleSheet.create({
     height: 25,
   },
   secondaryText: {
-    fontSize: 14,
+    fontSize: 16,
     color: 'white',
     textAlign: 'center',
   },
