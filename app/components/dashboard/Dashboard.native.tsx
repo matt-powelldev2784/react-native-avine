@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     paddingTop: 0,
-    color: theme.colors.secondary,
+    color: theme.colors.white,
   },
 })
 

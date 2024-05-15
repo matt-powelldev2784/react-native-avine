@@ -7,11 +7,11 @@ import Home from './home/Home'
 import Error from './error/Error'
 
 //clients
+import ClientMenuScreen from './clients/ClientMenuScreen'
 import ClientCardView from './clients/ClientCardView'
 import Clients from './clients/Clients'
 import AddClient from './clients/AddClient'
 import EditClient from './clients/EditClient'
-
 
 //jobs
 import Jobs from './jobs/Jobs'
@@ -34,6 +34,7 @@ import InvoiceCardView from './invoices/InvoiceCardView'
 import EditInvoice from './invoices/EditInvoice'
 
 export {
+  ClientMenuScreen,
   ClientCardView,
   AddCompanyInfo,
   Clients,

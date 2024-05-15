@@ -21,6 +21,7 @@ import {
   AddClient,
   EditClient,
   ClientCardView,
+  ClientMenuScreen,
 } from '../../screens'
 import { useAuth } from '../../components/auth/AuthProvider'
 
@@ -37,6 +38,7 @@ export type RootStackParamList = {
   //clients
   Clients: { refresh?: boolean } | undefined
   AddClient: undefined
+  ClientMenu: undefined
   EditClient: { clientId: string } | undefined
   ClientCardView: { clientId: string } | undefined
 
@@ -82,6 +84,7 @@ const StackNavigator = () => {
           <Stack.Screen name="Error" component={Error} />
 
           {/* --------------------------  Client Screens  ---------------------- */}
+          <Stack.Screen name="ClientMenu" component={ClientMenuScreen} />
           <Stack.Screen name="Clients" component={Clients} />
           <Stack.Screen name="AddClient" component={AddClient} />
           <Stack.Screen name="EditClient" component={EditClient} />

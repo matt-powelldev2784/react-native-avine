@@ -7,7 +7,7 @@ const useNavigationRouteFunctions = () => {
 
   const routeFunctions = {
     home: () => navigation.navigate('Home'),
-    clientsNaviagtion: () => navigation.navigate('Clients', { refresh: true }),
+    clientsNaviagtion: () => navigation.navigate('ClientMenu'),
     jobsNaviagtion: () => navigation.navigate('Jobs', { refresh: true }),
     roundsNavigation: () => navigation.navigate('Rounds', { refresh: true }),
     plannerNavigation: () =>

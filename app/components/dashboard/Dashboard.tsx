@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     paddingTop: Platform.OS !== 'web' ? 2 : 0,
-    color: theme.colors.secondary,
+    color: theme.colors.white,
   },
 })
 

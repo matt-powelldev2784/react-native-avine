@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   cardSmallScreen: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: theme.colors.secondary,
+    backgroundColor: theme.colors.white,
     borderRadius: 12,
     marginBottom: 8,
     borderWidth: 1,
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     height: 130,
     overflow: 'hidden',
     width: '100%',
-    backgroundColor: theme.colors.secondary,
+    backgroundColor: theme.colors.white,
   },
   jobShortNameContainer: {
     flexDirection: 'column',
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
   },
   jobShortNameText: {
-    color: theme.colors.secondary,
+    color: theme.colors.white,
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',

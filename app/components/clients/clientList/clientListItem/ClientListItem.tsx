@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: theme.colors.secondary,
+    backgroundColor: theme.colors.white,
     borderRadius: 12,
     marginBottom: 8,
     borderWidth: 1,
