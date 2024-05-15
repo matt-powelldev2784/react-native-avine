@@ -79,16 +79,16 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
+          {/* --------------------------  Misc Screens  -------------------------- */}
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Error" component={Error} />
+
           {/* --------------------------  Client Screens  ---------------------- */}
           <Stack.Screen name="ClientMenu" component={ClientMenuScreen} />
           <Stack.Screen name="Clients" component={Clients} />
           <Stack.Screen name="AddClient" component={AddClient} />
           <Stack.Screen name="EditClient" component={EditClient} />
           <Stack.Screen name="ClientCardView" component={ClientCardView} />
-
-          {/* --------------------------  Misc Screens  -------------------------- */}
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Error" component={Error} />
 
           {/* --------------------------  Invoice Screens  -------------------------- */}
           <Stack.Screen name="DueInvoices" component={DueInvoices} />
