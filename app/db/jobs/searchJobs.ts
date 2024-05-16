@@ -51,7 +51,7 @@ export const searchJobs = async ({
         jobsCollection,
         where(searchField, 'array-contains-any', searchTerms),
         where('isDeleted', '!=', true),
-        orderBy('name'),
+        orderBy('jobName'),
         limit(10),
       )
     }
@@ -70,7 +70,7 @@ export const searchJobs = async ({
       jobsCollection,
       where(searchField, 'array-contains-any', searchTerms),
       where('isDeleted', '!=', true),
-      orderBy('name'),
+      orderBy('jobName'),
     )
     const snapshot = await getCountFromServer(countQuery)
     const count = snapshot.data().count
