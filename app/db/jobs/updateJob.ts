@@ -2,6 +2,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { JobWithIdT } from '../../types/JobT'
 import { authError } from '../authError'
+import { splitStringToLowerCaseArray } from '../../utils/splitStringToLowerCaseArray'
 
 export const updateJob = async (jobData: JobWithIdT) => {
   if (auth.currentUser === null) {
@@ -25,6 +26,16 @@ export const updateJob = async (jobData: JobWithIdT) => {
       notes: jobData.notes,
       clientId: jobData.clientId,
       isDeleted: jobData.isDeleted,
+      _searchjobName: splitStringToLowerCaseArray(jobData.jobName),
+      _searchaddress: splitStringToLowerCaseArray(jobData.address),
+      _searchtown: splitStringToLowerCaseArray(jobData.town),
+      _searchpostcode: splitStringToLowerCaseArray(jobData.postcode),
+      _searchjobType: splitStringToLowerCaseArray(jobData.jobType),
+      _searchtime: splitStringToLowerCaseArray(jobData.time),
+      _searchprice: splitStringToLowerCaseArray(jobData.address),
+      _searchfrequency: splitStringToLowerCaseArray(jobData.frequency),
+      _searchcontactName: splitStringToLowerCaseArray(jobData.contactName),
+      _searchcontactTel: splitStringToLowerCaseArray(jobData.contactTel.toString()),
     })
 
     const updatedJob = await getDoc(jobDocRef)
