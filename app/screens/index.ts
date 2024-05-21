@@ -17,6 +17,7 @@ import EditClient from './clients/EditClient'
 import Jobs from './jobs/Jobs'
 import AddJob from './jobs/AddJob'
 import EditJob from './jobs/EditJob'
+import JobCardView from './jobs/JobCardView'
 
 //planner
 import Planner from './planner/Planner'
@@ -43,6 +44,7 @@ export {
   Jobs,
   AddJob,
   EditJob,
+  JobCardView,
   Rounds,
   AddRound,
   EditRound,

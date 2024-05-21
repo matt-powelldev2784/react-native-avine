@@ -15,7 +15,7 @@ const JobListItem = ({ id, jobName, contactTel }: JobWithIdT) => {
     navigation.navigate('EditJob', { jobId: id })
   }
   const handleViewClientPress = () => {
-    navigation.navigate('ClientCardView', { clientId: id })
+    navigation.navigate('JobCardView', { jobId: id })
   }
 
   return (
