@@ -8,6 +8,7 @@ import useFormikSearch from './hooks/useFormikSearch'
 import JobListItem from './components/JobListItem'
 
 const ClientList = () => {
+  //hooks
   const {
     searchApiIsLoading,
     formik,

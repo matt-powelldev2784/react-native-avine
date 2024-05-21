@@ -9,6 +9,7 @@ import useFormikSearch from './hooks/useFormikSearch'
 import { JobWithIdT } from '../../../types/JobT'
 
 const JobList = () => {
+  //hooks
   const {
     searchApiIsLoading,
     formik,
