@@ -36,7 +36,7 @@ const JobsMenu = () => {
           text="Add Job"
           secondaryText="Click here to add a job. Following this you should add the job to a round which can be added to the planner."
           navigateTo="AddJob"
-          backgroundColor={theme.colors.clientPrimary}
+          backgroundColor={theme.colors.jobPrimary}
         />
 
         <MenuCard
@@ -44,7 +44,7 @@ const JobsMenu = () => {
           text="Search Jobs"
           secondaryText="Click here to search the job database and view existing job details."
           navigateTo="Jobs"
-          backgroundColor={theme.colors.clientPrimary}
+          backgroundColor={theme.colors.jobPrimary}
         />
       </View>
 

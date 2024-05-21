@@ -11,10 +11,7 @@ const JobMenuScreen = () => {
   return (
     <>
       <Dashboard>
-        <ScreenMenu
-          title={'Job Database'}
-          bgColor={theme.colors.clientPrimary}
-        />
+        <ScreenMenu title={'Job Database'} bgColor={theme.colors.jobPrimary} />
         <FlatList
           style={{
             flex: 1,
