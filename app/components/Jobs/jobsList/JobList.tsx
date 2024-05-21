@@ -8,9 +8,14 @@ import theme from '../../../utils/theme/theme'
 import useFormikSearch from './hooks/useFormikSearch'
 import { JobWithIdT } from '../../../types/JobT'
 import NoDataFound from './components/NoDataFound'
+import useResetSearchOnFocus from './hooks/useResetSearchOnFocus'
 
 const JobList = () => {
   //hooks
+  useResetSearchOnFocus(() => {
+    setJobData([])
+    setLastVisibleDocument(null)
+  })
   const {
     searchApiIsLoading,
     formik,
