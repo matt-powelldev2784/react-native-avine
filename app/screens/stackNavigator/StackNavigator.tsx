@@ -23,6 +23,7 @@ import {
   ClientCardView,
   ClientMenuScreen,
   JobCardView,
+  JobMenuScreen,
 } from '../../screens'
 import { useAuth } from '../../components/auth/AuthProvider'
 
@@ -64,6 +65,7 @@ export type RootStackParamList = {
   AddCompanyInfo: undefined
 
   //jobs
+  JobsMenu: undefined
   Jobs: { refresh?: boolean } | undefined
   AddJob: undefined
   EditJob: { jobId: string } | undefined
@@ -82,6 +84,7 @@ const StackNavigator = () => {
       {userInfo ? (
         <>
           {/* --------------------------  Job Screens  ---------------------- */}
+          <Stack.Screen name="JobsMenu" component={JobMenuScreen} />
           <Stack.Screen name="Jobs" component={Jobs} />
           <Stack.Screen name="AddJob" component={AddJob} />
           <Stack.Screen name="EditJob" component={EditJob} />

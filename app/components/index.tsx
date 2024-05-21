@@ -15,6 +15,7 @@ import ClientList from './clients/clientList/ClientList'
 import ClientsMenu from './clients/clientMenu/ClientsMenu'
 
 //jobs
+import JobsMenu from './Jobs/jobMenu/JobsMenu'
 import JobList from './Jobs/jobsList/JobList'
 import AddJobForm from './Jobs/addJob/AddJobForm'
 import EditJobForm from './Jobs/editJob/EditJobForm'
@@ -47,6 +48,7 @@ export {
   AddCompanyInfoForm,
   AddClientForm,
   EditClientForm,
+  JobsMenu,
   JobList,
   AddJobForm,
   EditJobForm,

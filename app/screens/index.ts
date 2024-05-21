@@ -14,6 +14,7 @@ import AddClient from './clients/AddClient'
 import EditClient from './clients/EditClient'
 
 //jobs
+import JobMenuScreen from './jobs/JobMenuScreen'
 import Jobs from './jobs/Jobs'
 import AddJob from './jobs/AddJob'
 import EditJob from './jobs/EditJob'
@@ -41,6 +42,7 @@ export {
   Clients,
   AddClient,
   EditClient,
+  JobMenuScreen,
   Jobs,
   AddJob,
   EditJob,
