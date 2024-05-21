@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { View, Text, StyleSheet, FlatList, Image } from 'react-native'
 import React from 'react'
 import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
@@ -46,7 +46,14 @@ const ClientList = () => {
     <View style={styles.container}>
       <View style={styles.searchContainer}>
         <View style={styles.searchBox}>
-          <Text style={styles.searchTitle}>Search Jobs</Text>
+          <View style={styles.searchTitleContainer}>
+            <Image
+              source={require('../../../../assets/search.png')}
+              style={{ width: 30, height: 30, position: 'relative' }}
+            />
+            <Text style={styles.searchTitle}>Search Jobs</Text>
+          </View>
+
           <Dropdown
             formik={formik}
             name="searchField"
@@ -60,7 +67,7 @@ const ClientList = () => {
               { label: 'Town', value: '_searchTown' },
               { label: 'Address', value: '_searchAddress' },
             ]}
-            imageName={'search'}
+            imageName={'notes'}
           />
           <InputField
             formik={formik}
@@ -129,7 +136,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     marginTop: 12,
-    paddingVertical: 20,
+    paddingVertical: 8,
     paddingHorizontal: 12,
   },
   searchContainer: {
@@ -149,13 +156,21 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: theme.colors.backgroundGrey,
   },
+  searchTitleContainer: {
+    width: 150,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
+    marginBottom: 30,
+  },
   searchTitle: {
     color: theme.colors.primary,
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 32,
     width: '100%',
     textAlign: 'center',
+    paddingTop: 1,
   },
   buttonContainer: {
     display: 'flex',
