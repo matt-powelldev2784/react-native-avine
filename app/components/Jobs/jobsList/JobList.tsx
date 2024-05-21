@@ -7,6 +7,7 @@ import Button from '../../../ui/button/Button'
 import theme from '../../../utils/theme/theme'
 import useFormikSearch from './hooks/useFormikSearch'
 import { JobWithIdT } from '../../../types/JobT'
+import NoDataFound from './components/NoDataFound'
 
 const JobList = () => {
   //hooks
@@ -93,6 +94,8 @@ const JobList = () => {
 
       <View style={styles.largeWebCards}>
         {jobCards}
+
+        {docCount === 0 ? <NoDataFound /> : null}
 
         {jobDataHasLength ? (
           <View style={styles.buttonContainer}>

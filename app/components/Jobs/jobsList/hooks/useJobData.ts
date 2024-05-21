@@ -27,10 +27,11 @@ export const useJobData = (data: any): JobDataT => {
       const jobs = data.jobs as JobWithIdT[]
       setJobData((prev) => [...prev, ...jobs])
     }
-    if (data?.count) {
+    if (data?.count >= 0) {
       setDocCount(data.count)
     }
   }, [data])
+
 
   return {
     jobData,

@@ -6,6 +6,7 @@ import Button from '../../../ui/button/Button'
 import theme from '../../../utils/theme/theme'
 import useFormikSearch from './hooks/useFormikSearch'
 import JobListItem from './components/JobListItem'
+import NoDataFound from './components/NoDataFound'
 
 const ClientList = () => {
   //hooks
@@ -111,6 +112,8 @@ const ClientList = () => {
             }
           />
         )}
+
+        {docCount === 0 ? <NoDataFound /> : null}
       </View>
     </View>
   )
