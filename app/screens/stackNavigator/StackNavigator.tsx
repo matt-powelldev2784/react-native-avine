@@ -84,8 +84,8 @@ const StackNavigator = () => {
       {userInfo ? (
         <>
           {/* --------------------------  Job Screens  ---------------------- */}
-          <Stack.Screen name="JobsMenu" component={JobMenuScreen} />
           <Stack.Screen name="Jobs" component={Jobs} />
+          <Stack.Screen name="JobsMenu" component={JobMenuScreen} />
           <Stack.Screen name="AddJob" component={AddJob} />
           <Stack.Screen name="EditJob" component={EditJob} />
           <Stack.Screen name="JobCardView" component={JobCardView} />

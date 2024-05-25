@@ -12,7 +12,7 @@ const Jobs = () => {
     <>
       <Dashboard>
         <ScreenMenu
-          title={'Job List'}
+          title={'Job Database'}
           navigateTo={'AddJob'}
           buttonText="Add Job"
           bgColor={theme.colors.jobPrimary}
@@ -22,7 +22,7 @@ const Jobs = () => {
           style={{
             flex: 1,
             width: '100%',
-            backgroundColor: theme.colors.backgroundGrey,
+            backgroundColor: theme.colors.tertiaryBlue,
           }}
           data={childrenArray}
           renderItem={({ item }) => <View>{item}</View>}
