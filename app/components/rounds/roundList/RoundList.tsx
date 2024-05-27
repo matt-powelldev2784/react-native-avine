@@ -256,6 +256,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: '100%',
     maxWidth: 600,
+    paddingHorizontal: 10,
     gap: 8,
     zIndex: -1,
   },
