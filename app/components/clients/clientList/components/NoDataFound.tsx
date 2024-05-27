@@ -11,10 +11,10 @@ const NoDataFound = () => {
           style={{ width: 47, height: 48, marginBottom: 4 }}
         />
 
-        <Text style={styles.primaryText}>No Jobs Found!</Text>
+        <Text style={styles.primaryText}>No Clients Found!</Text>
         <Text style={styles.secondaryText}>
           Please try a different search or click the find all clients button to
-          view all jobs.
+          view all clients.
         </Text>
       </View>
     </View>
@@ -23,12 +23,12 @@ const NoDataFound = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'flex-start',
     width: '100%',
     height: '100%',
     overflow: 'hidden',
+    marginTop: 12,
   },
   flexContainer: {
     alignItems: 'center',

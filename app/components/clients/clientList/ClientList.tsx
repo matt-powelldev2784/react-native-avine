@@ -9,14 +9,14 @@ import {
 import React, { useState } from 'react'
 import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
-import ClientListItem from './clientListItem/ClientListItem'
+import ClientListItem from './components/ClientListItem'
 import { ClientWithIdT } from '../../../types/ClientT'
 import Button from '../../../ui/button/Button'
 import theme from '../../../utils/theme/theme'
 import useFormikSearch from './hooks/useFormikSearch'
 import { useDeviceType } from '../../../utils/deviceTypes'
 import useResetSearchOnFocus from '../../../utils/hooks/useResetSearchOnFocus'
-import NoDataFound from './components/noDataFound'
+import NoDataFound from './components/NoDataFound'
 
 const ClientList = () => {
   //state

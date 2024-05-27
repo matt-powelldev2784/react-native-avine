@@ -8,7 +8,7 @@ import SignOut from './auth/components/SignOut'
 import Welcome from './welcome/Welcome'
 
 //clients
-import ClientCard from './clients/clientList/clientCard/ClientCard'
+import ClientCard from './clients/clientList/components/ClientCard'
 import AddClientForm from './clients/addClient/AddClientForm'
 import EditClientForm from './clients/editClient/EditClientForm'
 import ClientList from './clients/clientList/ClientList'
