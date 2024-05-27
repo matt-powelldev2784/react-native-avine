@@ -15,7 +15,7 @@ import theme from '../../../utils/theme/theme'
 import useFormikSearch from './hooks/useFormikSearch'
 import { JobWithIdT } from '../../../types/JobT'
 import NoDataFound from './components/NoDataFound'
-import useResetSearchOnFocus from './hooks/useResetSearchOnFocus'
+import useResetSearchOnFocus from '../../../utils/hooks/useResetSearchOnFocus'
 import { useDeviceType } from '../../../utils/deviceTypes'
 
 const JobList = () => {
