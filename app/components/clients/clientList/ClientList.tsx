@@ -1,5 +1,12 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ViewStyle,
+  Image,
+} from 'react-native'
+import React, { useState } from 'react'
 import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
 import ClientListItem from './clientListItem/ClientListItem'
@@ -7,8 +14,21 @@ import { ClientWithIdT } from '../../../types/ClientT'
 import Button from '../../../ui/button/Button'
 import theme from '../../../utils/theme/theme'
 import useFormikSearch from './hooks/useFormikSearch'
+import { useDeviceType } from '../../../utils/deviceTypes'
+import useResetSearchOnFocus from '../../../utils/hooks/useResetSearchOnFocus'
+import NoDataFound from './components/noDataFound'
 
 const ClientList = () => {
+  //state
+  const [searchIsActive, setSearchIsActive] = useState<boolean>(false)
+
+  //hooks
+  const { isLargeWeb } = useDeviceType()
+  useResetSearchOnFocus(() => {
+    setClientData([])
+    setLastVisibleDocument(null)
+    setSearchIsActive(false)
+  })
   const {
     searchApiIsLoading,
     formik,
@@ -23,11 +43,13 @@ const ClientList = () => {
     formik.setFieldValue('findAll', true)
     resetSearchForm()
     formik.handleSubmit()
+    setSearchIsActive(true)
   }
   const handleSearchPress = async () => {
     formik.setFieldValue('findAll', false)
     resetSearchForm()
     formik.handleSubmit()
+    setSearchIsActive(true)
   }
   const handleMoreResultsPress = async () => {
     formik.handleSubmit()
@@ -35,6 +57,7 @@ const ClientList = () => {
   const resetSearchForm = () => {
     setClientData([])
     setLastVisibleDocument(null)
+    setSearchIsActive(false)
   }
 
   //variables
@@ -46,18 +69,49 @@ const ClientList = () => {
     : null
   const allDataReturned = docCount === clientData.length
 
+  //styles
+  const deviceHeight =
+    searchIsActive && !isLargeWeb ? 350 : Dimensions.get('window').height - 95
+  const containerStyle: ViewStyle = !isLargeWeb
+    ? { flexDirection: 'column' }
+    : { flexDirection: 'row' }
+  const searchContainerStyle: ViewStyle = isLargeWeb
+    ? { width: '30%' }
+    : { width: '100%' }
+  const searchResultsStyle: ViewStyle = isLargeWeb
+    ? { width: '70%' }
+    : { width: '100%', paddingTop: 20 }
+
   return (
-    <View style={styles.container}>
-      <View style={styles.searchContainer}>
-        <View style={styles.searchBox}>
-          <Text style={styles.searchTitle}>Search Clients</Text>
-          <InputField
-            formik={formik}
-            name="searchTerm"
-            placeholder="Seach Term"
-            title="Search Term"
-            imageName={'search'}
+    <View style={[styles.container, containerStyle]}>
+      {/* -------------------- Header---------------------------- */}
+      {!searchIsActive || (searchIsActive && !isLargeWeb) ? (
+        <View style={[styles.headerContainer, { height: deviceHeight }]}>
+          <Image
+            source={require('../../../../assets/jobs.jpg')}
+            style={{ width: '100%', height: deviceHeight, marginBottom: 8 }}
           />
+        </View>
+      ) : null}
+
+      {/* -------------------- Search Container ---------------------------- */}
+      <View style={[styles.searchContainer, searchContainerStyle]}>
+        <View style={styles.searchTitleContainer}>
+          <Image
+            source={require('../../../../assets/search_white.png')}
+            style={{ width: 25, height: 25 }}
+          />
+          <Text style={styles.searchTitle}>
+            Search{' '}
+            <Text
+              style={[styles.searchTitle, { color: theme.colors.secondary }]}
+            >
+              Clients
+            </Text>
+          </Text>
+        </View>
+
+        <View style={styles.inputContainer}>
           <Dropdown
             formik={formik}
             name="searchField"
@@ -66,46 +120,78 @@ const ClientList = () => {
             options={[{ label: 'Name', value: '_searchName' }]}
             imageName={'notes'}
           />
+          <InputField
+            formik={formik}
+            name="searchTerm"
+            placeholder="Search Term"
+            title="Search Term"
+            imageName={'search'}
+          />
+        </View>
 
-          <View style={styles.buttonContainer}>
-            <Button
-              onPress={handleSearchAllClientsPress}
-              text="Find All Clients"
-              isLoading={searchApiIsLoading}
-              backgroundColor={theme.colors.buttonSecondary}
-            />
-            <Button
-              onPress={handleSearchPress}
-              text="Search"
-              isLoading={searchApiIsLoading}
-            />
-          </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            onPress={handleSearchAllClientsPress}
+            text="Find All Clients"
+            isLoading={searchApiIsLoading}
+            backgroundColor={theme.colors.buttonSecondary}
+          />
+          <Button
+            onPress={handleSearchPress}
+            text="Search"
+            isLoading={searchApiIsLoading}
+          />
         </View>
       </View>
 
-      <View style={styles.largeWebCards}>
-        {ClientCards}
+      {/* -------------------- Job Cards ---------------------------- */}
+      {searchIsActive ? (
+        <View style={[styles.searchResultsContainer, searchResultsStyle]}>
+          {isLargeWeb ? (
+            <View style={styles.searchTitleContainer}>
+              <Image
+                source={require('../../../../assets/search_white.png')}
+                style={{ width: 25, height: 25 }}
+              />
+              <Text style={styles.searchTitle}>
+                Search{' '}
+                <Text
+                  style={[
+                    styles.searchTitle,
+                    { color: theme.colors.secondary },
+                  ]}
+                >
+                  Results
+                </Text>
+              </Text>
+            </View>
+          ) : null}
 
-        {clientDataHasLength ? (
-          <View style={styles.buttonContainer}>
-            <Button
-              onPress={resetSearchForm}
-              text="Reset Search Form"
-              isLoading={false}
-              backgroundColor={theme.colors.buttonSecondary}
-            />
-            <Button
-              onPress={handleMoreResultsPress}
-              text={allDataReturned ? 'No More Results' : 'Next 10 Results'}
-              isLoading={searchApiIsLoading}
-              opacity={allDataReturned ? 0.75 : 1}
-              disabled={allDataReturned}
-            />
-          </View>
-        ) : null}
-      </View>
+          {ClientCards}
 
-      <View style={styles.footer} />
+          {docCount === 0 ? <NoDataFound /> : null}
+
+          {clientDataHasLength ? (
+            <View style={styles.buttonContainer}>
+              <Button
+                onPress={resetSearchForm}
+                text="Reset Search Form"
+                isLoading={false}
+                backgroundColor={theme.colors.buttonSecondary}
+              />
+              <Button
+                onPress={handleMoreResultsPress}
+                text={allDataReturned ? 'No More Results' : 'Next 10 Results'}
+                isLoading={searchApiIsLoading}
+                opacity={allDataReturned ? 0.75 : 1}
+                disabled={allDataReturned}
+              />
+            </View>
+          ) : null}
+
+          <View style={styles.footer} />
+        </View>
+      ) : null}
     </View>
   )
 }
@@ -114,41 +200,49 @@ export default ClientList
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
     flexDirection: 'row',
     justifyItems: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: 40,
+    alignItems: 'flex-start',
     width: '100%',
     height: '100%',
     flex: 1,
-    marginTop: 12,
-    paddingVertical: 20,
-    paddingHorizontal: 12,
+    backgroundColor: theme.colors.tertiaryBlue,
+  },
+  headerContainer: {
+    position: 'absolute',
+    width: '100%',
+    right: 0,
   },
   searchContainer: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  searchBox: {
+    width: '30%',
+    height: '100%',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    paddingHorizontal: 5,
+    minWidth: 250,
+    minHeight: 350,
     flex: 1,
-    maxWidth: 600,
-    minWidth: 300,
-    width: '95%',
-    height: '100%',
-    backgroundColor: theme.colors.backgroundGrey,
+    transform: [{ translateY: -5 }],
+  },
+  searchTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
+    marginBottom: 30,
+    marginTop: 30,
   },
   searchTitle: {
-    color: theme.colors.primary,
+    color: theme.colors.white,
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 32,
-    width: '100%',
     textAlign: 'center',
+  },
+  inputContainer: {
+    width: '90%',
+    maxWidth: 600,
   },
   buttonContainer: {
     display: 'flex',
@@ -159,15 +253,19 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 600,
     gap: 8,
+    zIndex: -1,
   },
-  largeWebCards: {
-    flex: 1,
-    width: '100%',
+  searchResultsContainer: {
     height: '100%',
     alignItems: 'center',
+    paddingHorizontal: 10,
+    backgroundColor: theme.colors.tertiaryBlue,
+    marginBottom: 4,
+    zIndex: -1,
+    transform: [{ translateY: -5 }],
   },
   footer: {
-    height: 40,
+    height: 80,
     width: '100%',
     minWidth: 300,
   },
