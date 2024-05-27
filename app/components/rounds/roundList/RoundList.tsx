@@ -38,8 +38,6 @@ const RoundList = () => {
     docCount,
   } = useFormikSearch()
 
-  console.log('roundData', roundData)
-
   //functions
   const handleSearchAllRoundsPress = () => {
     formik.setFieldValue('findAll', true)
@@ -119,7 +117,11 @@ const RoundList = () => {
             name="searchField"
             placeholder="Search By"
             title="Search By"
-            options={[{ label: 'Name', value: '_searchName' }]}
+            options={[
+              { label: 'Round Name', value: '_searchRoundName' },
+              { label: 'Round Location', value: '_searchLocation' },
+              { label: 'Round Frequency', value: '_searchFrequency' },
+            ]}
             imageName={'notes'}
           />
           <InputField

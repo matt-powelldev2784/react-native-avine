@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Input parameters
-folderName="clients"
-ScreenName="ClientCardView"
-ComponentName="ClientCard"
-componentFolderName="clientCard"
+folderName="rounds"
+ScreenName="RoundCardView"
+ComponentName="RoundCard"
+componentFolderName="roundCard"
 navigateTo="navigateTo"
 buttonText="buttonText"
-screenTitle="Client Details"
-importComment="clients"
+screenTitle="Round Details"
+importComment="rounds"
 
 # Create the directory if it doesn't exist
 mkdir -p "./app/screens/$folderName"
