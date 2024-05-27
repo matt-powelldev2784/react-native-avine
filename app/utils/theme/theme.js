@@ -1,7 +1,8 @@
 const theme = {
   colors: {
-    primary: '#337bae',
+    primary: '#2272ab',
     secondary: '#ffd600',
+    tertiaryBlue: '#5898c1',
     white: 'white',
     backgroundGrey: '#EEEEEE',
     buttonSecondary: '#8c8c8c',

@@ -1,28 +1,23 @@
 import React from 'react'
-import { Dashboard, JobList, ScreenMenu } from '../../components'
+import { Dashboard, JobsMenu, ScreenMenu } from '../../components'
 import theme from '../../utils/theme/theme'
 import { FlatList, View } from 'react-native'
 
-const Jobs = () => {
+const JobMenuScreen = () => {
   // flatlist is used to render children to allow the
   // dashboatd header to be sticky in the webview
-  const childrenArray = [<JobList key={1} />]
+  const childrenArray = [<JobsMenu key={1} />]
 
   return (
     <>
       <Dashboard>
-        <ScreenMenu
-          title={'Job Database'}
-          navigateTo={'AddJob'}
-          buttonText="Add Job"
-          bgColor={theme.colors.jobPrimary}
-        />
-
+        <ScreenMenu title={'Job Database'} bgColor={theme.colors.jobPrimary} />
         <FlatList
           style={{
             flex: 1,
             width: '100%',
-            backgroundColor: theme.colors.tertiaryBlue,
+            height: '100%',
+            backgroundColor: theme.colors.backgroundGrey,
           }}
           data={childrenArray}
           renderItem={({ item }) => <View>{item}</View>}
@@ -33,4 +28,4 @@ const Jobs = () => {
   )
 }
 
-export default Jobs
+export default JobMenuScreen

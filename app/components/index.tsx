@@ -15,9 +15,11 @@ import ClientList from './clients/clientList/ClientList'
 import ClientsMenu from './clients/clientMenu/ClientsMenu'
 
 //jobs
+import JobsMenu from './Jobs/jobMenu/JobsMenu'
 import JobList from './Jobs/jobsList/JobList'
 import AddJobForm from './Jobs/addJob/AddJobForm'
 import EditJobForm from './Jobs/editJob/EditJobForm'
+import JobCard from './Jobs/jobsList/components/JobCard'
 
 //rounds
 import RoundList from './rounds/roundList/RoundList'
@@ -46,9 +48,11 @@ export {
   AddCompanyInfoForm,
   AddClientForm,
   EditClientForm,
+  JobsMenu,
   JobList,
   AddJobForm,
   EditJobForm,
+  JobCard,
   RoundList,
   AddRoundForm,
   EditRoundForm,

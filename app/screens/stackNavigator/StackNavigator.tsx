@@ -22,6 +22,8 @@ import {
   EditClient,
   ClientCardView,
   ClientMenuScreen,
+  JobCardView,
+  JobMenuScreen,
 } from '../../screens'
 import { useAuth } from '../../components/auth/AuthProvider'
 
@@ -63,9 +65,11 @@ export type RootStackParamList = {
   AddCompanyInfo: undefined
 
   //jobs
+  JobsMenu: undefined
   Jobs: { refresh?: boolean } | undefined
   AddJob: undefined
   EditJob: { jobId: string } | undefined
+  JobCardView: { jobId: string } | undefined
 }
 
 export type RefreshableScreen = 'Rounds' | 'Planner' | 'Jobs'
@@ -83,6 +87,13 @@ const StackNavigator = () => {
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Error" component={Error} />
 
+          {/* --------------------------  Job Screens  ---------------------- */}
+          <Stack.Screen name="Jobs" component={Jobs} />
+          <Stack.Screen name="JobsMenu" component={JobMenuScreen} />
+          <Stack.Screen name="AddJob" component={AddJob} />
+          <Stack.Screen name="EditJob" component={EditJob} />
+          <Stack.Screen name="JobCardView" component={JobCardView} />
+
           {/* --------------------------  Client Screens  ---------------------- */}
           <Stack.Screen name="ClientMenu" component={ClientMenuScreen} />
           <Stack.Screen name="Clients" component={Clients} />
@@ -96,11 +107,6 @@ const StackNavigator = () => {
           <Stack.Screen name="InvoiceCardView" component={InvoiceCardView} />
           <Stack.Screen name="EditInvoice" component={EditInvoice} />
           <Stack.Screen name="AddCompanyInfo" component={AddCompanyInfo} />
-
-          {/* --------------------------  Job Screens  ---------------------- */}
-          <Stack.Screen name="Jobs" component={Jobs} />
-          <Stack.Screen name="AddJob" component={AddJob} />
-          <Stack.Screen name="EditJob" component={EditJob} />
 
           {/* --------------------------  Round Screens  ------------------------- */}
           <Stack.Screen name="Rounds" component={Rounds} />

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     height: 20,
     top: 9.5,
     left: 10,
-    zIndex: 10,
+    zIndex: 50,
   },
   input: {
     borderColor: theme.colors.primary,
@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     fontSize: 16,
     paddingLeft: 36,
-    zIndex: 0,
     backgroundColor: 'white',
   },
   placeholder: {
