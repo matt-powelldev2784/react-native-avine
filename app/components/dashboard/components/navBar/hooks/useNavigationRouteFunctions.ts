@@ -9,7 +9,7 @@ const useNavigationRouteFunctions = () => {
     home: () => navigation.navigate('Home'),
     clientsNaviagtion: () => navigation.navigate('ClientMenu'),
     jobsNaviagtion: () => navigation.navigate('JobsMenu'),
-    roundsNavigation: () => navigation.navigate('Rounds', { refresh: true }),
+    roundsNavigation: () => navigation.navigate('RoundMenu'),
     plannerNavigation: () =>
       navigation.navigate('Planner', {
         screen: 'PlannerView',
