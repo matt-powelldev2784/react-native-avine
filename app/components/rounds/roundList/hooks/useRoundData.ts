@@ -12,7 +12,7 @@ interface RoundDataT {
   docCount: number | null
 }
 
-export const useClientData = (data: any): RoundDataT => {
+export const useRoundData = (data: any): RoundDataT => {
   const [lastVisibleDocument, setLastVisibleDocument] =
     useState<DocumentSnapshot | null>(null)
   const [roundData, setRoundData] = useState<RoundWithIdT[]>([])
