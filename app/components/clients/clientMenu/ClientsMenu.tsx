@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, Dimensions } from 'react-native'
+import { View, StyleSheet, Image, Dimensions, Platform } from 'react-native'
 import React from 'react'
 import theme from '../../../utils/theme/theme'
 import { useDeviceType } from '../../../utils/deviceTypes'
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   footer: {
-    height: 40,
+    height: Platform.OS === 'android' ? 100 : 40,
     width: '100%',
     minWidth: 300,
   },
