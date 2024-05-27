@@ -23,9 +23,9 @@ export const updateRound = async (roundData: RoundWithRelatedJobIdsT) => {
       location: roundData.location,
       frequency: roundData.frequency,
       relatedJobs: roundData.relatedJobs,
-      _roundName: splitStringToLowerCaseArray(roundData.roundName),
-      _location: splitStringToLowerCaseArray(roundData.location),
-      _frequency: splitStringToLowerCaseArray(roundData.frequency),
+      _searchRoundName: splitStringToLowerCaseArray(roundData.roundName),
+      _searchLocation: splitStringToLowerCaseArray(roundData.location),
+      _searchFrequency: splitStringToLowerCaseArray(roundData.frequency),
     })
 
     const updatedRound = await getDoc(roundDoc)
