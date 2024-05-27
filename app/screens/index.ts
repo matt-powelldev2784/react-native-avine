@@ -24,6 +24,7 @@ import JobCardView from './jobs/JobCardView'
 import Planner from './planner/Planner'
 
 //rounds
+import RoundCardView from './rounds/RoundCardView'
 import Rounds from './rounds/Rounds'
 import AddRound from './rounds/AddRound'
 import EditRound from './rounds/EditRound'
@@ -36,6 +37,7 @@ import InvoiceCardView from './invoices/InvoiceCardView'
 import EditInvoice from './invoices/EditInvoice'
 
 export {
+  RoundCardView,
   ClientMenuScreen,
   ClientCardView,
   AddCompanyInfo,
