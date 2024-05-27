@@ -83,6 +83,11 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
+          {/* --------------------------  Round Screens  ------------------------- */}
+          <Stack.Screen name="Rounds" component={Rounds} />
+          <Stack.Screen name="AddRound" component={AddRound} />
+          <Stack.Screen name="EditRound" component={EditRound} />
+
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Error" component={Error} />
@@ -107,11 +112,6 @@ const StackNavigator = () => {
           <Stack.Screen name="InvoiceCardView" component={InvoiceCardView} />
           <Stack.Screen name="EditInvoice" component={EditInvoice} />
           <Stack.Screen name="AddCompanyInfo" component={AddCompanyInfo} />
-
-          {/* --------------------------  Round Screens  ------------------------- */}
-          <Stack.Screen name="Rounds" component={Rounds} />
-          <Stack.Screen name="AddRound" component={AddRound} />
-          <Stack.Screen name="EditRound" component={EditRound} />
 
           {/* --------------------------  Planner Screens  -------------------------- */}
           <Stack.Screen

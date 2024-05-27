@@ -1,15 +1,15 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
-import { RoundWithJobT } from '../../../../../types/RoundT'
-import theme from '../../../../../utils/theme/theme'
-import { useDeviceType } from '../../../../../utils/deviceTypes'
+import { RoundWithJobT } from '../../../../types/RoundT'
+import theme from '../../../../utils/theme/theme'
+import { useDeviceType } from '../../../../utils/deviceTypes'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../../screens/stackNavigator/StackNavigator'
-import { ConfirmModal } from '../../../../../ui'
-import ShortNameText from '../../../../../utils/shortNameText/ShortNameText'
-import IconButton from '../../../../../ui/iconButton/IconButton'
-import { handleDeleteRound } from '../../../../../db/rounds/handleDeleteRound/handleDeleteRound'
+import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import { ConfirmModal } from '../../../../ui'
+import ShortNameText from '../../../../utils/shortNameText/ShortNameText'
+import IconButton from '../../../../ui/iconButton/IconButton'
+import { handleDeleteRound } from '../../../../db/rounds/handleDeleteRound/handleDeleteRound'
 
 const RoundCard = ({
   id,
