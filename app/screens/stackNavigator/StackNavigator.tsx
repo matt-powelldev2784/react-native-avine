@@ -24,8 +24,10 @@ import {
   ClientMenuScreen,
   JobCardView,
   JobMenuScreen,
+  RoundCardView,
 } from '../../screens'
 import { useAuth } from '../../components/auth/AuthProvider'
+import RoundMenuScreen from '../rounds/RoundMenuScreen'
 
 export type RootStackParamList = {
   //auth
@@ -48,6 +50,8 @@ export type RootStackParamList = {
   Rounds: { refresh?: boolean } | undefined
   AddRound: undefined
   EditRound: { roundId: string } | undefined
+  RoundCardView: { roundId: string } | undefined
+  RoundMenu: undefined
 
   //planner
   Planner:
@@ -83,6 +87,13 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
+          {/* --------------------------  Round Screens  ------------------------- */}
+          <Stack.Screen name="RoundMenu" component={RoundMenuScreen} />
+          <Stack.Screen name="Rounds" component={Rounds} />
+          <Stack.Screen name="AddRound" component={AddRound} />
+          <Stack.Screen name="EditRound" component={EditRound} />
+          <Stack.Screen name="RoundCardView" component={RoundCardView} />
+
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Error" component={Error} />
@@ -107,11 +118,6 @@ const StackNavigator = () => {
           <Stack.Screen name="InvoiceCardView" component={InvoiceCardView} />
           <Stack.Screen name="EditInvoice" component={EditInvoice} />
           <Stack.Screen name="AddCompanyInfo" component={AddCompanyInfo} />
-
-          {/* --------------------------  Round Screens  ------------------------- */}
-          <Stack.Screen name="Rounds" component={Rounds} />
-          <Stack.Screen name="AddRound" component={AddRound} />
-          <Stack.Screen name="EditRound" component={EditRound} />
 
           {/* --------------------------  Planner Screens  -------------------------- */}
           <Stack.Screen

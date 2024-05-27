@@ -8,6 +8,7 @@ import {
 import { db, auth } from '../../../firebaseConfig'
 import { RoundT } from '../../types/RoundT'
 import { authError } from '../authError'
+import { splitStringToLowerCaseArray } from '../../utils/splitStringToLowerCaseArray'
 
 export const addRound = async (roundData: RoundT) => {
   if (!auth.currentUser) {
@@ -26,6 +27,9 @@ export const addRound = async (roundData: RoundT) => {
         location: roundData.location,
         frequency: roundData.frequency,
         relatedJobs: [],
+        _searchRoundName: splitStringToLowerCaseArray(roundData.roundName),
+        _searchLocation: splitStringToLowerCaseArray(roundData.location),
+        _searchFrequency: splitStringToLowerCaseArray(roundData.frequency),
         isDeleted: false,
       })
 

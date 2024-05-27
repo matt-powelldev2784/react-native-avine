@@ -11,48 +11,31 @@ export const addRoundSeeds = async () => {
     roundName: 'Round Seed',
     location: 'Location Seed',
     frequency: '52 Weekly',
-    relatedJobs: ['VGtIVpTyrYbxmKSYpTrv', '3grKkplQ5bGUioRBhfXs'],
+    relatedJobs: ['07PHUY2BJSM2oXwfyCEN', '1UUtWbLdlzFnN7eYkd28'],
+  }
+
+  const seedData2 = {
+    roundName: 'Round Seed',
+    location: 'Location Seed',
+    frequency: '52 Weekly',
+    relatedJobs: ['07PHUY2BJSM2oXwfyCEN', '1UUtWbLdlzFnN7eYkd28'],
   }
 
   try {
     await addRound(seedData)
+    await addRound(seedData2)
+    await addRound(seedData)
+    await addRound(seedData)
+    await addRound(seedData)
+    await addRound(seedData)
+    await addRound(seedData2)
     await addRound(seedData)
     await addRound(seedData)
     await addRound(seedData)
     await addRound(seedData)
     await addRound(seedData)
     await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
-    await addRound(seedData)
+    await addRound(seedData2)
     await addRound(seedData)
     await addRound(seedData)
     await addRound(seedData)
