@@ -20,7 +20,7 @@ const ClientMenuScreen = () => {
             flex: 1,
             width: '100%',
             height: '100%',
-            backgroundColor: theme.colors.backgroundGrey,
+            backgroundColor: theme.colors.tertiaryBlue,
           }}
           data={childrenArray}
           renderItem={({ item }) => <View>{item}</View>}
