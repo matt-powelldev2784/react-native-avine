@@ -22,6 +22,7 @@ import EditJobForm from './Jobs/editJob/EditJobForm'
 import JobCard from './Jobs/jobsList/components/JobCard'
 
 //rounds
+import RoundMenu from './rounds/roundMenu/RoundMenu'
 import RoundCard from './rounds/roundList/components/RoundCard'
 import RoundList from './rounds/roundList/RoundList'
 import AddRoundForm from './rounds/addRound/AddRoundForm'
@@ -43,6 +44,7 @@ import PaidInvoiceList from './invoices/invoiceList/PaidInvoiceList'
 //otheres
 
 export {
+  RoundMenu,
   RoundCard,
   ClientsMenu,
   ClientList,

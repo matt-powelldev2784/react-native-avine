@@ -1,13 +1,15 @@
 #!/bin/bash
+# to run this script, use the following command from the root of the project:
+# bash ./_scripts/createScreenWithComponent.sh
 
 # Input parameters
 folderName="rounds"
-ScreenName="RoundCardView"
-ComponentName="RoundCard"
-componentFolderName="roundCard"
+ScreenName="RoundMenu"
+ComponentName="RoundMenu"
+componentFolderName="roundMenu"
 navigateTo="navigateTo"
 buttonText="buttonText"
-screenTitle="Round Details"
+screenTitle="Round Database"
 importComment="rounds"
 
 # Create the directory if it doesn't exist

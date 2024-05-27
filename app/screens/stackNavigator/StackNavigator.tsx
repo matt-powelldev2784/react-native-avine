@@ -27,6 +27,7 @@ import {
   RoundCardView,
 } from '../../screens'
 import { useAuth } from '../../components/auth/AuthProvider'
+import RoundMenuScreen from '../rounds/RoundMenuScreen'
 
 export type RootStackParamList = {
   //auth
@@ -50,6 +51,7 @@ export type RootStackParamList = {
   AddRound: undefined
   EditRound: { roundId: string } | undefined
   RoundCardView: { roundId: string } | undefined
+  RoundMenu: undefined
 
   //planner
   Planner:
@@ -86,6 +88,7 @@ const StackNavigator = () => {
       {userInfo ? (
         <>
           {/* --------------------------  Round Screens  ------------------------- */}
+          <Stack.Screen name="RoundMenu" component={RoundMenuScreen} />
           <Stack.Screen name="Rounds" component={Rounds} />
           <Stack.Screen name="AddRound" component={AddRound} />
           <Stack.Screen name="EditRound" component={EditRound} />
