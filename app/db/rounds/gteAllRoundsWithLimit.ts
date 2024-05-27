@@ -46,12 +46,12 @@ export const getAllRoundsWithLimit = async (
 
     const querySnapshot = await getDocs(q)
 
-    const jobs = querySnapshot.docs.map((round) => ({
+    const rounds = querySnapshot.docs.map((round) => ({
       id: round.id,
       ...round.data(),
     })) as RoundWithIdT[]
 
-    const sortedRounds = jobs.sort((a, b) =>
+    const sortedRounds = rounds.sort((a, b) =>
       a.roundName.localeCompare(b.roundName),
     )
 
