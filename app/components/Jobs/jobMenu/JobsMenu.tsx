@@ -66,16 +66,6 @@ const styles = StyleSheet.create({
     height: 400,
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
-  headerContainerSmall: {
-    position: 'absolute',
-    flexDirection: 'column',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: 40,
-    width: '100%',
-    height: 100,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
   menuCardContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',

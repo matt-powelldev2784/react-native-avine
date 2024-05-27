@@ -27,7 +27,7 @@ export const useClientData = (data: any): ClientDataT => {
       const clients = data.clients as ClientWithIdT[]
       setClientData((prev) => [...prev, ...clients])
     }
-    if (data?.count) {
+    if (data?.count >= 0) {
       setDocCount(data.count)
     }
   }, [data])

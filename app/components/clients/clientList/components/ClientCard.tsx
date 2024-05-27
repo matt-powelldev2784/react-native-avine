@@ -73,8 +73,8 @@ const ClientCard = ({ clientId }: ClientCardProps) => {
           <DataLineItem name={'Contact Name'} value={clientData.name} />
           <DataLineItem name={'Address'} value={clientData.address} />
           <DataLineItem name={'Town'} value={clientData.town} />
-          <DataLineItem name={'Contact Name'} value={clientData.postcode} />
-          <DataLineItem name={'Address'} value={clientData.contactTel} />
+          <DataLineItem name={'Post Code'} value={clientData.postcode} />
+          <DataLineItem name={'Contact Tel'} value={clientData.contactTel} />
           <LongDataItem name={'Notes'} value={clientData.notes || ''} />
         </View>
       </View>

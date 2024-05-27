@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image } from 'react-native'
+import { View, StyleSheet, Image, Dimensions } from 'react-native'
 import React from 'react'
 import theme from '../../../utils/theme/theme'
 import { useDeviceType } from '../../../utils/deviceTypes'
@@ -7,27 +7,18 @@ import MenuCard from './components/MenuCard'
 const ClientsMenu = () => {
   const { isLargeWeb } = useDeviceType()
   const menuCardContainerMargin = isLargeWeb ? { marginTop: 50 } : null
+  const deviceHeight = Dimensions.get('window').height - 95
 
   return (
     <View style={styles.container}>
       {/* -------------------- Header---------------------------- */}
-      {isLargeWeb ? (
-        <View style={styles.headerContainer}>
-          <Image
-            source={require('../../../../assets/clients.jpg')}
-            style={{ width: '100%', height: 400, marginBottom: 8 }}
-          />
-        </View>
-      ) : null}
 
-      {!isLargeWeb ? (
-        <View style={styles.headerContainerSmall}>
-          <Image
-            source={require('../../../../assets/clients.jpg')}
-            style={{ width: '100%', height: 100, marginBottom: 8 }}
-          />
-        </View>
-      ) : null}
+      <View style={styles.headerContainer}>
+        <Image
+          source={require('../../../../assets/clients.jpg')}
+          style={{ width: '100%', height: deviceHeight, marginBottom: 8 }}
+        />
+      </View>
 
       {/* -------------------- Menu Cards ---------------------------- */}
       <View style={[styles.menuCardContainer, menuCardContainerMargin]}>
@@ -66,22 +57,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
+    position: 'absolute',
     flexDirection: 'column',
     alignItems: 'center',
     flexWrap: 'wrap',
     gap: 40,
     width: '100%',
     height: 400,
-    borderRadius: 12,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  headerContainerSmall: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: 40,
-    width: '100%',
-    height: 100,
     borderRadius: 12,
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
