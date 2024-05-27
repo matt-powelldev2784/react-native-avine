@@ -7,8 +7,8 @@ const NoDataFound = () => {
     <View style={styles.container}>
       <View style={styles.flexContainer}>
         <Image
-          source={require('../../../../../assets/clipboard.png')}
-          style={{ width: 50, height: 67, marginBottom: 4 }}
+          source={require('../../../../../assets/not_found.png')}
+          style={{ width: 47, height: 48, marginBottom: 4 }}
         />
 
         <Text style={styles.primaryText}>No Jobs Found!</Text>
@@ -43,11 +43,11 @@ const styles = StyleSheet.create({
   primaryText: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: theme.colors.primary,
+    color: 'black',
   },
   secondaryText: {
     fontSize: 18,
-    color: theme.colors.primary,
+    color: 'black',
     margin: 4,
     textAlign: 'center',
     marginHorizontal: 20,
