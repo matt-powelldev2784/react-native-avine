@@ -23,7 +23,7 @@ export const useRoundData = (data: any): RoundDataT => {
       const lastRecord = data.lastVisible as DocumentSnapshot
       setLastVisibleDocument(lastRecord)
     }
-    if (data?.clients) {
+    if (data?.rounds) {
       const rounds = data.rounds as RoundWithIdT[]
       setRoundData((prev) => [...prev, ...rounds])
     }

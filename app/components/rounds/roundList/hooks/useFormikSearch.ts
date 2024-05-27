@@ -4,7 +4,7 @@ import { DocumentSnapshot } from 'firebase/firestore'
 import { useRoundData } from './useRoundData'
 import { RoundWithIdT } from '../../../../types/RoundT'
 import { searchRounds } from '../../../../db/rounds/searchRounds'
-import { getAllRoundsWithLimit } from '../../../../db/rounds/gteAllRoundsWithLimit'
+import { getAllRoundsWithLimit } from '../../../../db/rounds/getAllRoundsWithLimit'
 
 interface RoundDataT {
   lastVisible: DocumentSnapshot | null
