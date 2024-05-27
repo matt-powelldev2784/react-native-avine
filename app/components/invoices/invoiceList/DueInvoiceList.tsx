@@ -7,15 +7,17 @@ import useGetApiData from '../../../utils/hooks/useGetApiData'
 import { useRoute } from '@react-navigation/native'
 import { getDueInvoices } from '../../../db/invoice/getDueInvoices'
 import { InvoiceWithIdT } from '../../../types/InvoiceT'
+import { getInvoicesWithLimit } from '../../../db/invoice/getInvoicesWithLimit'
 
 const DueInvoiceList = () => {
   const route = useRoute()
   const { getApiIsLoading, data } = useGetApiData({
-    apiFunction: async () => getDueInvoices(),
+    apiFunction: async () => getInvoicesWithLimit({ isPaid: false }),
     route,
   })
 
   const invoiceData = data as InvoiceWithIdT[]
+  console.log('invoiceData', invoiceData)
 
   if (getApiIsLoading) {
     return <Loading loadingText={'Loading invoice list...'} />
