@@ -81,9 +81,12 @@ const ClientList = () => {
   const searchResultsStyle: ViewStyle = isLargeWeb
     ? { width: '70%' }
     : { width: '100%', paddingTop: 20 }
+  const containerHeightStyle: ViewStyle = !searchIsActive
+    ? { height: deviceHeight }
+    : { height: '100%' }
 
   return (
-    <View style={[styles.container, containerStyle]}>
+    <View style={[styles.container, containerStyle, containerHeightStyle]}>
       {/* -------------------- Header---------------------------- */}
       {!searchIsActive || (searchIsActive && !isLargeWeb) ? (
         <View style={[styles.headerContainer, { height: deviceHeight }]}>
