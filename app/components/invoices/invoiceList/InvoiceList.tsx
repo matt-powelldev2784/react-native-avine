@@ -134,7 +134,8 @@ const InvoiceList = () => {
               title="Search By"
               options={[
                 { label: 'Job Name', value: 'job._searchJobName' },
-                { label: 'Contact Name', value: 'job._searchContactName' },
+                { label: 'Job Contact Name', value: 'job._searchContactName' },
+                { label: 'Client Contact Name', value: 'client._searchName' },
               ]}
               imageName={'notes'}
             />
