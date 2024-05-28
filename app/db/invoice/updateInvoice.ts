@@ -1,6 +1,7 @@
 import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
+import { getClient } from '../clients/getClient'
 
 interface updateInvoiceT {
   id: string
@@ -19,13 +20,12 @@ export const updateInvoice = async ({
     return authError({ filename: 'updateInvoice' })
   }
 
-  console.log('id', id)
-
   try {
     const invoiceDocRef = doc(db, 'users', auth.currentUser.uid, 'invoices', id)
 
     const invoiceDoc = await getDoc(invoiceDocRef)
     const invoiceData = invoiceDoc.data()
+    const client = await getClient(clientId)
 
     if (!invoiceDoc || !invoiceData) {
       throw new Error('Invoice does not exist')
@@ -40,6 +40,7 @@ export const updateInvoice = async ({
     await updateDoc(invoiceDocRef, {
       clientId,
       price,
+      client,
       description,
       job: { ...invoiceData.job, clientId: clientId },
     })
