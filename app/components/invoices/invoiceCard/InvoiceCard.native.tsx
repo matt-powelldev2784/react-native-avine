@@ -20,7 +20,7 @@ interface InvoiceCardProps {
   invoiceId: string
 }
 
-type DueInvoiceCardRouteProp = RouteProp<RootStackParamList, 'DueInvoices'>
+type InvoiceCardRouteProp = RouteProp<RootStackParamList, 'InvoiceCardView'>
 
 const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
   // state
@@ -28,7 +28,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
 
   // hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const route = useRoute<DueInvoiceCardRouteProp>()
+  const route = useRoute<InvoiceCardRouteProp>()
   const { invoiceData, user, client, isComplete, isPaid } = useGetInvoiceData({
     invoiceId,
     route,

@@ -35,11 +35,10 @@ import ScheduledJobCard from './planner/scheduledJobCard/ScheduledJobCard'
 
 //invoices
 import AddCompanyInfoForm from './invoices/addCompanyInfoForm/AddCompanyInfoForm'
-
-import DueInvoiceList from './invoices/invoiceList/DueInvoiceList'
+import InvoiceList from './invoices/invoiceList/InvoiceList'
 import InvoiceCard from './invoices/InvoiceCard/InvoiceCard'
 import EditInvoiceForm from './invoices/editInvoiceForm/EditInvoiceForm'
-import PaidInvoiceList from './invoices/invoiceList/PaidInvoiceList'
+
 
 //otheres
 
@@ -61,8 +60,7 @@ export {
   AddRoundForm,
   EditRoundForm,
   WeekPlanner,
-  DueInvoiceList,
-  PaidInvoiceList,
+  InvoiceList,
   InvoiceCard,
   EditInvoiceForm,
   ScheduleRoundForm,

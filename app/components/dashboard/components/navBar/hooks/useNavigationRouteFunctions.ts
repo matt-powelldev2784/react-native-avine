@@ -15,7 +15,7 @@ const useNavigationRouteFunctions = () => {
         screen: 'PlannerView',
       }),
     invoicesNavigation: () =>
-      navigation.navigate('DueInvoices', { refresh: true }),
+      navigation.navigate('InvoiceListView', { refresh: true }),
     signOut: () => {
       navigation.navigate('SignOut')
     },

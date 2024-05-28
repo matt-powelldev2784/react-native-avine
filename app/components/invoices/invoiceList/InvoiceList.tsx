@@ -18,7 +18,7 @@ import { useDeviceType } from '../../../utils/deviceTypes'
 import { InvoiceWithIdT } from '../../../types/InvoiceT'
 import InvoiceListItem from './components/InvoiceListItem'
 
-const DueInvoiceList = () => {
+const InvoiceList = () => {
   //state
   const [searchIsActive, setSearchIsActive] = useState<boolean>(false)
 
@@ -233,7 +233,7 @@ const DueInvoiceList = () => {
   )
 }
 
-export default DueInvoiceList
+export default InvoiceList
 
 const styles = StyleSheet.create({
   container: {
