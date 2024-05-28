@@ -3,6 +3,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
+  DimensionValue,
 } from 'react-native'
 import React from 'react'
 import theme from '../../utils/theme/theme'
@@ -14,8 +15,8 @@ interface ButtoMdProps {
   isLoading?: boolean
   disabled?: boolean
   opacity?: number
-  width?: number | string
-  height?: number | string
+  width?: DimensionValue
+  height?: DimensionValue
 }
 
 const Button = ({
@@ -33,15 +34,14 @@ const Button = ({
       onPress={onPress}
       style={[
         styles.button,
-        backgroundColor ? { backgroundColor: backgroundColor } : null,
-        opacity ? { opacity: opacity } : null,
+        backgroundColor ? { backgroundColor } : {},
+        opacity ? { opacity } : {},
         width ? { width: width } : null,
         height ? { height: height } : null,
       ]}
       disabled={isLoading || disabled}
     >
       {!isLoading ? <Text style={styles.buttonText}>{text}</Text> : null}
-
       {isLoading ? <ActivityIndicator size="small" color={'white'} /> : null}
     </TouchableOpacity>
   )

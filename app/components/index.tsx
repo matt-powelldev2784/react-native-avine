@@ -37,7 +37,7 @@ import ScheduledJobCard from './planner/scheduledJobCard/ScheduledJobCard'
 import AddCompanyInfoForm from './invoices/addCompanyInfoForm/AddCompanyInfoForm'
 
 import DueInvoiceList from './invoices/invoiceList/DueInvoiceList'
-import InvoiceCard from './invoices/invoiceCard/InvoiceCard'
+import InvoiceCard from './invoices/InvoiceCard/InvoiceCard'
 import EditInvoiceForm from './invoices/editInvoiceForm/EditInvoiceForm'
 import PaidInvoiceList from './invoices/invoiceList/PaidInvoiceList'
 

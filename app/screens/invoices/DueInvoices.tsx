@@ -12,17 +12,15 @@ const DueInvoices = () => {
     <>
       <Dashboard>
         <ScreenMenu
-          title={'Due Invoices'}
+          title={'Invoice Database'}
           bgColor={theme.colors.invoicePrimary}
-          navigateTo="PaidInvoices"
-          buttonText="Paid Invoices"
         />
 
         <FlatList
           style={{
             flex: 1,
             width: '100%',
-            backgroundColor: theme.colors.backgroundGrey,
+            backgroundColor: theme.colors.tertiaryBlue,
           }}
           data={childrenArray}
           renderItem={({ item }) => <View>{item}</View>}
