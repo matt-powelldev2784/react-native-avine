@@ -28,7 +28,7 @@ const useFormikInvoice = ({ invoiceId }: useFormikStepsInterface) => {
   const formik = useFormik({
     initialValues: {
       id: '',
-      price: 0,
+      price: '' as number | string,
       description: '',
       clientId: data?.job?.clientId,
       ...data,

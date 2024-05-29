@@ -83,7 +83,7 @@ const Welcome = () => {
             number="6"
             text="Invoice Job"
             secondaryText="Click here to display due invoices. PDF invoices can be downloaded and emailed to clients. Once paid, the invoice can be marked as paid."
-            navigateTo="DueInvoices"
+            navigateTo="InvoiceListView"
             backgroundColor={theme.colors.invoicePrimary}
           />
 

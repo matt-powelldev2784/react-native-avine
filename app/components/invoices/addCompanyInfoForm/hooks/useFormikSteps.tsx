@@ -35,7 +35,7 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
   const validationSchema = validationSchemas[activeStep]
 
   const { postApiIsLoading, setApiFunction } = usePostApiData({
-    onSuccessScreen: 'DueInvoices',
+    onSuccessScreen: 'InvoiceListView',
     refreshScreen: { refresh: true },
   })
 
@@ -46,7 +46,7 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
       town: '',
       county: '',
       postcode: '',
-      contactTel: 0,
+      contactTel: '' as number | string,
       logoUrl: '',
       logoUploadDeclined: false,
       companyDetailsProvided: true,
