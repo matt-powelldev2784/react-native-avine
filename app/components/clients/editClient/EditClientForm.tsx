@@ -67,6 +67,13 @@ const EditClientForm = () => {
         />
         <InputField
           formik={formik}
+          name="county"
+          placeholder="County"
+          title="County"
+          imageName={'location'}
+        />
+        <InputField
+          formik={formik}
           name="postcode"
           placeholder="Post Code"
           title="Post Code"

@@ -24,6 +24,7 @@ export const updateClient = async (clientData: ClientWithIdT) => {
       name: clientData.name,
       address: clientData.address,
       town: clientData.town,
+      county: clientData.county,
       postcode: clientData.postcode,
       contactTel: clientData.contactTel,
       notes: clientData.notes,

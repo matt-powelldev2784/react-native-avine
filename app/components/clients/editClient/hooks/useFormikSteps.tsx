@@ -9,6 +9,7 @@ export const stepOneSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
   address: Yup.string().required('Address is required'),
   town: Yup.string().required('Town is required'),
+  county: Yup.string().required('County is required'),
   postcode: Yup.string().required('Post Code is required'),
   contactTel: Yup.number()
     .typeError('Telephone number must be a number')
@@ -27,8 +28,6 @@ const useFormikSteps = ({ activeStep, clientId }: useFormikStepsInterface) => {
     apiFunction: async () => getClient(clientId),
   })
 
-  console.log('data', data)
-
   const { postApiIsLoading, setApiFunction } = usePostApiData({
     onSuccessScreen: 'Clients',
     refreshScreen: true,
@@ -46,8 +45,9 @@ const useFormikSteps = ({ activeStep, clientId }: useFormikStepsInterface) => {
       name: '',
       address: '',
       town: '',
+      county: '',
       postcode: '',
-      contactTel: 0,
+      contactTel: '' as number | string,
       notes: '',
       isDeleted: false,
       ...data,

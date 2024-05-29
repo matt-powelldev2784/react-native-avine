@@ -19,6 +19,7 @@ export const addClient = async (clientInfo: ClientT) => {
       name: clientInfo.name,
       address: clientInfo.address,
       town: clientInfo.town,
+      county: clientInfo.county,
       postcode: clientInfo.postcode,
       contactTel: clientInfo.contactTel,
       notes: clientInfo.notes,

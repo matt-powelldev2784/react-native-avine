@@ -2,6 +2,7 @@ export interface ClientT {
   name: string
   address: string
   town: string
+  county: string
   postcode: string
   contactTel: string | number
   notes: string | null
