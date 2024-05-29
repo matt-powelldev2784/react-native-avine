@@ -14,7 +14,7 @@ import theme from '../../../utils/theme/theme'
 import useFormikSearch from './hooks/useFormikSearch'
 import NoDataFound from './components/NoDataFound'
 import useResetSearchOnFocus from '../../../utils/hooks/useResetSearchOnFocus'
-import { useDeviceType } from '../../../utils/deviceTypes'
+import { useDeviceType } from '../../../utils/hooks/useDeviceTypes'
 import { InvoiceWithIdT } from '../../../types/InvoiceT'
 import InvoiceListItem from './components/InvoiceListItem'
 

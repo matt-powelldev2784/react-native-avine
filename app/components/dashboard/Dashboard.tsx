@@ -12,7 +12,7 @@ import NavBar from './components/navBar/NavBar'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
-import { useDeviceType } from '../../utils/deviceTypes'
+import { useDeviceType } from '../../utils/hooks/useDeviceTypes'
 import theme from '../../utils/theme/theme'
 
 interface DashboardProps {

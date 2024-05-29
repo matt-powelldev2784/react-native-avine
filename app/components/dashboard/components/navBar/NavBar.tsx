@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useDeviceType } from '../../../../utils/deviceTypes'
+import { useDeviceType } from '../../../../utils/hooks/useDeviceTypes'
 import theme from '../../../../utils/theme/theme'
 import useNavigationRouteFunctions from './hooks/useNavigationRouteFunctions'
 import NavBarItem from './components/NavBarItem'

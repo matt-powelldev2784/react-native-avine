@@ -1,7 +1,7 @@
 import { View, StyleSheet, Image, Dimensions, Platform } from 'react-native'
 import React from 'react'
 import theme from '../../../utils/theme/theme'
-import { useDeviceType } from '../../../utils/deviceTypes'
+import { useDeviceType } from '../../../utils/hooks/useDeviceTypes'
 import MenuCard from './components/MenuCard'
 
 const RoundMenu = () => {

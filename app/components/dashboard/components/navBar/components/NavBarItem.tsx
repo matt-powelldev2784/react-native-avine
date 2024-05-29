@@ -1,7 +1,7 @@
 import { Text, StyleSheet, Image, ImageSourcePropType } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { useDeviceType } from '../../../../../utils/deviceTypes'
+import { useDeviceType } from '../../../../../utils/hooks/useDeviceTypes'
 
 interface NavBarItemProps {
   routeFunction: () => void

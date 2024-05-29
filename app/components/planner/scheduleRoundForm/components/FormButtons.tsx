@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import theme from '../../../../utils/theme/theme'
-import { useDeviceType } from '../../../../utils/deviceTypes'
+import { useDeviceType } from '../../../../utils/hooks/useDeviceTypes'
 import Button from '../../../../ui/button/Button'
 import { useMoveToNextStep } from '../hooks/useMoveToNextStep'
 import { handleFormStepBack } from '../../../../utils/handleFormStepBack'
