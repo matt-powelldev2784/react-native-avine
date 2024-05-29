@@ -32,10 +32,12 @@ export const updateJob = async (jobData: JobWithIdT) => {
       _searchPostcode: splitStringToLowerCaseArray(jobData.postcode),
       _searchJobType: splitStringToLowerCaseArray(jobData.jobType),
       _searchTime: splitStringToLowerCaseArray(jobData.time),
-      _searchPrice: splitStringToLowerCaseArray(jobData.address),
+      _searchPrice: splitStringToLowerCaseArray(jobData.price.toString()),
       _searchFrequency: splitStringToLowerCaseArray(jobData.frequency),
       _searchContactName: splitStringToLowerCaseArray(jobData.contactName),
-      _searchContactTel: splitStringToLowerCaseArray(jobData.contactTel.toString()),
+      _searchContactTel: splitStringToLowerCaseArray(
+        jobData.contactTel.toString(),
+      ),
     })
 
     const updatedJob = await getDoc(jobDocRef)

@@ -1,9 +1,9 @@
 import { RouteProp } from '@react-navigation/native'
-import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
-import useGetApiData from '../../../utils/hooks/useGetApiData'
-import { getRelatedInvoiceData } from '../../../db/invoice/getRelatedInvoiceData'
+import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import useGetApiData from '../../../../utils/hooks/useGetApiData'
+import { getRelatedInvoiceData } from '../../../../db/invoice/getRelatedInvoiceData'
 
-type DueInvoiceCardRouteProp = RouteProp<RootStackParamList, 'DueInvoices'>
+type DueInvoiceCardRouteProp = RouteProp<RootStackParamList, 'InvoiceCardView'>
 
 interface UseGetJobCardDataT {
   route: DueInvoiceCardRouteProp

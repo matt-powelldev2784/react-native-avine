@@ -1,37 +1,49 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import theme from '../../../../utils/theme/theme'
-import { InvoiceWithIdT } from '../../../../types/InvoiceT'
-import { format } from 'date-fns'
-import { convertDbDateToDateString } from '../../../../utils/convertDbDateToDateString'
 import IconButton from '../../../../ui/iconButton/IconButton'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import { InvoiceWithIdT } from '../../../../types/InvoiceT'
+import { convertPlannerDateToShortDate } from '../../../../utils/convertPlannerDateToShortDate'
 
-const InvoiceListItem = ({ id, completedDate, job }: InvoiceWithIdT) => {
+const InvoiceListItem = ({ id, completedDate, price, job }: InvoiceWithIdT) => {
+  //hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const completedDateString = convertDbDateToDateString(completedDate)
-  const formattedDate = format(completedDateString, 'dd MMMM yyyy')
 
   const handleEditInvoicePress = () => {
+    navigation.navigate('EditInvoice', { invoiceId: id })
+  }
+  const handleViewInvoicePress = () => {
     navigation.navigate('InvoiceCardView', { invoiceId: id })
   }
 
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper]}>
       <View style={styles.container}>
         <View style={styles.cardLeftBorder}></View>
 
-        <View style={styles.leftContainer}>
+        <View style={[styles.leftContainer]}>
           <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
             {job.jobName}
           </Text>
 
-          <Text style={styles.text}>{formattedDate}</Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+            Job Completed: {convertPlannerDateToShortDate(completedDate)}
+          </Text>
+
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+            Price: £{price}
+          </Text>
         </View>
 
         <View style={styles.rightContainer}>
+          <IconButton
+            onPress={handleViewInvoicePress}
+            imgSource={require('../../../../../assets/eye.png')}
+            size={35}
+          />
           <IconButton
             onPress={handleEditInvoicePress}
             imgSource={require('../../../../../assets/edit.png')}
@@ -45,10 +57,11 @@ const InvoiceListItem = ({ id, completedDate, job }: InvoiceWithIdT) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: '100%',
-    flexDirection: 'column',
+    position: 'relative',
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
   },
   container: {
     flexDirection: 'row',
@@ -59,9 +72,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: theme.colors.primary,
-    height: 70,
+    height: 80,
     overflow: 'hidden',
+    maxWidth: 800,
     width: '100%',
+    flex: 1,
   },
   cardLeftBorder: {
     position: 'absolute',
@@ -72,14 +87,17 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
   },
   leftContainer: {
+    flex: 1,
     marginLeft: 28,
-    padding: 8,
+    paddingHorizontal: 8,
     justifyContent: 'center',
   },
   rightContainer: {
-    marginLeft: 28,
-    padding: 8,
+    flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: 100,
+    gap: 12,
   },
   title: {
     fontSize: 20,
@@ -87,7 +105,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   text: {
-    fontSize: 16,
+    fontSize: 15,
     color: 'black',
     marginBottom: 0,
   },

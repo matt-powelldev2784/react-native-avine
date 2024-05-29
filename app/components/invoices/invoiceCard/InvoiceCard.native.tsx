@@ -2,9 +2,9 @@ import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
-import { useGetInvoiceData } from '../hooks/getInvoiceData'
+import { useGetInvoiceData } from './hooks/getInvoiceData'
 import { ConfirmModal, Loading } from '../../../ui'
-import useFormikIsPaid from '../hooks/useFormikIsPaid'
+import useFormikIsPaid from './hooks/useFormikIsPaid'
 import DataSwitchItem from '../../../ui/dataItems/DataSwitchItem'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import theme from '../../../utils/theme/theme'
@@ -20,7 +20,7 @@ interface InvoiceCardProps {
   invoiceId: string
 }
 
-type DueInvoiceCardRouteProp = RouteProp<RootStackParamList, 'DueInvoices'>
+type InvoiceCardRouteProp = RouteProp<RootStackParamList, 'InvoiceCardView'>
 
 const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
   // state
@@ -28,7 +28,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
 
   // hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const route = useRoute<DueInvoiceCardRouteProp>()
+  const route = useRoute<InvoiceCardRouteProp>()
   const { invoiceData, user, client, isComplete, isPaid } = useGetInvoiceData({
     invoiceId,
     route,

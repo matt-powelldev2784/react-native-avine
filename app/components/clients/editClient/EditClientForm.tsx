@@ -53,6 +53,13 @@ const EditClientForm = () => {
         />
         <InputField
           formik={formik}
+          name="companyName"
+          placeholder="Company Name"
+          title="companyName"
+          imageName={'person'}
+        />
+        <InputField
+          formik={formik}
           name="address"
           placeholder="Address"
           title="Address"
@@ -63,6 +70,13 @@ const EditClientForm = () => {
           name="town"
           placeholder="Town"
           title="Town"
+          imageName={'location'}
+        />
+        <InputField
+          formik={formik}
+          name="county"
+          placeholder="County"
+          title="County"
           imageName={'location'}
         />
         <InputField

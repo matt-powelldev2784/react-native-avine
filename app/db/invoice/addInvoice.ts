@@ -4,6 +4,7 @@ import { authError } from '../authError'
 import { getJob } from '../jobs/getJob'
 import { convertPlannerDateToShortDate } from '../../utils/convertPlannerDateToShortDate'
 import { addInvoiceId } from './addInvoiceId'
+import { getClient } from '../clients/getClient'
 
 interface addInvoiceT {
   plannerJobRef: string
@@ -35,6 +36,7 @@ export const addInvoice = async ({
     const invoiceDoc = await getDoc(invoiceDocRef)
 
     const job = await getJob(jobId)
+    const client = await getClient(job.clientId)
 
     if (!invoiceDoc.exists()) {
       const newInvoiceId = await addInvoiceId()
@@ -46,6 +48,7 @@ export const addInvoice = async ({
         roundType: roundType,
         completedDate: plannerDate,
         job: job,
+        client: client,
         price: job.price,
         description: `Window cleaning on services completed on ${convertPlannerDateToShortDate(
           plannerDate,

@@ -1,28 +1,26 @@
 import React from 'react'
-import { Dashboard, DueInvoiceList, ScreenMenu } from '../../components'
+import { Dashboard, InvoiceList, ScreenMenu } from '../../components'
 import theme from '../../utils/theme/theme'
 import { FlatList, View } from 'react-native'
 
-const DueInvoices = () => {
+const InvoiceListView = () => {
   // flatlist is used to render children to allow the
   // dashboatd header to be sticky in the webview
-  const childrenArray = [<DueInvoiceList key={0} />]
+  const childrenArray = [<InvoiceList key={0} />]
 
   return (
     <>
       <Dashboard>
         <ScreenMenu
-          title={'Due Invoices'}
+          title={'Invoice Database'}
           bgColor={theme.colors.invoicePrimary}
-          navigateTo="PaidInvoices"
-          buttonText="Paid Invoices"
         />
 
         <FlatList
           style={{
             flex: 1,
             width: '100%',
-            backgroundColor: theme.colors.backgroundGrey,
+            backgroundColor: theme.colors.tertiaryBlue,
           }}
           data={childrenArray}
           renderItem={({ item }) => <View>{item}</View>}
@@ -33,4 +31,4 @@ const DueInvoices = () => {
   )
 }
 
-export default DueInvoices
+export default InvoiceListView

@@ -17,13 +17,18 @@ export const addClient = async (clientInfo: ClientT) => {
 
     await setDoc(clientDoc, {
       name: clientInfo.name,
+      companyName: clientInfo.companyName,
       address: clientInfo.address,
       town: clientInfo.town,
+      county: clientInfo.county,
       postcode: clientInfo.postcode,
       contactTel: clientInfo.contactTel,
       notes: clientInfo.notes,
       isDeleted: false,
       _searchName: splitStringToLowerCaseArray(clientInfo.name),
+      _searchCompanyName: splitStringToLowerCaseArray(
+        clientInfo.companyName || '',
+      ),
       _searchAddress: splitStringToLowerCaseArray(clientInfo.address),
       _searchTown: splitStringToLowerCaseArray(clientInfo.town),
       _searchPostcode: splitStringToLowerCaseArray(clientInfo.postcode),

@@ -32,8 +32,7 @@ import EditRound from './rounds/EditRound'
 
 //invoices
 import AddCompanyInfo from './invoices/AddCompanyInfo'
-import DueInvoices from './invoices/DueInvoices'
-import PaidInvoices from './invoices/PaidInvoices'
+import InvoiceListView from './invoices/InvoiceListView'
 import InvoiceCardView from './invoices/InvoiceCardView'
 import EditInvoice from './invoices/EditInvoice'
 
@@ -55,8 +54,7 @@ export {
   AddRound,
   EditRound,
   Planner,
-  DueInvoices,
-  PaidInvoices,
+  InvoiceListView,
   InvoiceCardView,
   EditInvoice,
   SignInScreen,
