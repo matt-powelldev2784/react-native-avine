@@ -24,6 +24,7 @@ const useFormikSearch = () => {
     setInvoiceData,
     setLastVisibleDocument,
     docCount,
+    setDocCount,
   } = useInvoiceData(data)
 
   const formik = useFormik({
@@ -61,6 +62,7 @@ const useFormikSearch = () => {
     setInvoiceData,
     setLastVisibleDocument,
     docCount,
+    setDocCount,
   }
 }
 

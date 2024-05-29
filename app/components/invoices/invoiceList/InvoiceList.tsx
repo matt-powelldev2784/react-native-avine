@@ -36,6 +36,7 @@ const InvoiceList = () => {
     setInvoiceData,
     setLastVisibleDocument,
     docCount,
+    setDocCount,
   } = useFormikSearch()
 
   //functions
@@ -64,6 +65,7 @@ const InvoiceList = () => {
   }
   const resetSearchForm = () => {
     setInvoiceData([])
+    setDocCount(null)
     setLastVisibleDocument(null)
     setSearchIsActive(false)
   }

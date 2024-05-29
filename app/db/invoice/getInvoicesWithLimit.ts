@@ -71,7 +71,11 @@ export const getInvoicesWithLimit = async ({
     })
 
     // get document count
-    const countQuery = query(invoiceCollection, orderBy('invoiceId'))
+    const countQuery = query(
+      invoiceCollection,
+      where('isPaid', '==', isPaid),
+      orderBy('invoiceId'),
+    )
     const snapshot = await getCountFromServer(countQuery)
     const count = snapshot.data().count
 

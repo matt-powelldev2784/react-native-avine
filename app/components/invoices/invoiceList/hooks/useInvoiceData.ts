@@ -10,6 +10,7 @@ interface InvoiceDataT {
     SetStateAction<DocumentSnapshot<DocumentData, DocumentData> | null>
   >
   docCount: number | null
+  setDocCount: Dispatch<SetStateAction<number | null>>
 }
 
 export const useInvoiceData = (data: any): InvoiceDataT => {
@@ -38,5 +39,6 @@ export const useInvoiceData = (data: any): InvoiceDataT => {
     setInvoiceData,
     setLastVisibleDocument,
     docCount,
+    setDocCount,
   }
 }
