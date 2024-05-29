@@ -35,6 +35,7 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
   const formik = useFormik({
     initialValues: {
       name: '',
+      companyName: '',
       address: '',
       town: '',
       county: '',

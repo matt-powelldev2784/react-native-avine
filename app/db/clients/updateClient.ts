@@ -22,6 +22,7 @@ export const updateClient = async (clientData: ClientWithIdT) => {
 
     await updateDoc(clientDocRef, {
       name: clientData.name,
+      companyName: clientData.companyName,
       address: clientData.address,
       town: clientData.town,
       county: clientData.county,
@@ -30,6 +31,9 @@ export const updateClient = async (clientData: ClientWithIdT) => {
       notes: clientData.notes,
       isDeleted: clientData.isDeleted,
       _searchName: splitStringToLowerCaseArray(clientData.name),
+      _searchCompanyName: splitStringToLowerCaseArray(
+        clientData.companyName || '',
+      ),
       _searchAddress: splitStringToLowerCaseArray(clientData.address),
       _searchTown: splitStringToLowerCaseArray(clientData.town),
       _searchPostcode: splitStringToLowerCaseArray(clientData.postcode),

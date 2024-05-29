@@ -1,5 +1,6 @@
 export interface ClientT {
   name: string
+  companyName?: string
   address: string
   town: string
   county: string

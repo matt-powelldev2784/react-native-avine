@@ -43,6 +43,7 @@ const useFormikSteps = ({ activeStep, clientId }: useFormikStepsInterface) => {
     initialValues: {
       id: '',
       name: '',
+      companyName: '',
       address: '',
       town: '',
       county: '',

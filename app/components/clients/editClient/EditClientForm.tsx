@@ -53,6 +53,13 @@ const EditClientForm = () => {
         />
         <InputField
           formik={formik}
+          name="companyName"
+          placeholder="Company Name"
+          title="companyName"
+          imageName={'person'}
+        />
+        <InputField
+          formik={formik}
           name="address"
           placeholder="Address"
           title="Address"
