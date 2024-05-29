@@ -9,8 +9,10 @@ export const addClientSeeds = async () => {
 
   const seedData = {
     name: 'Name Seed',
+    companyName: 'Company Seed',
     address: 'Add Seed',
     town: 'Town Seed',
+    county: 'County Seed',
     postcode: 'Post Code Seed',
     contactTel: '123',
     notes: '1',

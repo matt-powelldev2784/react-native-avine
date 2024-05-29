@@ -138,6 +138,10 @@ const InvoiceList = () => {
                 { label: 'Job Name', value: 'job._searchJobName' },
                 { label: 'Job Contact Name', value: 'job._searchContactName' },
                 { label: 'Client Contact Name', value: 'client._searchName' },
+                {
+                  label: 'Client Company Name',
+                  value: 'client._searchCompanyName',
+                },
               ]}
               imageName={'notes'}
             />
