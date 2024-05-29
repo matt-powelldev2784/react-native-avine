@@ -4,7 +4,7 @@ export interface CompanyT {
   town: string
   county: string
   postcode: string
-  contactTel: number
+  contactTel: number | string
   companyDetailsProvided: boolean
 }
 

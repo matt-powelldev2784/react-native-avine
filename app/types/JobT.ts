@@ -5,7 +5,7 @@ export interface JobT {
   postcode: string
   jobType: string
   time: string
-  price: number
+  price: number | string
   frequency: string
   contactName: string
   contactTel: number | string

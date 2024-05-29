@@ -46,7 +46,7 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
       town: '',
       county: '',
       postcode: '',
-      contactTel: 0,
+      contactTel: '' as number | string,
       logoUrl: '',
       logoUploadDeclined: false,
       companyDetailsProvided: true,
