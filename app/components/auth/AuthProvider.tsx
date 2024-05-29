@@ -5,6 +5,7 @@ import React, {
   useState,
   useEffect,
 } from 'react'
+//tslint:disable-next-line: no-submodule-imports
 import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../../firebaseConfig'
 import * as Google from 'expo-auth-session/providers/google'
