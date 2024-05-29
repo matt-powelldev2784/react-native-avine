@@ -35,7 +35,7 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
   const validationSchema = validationSchemas[activeStep]
 
   const { postApiIsLoading, setApiFunction } = usePostApiData({
-    onSuccessScreen: 'DueInvoices',
+    onSuccessScreen: 'InvoiceListView',
     refreshScreen: { refresh: true },
   })
 
