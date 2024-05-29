@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import { useDeviceType } from '../../../../utils/deviceTypes'
+import { useDeviceType } from '../../../../utils/hooks/useDeviceTypes'
 import theme from '../../../../utils/theme/theme'
 
 interface FormFlowTitlesProps {

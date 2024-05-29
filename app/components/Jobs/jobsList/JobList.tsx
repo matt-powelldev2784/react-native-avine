@@ -16,7 +16,7 @@ import useFormikSearch from './hooks/useFormikSearch'
 import { JobWithIdT } from '../../../types/JobT'
 import NoDataFound from './components/NoDataFound'
 import useResetSearchOnFocus from '../../../utils/hooks/useResetSearchOnFocus'
-import { useDeviceType } from '../../../utils/deviceTypes'
+import { useDeviceType } from '../../../utils/hooks/useDeviceTypes'
 
 const JobList = () => {
   //state

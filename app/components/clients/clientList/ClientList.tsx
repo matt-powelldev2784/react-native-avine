@@ -14,7 +14,7 @@ import { ClientWithIdT } from '../../../types/ClientT'
 import Button from '../../../ui/button/Button'
 import theme from '../../../utils/theme/theme'
 import useFormikSearch from './hooks/useFormikSearch'
-import { useDeviceType } from '../../../utils/deviceTypes'
+import { useDeviceType } from '../../../utils/hooks/useDeviceTypes'
 import useResetSearchOnFocus from '../../../utils/hooks/useResetSearchOnFocus'
 import NoDataFound from './components/NoDataFound'
 
