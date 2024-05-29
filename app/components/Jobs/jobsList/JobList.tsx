@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingHorizontal: 5,
-    minWidth: 300,
+    minWidth: 250,
     minHeight: 350,
     flex: 1,
     transform: [{ translateY: -5 }],
