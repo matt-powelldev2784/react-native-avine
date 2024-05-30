@@ -14,6 +14,7 @@ import LongDataItem from '../../../ui/dataItems/LongDataItem'
 import IconButton from '../../../ui/iconButton/IconButton'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { createWebPdf } from '../invoicePdf/web/createWebPdf'
+import Button from '../../../ui/button/Button'
 
 interface InvoiceCardProps {
   invoiceId: string
@@ -128,6 +129,11 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
           />
         </View>
 
+        <View style={styles.buttonContainer}>
+          <Button text={'Download Invoice'} onPress={handleDownloadInvoice} />
+          <Button text={'Edit Invoice'} onPress={handleNavigateToEditInvoice} />
+        </View>
+
         {isPaid ? (
           <Text style={styles.warningText}>
             If you wish to edit this invoice please set the status back to not
@@ -218,7 +224,11 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: theme.colors.primary,
   },
-  infoWrapper: { padding: 8, marginBottom: 24, width: '100%' },
+  infoWrapper: {
+    padding: 8,
+    marginBottom: 24,
+    width: '100%',
+  },
   infoTitle: {
     fontSize: 20,
     color: theme.colors.primary,
@@ -226,6 +236,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     marginTop: 12,
+  },
+  buttonContainer: {
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    paddingVertical: 20,
   },
   warningText: {
     fontSize: 14,

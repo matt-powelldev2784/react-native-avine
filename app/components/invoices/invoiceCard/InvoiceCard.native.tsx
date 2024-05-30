@@ -15,6 +15,7 @@ import IconButton from '../../../ui/iconButton/IconButton'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { createNativePdf } from '../invoicePdf/native/createNativePdf'
 import { nativeInvoiceHtml } from '../invoicePdf/native/nativeInvoiceHtml'
+import Button from '../../../ui/button/Button'
 
 interface InvoiceCardProps {
   invoiceId: string
@@ -132,6 +133,11 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
           />
         </View>
 
+        <View style={styles.buttonContainer}>
+          <Button text={'Download Invoice'} onPress={handleDownloadInvoice} />
+          <Button text={'Edit Invoice'} onPress={handleNavigateToEditInvoice} />
+        </View>
+
         {isPaid ? (
           <Text style={styles.warningText}>
             If you wish to edit this invoice please set the status back not
@@ -230,6 +236,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     marginTop: 12,
+  },
+  buttonContainer: {
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    paddingVertical: 20,
   },
   warningText: {
     fontSize: 14,
