@@ -9,6 +9,10 @@ import usePostApiData from '../../../../utils/hooks/usePostApiData'
 import IconButton from '../../../../ui/iconButton/IconButton'
 import { getJob } from '../../../../db/jobs/getJob'
 import { deleteJob } from '../../../../db/jobs/deleteJob'
+import Button from '../../../../ui/button/Button'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 
 interface JobCardProps {
   jobId: string
@@ -19,6 +23,7 @@ const JobCard = ({ jobId }: JobCardProps) => {
   const [modalVisible, setModalVisible] = useState(false)
 
   //hooks
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { getApiIsLoading, data: jobData } = useGetApiData({
     apiFunction: async () => getJob(jobId),
   })
@@ -28,8 +33,11 @@ const JobCard = ({ jobId }: JobCardProps) => {
   })
 
   //functions
-  const handleDeleteClientPress = () => {
+  const handleDeleteJobPress = () => {
     setModalVisible(true)
+  }
+  const handleNavigateToEditJob = () => {
+    navigation.navigate('EditJob', { jobId })
   }
   const handleConfirmDeleteClientPress = async () => {
     setApiFunction(() => async () => deleteJob(jobId))
@@ -56,14 +64,20 @@ const JobCard = ({ jobId }: JobCardProps) => {
 
           <View style={styles.roundIconsContainer}>
             <IconButton
-              onPress={handleDeleteClientPress}
+              onPress={handleDeleteJobPress}
               imgSource={require('../../../../../assets/bin_white.png')}
               size={35}
-              width={20}
-              height={25}
+              width={25}
+              height={30}
             />
 
             <Text />
+
+            <IconButton
+              size={34}
+              imgSource={require('../../../../../assets/edit_white.png')}
+              onPress={handleNavigateToEditJob}
+            />
           </View>
         </View>
 
@@ -87,6 +101,16 @@ const JobCard = ({ jobId }: JobCardProps) => {
           <DataLineItem name={'Time'} value={`${jobData.time} hrs`} />
 
           <LongDataItem name={'Notes'} value={jobData.notes || ''} />
+        </View>
+
+        {/* --------------------------  Buttons -------------------------- */}
+        <View style={styles.buttonContainer}>
+          <Button
+            text={'Delete Job'}
+            onPress={handleDeleteJobPress}
+            backgroundColor="red"
+          />
+          <Button text={'Edit Job'} onPress={handleNavigateToEditJob} />
         </View>
       </View>
 
@@ -180,6 +204,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     marginTop: 12,
+  },
+  buttonContainer: {
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    paddingVertical: 20,
   },
   warningText: {
     fontSize: 14,
