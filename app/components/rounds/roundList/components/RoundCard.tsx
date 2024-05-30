@@ -90,11 +90,11 @@ const RoundCard = ({ roundId }: RoundCardProps) => {
         {/* --------------------------  Buttons -------------------------- */}
         <View style={styles.buttonContainer}>
           <Button
-            text={'Delete Job'}
+            text={'Delete Round'}
             onPress={handleDeleteRoundPress}
             backgroundColor="red"
           />
-          <Button text={'Edit Job'} onPress={handleNavigateToEditRound} />
+          <Button text={'Edit Round'} onPress={handleNavigateToEditRound} />
         </View>
       </View>
 
