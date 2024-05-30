@@ -74,6 +74,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
   return (
     <View style={styles.cardWrapperWeb}>
       <View style={styles.cardContainer}>
+        {/* --------------------------  Title Conatiner Blue  -------------------------- */}
         <View style={styles.titleContainer}>
           <Image
             source={require('../../../../assets/paper_white.png')}
@@ -107,6 +108,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
           </View>
         </View>
 
+        {/* --------------------------  Invoice Info -------------------------- */}
         <View style={styles.switchWrapper}>
           <View style={styles.line} />
           <DataSwitchItem
@@ -129,6 +131,7 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
           />
         </View>
 
+        {/* --------------------------  Buttons -------------------------- */}
         <View style={styles.buttonContainer}>
           <Button text={'Download Invoice'} onPress={handleDownloadInvoice} />
           <Button text={'Edit Invoice'} onPress={handleNavigateToEditInvoice} />
