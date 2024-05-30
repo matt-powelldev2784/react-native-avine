@@ -50,7 +50,7 @@ export const addInvoice = async ({
         job: job,
         client: client,
         price: job.price,
-        description: `Window cleaning on services completed on ${convertPlannerDateToShortDate(
+        description: `Window cleaning services completed on ${convertPlannerDateToShortDate(
           plannerDate,
         )}`,
         isPaid: false,

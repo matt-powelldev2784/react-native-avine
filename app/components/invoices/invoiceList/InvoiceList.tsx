@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingHorizontal: 5,
     minWidth: 250,
-    minHeight: 350,
+    minHeight: 445,
     flex: 1,
     transform: [{ translateY: -5 }],
   },

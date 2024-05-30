@@ -53,8 +53,6 @@ export const toggleJobIsComplete = async ({
       )
     }
 
-    console.log('plannerJobRef', plannerJobRef)
-    console.log('plannerDate', plannerDate)
 
     if (isComplete === true) {
       await updateDoc(plannerDateDocRef, {
