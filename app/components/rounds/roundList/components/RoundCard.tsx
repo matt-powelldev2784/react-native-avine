@@ -50,7 +50,7 @@ const RoundCard = ({ roundId }: RoundCardProps) => {
           />
 
           <Text style={styles.titleText} numberOfLines={1} ellipsizeMode="tail">
-            {roundData.roundName}
+            Round Details
           </Text>
 
           <View style={styles.roundIconsContainer}>
@@ -68,7 +68,6 @@ const RoundCard = ({ roundId }: RoundCardProps) => {
 
         {/* --------------------------  Info Conatiner White  -------------------------- */}
         <View style={styles.infoWrapper}>
-          <Text style={styles.infoTitle}>Client Details:</Text>
           <DataLineItem name={'Round Name'} value={roundData.roundName} />
           <DataLineItem name={'Location'} value={roundData.location} />
           <DataLineItem name={'Frequency'} value={roundData.frequency} />

@@ -51,7 +51,7 @@ const JobCard = ({ jobId }: JobCardProps) => {
           />
 
           <Text style={styles.titleText} numberOfLines={1} ellipsizeMode="tail">
-            {jobData.jobName}
+            Job Details
           </Text>
 
           <View style={styles.roundIconsContainer}>
@@ -69,7 +69,6 @@ const JobCard = ({ jobId }: JobCardProps) => {
 
         {/* --------------------------  Info Conatiner White  -------------------------- */}
         <View style={styles.infoWrapper}>
-          <Text style={styles.infoTitle}>Job Details:</Text>
           <DataLineItem name={'Contact Name'} value={jobData.contactName} />
           <DataLineItem name={'Contact Tel'} value={jobData.contactTel} />
 

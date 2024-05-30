@@ -84,11 +84,11 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
           />
 
           <Text style={styles.titleText} numberOfLines={1} ellipsizeMode="tail">
-            {invoiceData.job.jobName}
+            Invoice
           </Text>
 
           <View style={styles.dateTextContainer}>
-            <Text style={styles.dateText}>{shortDateString}</Text>
+            <Text style={styles.dateText}>{invoiceData.invoiceId}</Text>
           </View>
 
           <View style={styles.roundIconsContainer}>
@@ -110,17 +110,6 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
           </View>
         </View>
 
-        <View style={styles.infoWrapper}>
-          <Text style={styles.infoTitle}>Invoice Details:</Text>
-          <DataLineItem name={'Date Completed'} value={shortDateString} />
-          <DataLineItem name={'Price'} value={`£${invoiceData.price}`} />
-
-          <LongDataItem
-            name={'Description'}
-            value={invoiceData.description || ''}
-          />
-        </View>
-
         <View style={styles.switchWrapper}>
           <View style={styles.line} />
           <DataSwitchItem
@@ -129,6 +118,17 @@ const InvoiceCard = ({ invoiceId }: InvoiceCardProps) => {
             isLoading={isPaidApiIsLoading}
             formik={formikIsPaid}
             error={isPaidError || false}
+          />
+        </View>
+
+        <View style={styles.infoWrapper}>
+          <DataLineItem name={'Job Name'} value={invoiceData.job.jobName} />
+          <DataLineItem name={'Date Completed'} value={shortDateString} />
+          <DataLineItem name={'Price'} value={`£${invoiceData.price}`} />
+
+          <LongDataItem
+            name={'Description'}
+            value={invoiceData.description || ''}
           />
         </View>
 

@@ -9,6 +9,9 @@ import LongDataItem from '../../../../ui/dataItems/LongDataItem'
 import { deleteClient } from '../../../../db/clients/deleteClient'
 import usePostApiData from '../../../../utils/hooks/usePostApiData'
 import IconButton from '../../../../ui/iconButton/IconButton'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 
 interface ClientCardProps {
   clientId: string
@@ -19,6 +22,7 @@ const ClientCard = ({ clientId }: ClientCardProps) => {
   const [modalVisible, setModalVisible] = useState(false)
 
   //hooks
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { getApiIsLoading, data: clientData } = useGetApiData({
     apiFunction: async () => getClient(clientId),
   })
@@ -30,6 +34,9 @@ const ClientCard = ({ clientId }: ClientCardProps) => {
   //functions
   const handleDeleteClientPress = () => {
     setModalVisible(true)
+  }
+  const handleNavigateToEditClient = () => {
+    navigation.navigate('EditClient', { clientId })
   }
   const handleConfirmDeleteClientPress = async () => {
     setApiFunction(() => async () => deleteClient(clientId))
@@ -51,7 +58,7 @@ const ClientCard = ({ clientId }: ClientCardProps) => {
           />
 
           <Text style={styles.titleText} numberOfLines={1} ellipsizeMode="tail">
-            {clientData.name}
+            Client Details
           </Text>
 
           <View style={styles.roundIconsContainer}>
@@ -59,17 +66,22 @@ const ClientCard = ({ clientId }: ClientCardProps) => {
               onPress={handleDeleteClientPress}
               imgSource={require('../../../../../assets/bin_white.png')}
               size={35}
-              width={20}
-              height={25}
+              width={25}
+              height={30}
             />
 
             <Text />
+
+            <IconButton
+              size={34}
+              imgSource={require('../../../../../assets/edit_white.png')}
+              onPress={handleNavigateToEditClient}
+            />
           </View>
         </View>
 
         {/* --------------------------  Info Conatiner White  -------------------------- */}
         <View style={styles.infoWrapper}>
-          <Text style={styles.infoTitle}>Client Details:</Text>
           <DataLineItem name={'Contact Name'} value={clientData.name} />
           <DataLineItem
             name={'Company Name'}
