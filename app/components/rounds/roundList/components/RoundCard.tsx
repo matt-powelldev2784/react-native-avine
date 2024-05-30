@@ -8,6 +8,10 @@ import usePostApiData from '../../../../utils/hooks/usePostApiData'
 import IconButton from '../../../../ui/iconButton/IconButton'
 import { getRound } from '../../../../db/rounds/getRound'
 import { deleteRound } from '../../../../db/rounds/deleteRound'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import Button from '../../../../ui/button/Button'
 
 interface RoundCardProps {
   roundId: string
@@ -18,6 +22,7 @@ const RoundCard = ({ roundId }: RoundCardProps) => {
   const [modalVisible, setModalVisible] = useState(false)
 
   //hooks
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { getApiIsLoading, data: roundData } = useGetApiData({
     apiFunction: async () => getRound(roundId),
   })
@@ -29,6 +34,9 @@ const RoundCard = ({ roundId }: RoundCardProps) => {
   //functions
   const handleDeleteRoundPress = () => {
     setModalVisible(true)
+  }
+  const handleNavigateToEditRound = () => {
+    navigation.navigate('EditRound', { roundId })
   }
   const handleConfirmDeleteClientPress = async () => {
     setApiFunction(() => async () => deleteRound(roundId))
@@ -63,6 +71,12 @@ const RoundCard = ({ roundId }: RoundCardProps) => {
             />
 
             <Text />
+
+            <IconButton
+              size={34}
+              imgSource={require('../../../../../assets/edit_white.png')}
+              onPress={handleNavigateToEditRound}
+            />
           </View>
         </View>
 
@@ -71,6 +85,16 @@ const RoundCard = ({ roundId }: RoundCardProps) => {
           <DataLineItem name={'Round Name'} value={roundData.roundName} />
           <DataLineItem name={'Location'} value={roundData.location} />
           <DataLineItem name={'Frequency'} value={roundData.frequency} />
+        </View>
+
+        {/* --------------------------  Buttons -------------------------- */}
+        <View style={styles.buttonContainer}>
+          <Button
+            text={'Delete Job'}
+            onPress={handleDeleteRoundPress}
+            backgroundColor="red"
+          />
+          <Button text={'Edit Job'} onPress={handleNavigateToEditRound} />
         </View>
       </View>
 
@@ -164,6 +188,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     marginTop: 12,
+  },
+  buttonContainer: {
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    paddingVertical: 20,
   },
   warningText: {
     fontSize: 14,
