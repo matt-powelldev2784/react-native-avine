@@ -12,6 +12,7 @@ import IconButton from '../../../../ui/iconButton/IconButton'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import Button from '../../../../ui/button/Button'
 
 interface ClientCardProps {
   clientId: string
@@ -93,6 +94,16 @@ const ClientCard = ({ clientId }: ClientCardProps) => {
           <DataLineItem name={'Post Code'} value={clientData.postcode} />
           <DataLineItem name={'Contact Tel'} value={clientData.contactTel} />
           <LongDataItem name={'Notes'} value={clientData.notes || ''} />
+        </View>
+
+        {/* --------------------------  Buttons -------------------------- */}
+        <View style={styles.buttonContainer}>
+          <Button
+            text={'Delete Client'}
+            onPress={handleDeleteClientPress}
+            backgroundColor="red"
+          />
+          <Button text={'Edit Client'} onPress={handleNavigateToEditClient} />
         </View>
       </View>
 
@@ -186,6 +197,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     marginTop: 12,
+  },
+  buttonContainer: {
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    paddingVertical: 20,
   },
   warningText: {
     fontSize: 14,
