@@ -1,17 +1,17 @@
-import { View, Text, StyleSheet, Platform, Image } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { useState } from 'react'
 import { ConfirmModal, Loading } from '../../../../ui'
 import useGetApiData from '../../../../utils/hooks/useGetApiData'
 import theme from '../../../../utils/theme/theme'
 import DataLineItem from '../../../../ui/dataItems/DataLineItem'
 import usePostApiData from '../../../../utils/hooks/usePostApiData'
-import IconButton from '../../../../ui/iconButton/IconButton'
-import { getRound } from '../../../../db/rounds/getRound'
 import { deleteRound } from '../../../../db/rounds/deleteRound'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 import Button from '../../../../ui/button/Button'
+import { getSingleRoundWithRelatedJobs } from '../../../../db/rounds/withRelatedJobs/getSingleRoundWithRelatedJobs'
+import JobListItem from './JobListItem'
 
 interface RoundCardProps {
   roundId: string
@@ -24,7 +24,7 @@ const RoundCard = ({ roundId }: RoundCardProps) => {
   //hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { getApiIsLoading, data: roundData } = useGetApiData({
-    apiFunction: async () => getRound(roundId),
+    apiFunction: async () => getSingleRoundWithRelatedJobs(roundId),
   })
   const { postApiIsLoading, setApiFunction } = usePostApiData({
     onSuccessScreen: 'Rounds',
@@ -53,38 +53,30 @@ const RoundCard = ({ roundId }: RoundCardProps) => {
         {/* --------------------------  Title Conatiner Blue  -------------------------- */}
         <View style={styles.titleContainer}>
           <Image
-            source={require('../../../../../assets/person_white.png')}
-            style={{ width: 27, height: 32, margin: 8 }}
+            source={require('../../../../../assets/round.png')}
+            style={{ width: 32, height: 32, margin: 8 }}
           />
 
           <Text style={styles.titleText} numberOfLines={1} ellipsizeMode="tail">
             Round Details
           </Text>
-
-          <View style={styles.roundIconsContainer}>
-            <IconButton
-              onPress={handleDeleteRoundPress}
-              imgSource={require('../../../../../assets/bin_white.png')}
-              size={35}
-              width={20}
-              height={25}
-            />
-
-            <Text />
-
-            <IconButton
-              size={34}
-              imgSource={require('../../../../../assets/edit_white.png')}
-              onPress={handleNavigateToEditRound}
-            />
-          </View>
         </View>
 
-        {/* --------------------------  Info Conatiner White  -------------------------- */}
+        {/* --------------------------  Info Container White  -------------------------- */}
         <View style={styles.infoWrapper}>
           <DataLineItem name={'Round Name'} value={roundData.roundName} />
           <DataLineItem name={'Location'} value={roundData.location} />
           <DataLineItem name={'Frequency'} value={roundData.frequency} />
+        </View>
+
+        {/* -------------------------- Job List -------------------------- */}
+        <View style={styles.jobListContainer}>
+          <Text style={styles.titleTextBlue}>Related Jobs:</Text>
+          {roundData.relatedJobs.map((job) => (
+            <View style={styles.jobList} key={job.id}>
+              <JobListItem job={job} />
+            </View>
+          ))}
         </View>
 
         {/* --------------------------  Buttons -------------------------- */}
@@ -123,7 +115,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     marginTop: 8,
     width: '100%',
-    maxWidth: 700,
+    maxWidth: 600,
     marginBottom: 8,
     backgroundColor: 'white',
     borderRadius: 12,
@@ -147,16 +139,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
   },
-  roundIconsContainer: {
-    position: 'absolute',
-    top: 8,
-    paddingHorizontal: 8,
-    overflow: 'hidden',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: Platform.OS === 'web' ? '96%' : '100%',
-    height: 40,
+  titleTextBlue: {
+    color: theme.colors.primary,
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 8,
   },
   dateTextContainer: {
     borderRadius: 12,
@@ -180,7 +167,12 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: theme.colors.primary,
   },
-  infoWrapper: { padding: 8, marginBottom: 24, width: '100%' },
+  infoWrapper: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginBottom: 24,
+    width: '100%',
+  },
   infoTitle: {
     fontSize: 20,
     color: theme.colors.primary,
@@ -188,6 +180,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     marginTop: 12,
+  },
+  jobListContainer: {
+    width: '100%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+  },
+  jobList: {
+    width: '100%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonContainer: {
     display: 'flex',
