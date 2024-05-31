@@ -151,7 +151,7 @@ const RoundList = () => {
            </View>
          </View>
 
-         {/* -------------------- Job Cards ---------------------------- */}
+         {/* -------------------- Round Cards ---------------------------- */}
          {searchIsActive ? (
            <View style={[styles.searchResultsContainer, searchResultsStyle]}>
              {isLargeWeb ? (
