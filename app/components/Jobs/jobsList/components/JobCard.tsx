@@ -16,9 +16,10 @@ import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavi
 
 interface JobCardProps {
   jobId: string
+  setRoundCardModalVisible: (value: boolean) => void
 }
 
-const JobCard = ({ jobId }: JobCardProps) => {
+const JobCard = ({ jobId, setRoundCardModalVisible }: JobCardProps) => {
   //state
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -28,7 +29,7 @@ const JobCard = ({ jobId }: JobCardProps) => {
     apiFunction: async () => getJob(jobId),
   })
   const { postApiIsLoading, setApiFunction } = usePostApiData({
-    onSuccessScreen: 'Jobs',
+    onSuccessScreen: 'JobsMenu',
     refreshScreen: { refresh: true },
   })
 
@@ -37,6 +38,7 @@ const JobCard = ({ jobId }: JobCardProps) => {
     setModalVisible(true)
   }
   const handleNavigateToEditJob = () => {
+    setRoundCardModalVisible(false)
     navigation.navigate('EditJob', { jobId })
   }
   const handleConfirmDeleteClientPress = async () => {
@@ -133,20 +135,17 @@ const styles = StyleSheet.create({
   cardWrapperWeb: {
     width: '100%',
     padding: 12,
-    backgroundColor: theme.colors.backgroundGrey,
     alignItems: 'center',
+    marginTop: 36,
   },
   cardContainer: {
     marginTop: 8,
     width: '100%',
-    maxWidth: 700,
+    maxWidth: 600,
     marginBottom: 8,
     backgroundColor: 'white',
     borderRadius: 12,
     overflow: 'hidden',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: theme.colors.primary,
   },
   titleContainer: {
     padding: 16,

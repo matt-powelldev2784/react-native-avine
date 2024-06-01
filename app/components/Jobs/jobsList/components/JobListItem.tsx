@@ -1,21 +1,27 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import theme from '../../../../utils/theme/theme'
 import IconButton from '../../../../ui/iconButton/IconButton'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 import { JobWithIdT } from '../../../../types/JobT'
+import CardModal from '../../../../ui/modal/CardModal'
+import JobCard from './JobCard'
 
 const JobListItem = ({ id, jobName, contactTel }: JobWithIdT) => {
+  // state
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
+
   //hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
-  const handleEditClientPress = () => {
+  // functions
+  const handleEditJobPress = () => {
     navigation.navigate('EditJob', { jobId: id })
   }
-  const handleViewClientPress = () => {
-    navigation.navigate('JobCardView', { jobId: id })
+  const handleViewJobPress = () => {
+    setModalVisible(true)
   }
 
   return (
@@ -33,17 +39,27 @@ const JobListItem = ({ id, jobName, contactTel }: JobWithIdT) => {
 
         <View style={styles.rightContainer}>
           <IconButton
-            onPress={handleViewClientPress}
+            onPress={handleViewJobPress}
             imgSource={require('../../../../../assets/eye.png')}
             size={35}
           />
           <IconButton
-            onPress={handleEditClientPress}
+            onPress={handleEditJobPress}
             imgSource={require('../../../../../assets/edit.png')}
             size={35}
           />
         </View>
       </View>
+
+      {modalVisible ? (
+        <CardModal
+          isVisible={modalVisible}
+          onCancel={() => setModalVisible(false)}
+          reactElement={
+            <JobCard jobId={id} setRoundCardModalVisible={setModalVisible} />
+          }
+        />
+      ) : null}
     </View>
   )
 }
