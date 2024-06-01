@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Platform, Image } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { useState } from 'react'
 import { ConfirmModal, Loading } from '../../../../ui'
 import useGetApiData from '../../../../utils/hooks/useGetApiData'
@@ -6,7 +6,6 @@ import theme from '../../../../utils/theme/theme'
 import DataLineItem from '../../../../ui/dataItems/DataLineItem'
 import LongDataItem from '../../../../ui/dataItems/LongDataItem'
 import usePostApiData from '../../../../utils/hooks/usePostApiData'
-import IconButton from '../../../../ui/iconButton/IconButton'
 import { getJob } from '../../../../db/jobs/getJob'
 import { deleteJob } from '../../../../db/jobs/deleteJob'
 import Button from '../../../../ui/button/Button'
@@ -63,24 +62,6 @@ const JobCard = ({ jobId, setRoundCardModalVisible }: JobCardProps) => {
           <Text style={styles.titleText} numberOfLines={1} ellipsizeMode="tail">
             Job Details
           </Text>
-
-          <View style={styles.roundIconsContainer}>
-            <IconButton
-              onPress={handleDeleteJobPress}
-              imgSource={require('../../../../../assets/bin_white.png')}
-              size={35}
-              width={25}
-              height={30}
-            />
-
-            <Text />
-
-            <IconButton
-              size={34}
-              imgSource={require('../../../../../assets/edit_white.png')}
-              onPress={handleNavigateToEditJob}
-            />
-          </View>
         </View>
 
         {/* --------------------------  Info Conatiner White  -------------------------- */}
@@ -161,17 +142,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
-  },
-  roundIconsContainer: {
-    position: 'absolute',
-    top: 8,
-    paddingHorizontal: 8,
-    overflow: 'hidden',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: Platform.OS === 'web' ? '96%' : '100%',
-    height: 40,
   },
   dateTextContainer: {
     borderRadius: 12,
