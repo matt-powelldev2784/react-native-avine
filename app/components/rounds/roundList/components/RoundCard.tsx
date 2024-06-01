@@ -15,9 +15,10 @@ import JobListItem from './JobListItem'
 
 interface RoundCardProps {
   roundId: string
+  roundCardModalVisible: (value: boolean) => void
 }
 
-const RoundCard = ({ roundId }: RoundCardProps) => {
+const RoundCard = ({ roundId, roundCardModalVisible }: RoundCardProps) => {
   //state
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -27,7 +28,7 @@ const RoundCard = ({ roundId }: RoundCardProps) => {
     apiFunction: async () => getSingleRoundWithRelatedJobs(roundId),
   })
   const { postApiIsLoading, setApiFunction } = usePostApiData({
-    onSuccessScreen: 'Rounds',
+    onSuccessScreen: 'RoundMenu',
     refreshScreen: { refresh: true },
   })
 
@@ -36,6 +37,7 @@ const RoundCard = ({ roundId }: RoundCardProps) => {
     setModalVisible(true)
   }
   const handleNavigateToEditRound = () => {
+    roundCardModalVisible(false)
     navigation.navigate('EditRound', { roundId })
   }
   const handleConfirmDeleteClientPress = async () => {
@@ -48,7 +50,7 @@ const RoundCard = ({ roundId }: RoundCardProps) => {
   }
 
   return (
-    <View style={styles.cardWrapperWeb}>
+    <View style={[styles.cardWrapperWeb]}>
       <View style={styles.cardContainer}>
         {/* --------------------------  Title Conatiner Blue  -------------------------- */}
         <View style={styles.titleContainer}>
@@ -74,7 +76,10 @@ const RoundCard = ({ roundId }: RoundCardProps) => {
           <Text style={styles.titleTextBlue}>Related Jobs:</Text>
           {roundData.relatedJobs.map((job) => (
             <View style={styles.jobList} key={job.id}>
-              <JobListItem job={job} />
+              <JobListItem
+                job={job}
+                roundCardModalVisible={roundCardModalVisible}
+              />
             </View>
           ))}
         </View>
@@ -109,8 +114,8 @@ const styles = StyleSheet.create({
   cardWrapperWeb: {
     width: '100%',
     padding: 12,
-    backgroundColor: theme.colors.backgroundGrey,
     alignItems: 'center',
+    marginTop: 36,
   },
   cardContainer: {
     marginTop: 8,
@@ -120,9 +125,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 12,
     overflow: 'hidden',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: theme.colors.primary,
   },
   titleContainer: {
     padding: 16,

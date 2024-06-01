@@ -10,15 +10,17 @@ import { useDeviceType } from '../../../../utils/hooks/useDeviceTypes'
 
 interface JobListItemProps {
   job: JobWithIdT
+  roundCardModalVisible: (value: boolean) => void
 }
 
-const JobListItem = ({ job }: JobListItemProps) => {
+const JobListItem = ({ job, roundCardModalVisible }: JobListItemProps) => {
   //hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { isLargeWeb } = useDeviceType()
 
   //functions
   const handleNavigateToViewJob = () => {
+    roundCardModalVisible(false)
     navigation.navigate('JobCardView', { jobId: job.id })
   }
 

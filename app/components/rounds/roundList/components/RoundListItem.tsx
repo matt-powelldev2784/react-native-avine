@@ -1,21 +1,27 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import theme from '../../../../utils/theme/theme'
 import IconButton from '../../../../ui/iconButton/IconButton'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 import { RoundWithIdT } from '../../../../types/RoundT'
+import RoundCard from './RoundCard'
+import CardModal from '../../../../ui/modal/CardModal'
 
 const RoundListItem = ({ id, roundName, frequency }: RoundWithIdT) => {
+  // state
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
+
   //hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
+  // functions
   const handleEditRoundPress = () => {
     navigation.navigate('EditRound', { roundId: id })
   }
   const handleViewRoundPress = () => {
-    navigation.navigate('RoundCardView', { roundId: id })
+    setModalVisible(true)
   }
 
   return (
@@ -44,6 +50,16 @@ const RoundListItem = ({ id, roundName, frequency }: RoundWithIdT) => {
           />
         </View>
       </View>
+
+      {modalVisible ? (
+        <CardModal
+          isVisible={modalVisible}
+          onCancel={() => setModalVisible(false)}
+          reactElement={
+            <RoundCard roundId={id} roundCardModalVisible={setModalVisible} />
+          }
+        />
+      ) : null}
     </View>
   )
 }
