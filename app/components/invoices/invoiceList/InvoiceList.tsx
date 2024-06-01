@@ -21,6 +21,7 @@ import InvoiceListItem from './components/InvoiceListItem'
 const InvoiceList = () => {
   //state
   const [searchIsActive, setSearchIsActive] = useState<boolean>(false)
+  const [currentSearch, setCurrentSearch] = useState<() => void>(() => {})
 
   //hooks
   const { isLargeWeb } = useDeviceType()
@@ -46,6 +47,7 @@ const InvoiceList = () => {
     resetSearchForm()
     formik.handleSubmit()
     setSearchIsActive(true)
+    setCurrentSearch(() => handleSearchAllDueInvoicesPress)
   }
   const handleSearchAllPaidInvoicesPress = () => {
     formik.setFieldValue('findAll', true)
@@ -53,12 +55,14 @@ const InvoiceList = () => {
     resetSearchForm()
     formik.handleSubmit()
     setSearchIsActive(true)
+    setCurrentSearch(() => handleSearchAllPaidInvoicesPress)
   }
   const handleSearchPress = async () => {
     formik.setFieldValue('findAll', false)
     resetSearchForm()
     formik.handleSubmit()
     setSearchIsActive(true)
+    setCurrentSearch(() => handleSearchPress)
   }
   const handleMoreResultsPress = async () => {
     formik.handleSubmit()
@@ -69,12 +73,21 @@ const InvoiceList = () => {
     setLastVisibleDocument(null)
     setSearchIsActive(false)
   }
+  const addOrRemoveIsPaidInvoice = () => {
+    currentSearch()
+  }
 
   //variables
   const invoiceDataHasLength = invoiceData.length > 0
   const invoiceCards = invoiceDataHasLength
     ? invoiceData.map((invoice: InvoiceWithIdT) => {
-        return <InvoiceListItem {...invoice} key={invoice.id} />
+        return (
+          <InvoiceListItem
+            {...invoice}
+            key={invoice.id}
+            addOrRemoveIsPaidInvoice={addOrRemoveIsPaidInvoice}
+          />
+        )
       })
     : null
   const allDataReturned = docCount === invoiceData.length
