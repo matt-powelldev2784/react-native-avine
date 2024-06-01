@@ -56,7 +56,10 @@ const RoundListItem = ({ id, roundName, frequency }: RoundWithIdT) => {
           isVisible={modalVisible}
           onCancel={() => setModalVisible(false)}
           reactElement={
-            <RoundCard roundId={id} roundCardModalVisible={setModalVisible} />
+            <RoundCard
+              roundId={id}
+              setRoundCardModalVisible={setModalVisible}
+            />
           }
         />
       ) : null}

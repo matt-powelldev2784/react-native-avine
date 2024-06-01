@@ -15,10 +15,10 @@ import JobListItem from './JobListItem'
 
 interface RoundCardProps {
   roundId: string
-  roundCardModalVisible: (value: boolean) => void
+  setRoundCardModalVisible: (value: boolean) => void
 }
 
-const RoundCard = ({ roundId, roundCardModalVisible }: RoundCardProps) => {
+const RoundCard = ({ roundId, setRoundCardModalVisible }: RoundCardProps) => {
   //state
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -37,7 +37,7 @@ const RoundCard = ({ roundId, roundCardModalVisible }: RoundCardProps) => {
     setModalVisible(true)
   }
   const handleNavigateToEditRound = () => {
-    roundCardModalVisible(false)
+    setRoundCardModalVisible(false)
     navigation.navigate('EditRound', { roundId })
   }
   const handleConfirmDeleteClientPress = async () => {
@@ -78,7 +78,7 @@ const RoundCard = ({ roundId, roundCardModalVisible }: RoundCardProps) => {
             <View style={styles.jobList} key={job.id}>
               <JobListItem
                 job={job}
-                roundCardModalVisible={roundCardModalVisible}
+                setRoundCardModalVisible={setRoundCardModalVisible}
               />
             </View>
           ))}
