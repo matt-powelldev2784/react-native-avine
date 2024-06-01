@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Platform } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native'
@@ -11,7 +11,6 @@ import theme from '../../../utils/theme/theme'
 import DataLineItem from '../../../ui/dataItems/DataLineItem'
 import { convertPlannerDateToShortDate } from '../../../utils/convertPlannerDateToShortDate'
 import LongDataItem from '../../../ui/dataItems/LongDataItem'
-import IconButton from '../../../ui/iconButton/IconButton'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { createNativePdf } from '../invoicePdf/native/createNativePdf'
 import { nativeInvoiceHtml } from '../invoicePdf/native/nativeInvoiceHtml'
@@ -101,7 +100,6 @@ const InvoiceCard = ({
 
         {/* --------------------------  Invoice Info -------------------------- */}
         <View style={styles.switchWrapper}>
-          <View style={styles.line} />
           <DataSwitchItem
             name={'Invoice Paid'}
             value={isPaid}

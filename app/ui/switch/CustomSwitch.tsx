@@ -7,12 +7,14 @@ interface CustomSwitchProps {
   value: boolean
   onValueChange: () => void
   disabled?: boolean
+  color?: string
 }
 
 const CustomSwitch = ({
   value,
   onValueChange,
   disabled,
+  color,
 }: CustomSwitchProps) => {
   return (
     <View>
@@ -25,10 +27,10 @@ const CustomSwitch = ({
         circleSize={30}
         barHeight={38}
         circleBorderWidth={0}
-        backgroundActive={theme.colors.primary}
+        backgroundActive={color || theme.colors.primary}
         backgroundInactive={'#C4C4C4'}
         circleActiveColor={'white'}
-        circleInActiveColor={theme.colors.primary}
+        circleInActiveColor={color || theme.colors.primary}
         // renderInsideCircle={() => <CustomComponent />} // custom component to render inside the Switch circle (Text, Image, etc.)
         changeValueImmediately={true} // if rendering inside circle, change state immediately or wait for animation to complete
         innerCircleStyle={{}} // style for inner animated circle for what you (may) be rendering inside the circle

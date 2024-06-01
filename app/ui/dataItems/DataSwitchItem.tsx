@@ -72,8 +72,6 @@ const DataSwitchItem = ({
           />
         </View>
       </View>
-
-      <View style={styles.line} />
     </>
   )
 }
@@ -81,10 +79,12 @@ const DataSwitchItem = ({
 const styles = StyleSheet.create({
   container: {
     marginVertical: 16,
-    paddingHorizontal: 8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    backgroundColor: theme.colors.backgroundGrey,
+    borderRadius: 16,
+    padding: 16,
   },
   textContainer: {
     flexDirection: 'row',
@@ -108,10 +108,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     padding: 4,
     borderRadius: 4,
-  },
-  line: {
-    height: 1,
-    backgroundColor: theme.colors.primary,
   },
 })
 

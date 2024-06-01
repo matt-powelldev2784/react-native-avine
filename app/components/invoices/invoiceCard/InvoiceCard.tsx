@@ -96,7 +96,6 @@ const InvoiceCard = ({
 
         {/* --------------------------  Invoice Info -------------------------- */}
         <View style={styles.switchWrapper}>
-          <View style={styles.line} />
           <DataSwitchItem
             name={'Invoice Paid'}
             value={isPaid}
@@ -203,7 +202,7 @@ const styles = StyleSheet.create({
   },
   line: {
     height: 1,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.black,
   },
   infoWrapper: {
     padding: 8,
