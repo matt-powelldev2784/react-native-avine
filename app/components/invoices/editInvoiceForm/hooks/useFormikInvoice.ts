@@ -21,7 +21,7 @@ const useFormikInvoice = ({ invoiceId }: useFormikStepsInterface) => {
   })
 
   const { postApiIsLoading, setApiFunction } = usePostApiData({
-    onSuccessScreen: 'InvoiceCardView',
+    onSuccessScreen: 'EditInvoice',
     refreshScreen: { invoiceId },
   })
 

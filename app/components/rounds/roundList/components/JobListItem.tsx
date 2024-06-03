@@ -1,28 +1,17 @@
 import { View, Text, StyleSheet, ViewStyle } from 'react-native'
 import React from 'react'
 import theme from '../../../../utils/theme/theme'
-import IconButton from '../../../../ui/iconButton/IconButton'
-import { useNavigation } from '@react-navigation/native'
-import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
-import { StackNavigationProp } from '@react-navigation/stack'
 import { JobWithIdT } from '../../../../types/JobT'
 import { useDeviceType } from '../../../../utils/hooks/useDeviceTypes'
 
 interface JobListItemProps {
   job: JobWithIdT
-  setRoundCardModalVisible: (value: boolean) => void
+  relatedJobNumber: number
 }
 
-const JobListItem = ({ job, setRoundCardModalVisible }: JobListItemProps) => {
+const JobListItem = ({ job, relatedJobNumber }: JobListItemProps) => {
   //hooks
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { isLargeWeb } = useDeviceType()
-
-  //functions
-  const handleNavigateToViewJob = () => {
-    setRoundCardModalVisible(false)
-    navigation.navigate('JobCardView', { jobId: job.id })
-  }
 
   //variables
   const jobTextStyle: ViewStyle = isLargeWeb
@@ -31,12 +20,8 @@ const JobListItem = ({ job, setRoundCardModalVisible }: JobListItemProps) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.iconConatiner}>
-        <IconButton
-          size={34}
-          imgSource={require('../../../../../assets/eye.png')}
-          onPress={handleNavigateToViewJob}
-        />
+      <View style={styles.circle}>
+        <Text style={styles.circleText}>{relatedJobNumber}</Text>
       </View>
 
       <View style={(styles.textContainer, jobTextStyle)}>
@@ -71,6 +56,18 @@ const styles = StyleSheet.create({
   iconConatiner: {
     width: '20%',
     maxWidth: 38,
+  },
+  circle: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: theme.colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  circleText: {
+    color: 'white',
+    fontSize: 16,
   },
   textContainer: {
     flexDirection: 'column',

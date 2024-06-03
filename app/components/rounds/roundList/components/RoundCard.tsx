@@ -73,13 +73,13 @@ const RoundCard = ({ roundId, setRoundCardModalVisible }: RoundCardProps) => {
 
         {/* -------------------------- Job List -------------------------- */}
         <View style={styles.jobListContainer}>
-          <Text style={styles.titleTextBlue}>Related Jobs:</Text>
-          {roundData.relatedJobs.map((job) => (
+          <Text style={styles.relatedJobTitle}>Related Jobs:</Text>
+          <Text style={styles.relatedJobInfo}>
+            To reorder the related jobs click the edit round button below.
+          </Text>
+          {roundData.relatedJobs.map((job, index) => (
             <View style={styles.jobList} key={job.id}>
-              <JobListItem
-                job={job}
-                setRoundCardModalVisible={setRoundCardModalVisible}
-              />
+              <JobListItem job={job} relatedJobNumber={index + 1} />
             </View>
           ))}
         </View>
@@ -141,10 +141,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
   },
-  titleTextBlue: {
+  titleTextBlue: {},
+  relatedJobTitle: {
     color: theme.colors.primary,
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  relatedJobInfo: {
+    color: theme.colors.primary,
+    fontSize: 16,
+    textAlign: 'center',
     marginBottom: 8,
   },
   dateTextContainer: {

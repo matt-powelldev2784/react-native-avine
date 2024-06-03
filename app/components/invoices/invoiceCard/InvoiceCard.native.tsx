@@ -21,7 +21,7 @@ interface InvoiceCardProps {
   setInvoiceCardModalVisible: (value: boolean) => void
 }
 
-type InvoiceCardRouteProp = RouteProp<RootStackParamList, 'InvoiceCardView'>
+type InvoiceCardRouteProp = RouteProp<RootStackParamList, 'InvoiceListView'>
 
 const InvoiceCard = ({
   invoiceId,
