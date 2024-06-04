@@ -165,7 +165,12 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: theme.colors.primary,
   },
-  infoWrapper: { padding: 8, marginBottom: 24, width: '100%' },
+  infoWrapper: {
+    padding: 8,
+    marginBottom: 24,
+    width: '100%',
+    paddingHorizontal: 16,
+  },
   infoTitle: {
     fontSize: 20,
     color: theme.colors.primary,
