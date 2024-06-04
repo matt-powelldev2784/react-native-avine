@@ -21,17 +21,16 @@ const useFormikInvoice = ({ invoiceId }: useFormikStepsInterface) => {
   })
 
   const { postApiIsLoading, setApiFunction } = usePostApiData({
-    onSuccessScreen: 'EditInvoice',
+    onSuccessScreen: 'InvoiceListView',
     refreshScreen: { invoiceId },
   })
 
   const formik = useFormik({
     initialValues: {
-      id: '',
-      price: '' as number | string,
-      description: '',
+      id: data?.id || '',
+      price: (data?.price.toString() as number | string) || '',
+      description: data?.description || '',
       clientId: data?.job?.clientId,
-      ...data,
     },
     onSubmit: async (values) => {
       if (!values.clientId) return
