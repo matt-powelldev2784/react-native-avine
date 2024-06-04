@@ -1,8 +1,7 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import { usePlannerContext } from '../../../screens/planner/plannerContext/usePlannerContext'
-import { useNavigation, useRoute } from '@react-navigation/native'
-import { RouteProp } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import { useGetJobCardData } from './hooks/useGetJobCardData'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -15,21 +14,17 @@ import LongDataItem from '../../../ui/dataItems/LongDataItem'
 import { Loading } from '../../../ui'
 import useFormikIsPaid from './hooks/useFormikIsPaid'
 
-type ScheduledJobCardRouteProp = RouteProp<RootStackParamList, 'Planner'>
-
 const ScheduledJobCard = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const route = useRoute<ScheduledJobCardRouteProp>()
   const { selectedDay, selectedJob } = usePlannerContext()
 
-  const { jobData, isComplete, isPaid } = useGetJobCardData({
-    route,
-  })
+  const { jobData, isComplete, isPaid, client } = useGetJobCardData()
 
-  const { postApiIsLoading, formik, isCompleteError } = useFormikIsComplete({
-    isComplete,
-    isPaid,
-  })
+  const { isCompleteApiIsLoading, formik, isCompleteError } =
+    useFormikIsComplete({
+      isComplete,
+      isPaid,
+    })
 
   const { isPaidApiIsLoading, formikIsPaid, isPaidError } = useFormikIsPaid({
     isPaid,
@@ -44,7 +39,8 @@ const ScheduledJobCard = () => {
   if (
     typeof isComplete !== 'boolean' ||
     typeof isPaid !== 'boolean' ||
-    !jobData
+    !jobData ||
+    !client
   ) {
     return <Loading loadingText={'Loading job details...'} />
   }
@@ -73,7 +69,7 @@ const ScheduledJobCard = () => {
           <DataSwitchItem
             name={'Job Complete'}
             value={isComplete}
-            isLoading={postApiIsLoading}
+            isLoading={isCompleteApiIsLoading}
             formik={formik}
             error={isCompleteError || false}
           />
@@ -94,17 +90,27 @@ const ScheduledJobCard = () => {
           <DataLineItem name={'Town'} value={jobData.town} />
           <DataLineItem name={'Post Code'} value={jobData.postcode} />
           <DataLineItem name={'Contact Tel'} value={jobData.contactTel} />
+
+          <View style={styles.spacer} />
+
           <DataLineItem name={'Job Type'} value={jobData.jobType} />
           <DataLineItem name={'Estimated Time'} value={`${jobData.time} hrs`} />
-          <DataLineItem name={'Client'} value={jobData.clientId} />
           <DataLineItem name={'Price'} value={jobData.price} />
           <DataLineItem name={'Frequency'} value={jobData.frequency} />
 
+          <View style={styles.spacer} />
+          <DataLineItem name={'Client Contact Name'} value={client.name} />
+          <DataLineItem
+            name={'Client Company Name'}
+            value={client.companyName || ''}
+          />
+          <DataLineItem name={'Client Tel'} value={client.contactTel || ''} />
+
           <LongDataItem name={'Notes'} value={jobData.notes || ''} />
         </View>
-      </View>
 
-      <View style={{ height: 100 }} />
+        <View style={styles.footer} />
+      </View>
     </View>
   )
 }
@@ -115,21 +121,19 @@ const styles = StyleSheet.create({
   cardWrapperWeb: {
     width: '100%',
     padding: 12,
-    backgroundColor: theme.colors.backgroundGrey,
     alignItems: 'center',
+    marginTop: 36,
+    marginBottom: 36,
   },
   cardContainer: {
+    position: 'relative',
     marginTop: 8,
     width: '100%',
-    maxWidth: 700,
+    maxWidth: 600,
     marginBottom: 8,
     backgroundColor: 'white',
     borderRadius: 12,
-
     overflow: 'hidden',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: theme.colors.primary,
   },
   titleContainer: {
     padding: 16,
@@ -162,8 +166,14 @@ const styles = StyleSheet.create({
     flexGrow: 2,
     padding: 8,
     marginBottom: 16,
+    paddingHorizontal: 16,
   },
-  infoWrapper: { padding: 8, marginBottom: 24, width: '100%' },
+  infoWrapper: {
+    padding: 8,
+    marginBottom: 80,
+    width: '100%',
+    paddingHorizontal: 16,
+  },
   infoTitle: {
     fontSize: 20,
     color: theme.colors.primary,
@@ -171,4 +181,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
   },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    padding: 16,
+    backgroundColor: theme.colors.primary,
+    width: '100%',
+    height: 30,
+  },
+  spacer: { height: 32 },
 })

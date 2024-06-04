@@ -1,12 +1,10 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import theme from '../../../../utils/theme/theme'
 import { JobWithIdT } from '../../../../types/JobT'
-
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
+import CardModal from '../../../../ui/modal/CardModal'
+import ScheduledJobCard from '../../scheduledJobCard/ScheduledJobCard'
 
 interface ScheduledJobCardProps {
   job: JobWithIdT
@@ -19,18 +17,19 @@ const ScheduledJobListItem = ({
   recurringRound,
   roundId,
 }: ScheduledJobCardProps) => {
+  //state
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
+
   // hooks
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { setSelectedJob } = usePlannerContext()
 
+  // functions
   const handleViewScheduledJobDetails = () => {
     setSelectedJob({ jobId: job.id, recurringRound, roundId })
-
-    navigation.navigate('Planner', {
-      screen: 'ScheduledJobView',
-    })
+    setModalVisible(true)
   }
 
+  //variables
   const isComplete = job?.jobIsComplete
   const completeStyle = isComplete ? 0.5 : 1
 
@@ -56,6 +55,14 @@ const ScheduledJobListItem = ({
           />
         </TouchableOpacity>
       </View>
+
+      {modalVisible ? (
+        <CardModal
+          isVisible={modalVisible}
+          onCancel={() => setModalVisible(false)}
+          reactElement={<ScheduledJobCard />}
+        />
+      ) : null}
     </View>
   )
 }

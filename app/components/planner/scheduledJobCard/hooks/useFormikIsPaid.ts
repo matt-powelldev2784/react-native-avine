@@ -1,9 +1,9 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import usePostApiData from '../../../../utils/hooks/usePostApiData'
 import { formatDateForDb } from '../../../../utils/formatDateForDb'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 import { toggleInvoiceIsPaid } from '../../../../db/jobs/toggleInvoiceIsPaid'
+import { useState } from 'react'
 
 interface useFormikStepsInterface {
   isPaid: boolean | null | undefined
@@ -11,15 +11,12 @@ interface useFormikStepsInterface {
 }
 
 const useFormikIsPaid = ({ isPaid, isComplete }: useFormikStepsInterface) => {
-  const { selectedDay, selectedJob } = usePlannerContext()
+  const [isPaidApiIsLoading, setIsPaidPostApiIsLoading] = useState(false)
+  const { selectedDay, selectedJob, setPlannerCardNeedsUpdate } =
+    usePlannerContext()
   const isPaidError = isComplete
     ? false
-    : 'You cannot toggle a invoice as paid until the job is set to complete.'
-
-  const { setApiFunction, postApiIsLoading } = usePostApiData({
-    onSuccessScreen: 'Planner',
-    refreshScreen: { screen: 'ScheduledJobView' },
-  })
+    : 'You cannot set the invoice to paid until the job is set to complete.'
 
   const validationSchema = Yup.object().shape({
     isPaid: Yup.boolean(),
@@ -30,32 +27,37 @@ const useFormikIsPaid = ({ isPaid, isComplete }: useFormikStepsInterface) => {
       isPaid: isPaid,
     },
     onSubmit: async () => {
-      if (!selectedJob || !selectedDay) {
-        return
-      }
-      if (typeof isPaid !== 'boolean') {
-        return
-      }
+      try {
+        if (!selectedJob || !selectedDay) {
+          return
+        }
+        if (typeof isPaid !== 'boolean') {
+          return
+        }
 
-      const relatedJobSuffix = selectedJob.recurringRound
-        ? 'recurringRound'
-        : 'oneOffRound'
+        const relatedJobSuffix = selectedJob.recurringRound
+          ? 'recurringRound'
+          : 'oneOffRound'
 
-      setApiFunction(
-        () => async () =>
-          toggleInvoiceIsPaid({
-            plannerDocRef: `${selectedJob.roundId}@${selectedJob.jobId}@${relatedJobSuffix}`,
-            plannerDate: formatDateForDb(selectedDay),
-            isPaid: !isPaid,
-          }),
-      )
+        setIsPaidPostApiIsLoading(true)
+
+        await toggleInvoiceIsPaid({
+          plannerDocRef: `${selectedJob.roundId}@${selectedJob.jobId}@${relatedJobSuffix}`,
+          plannerDate: formatDateForDb(selectedDay),
+          isPaid: !isPaid,
+        }),
+          setIsPaidPostApiIsLoading(false)
+        setPlannerCardNeedsUpdate(true)
+      } catch (error) {
+        console.log('error', error)
+        setIsPaidPostApiIsLoading(false)
+      }
     },
     validationSchema,
     enableReinitialize: true,
   })
 
   const formikIsPaid = formik
-  const isPaidApiIsLoading = postApiIsLoading
 
   return { isPaidApiIsLoading, formikIsPaid, isPaidError }
 }

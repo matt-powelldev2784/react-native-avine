@@ -23,9 +23,6 @@ export const toggleInvoiceIsPaid = async ({
     return authError({ filename: 'toggleInvoiceIsPaid' })
   }
 
-  console.log(plannerDocRef, plannerDate, isPaid)
-  console.log('`${jobId}@${plannerDate}`', `${plannerDocRef}@${plannerDate}`)
-
   try {
     const plannerDateDocRef = doc(
       db,

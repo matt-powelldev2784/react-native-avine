@@ -15,6 +15,7 @@ const Planner = () => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
   const [selectedJob, setSelectedJob] = useState<SelectedJobT | null>(null)
+  const [plannerCardNeedsUpdate, setPlannerCardNeedsUpdate] = useState(false)
   const screen = route.params?.screen
 
   useEffect(() => {
@@ -29,6 +30,8 @@ const Planner = () => {
     setSelectedDay,
     selectedJob,
     setSelectedJob,
+    plannerCardNeedsUpdate,
+    setPlannerCardNeedsUpdate,
   }
 
   return (
