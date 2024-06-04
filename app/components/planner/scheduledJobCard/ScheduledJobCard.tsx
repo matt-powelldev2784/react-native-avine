@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     padding: 12,
     alignItems: 'center',
     marginTop: 36,
-    marginBottom: 36,
+    marginBottom: 150,
   },
   cardContainer: {
     position: 'relative',
