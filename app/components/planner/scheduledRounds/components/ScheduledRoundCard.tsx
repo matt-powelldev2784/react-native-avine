@@ -107,7 +107,7 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
 
       {/* ---------------------- Delete recurring rounds modal ----------------------- */}
       <ConfirmModal
-        modalText={`Please confirm deletion of ${round.roundName} round from the planner.`}
+        modalText={`Please confirm deletion of ${round.roundName} recurring round from the planner.`}
         modalText2={`Do you want to delete a single entry for this date only or all recurring entries?`}
         onConfirm={handleDeleteAllRecurringRounds}
         onConfirm2={handleDeleteSingleRecurringRound}
