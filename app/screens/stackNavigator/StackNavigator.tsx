@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
   Planner,
   InvoiceListView,
-  InvoiceCardView,
   AddCompanyInfo,
   EditInvoice,
   Rounds,
@@ -19,11 +18,8 @@ import {
   Clients,
   AddClient,
   EditClient,
-  ClientCardView,
   ClientMenuScreen,
-  JobCardView,
   JobMenuScreen,
-  RoundCardView,
 } from '../../screens'
 import { useAuth } from '../../components/auth/AuthProvider'
 import RoundMenuScreen from '../rounds/RoundMenuScreen'
@@ -43,13 +39,11 @@ export type RootStackParamList = {
   AddClient: undefined
   ClientMenu: undefined
   EditClient: { clientId: string } | undefined
-  ClientCardView: { clientId: string } | undefined
 
   //rounds
   Rounds: { refresh?: boolean } | undefined
   AddRound: undefined
   EditRound: { roundId: string } | undefined
-  RoundCardView: { roundId: string } | undefined
   RoundMenu: undefined
 
   //planner
@@ -62,7 +56,6 @@ export type RootStackParamList = {
 
   //invoices
   InvoiceListView: { refresh?: boolean } | undefined
-  InvoiceCardView: { invoiceId: string } | undefined
   EditInvoice: { invoiceId: string } | undefined
   AddCompanyInfo: undefined
 
@@ -71,7 +64,6 @@ export type RootStackParamList = {
   Jobs: { refresh?: boolean } | undefined
   AddJob: undefined
   EditJob: { jobId: string } | undefined
-  JobCardView: { jobId: string } | undefined
 }
 
 export type RefreshableScreen = 'Rounds' | 'Planner' | 'Jobs'
@@ -85,18 +77,17 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
-          {/* --------------------------  Invoice Screens  -------------------------- */}
-          <Stack.Screen name="InvoiceListView" component={InvoiceListView} />
-          <Stack.Screen name="InvoiceCardView" component={InvoiceCardView} />
-          <Stack.Screen name="EditInvoice" component={EditInvoice} />
-          <Stack.Screen name="AddCompanyInfo" component={AddCompanyInfo} />
-
           {/* --------------------------  Round Screens  ------------------------- */}
           <Stack.Screen name="RoundMenu" component={RoundMenuScreen} />
           <Stack.Screen name="Rounds" component={Rounds} />
           <Stack.Screen name="AddRound" component={AddRound} />
           <Stack.Screen name="EditRound" component={EditRound} />
-          <Stack.Screen name="RoundCardView" component={RoundCardView} />
+
+          {/* --------------------------  Invoice Screens  -------------------------- */}
+          <Stack.Screen name="InvoiceListView" component={InvoiceListView} />
+
+          <Stack.Screen name="EditInvoice" component={EditInvoice} />
+          <Stack.Screen name="AddCompanyInfo" component={AddCompanyInfo} />
 
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />
@@ -107,14 +98,12 @@ const StackNavigator = () => {
           <Stack.Screen name="ClientMenu" component={ClientMenuScreen} />
           <Stack.Screen name="AddClient" component={AddClient} />
           <Stack.Screen name="EditClient" component={EditClient} />
-          <Stack.Screen name="ClientCardView" component={ClientCardView} />
 
           {/* --------------------------  Job Screens  ---------------------- */}
           <Stack.Screen name="Jobs" component={Jobs} />
           <Stack.Screen name="JobsMenu" component={JobMenuScreen} />
           <Stack.Screen name="AddJob" component={AddJob} />
           <Stack.Screen name="EditJob" component={EditJob} />
-          <Stack.Screen name="JobCardView" component={JobCardView} />
 
           {/* --------------------------  Planner Screens  -------------------------- */}
           <Stack.Screen

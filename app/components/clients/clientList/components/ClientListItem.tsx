@@ -1,13 +1,18 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import theme from '../../../../utils/theme/theme'
 import IconButton from '../../../../ui/iconButton/IconButton'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 import { ClientWithIdT } from '../../../../types/ClientT'
+import CardModal from '../../../../ui/modal/CardModal'
+import ClientCard from './ClientCard'
 
 const ClientListItem = ({ id, name, contactTel }: ClientWithIdT) => {
+  // state
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
+
   //hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
@@ -15,7 +20,7 @@ const ClientListItem = ({ id, name, contactTel }: ClientWithIdT) => {
     navigation.navigate('EditClient', { clientId: id })
   }
   const handleViewClientPress = () => {
-    navigation.navigate('ClientCardView', { clientId: id })
+    setModalVisible(true)
   }
 
   return (
@@ -44,6 +49,19 @@ const ClientListItem = ({ id, name, contactTel }: ClientWithIdT) => {
           />
         </View>
       </View>
+
+      {modalVisible ? (
+        <CardModal
+          isVisible={modalVisible}
+          onCancel={() => setModalVisible(false)}
+          reactElement={
+            <ClientCard
+              clientId={id}
+              setClientCardModalVisible={setModalVisible}
+            />
+          }
+        />
+      ) : null}
     </View>
   )
 }

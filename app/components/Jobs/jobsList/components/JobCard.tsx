@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Platform, Image } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { useState } from 'react'
 import { ConfirmModal, Loading } from '../../../../ui'
 import useGetApiData from '../../../../utils/hooks/useGetApiData'
@@ -6,30 +6,39 @@ import theme from '../../../../utils/theme/theme'
 import DataLineItem from '../../../../ui/dataItems/DataLineItem'
 import LongDataItem from '../../../../ui/dataItems/LongDataItem'
 import usePostApiData from '../../../../utils/hooks/usePostApiData'
-import IconButton from '../../../../ui/iconButton/IconButton'
 import { getJob } from '../../../../db/jobs/getJob'
 import { deleteJob } from '../../../../db/jobs/deleteJob'
+import Button from '../../../../ui/button/Button'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 
 interface JobCardProps {
   jobId: string
+  setRoundCardModalVisible: (value: boolean) => void
 }
 
-const JobCard = ({ jobId }: JobCardProps) => {
+const JobCard = ({ jobId, setRoundCardModalVisible }: JobCardProps) => {
   //state
   const [modalVisible, setModalVisible] = useState(false)
 
   //hooks
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { getApiIsLoading, data: jobData } = useGetApiData({
     apiFunction: async () => getJob(jobId),
   })
   const { postApiIsLoading, setApiFunction } = usePostApiData({
-    onSuccessScreen: 'Jobs',
+    onSuccessScreen: 'JobsMenu',
     refreshScreen: { refresh: true },
   })
 
   //functions
-  const handleDeleteClientPress = () => {
+  const handleDeleteJobPress = () => {
     setModalVisible(true)
+  }
+  const handleNavigateToEditJob = () => {
+    setRoundCardModalVisible(false)
+    navigation.navigate('EditJob', { jobId })
   }
   const handleConfirmDeleteClientPress = async () => {
     setApiFunction(() => async () => deleteJob(jobId))
@@ -51,25 +60,12 @@ const JobCard = ({ jobId }: JobCardProps) => {
           />
 
           <Text style={styles.titleText} numberOfLines={1} ellipsizeMode="tail">
-            {jobData.jobName}
+            Job Details
           </Text>
-
-          <View style={styles.roundIconsContainer}>
-            <IconButton
-              onPress={handleDeleteClientPress}
-              imgSource={require('../../../../../assets/bin_white.png')}
-              size={35}
-              width={20}
-              height={25}
-            />
-
-            <Text />
-          </View>
         </View>
 
         {/* --------------------------  Info Conatiner White  -------------------------- */}
         <View style={styles.infoWrapper}>
-          <Text style={styles.infoTitle}>Job Details:</Text>
           <DataLineItem name={'Contact Name'} value={jobData.contactName} />
           <DataLineItem name={'Contact Tel'} value={jobData.contactTel} />
 
@@ -88,6 +84,16 @@ const JobCard = ({ jobId }: JobCardProps) => {
           <DataLineItem name={'Time'} value={`${jobData.time} hrs`} />
 
           <LongDataItem name={'Notes'} value={jobData.notes || ''} />
+        </View>
+
+        {/* --------------------------  Buttons -------------------------- */}
+        <View style={styles.buttonContainer}>
+          <Button
+            text={'Delete Job'}
+            onPress={handleDeleteJobPress}
+            backgroundColor="red"
+          />
+          <Button text={'Edit Job'} onPress={handleNavigateToEditJob} />
         </View>
       </View>
 
@@ -110,20 +116,17 @@ const styles = StyleSheet.create({
   cardWrapperWeb: {
     width: '100%',
     padding: 12,
-    backgroundColor: theme.colors.backgroundGrey,
     alignItems: 'center',
+    marginTop: 36,
   },
   cardContainer: {
     marginTop: 8,
     width: '100%',
-    maxWidth: 700,
+    maxWidth: 600,
     marginBottom: 8,
     backgroundColor: 'white',
     borderRadius: 12,
     overflow: 'hidden',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: theme.colors.primary,
   },
   titleContainer: {
     padding: 16,
@@ -139,17 +142,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
-  },
-  roundIconsContainer: {
-    position: 'absolute',
-    top: 8,
-    paddingHorizontal: 8,
-    overflow: 'hidden',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: Platform.OS === 'web' ? '96%' : '100%',
-    height: 40,
   },
   dateTextContainer: {
     borderRadius: 12,
@@ -173,7 +165,12 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: theme.colors.primary,
   },
-  infoWrapper: { padding: 8, marginBottom: 24, width: '100%' },
+  infoWrapper: {
+    padding: 8,
+    marginBottom: 24,
+    width: '100%',
+    paddingHorizontal: 16,
+  },
   infoTitle: {
     fontSize: 20,
     color: theme.colors.primary,
@@ -181,6 +178,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     marginTop: 12,
+  },
+  buttonContainer: {
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    paddingVertical: 20,
   },
   warningText: {
     fontSize: 14,

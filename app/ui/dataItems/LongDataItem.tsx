@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 16,
     color: 'black',
-    textAlign: 'center',
+    paddingHorizontal: 8,
+    // textAlign: 'center',
   },
   line: {
     marginVertical: 8,

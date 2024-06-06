@@ -4,6 +4,7 @@ const theme = {
     secondary: '#ffd600',
     tertiaryBlue: '#5898c1',
     white: 'white',
+    black: 'black',
     backgroundGrey: '#EEEEEE',
     buttonSecondary: '#8c8c8c',
     formFlowSecondary: '#f1f2f2',

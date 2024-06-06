@@ -22,6 +22,7 @@ interface useGetDataProps<T> {
   apiFunction: ApiFunction<T>
   route?: RouteProp<ParamListBase>
   selectedDay?: Date
+  plannerCardNeedsUpdate?: boolean
 }
 
 export type ApiFunction<T> = () => Promise<T>
@@ -30,6 +31,7 @@ const useGetApiData = <T>({
   apiFunction,
   route,
   selectedDay,
+  plannerCardNeedsUpdate,
 }: useGetDataProps<T>) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [data, setData] = useState<T | null>(null)
@@ -57,7 +59,7 @@ const useGetApiData = <T>({
     }
 
     fetchData()
-  }, [route, selectedDay])
+  }, [route, selectedDay, plannerCardNeedsUpdate])
 
   return {
     data,

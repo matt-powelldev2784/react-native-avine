@@ -10,7 +10,7 @@ import { useGetClientOptions } from '../../Jobs/editJob/hooks/useFetchClients'
 import Dropdown from '../../../ui/formElements/DropDown'
 import Button from '../../../ui/button/Button'
 
-type EditInvoiceFormRouteProp = RouteProp<RootStackParamList, 'InvoiceCardView'>
+type EditInvoiceFormRouteProp = RouteProp<RootStackParamList, 'EditInvoice'>
 
 const EditInvoiceForm = () => {
   //hooks

@@ -1,13 +1,19 @@
+import { toggleInvoiceIsPaid } from './../../../../db/jobs/toggleInvoiceIsPaid'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import usePostApiData from '../../../../utils/hooks/usePostApiData'
-import { toggleInvoiceIsPaid } from '../../../../db/jobs/toggleInvoiceIsPaid'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface useFormikStepsInterface {
   isPaid: boolean | null | undefined
   isComplete: boolean | null | undefined
   invoiceId: string
   plannerDate: string | null
+}
+
+interface useFormikIsPaidReturn {
+  isPaid: boolean | null | undefined
+  message: string
 }
 
 const useFormikIsPaid = ({
@@ -20,10 +26,23 @@ const useFormikIsPaid = ({
     ? false
     : 'You cannot toggle a invoice as paid until the job is set to complete.'
 
-  const { setApiFunction, postApiIsLoading } = usePostApiData({
-    onSuccessScreen: 'InvoiceCardView',
-    refreshScreen: { invoiceId },
+  const { setApiFunction, postApiIsLoading, data } = usePostApiData({
+    onSuccessScreen: 'InvoiceListView',
+    refreshScreen: { refresh: true },
   })
+
+  const toggleInvoiceIsPaidData = data as useFormikIsPaidReturn
+  const isPaidUpdated = toggleInvoiceIsPaidData?.isPaid
+
+  if (isPaidUpdated === true || isPaidUpdated === false) {
+    const addIsPaidHasUpdatedToStorage = async () => {
+      await AsyncStorage.setItem(
+        'isPaidHasUpdated',
+        JSON.stringify(isPaidUpdated),
+      )
+    }
+    addIsPaidHasUpdatedToStorage()
+  }
 
   const validationSchema = Yup.object().shape({
     isPaid: Yup.boolean(),

@@ -3,7 +3,7 @@ import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavi
 import useGetApiData from '../../../../utils/hooks/useGetApiData'
 import { getRelatedInvoiceData } from '../../../../db/invoice/getRelatedInvoiceData'
 
-type DueInvoiceCardRouteProp = RouteProp<RootStackParamList, 'InvoiceCardView'>
+type DueInvoiceCardRouteProp = RouteProp<RootStackParamList, 'InvoiceListView'>
 
 interface UseGetJobCardDataT {
   route: DueInvoiceCardRouteProp

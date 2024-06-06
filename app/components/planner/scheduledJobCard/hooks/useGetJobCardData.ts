@@ -1,38 +1,53 @@
 import { JobWithIdT } from '../../../../types/JobT'
 import { formatDateForDb } from '../../../../utils/formatDateForDb'
-import useGetApiData from '../../../../utils/hooks/useGetApiData'
-import { RouteProp } from '@react-navigation/native'
-import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 import { getScheduledJobDetails } from '../../../../db/planner/getScheduledJobDetails/getScheduledJobDetails'
+import { useEffect, useState } from 'react'
+import { ClientWithIdT } from '../../../../types/ClientT'
 
-type ScheduledJobCardRouteProp = RouteProp<RootStackParamList, 'Planner'>
-
-interface UseGetJobCardDataT {
-  route: ScheduledJobCardRouteProp
+interface ScheduledJobData {
+  job: JobWithIdT
+  isComplete: boolean | null
+  isPaid: boolean | null
+  client: ClientWithIdT
 }
 
-export const useGetJobCardData = ({ route }: UseGetJobCardDataT) => {
-  const { selectedDay, selectedJob } = usePlannerContext()
+export const useGetJobCardData = () => {
+  const [data, setData] = useState<ScheduledJobData | null>(null)
+  const [getApiIsLoading, setGetApiIsLoading] = useState<boolean>(false)
+  const {
+    selectedDay,
+    selectedJob,
+    plannerCardNeedsUpdate,
+    setPlannerCardNeedsUpdate,
+  } = usePlannerContext()
 
   if (!selectedJob || !selectedDay) {
     return { getApiIsLoading: false, jobData: null, isComplete: null }
   }
 
-  const { getApiIsLoading, data } = useGetApiData({
-    route,
-    apiFunction: async () =>
-      getScheduledJobDetails({
+  useEffect(() => {
+    const getData = async () => {
+      setGetApiIsLoading(true)
+
+      const data = await getScheduledJobDetails({
         roundId: selectedJob.roundId,
         jobId: selectedJob.jobId,
         plannerDate: formatDateForDb(selectedDay),
         recurringRound: selectedJob.recurringRound,
-      }),
-  })
+      })
+      setData(data)
+      setGetApiIsLoading(false)
+    }
+    getData()
 
-  const jobData = data as JobWithIdT
-  const isComplete = jobData?.jobIsComplete
-  const isPaid = jobData?.invoiceIsPaid
+    setPlannerCardNeedsUpdate(false)
+  }, [plannerCardNeedsUpdate])
 
-  return { getApiIsLoading, jobData, isComplete, isPaid }
+  const jobData = data?.job
+  const isComplete = data?.isComplete
+  const isPaid = data?.isPaid
+  const client = data?.client as ClientWithIdT
+
+  return { getApiIsLoading, jobData, isComplete, isPaid, client }
 }

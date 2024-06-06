@@ -3,6 +3,7 @@ import { authError } from '../../authError'
 import { getJob } from '../../jobs/getJob'
 import { getJobIsComplete } from '../getJobIsComplete/getJobIsComplete'
 import { getInvoiceIsPaid } from '../getInvoiceIsPaid/getInvoiceIsPaid'
+import { getClient } from '../../clients/getClient'
 
 interface getScheduledJobDetailsT {
   roundId: string
@@ -23,20 +24,26 @@ export const getScheduledJobDetails = async ({
 
   try {
     const job = await getJob(jobId)
-    const isPaidDetails = await getInvoiceIsPaid({
+    const isPaid = await getInvoiceIsPaid({
       roundId,
       jobId,
       plannerDate,
       recurringRound,
     })
-    const isCompleteDetails = await getJobIsComplete({
+    const isComplete = await getJobIsComplete({
       roundId,
       jobId,
       plannerDate,
       recurringRound,
     })
+    const client = await getClient(job.clientId)
 
-    return { ...job, ...isPaidDetails, ...isCompleteDetails }
+    return {
+      job,
+      isPaid: isPaid.invoiceIsPaid,
+      isComplete: isComplete.jobIsComplete,
+      client,
+    }
   } catch (error) {
     throw new Error(
       `Error getting job details at getScheduledJobDetails route: ${error}`,
