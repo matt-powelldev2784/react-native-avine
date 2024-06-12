@@ -6,7 +6,7 @@ import {
   Image,
   Platform,
 } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { RoundWithRecurringFlagT } from '../../../../types/RoundT'
 import { JobWithIdT } from '../../../../types/JobT'
 import theme from '../../../../utils/theme/theme'
@@ -20,6 +20,7 @@ import { batchToggleInvoiceIsPaid } from '../../../../db/jobs/batchToogleInvoice
 import Button from '../../../../ui/button/Button'
 import { getInvoicesRelatedToRound } from '../../../../db/invoice/getInvoicesRelatedToRound'
 import useGetApiData from '../../../../utils/hooks/useGetApiData'
+import { useJobAndInvoiceStatus } from '../hooks/useJobandInvoiceStatus'
 
 interface ScheduledRoundCardProps {
   round: RoundWithRecurringFlagT
@@ -29,46 +30,21 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
   //state
   const [recurringModalVisible, setRecurringModalVisible] = useState(false)
   const [oneOffModalVisible, setOneOffModalVisible] = useState(false)
-  const [noJobStatusHasChanged, setNoJobStatusHasChanged] = useState(false)
-  const [allJobsAreComplete, setAllJobsAreComplete] = useState(false)
-  const [allInvoicesArePaid, setAllInvoicesArePaid] = useState(false)
 
   //hooks
   const { selectedDay, plannerCardNeedsUpdate, setPlannerCardNeedsUpdate } =
     usePlannerContext()
   const selectedDayForDb = formatDateForDb(selectedDay)
 
-  const { getApiIsLoading, data: relatedInvoices } = useGetApiData({
+  const { data: relatedInvoices } = useGetApiData({
     apiFunction: async () =>
       getInvoicesRelatedToRound({ round, plannerDate: selectedDayForDb }),
     selectedDay,
   })
 
-  useEffect(() => {
-    setNoJobStatusHasChanged(
-      round.relatedJobs.every((job) => job.jobIsComplete === false),
-    )
+  const { noJobStatusHasChanged, allJobsAreComplete, allInvoicesArePaid } =
+    useJobAndInvoiceStatus({ round, relatedInvoices, plannerCardNeedsUpdate })
 
-    setAllJobsAreComplete(
-      round.relatedJobs.every((job) => job.jobIsComplete === true),
-    )
-
-    if (relatedInvoices === null) {
-      return
-    }
-    if (relatedInvoices.length !== round.relatedJobs.length) {
-      return
-    }
-
-    setAllInvoicesArePaid(
-      relatedInvoices.every((invoice) => {
-        if (invoice === null) {
-          return false
-        }
-        return invoice.isPaid === true
-      }),
-    )
-  }, [round.relatedJobs, relatedInvoices, plannerCardNeedsUpdate])
   const {
     handleDeletePress,
     handleDeleteOneOffRound,
@@ -98,11 +74,6 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
   const toggleAllJobsPaid = async () => {
     await batchToggleInvoiceIsPaid({ round, plannerDate })
     setPlannerCardNeedsUpdate(true)
-    setAllInvoicesArePaid(true)
-  }
-
-  if (getApiIsLoading) {
-    return <></>
   }
 
   return (
