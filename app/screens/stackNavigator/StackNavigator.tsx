@@ -77,16 +77,16 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
+          {/* --------------------------  Misc Screens  -------------------------- */}
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Error" component={Error} />
+
           {/* --------------------------  Planner Screens  -------------------------- */}
           <Stack.Screen
             name="Planner"
             component={Planner}
             initialParams={{ screen: 'PlannerView' }}
           />
-
-          {/* --------------------------  Misc Screens  -------------------------- */}
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Error" component={Error} />
 
           {/* --------------------------  Round Screens  ------------------------- */}
           <Stack.Screen name="RoundMenu" component={RoundMenuScreen} />
