@@ -23,6 +23,8 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
   //state
   const [recurringModalVisible, setRecurringModalVisible] = useState(false)
   const [oneOffModalVisible, setOneOffModalVisible] = useState(false)
+  const [allPaidModalVisible, setAllPaidModalVisible] = useState(false)
+  const [allCompleteModalVisible, setAllCompleteModalVisible] = useState(false)
 
   //hooks
   const { selectedDay, plannerCardNeedsUpdate, setPlannerCardNeedsUpdate } =
@@ -122,18 +124,36 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
           {!allInvoicesArePaid && allJobsAreComplete ? (
             <Button
               text={'Set all invoices to paid'}
-              onPress={toggleAllJobsPaid}
+              onPress={() => setAllPaidModalVisible(true)}
               backgroundColor={theme.colors.invoicePrimary}
             />
           ) : null}
           {noJobStatusHasChanged ? (
             <Button
               text={'Set all jobs to complete'}
-              onPress={toggleAllJobsComplete}
+              onPress={() => setAllCompleteModalVisible(true)}
             />
           ) : null}
         </View>
       </View>
+
+      {/* ---------------------- Toogle all complete model ----------------------- */}
+      <ConfirmModal
+        modalText={`Are you sure you want to set all the jobs in ${round.roundName} round to complete?`}
+        onConfirm={toggleAllJobsComplete}
+        onCancel={() => setAllCompleteModalVisible(false)}
+        visible={allCompleteModalVisible}
+        confirmButtonText={'Yes'}
+      />
+
+      {/* ---------------------- Toogle all paid model ----------------------- */}
+      <ConfirmModal
+        modalText={`Are you sure you want to set all the invoices in ${round.roundName} round to paid?`}
+        onConfirm={toggleAllJobsPaid}
+        onCancel={() => setAllPaidModalVisible(false)}
+        visible={allPaidModalVisible}
+        confirmButtonText={'Yes'}
+      />
 
       {/* ---------------------- Delete one off round modal ----------------------- */}
       <ConfirmModal
