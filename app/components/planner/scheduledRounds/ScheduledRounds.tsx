@@ -18,14 +18,14 @@ interface ScheduledRoundsProps {
 type ScheduledRoundsT = RoundWithRecurringFlagT[] | []
 
 const ScheduledRounds = ({ addFooter }: ScheduledRoundsProps) => {
+  //hooks
   const route = useRoute()
-  const { selectedDay, plannerCardNeedsUpdate } = usePlannerContext()
+  const { selectedDay } = usePlannerContext()
   const selectedDayForDb = formatDateForDb(selectedDay)
   const { getApiIsLoading, data } = useGetApiData({
     apiFunction: async () => getRoundsByPlannerDate(selectedDayForDb),
     selectedDay,
     route,
-    plannerCardNeedsUpdate,
   })
 
   const scheduledRounds = data as ScheduledRoundsT

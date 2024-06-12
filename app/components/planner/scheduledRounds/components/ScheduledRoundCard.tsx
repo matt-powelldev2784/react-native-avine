@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Platform,
-} from 'react-native'
+import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { RoundWithRecurringFlagT } from '../../../../types/RoundT'
 import { JobWithIdT } from '../../../../types/JobT'
@@ -13,6 +6,14 @@ import theme from '../../../../utils/theme/theme'
 import ScheduledListItem from './ScheduledJobListItem'
 import { ConfirmModal } from '../../../../ui'
 import useHandleDelete from '../hooks/useHandleDelete'
+import { batchToggleJobIsComplete } from '../../../../db/jobs/batchToggleJobIsComplete'
+import { formatDateForDb } from '../../../../utils/formatDateForDb'
+import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
+import { batchToggleInvoiceIsPaid } from '../../../../db/jobs/batchToogleInvoiceIsPaid'
+import Button from '../../../../ui/button/Button'
+import { getInvoicesRelatedToRound } from '../../../../db/invoice/getInvoicesRelatedToRound'
+import useGetApiData from '../../../../utils/hooks/useGetApiData'
+import { useJobAndInvoiceStatus } from '../hooks/useJobandInvoiceStatus'
 
 interface ScheduledRoundCardProps {
   round: RoundWithRecurringFlagT
@@ -22,8 +23,23 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
   //state
   const [recurringModalVisible, setRecurringModalVisible] = useState(false)
   const [oneOffModalVisible, setOneOffModalVisible] = useState(false)
+  const [allPaidModalVisible, setAllPaidModalVisible] = useState(false)
+  const [allCompleteModalVisible, setAllCompleteModalVisible] = useState(false)
 
   //hooks
+  const { selectedDay, plannerCardNeedsUpdate, setPlannerCardNeedsUpdate } =
+    usePlannerContext()
+  const selectedDayForDb = formatDateForDb(selectedDay)
+
+  const { data: relatedInvoices } = useGetApiData({
+    apiFunction: async () =>
+      getInvoicesRelatedToRound({ round, plannerDate: selectedDayForDb }),
+    selectedDay,
+  })
+
+  const { noJobStatusHasChanged, allJobsAreComplete, allInvoicesArePaid } =
+    useJobAndInvoiceStatus({ round, relatedInvoices, plannerCardNeedsUpdate })
+
   const {
     handleDeletePress,
     handleDeleteOneOffRound,
@@ -42,6 +58,18 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
   //   (totalTime: number, job: JobWithIdT) => totalTime + parseFloat(job.time),
   //   0,
   // )
+  const plannerDate = formatDateForDb(selectedDay)
+
+  //functions
+  const toggleAllJobsComplete = async () => {
+    await batchToggleJobIsComplete({ round, plannerDate })
+    setPlannerCardNeedsUpdate(true)
+  }
+
+  const toggleAllJobsPaid = async () => {
+    await batchToggleInvoiceIsPaid({ round, plannerDate })
+    setPlannerCardNeedsUpdate(true)
+  }
 
   return (
     <View style={styles.roundWrapper}>
@@ -70,13 +98,6 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
             ) : (
               <Text />
             )}
-
-            <TouchableOpacity onPress={handleDeletePress}>
-              <Image
-                source={require('../../../../../assets/bin.png')}
-                style={{ width: 34, height: 34 }}
-              />
-            </TouchableOpacity>
           </View>
         </View>
 
@@ -93,7 +114,46 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
             {index !== self.length - 1 && <View style={styles.jobCardLine} />}
           </View>
         ))}
+
+        <View style={styles.buttonContainer}>
+          <Button
+            text={'Delete Round From Planner'}
+            onPress={handleDeletePress}
+            backgroundColor="red"
+          />
+          {!allInvoicesArePaid && allJobsAreComplete ? (
+            <Button
+              text={'Set all invoices to paid'}
+              onPress={() => setAllPaidModalVisible(true)}
+              backgroundColor={theme.colors.invoicePrimary}
+            />
+          ) : null}
+          {noJobStatusHasChanged ? (
+            <Button
+              text={'Set all jobs to complete'}
+              onPress={() => setAllCompleteModalVisible(true)}
+            />
+          ) : null}
+        </View>
       </View>
+
+      {/* ---------------------- Toogle all complete model ----------------------- */}
+      <ConfirmModal
+        modalText={`Are you sure you want to set all the jobs in ${round.roundName} round to complete?`}
+        onConfirm={toggleAllJobsComplete}
+        onCancel={() => setAllCompleteModalVisible(false)}
+        visible={allCompleteModalVisible}
+        confirmButtonText={'Yes'}
+      />
+
+      {/* ---------------------- Toogle all paid model ----------------------- */}
+      <ConfirmModal
+        modalText={`Are you sure you want to set all the invoices in ${round.roundName} round to paid?`}
+        onConfirm={toggleAllJobsPaid}
+        onCancel={() => setAllPaidModalVisible(false)}
+        visible={allPaidModalVisible}
+        confirmButtonText={'Yes'}
+      />
 
       {/* ---------------------- Delete one off round modal ----------------------- */}
       <ConfirmModal
@@ -183,6 +243,18 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: theme.colors.primary,
     width: '100%',
+  },
+  buttonContainer: {
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    minHeight: 82.5,
   },
 })
 
