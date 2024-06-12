@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Platform,
-} from 'react-native'
+import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { RoundWithRecurringFlagT } from '../../../../types/RoundT'
 import { JobWithIdT } from '../../../../types/JobT'
@@ -103,13 +96,6 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
             ) : (
               <Text />
             )}
-
-            <TouchableOpacity onPress={handleDeletePress}>
-              <Image
-                source={require('../../../../../assets/bin.png')}
-                style={{ width: 34, height: 34 }}
-              />
-            </TouchableOpacity>
           </View>
         </View>
 
@@ -128,7 +114,12 @@ const ScheduledRoundCard = ({ round }: ScheduledRoundCardProps) => {
         ))}
 
         <View style={styles.buttonContainer}>
-          {allJobsAreComplete && !allInvoicesArePaid ? (
+          <Button
+            text={'Delete Round From Planner'}
+            onPress={handleDeletePress}
+            backgroundColor="red"
+          />
+          {!allInvoicesArePaid && allJobsAreComplete ? (
             <Button
               text={'Set all invoices to paid'}
               onPress={toggleAllJobsPaid}
@@ -243,6 +234,7 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingVertical: 20,
     paddingHorizontal: 20,
+    minHeight: 82.5,
   },
 })
 

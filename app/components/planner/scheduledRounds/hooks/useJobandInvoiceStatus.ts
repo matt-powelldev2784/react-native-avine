@@ -18,11 +18,15 @@ export const useJobAndInvoiceStatus = ({
   relatedInvoices,
   plannerCardNeedsUpdate,
 }: useJobAndInvoiceStatusT) => {
-  const [noJobStatusHasChanged, setNoJobStatusHasChanged] = useState(true)
+  const [noJobStatusHasChanged, setNoJobStatusHasChanged] = useState(false)
   const [allJobsAreComplete, setAllJobsAreComplete] = useState(false)
   const [allInvoicesArePaid, setAllInvoicesArePaid] = useState(false)
 
   useEffect(() => {
+    if (relatedInvoices === null) {
+      return
+    }
+
     setNoJobStatusHasChanged(
       round.relatedJobs.every((job) => job.jobIsComplete === false),
     )
@@ -31,9 +35,6 @@ export const useJobAndInvoiceStatus = ({
       round.relatedJobs.every((job) => job.jobIsComplete === true),
     )
 
-    if (relatedInvoices === null) {
-      return
-    }
     if (relatedInvoices.length !== round.relatedJobs.length) {
       return
     }
