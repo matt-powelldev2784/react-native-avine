@@ -77,6 +77,13 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
+          {/* --------------------------  Planner Screens  -------------------------- */}
+          <Stack.Screen
+            name="Planner"
+            component={Planner}
+            initialParams={{ screen: 'PlannerView' }}
+          />
+
           {/* --------------------------  Misc Screens  -------------------------- */}
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Error" component={Error} />
@@ -104,13 +111,6 @@ const StackNavigator = () => {
           <Stack.Screen name="JobsMenu" component={JobMenuScreen} />
           <Stack.Screen name="AddJob" component={AddJob} />
           <Stack.Screen name="EditJob" component={EditJob} />
-
-          {/* --------------------------  Planner Screens  -------------------------- */}
-          <Stack.Screen
-            name="Planner"
-            component={Planner}
-            initialParams={{ screen: 'PlannerView' }}
-          />
 
           {/* --------------------------  Auth Screens Screens  ------------------- */}
           <Stack.Screen name="SignOut" component={SignOutScreen} />
