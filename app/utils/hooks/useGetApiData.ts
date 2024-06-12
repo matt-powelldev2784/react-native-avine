@@ -6,6 +6,7 @@ import {
   RootStackParamList,
 } from '../../screens/stackNavigator/StackNavigator'
 import { RouteProp, ParamListBase } from '@react-navigation/native'
+import { usePlannerContext } from '../../screens/planner/plannerContext/usePlannerContext'
 
 // *****************************************************************
 // the setApiFunction should be called like this example:
@@ -22,7 +23,6 @@ interface useGetDataProps<T> {
   apiFunction: ApiFunction<T>
   route?: RouteProp<ParamListBase>
   selectedDay?: Date
-  plannerCardNeedsUpdate?: boolean
 }
 
 export type ApiFunction<T> = () => Promise<T>
@@ -31,12 +31,13 @@ const useGetApiData = <T>({
   apiFunction,
   route,
   selectedDay,
-  plannerCardNeedsUpdate,
 }: useGetDataProps<T>) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const [data, setData] = useState<T | null>(null)
   const [getApiIsLoading, setGetApiIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<unknown>()
+  const { plannerCardNeedsUpdate, setPlannerCardNeedsUpdate } =
+    usePlannerContext()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,6 +51,7 @@ const useGetApiData = <T>({
 
         setData(response)
         setGetApiIsLoading(false)
+        setPlannerCardNeedsUpdate(false)
       } catch (error: unknown) {
         console.log('error', error)
         setGetApiIsLoading(false)
