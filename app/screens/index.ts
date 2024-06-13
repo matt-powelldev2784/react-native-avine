@@ -19,7 +19,11 @@ import AddJob from './jobs/AddJob'
 import EditJob from './jobs/EditJob'
 
 //planner
+import MonthPlannerView from './planner/MonthPlannerView'
 import Planner from './planner/Planner'
+import PlannerView from './planner/PlannerView'
+import ScheduledJobView from './planner/ScheduledJobView'
+import ScheduleRoundFormView from './planner/ScheduleRoundFormView'
 
 //rounds
 import RoundMenu from './rounds/RoundMenuScreen'
@@ -33,7 +37,11 @@ import InvoiceListView from './invoices/InvoiceListView'
 import EditInvoice from './invoices/EditInvoice'
 
 export {
+  MonthPlannerView,
+  PlannerView,
   RoundMenu,
+  ScheduledJobView,
+  ScheduleRoundFormView,
   ClientMenuScreen,
   AddCompanyInfo,
   Clients,

@@ -3,10 +3,13 @@ import { Dashboard } from '../../components'
 import { PlannerContext } from './plannerContext/usePlannerContext'
 import { RouteProp, useRoute } from '@react-navigation/native'
 import { RootStackParamList } from '../stackNavigator/StackNavigator'
-import PlannerView from './PlannerView'
-import ScheduledJobView from './ScheduledJobView'
 import { SelectedJobT } from '../../types/JobT'
-import ScheduleRoundFormView from './ScheduleRoundFormView'
+import {
+  PlannerView,
+  MonthPlannerView,
+  ScheduleRoundFormView,
+  ScheduledJobView,
+} from '../index'
 
 type PlannerRouteProp = RouteProp<RootStackParamList, 'Planner'>
 
@@ -39,6 +42,7 @@ const Planner = () => {
       <Dashboard>
         <PlannerContext.Provider value={PlannerContextValue}>
           {screen === 'PlannerView' ? <PlannerView /> : null}
+          {screen === 'MonthPlannerView' ? <MonthPlannerView /> : null}
           {screen === 'ScheduleRoundFormView' ? (
             <ScheduleRoundFormView />
           ) : null}
