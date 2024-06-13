@@ -29,7 +29,7 @@ import AddRoundForm from './rounds/addRound/AddRoundForm'
 import EditRoundForm from './rounds/editRound/EditRoundForm'
 
 //planner
-import MonthPlanner from './planner/monthPlanner/MonthPlanner'
+import ExtendedPlanner from './planner/monthPlanner/ExtendedPlanner'
 import WeekPlanner from './planner/weekPlanner/WeekPlanner'
 import ScheduleRoundForm from './planner/scheduleRoundForm/ScheduleRoundForm'
 import ScheduledJobCard from './planner/scheduledJobCard/ScheduledJobCard'
@@ -40,11 +40,10 @@ import InvoiceList from './invoices/invoiceList/InvoiceList'
 import InvoiceCard from './invoices/InvoiceCard/InvoiceCard'
 import EditInvoiceForm from './invoices/editInvoiceForm/EditInvoiceForm'
 
-
 //otheres
 
 export {
-  MonthPlanner,
+  ExtendedPlanner,
   RoundMenu,
   RoundCard,
   ClientsMenu,

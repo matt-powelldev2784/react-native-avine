@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const MonthPlanner = () => {
+const ExtendedPlanner = () => {
   return (
     <View>
-      <Text>MonthPlanner</Text>
+      <Text>ExtendedPlanner</Text>
     </View>
   )
 }
 
-export default MonthPlanner
+export default ExtendedPlanner

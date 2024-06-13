@@ -6,7 +6,7 @@ import { RootStackParamList } from '../stackNavigator/StackNavigator'
 import { SelectedJobT } from '../../types/JobT'
 import {
   PlannerView,
-  MonthPlannerView,
+  ExtendedPlannerView,
   ScheduleRoundFormView,
   ScheduledJobView,
 } from '../index'
@@ -42,7 +42,7 @@ const Planner = () => {
       <Dashboard>
         <PlannerContext.Provider value={PlannerContextValue}>
           {screen === 'PlannerView' ? <PlannerView /> : null}
-          {screen === 'MonthPlannerView' ? <MonthPlannerView /> : null}
+          {screen === 'MonthPlannerView' ? <ExtendedPlannerView /> : null}
           {screen === 'ScheduleRoundFormView' ? (
             <ScheduleRoundFormView />
           ) : null}

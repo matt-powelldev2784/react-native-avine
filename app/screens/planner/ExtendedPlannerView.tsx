@@ -1,18 +1,18 @@
 import React from 'react'
-import { MonthPlanner, ScreenMenu } from '../../components'
+import { ExtendedPlanner, ScreenMenu } from '../../components'
 import theme from '../../utils/theme/theme'
 import { FlatList, View } from 'react-native'
 
-const MonthPlannerView = () => {
+const ExtendedPlannerView = () => {
   // flatlist is used to render children to allow the
   // dashboard header to be sticky in the webview
-  const childrenArray = [<MonthPlanner key={0} />]
+  const childrenArray = [<ExtendedPlanner key={0} />]
 
   return (
     <>
       <>
         <ScreenMenu
-          title={'Month Planner'}
+          title={'Extended Planner'}
           bgColor={theme.colors.invoicePrimary}
         />
 
@@ -31,4 +31,4 @@ const MonthPlannerView = () => {
   )
 }
 
-export default MonthPlannerView
+export default ExtendedPlannerView
