@@ -1,4 +1,4 @@
-import { View, StyleSheet, ScrollView } from 'react-native'
+import { StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import { getWeeks } from '../utils/getWeeks'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
@@ -29,7 +29,10 @@ const styles = StyleSheet.create({
     height: '110%',
     minHeight: 650,
   },
-  horizontalScrollView: {},
+  horizontalScrollView: {
+    paddingHorizontal: 24,
+    paddingVertical: 8,
+  },
 })
 
 export default Calender

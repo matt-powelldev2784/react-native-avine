@@ -8,15 +8,21 @@ interface DayViewProps {
 }
 
 const DayView = ({ date }: DayViewProps) => {
-  const day = format(date, 'dd')
-  const month = format(date, 'MMMM')
-  const year = format(date, 'yyyy')
+  const formattedDate = format(date, 'EEE dd MMM')
 
   return (
-    <View style={styles.dayWrapper}>
-      <Text>
-        {day} {month} {year}
-      </Text>
+    <View style={styles.dateContiner}>
+      <Text style={styles.dateText}>{formattedDate}</Text>
+
+      <View style={styles.dayContainer}>
+        <View style={styles.roundContainer}>
+          <Text style={styles.roundText}>123</Text>
+        </View>
+
+        <View style={styles.roundContainer}>
+          <Text style={styles.roundText}>123</Text>
+        </View>
+      </View>
     </View>
   )
 }
@@ -24,12 +30,45 @@ const DayView = ({ date }: DayViewProps) => {
 export default DayView
 
 const styles = StyleSheet.create({
-  dayWrapper: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    backgroundColor: theme.colors.primary,
-    height: 600,
-    width: 180,
+  dateContiner: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     margin: 4,
+    borderRadius: 4,
+  },
+  dateText: {
+    color: theme.colors.primary,
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  dayContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: 160,
+    height: 580,
+    backgroundColor: theme.colors.backgroundGrey,
+    borderRadius: 4,
+  },
+  roundContainer: {
+    width: '100%',
+    marginBottom: 4,
+    backgroundColor: theme.colors.primary,
+    borderRadius: 4,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: theme.colors.primary,
+    minHeight: 50,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  roundText: {
+    color: theme.colors.white,
+    fontSize: 12,
+    fontWeight: 'bold',
+    padding: 2,
   },
 })
