@@ -1,12 +1,9 @@
 import { auth } from '../../../../firebaseConfig'
-import { RoundWithRecurringFlagT } from '../../../types/RoundT'
+import { ExtendedPlannerRoundsDataT } from '../../../types/RoundT'
 import { getOneOffRounds } from './getOneOffRounds'
 import { getRecurringRounds } from './getRecurringRounds'
 
-interface RoundsDataT {
-  plannerDate: string
-  rounds: RoundWithRecurringFlagT[]
-}
+
 
 export const getRoundsByPlannerDates = async (plannerDates: string[]) => {
   if (auth.currentUser === null) {
@@ -14,7 +11,7 @@ export const getRoundsByPlannerDates = async (plannerDates: string[]) => {
   }
 
   try {
-    const roundsData: RoundsDataT[] = []
+    const roundsData: ExtendedPlannerRoundsDataT[] = []
 
     for (const plannerDate of plannerDates) {
       const oneOffRounds = (await getOneOffRounds(plannerDate)) || []

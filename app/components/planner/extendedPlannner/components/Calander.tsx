@@ -1,13 +1,17 @@
 import { StyleSheet, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { getWeeks } from '../utils/getWeeks'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 import DayView from './DayView'
 
+import { useFetchRoundsData } from '../hooks/useFetchRoundsData'
+
 const Calender = () => {
   const { displayWeek, setDisplayWeek, setSelectedDay } = usePlannerContext()
-  const datesToDisplay = getWeeks(displayWeek, 2)
-  console.log('datesToDisplay', datesToDisplay)
+  const datesToDisplay = useMemo(() => getWeeks(displayWeek, 2), [displayWeek])
+
+  const { roundData } = useFetchRoundsData(datesToDisplay)
+  console.log('roundData', roundData)
 
   return (
     <ScrollView contentContainerStyle={styles.verticalScrollView}>
