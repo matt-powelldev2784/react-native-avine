@@ -3,26 +3,43 @@ import React, { useMemo } from 'react'
 import { getWeeks } from '../utils/getWeeks'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 import DayView from './DayView'
-
-import { useFetchRoundsData } from '../hooks/useFetchRoundsData'
+import useGetApiData from '../../../../utils/hooks/useGetApiData'
+import { getRoundsByPlannerDates } from '../../../../db/planner/getRoundsByPlannerDate/getRoundsByPlannerDates'
+import { formatDateForDb } from '../../../../utils/formatDateForDb'
+import { Loading } from '../../../../ui'
 
 const Calender = () => {
-  const { displayWeek, setDisplayWeek, setSelectedDay } = usePlannerContext()
+  const { displayWeek, setDisplayWeek, selectedDay, setSelectedDay } =
+    usePlannerContext()
   const datesToDisplay = useMemo(() => getWeeks(displayWeek, 2), [displayWeek])
 
-  const { roundData } = useFetchRoundsData(datesToDisplay)
-  console.log('roundData', roundData)
+  const plannerDates = datesToDisplay.map((date) => {
+    return formatDateForDb(date)
+  })
+  const { data: roundData, getApiIsLoading } = useGetApiData({
+    apiFunction: async () => await getRoundsByPlannerDates(plannerDates),
+    selectedDay,
+  })
 
   return (
     <ScrollView contentContainerStyle={styles.verticalScrollView}>
+      {getApiIsLoading ? <Loading loadingText={'Planner is Loading'} /> : null}
+
       <ScrollView
         horizontal
         contentContainerStyle={styles.horizontalScrollView}
       >
         {/* ---------------------- maps days to display ----------------------- */}
-        {datesToDisplay.map((date) => {
-          return <DayView key={date.toString()} date={date} />
-        })}
+        {roundData
+          ? roundData.map((roundData) => {
+              return (
+                <DayView
+                  key={roundData.plannerDate.toString()}
+                  roundData={roundData}
+                />
+              )
+            })
+          : null}
       </ScrollView>
     </ScrollView>
   )

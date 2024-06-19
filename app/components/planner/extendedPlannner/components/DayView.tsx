@@ -2,26 +2,32 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { format } from 'date-fns'
 import theme from '../../../../utils/theme/theme'
+import { ExtendedPlannerRoundsDataT } from '../../../../types/RoundT'
+import { convertDbDateToDateString } from '../../../../utils/convertDbDateToDateString'
 
 interface DayViewProps {
-  date: Date
+  roundData: ExtendedPlannerRoundsDataT
 }
 
-const DayView = ({ date }: DayViewProps) => {
+const DayView = ({ roundData }: DayViewProps) => {
+  const date = convertDbDateToDateString(roundData.plannerDate)
   const formattedDate = format(date, 'EEE dd MMM')
+  const rounds = roundData.rounds
+
+  console.log('rounds', rounds)
 
   return (
     <View style={styles.dateContiner}>
       <Text style={styles.dateText}>{formattedDate}</Text>
 
       <View style={styles.dayContainer}>
-        <View style={styles.roundContainer}>
-          <Text style={styles.roundText}>123</Text>
-        </View>
-
-        <View style={styles.roundContainer}>
-          <Text style={styles.roundText}>123</Text>
-        </View>
+        {rounds.map((round) => {
+          return (
+            <View key={round.id} style={styles.roundContainer}>
+              <Text style={styles.roundText}>{round.roundName}</Text>
+            </View>
+          )
+        })}
       </View>
     </View>
   )
