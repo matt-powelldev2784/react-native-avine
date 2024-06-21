@@ -10,7 +10,6 @@ const WeekCalender = () => {
   const { displayWeek, setDisplayWeek, setSelectedDay } = usePlannerContext()
   const weekToDisplay = getWeek(displayWeek)
 
-
   const handleMoveToPrevWeek = () => {
     const newWeek = addDays(displayWeek, -7)
     const newday = startOfWeek(newWeek, { weekStartsOn: 1 })
