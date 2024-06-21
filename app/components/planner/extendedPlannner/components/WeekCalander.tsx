@@ -1,27 +1,23 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { format, startOfWeek, addDays } from 'date-fns'
+import { format, addDays } from 'date-fns'
 import DaySelector from './DaySelector'
 import theme from '../../../../utils/theme/theme'
 import { getWeek } from '../../../../utils/getWeek'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 
 const WeekCalender = () => {
-  const { displayWeek, setDisplayWeek, setSelectedDay } = usePlannerContext()
+  const { displayWeek, setDisplayWeek } = usePlannerContext()
   const weekToDisplay = getWeek(displayWeek)
 
   const handleMoveToPrevWeek = () => {
     const newWeek = addDays(displayWeek, -7)
-    const newday = startOfWeek(newWeek, { weekStartsOn: 1 })
     setDisplayWeek(newWeek)
-    setSelectedDay(newday)
   }
 
   const handleMoveToNextWeek = () => {
     const newWeek = addDays(displayWeek, 7)
-    const newday = startOfWeek(newWeek, { weekStartsOn: 1 })
     setDisplayWeek(newWeek)
-    setSelectedDay(newday)
   }
 
   //map week to display - inside this loop is another loop which maps the days of the week
