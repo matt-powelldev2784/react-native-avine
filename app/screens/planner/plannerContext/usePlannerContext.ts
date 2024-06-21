@@ -9,6 +9,8 @@ interface PlannerContextType {
   setSelectedDay: React.Dispatch<React.SetStateAction<Date>>
   selectedJob: SelectedJobT | null
   setSelectedJob: React.Dispatch<React.SetStateAction<SelectedJobT | null>>
+  daysToView: number
+  setDaysToView: React.Dispatch<React.SetStateAction<number>>
   plannerCardNeedsUpdate: boolean
   setPlannerCardNeedsUpdate: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -20,6 +22,8 @@ export const PlannerContext = createContext<PlannerContextType>({
   setSelectedDay: () => {},
   selectedJob: { jobId: '', roundId: '', recurringRound: false },
   setSelectedJob: () => {},
+  daysToView: 0,
+  setDaysToView: () => {},
   plannerCardNeedsUpdate: false,
   setPlannerCardNeedsUpdate: () => {},
 })
