@@ -1,4 +1,10 @@
-import { StyleSheet, ScrollView, Dimensions } from 'react-native'
+import {
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+  FlexAlignType,
+  ViewStyle,
+} from 'react-native'
 import React, { useMemo } from 'react'
 import { getWeeks } from '../utils/getWeeks'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
@@ -8,12 +14,16 @@ import { getRoundsByPlannerDates } from '../../../../db/planner/getRoundsByPlann
 import { formatDateForDb } from '../../../../utils/formatDateForDb'
 import { Loading } from '../../../../ui'
 import { getRoundTimeOfLongestDay } from '../utils/getRoundTmeOfLongestDay'
+import useWindowWidth from '../../../../utils/hooks/useWindowWidth'
 
 const Calender = () => {
   //functions and hooks
   const { displayWeek, setDisplayWeek, selectedDay, setSelectedDay } =
     usePlannerContext()
   const datesToDisplay = useMemo(() => getWeeks(displayWeek, 2), [displayWeek])
+  const windowWidth = useWindowWidth()
+
+  // get round data api call
   const plannerDates = datesToDisplay.map((date) => {
     return formatDateForDb(date)
   })
@@ -28,15 +38,24 @@ const Calender = () => {
     return roundData ? getRoundTimeOfLongestDay(roundData) * 50 + 40 : 200
   }, [roundData])
 
-  //variable
+  //variables
   const windowHeight = Dimensions.get('window').height
-  const minHeight = Math.max(longestTime, windowHeight - 100)
+  const minHeight = Math.max(longestTime, windowHeight - 300)
+  const calanderWidth = datesToDisplay.length * 168
+  const calenderIsBiggerThanWindow = windowWidth > calanderWidth
+  const containerFlexStyle: ViewStyle = calenderIsBiggerThanWindow
+    ? { alignItems: 'center' as FlexAlignType }
+    : {}
+  console.log('windowWidth', windowWidth)
+  console.log('calanderWidth', calanderWidth)
+  console.log('calenderIsBiggerThanWindow', calenderIsBiggerThanWindow)
 
   return (
     <ScrollView
       contentContainerStyle={[
         styles.verticalScrollView,
         { minHeight: minHeight },
+        containerFlexStyle,
       ]}
     >
       {getApiIsLoading ? <Loading loadingText={'Planner is Loading'} /> : null}
