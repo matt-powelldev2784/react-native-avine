@@ -36,7 +36,7 @@ const useGetApiData = <T>({
   const [data, setData] = useState<T | null>(null)
   const [getApiIsLoading, setGetApiIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<unknown>()
-  const { plannerCardNeedsUpdate, setPlannerCardNeedsUpdate } =
+  const { plannerCardNeedsUpdate, setPlannerCardNeedsUpdate, daysToView } =
     usePlannerContext()
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const useGetApiData = <T>({
     }
 
     fetchData()
-  }, [route, selectedDay, plannerCardNeedsUpdate])
+  }, [route, selectedDay, plannerCardNeedsUpdate, daysToView])
 
   return {
     data,

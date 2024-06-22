@@ -18,9 +18,14 @@ import { getDays } from '../utils/getDays'
 
 const Calender = () => {
   //functions and hooks
-  const { selectedDay } = usePlannerContext()
-  const datesToDisplay = useMemo(() => getDays(selectedDay, 7), [selectedDay])
+  const { selectedDay, daysToView } = usePlannerContext()
+  const datesToDisplay = useMemo(
+    () => getDays(selectedDay, daysToView),
+    [selectedDay, daysToView],
+  )
   const windowWidth = useWindowWidth()
+
+console.log('daysToView', daysToView)
 
   // get round data api call
   const plannerDates = datesToDisplay.map((date) => {
