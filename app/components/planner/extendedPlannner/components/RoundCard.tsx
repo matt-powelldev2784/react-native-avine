@@ -64,7 +64,7 @@ const RoundCard = ({ round }: RoundCardProps) => {
           <View style={styles.iconContainer}>
             <Image
               source={require('../../../../../assets/clock_white.png')}
-              style={{ width: 15, height: 15, margin: 4 }}
+              style={{ width: 16, height: 16, margin: 4 }}
             />
             <Text style={styles.roundText}>{roundTime} hrs</Text>
           </View>
@@ -73,18 +73,26 @@ const RoundCard = ({ round }: RoundCardProps) => {
 
       {largeRound ? (
         <>
+          <View style={styles.roundCardLine} />
+
           <View style={styles.iconContainer}>
             <Image
               source={require('../../../../../assets/clipboard_tick.png')}
-              style={{ width: 15, height: 15, margin: 4 }}
+              style={{
+                width: 16,
+                height: 16,
+                margin: 4,
+              }}
             />
             <Text style={styles.roundText}>{numOfJobs} jobs</Text>
           </View>
 
+          <View style={styles.roundCardLine} />
+
           <View style={styles.iconContainer}>
             <Image
               source={require('../../../../../assets/pound_sign_white.png')}
-              style={{ width: 15, height: 15, margin: 4 }}
+              style={{ width: 18, height: 18, margin: 4 }}
             />
             <Text style={styles.roundText}>£ {totalPrice.toFixed(0)}</Text>
           </View>
@@ -125,7 +133,6 @@ const styles = StyleSheet.create({
     height: 48,
     gap: 2,
   },
-
   smallRoundTitle: {
     color: theme.colors.white,
     fontSize: 12,
@@ -134,24 +141,32 @@ const styles = StyleSheet.create({
   },
   roundTitle: {
     color: theme.colors.white,
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: 'bold',
     padding: 2,
     marginBottom: 8,
     textAlign: 'center',
   },
-  roundText: {
-    color: theme.colors.white,
-    fontSize: 13,
-    fontWeight: 'bold',
-    padding: 2,
-    marginVertical: 4,
-    textAlign: 'center',
-  },
   iconContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    width: 140,
+  },
+  roundText: {
+    color: theme.colors.white,
+    fontSize: 15,
+    fontWeight: 'bold',
+    padding: 2,
+    marginVertical: 4,
+    textAlign: 'right',
+    width: 120,
+  },
+  roundCardLine: {
+    height: 1,
+    backgroundColor: theme.colors.white,
+    width: '90%',
+    marginVertical: 2,
   },
 })
 
