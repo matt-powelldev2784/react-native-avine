@@ -8,13 +8,11 @@ import {
 import React, { useMemo } from 'react'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 import DayView from './DayView'
-import useGetApiData from '../../../../utils/hooks/useGetApiData'
-import { getRoundsByPlannerDates } from '../../../../db/planner/getRoundsByPlannerDate/getRoundsByPlannerDates'
-import { formatDateForDb } from '../../../../utils/formatDateForDb'
 import { Loading } from '../../../../ui'
 import { getRoundTimeOfLongestDay } from '../utils/getRoundTmeOfLongestDay'
 import useWindowWidth from '../../../../utils/hooks/useWindowWidth'
 import { getDays } from '../utils/getDays'
+import useRoundData from '../hooks/useRoundData'
 
 const Calender = () => {
   //functions and hooks
@@ -24,15 +22,7 @@ const Calender = () => {
     [selectedDay, daysToView],
   )
   const windowWidth = useWindowWidth()
-
-  // get round data api call
-  const plannerDates = datesToDisplay.map((date) => {
-    return formatDateForDb(date)
-  })
-  const { data: roundData, getApiIsLoading } = useGetApiData({
-    apiFunction: async () => await getRoundsByPlannerDates(plannerDates),
-    selectedDay,
-  })
+  const { roundData, getApiIsLoading } = useRoundData(datesToDisplay)
 
   // the height of each round card is roundTime x 50 pixels
   // the plus 40 is to allow for the margin and padding

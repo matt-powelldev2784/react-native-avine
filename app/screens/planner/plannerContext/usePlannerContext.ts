@@ -13,6 +13,8 @@ interface PlannerContextType {
   setDaysToView: React.Dispatch<React.SetStateAction<number>>
   plannerCardNeedsUpdate: boolean
   setPlannerCardNeedsUpdate: React.Dispatch<React.SetStateAction<boolean>>
+  plannerNeedsUpdate: boolean
+  setPlannerNeedsUpdate: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const PlannerContext = createContext<PlannerContextType>({
@@ -26,6 +28,8 @@ export const PlannerContext = createContext<PlannerContextType>({
   setDaysToView: () => {},
   plannerCardNeedsUpdate: false,
   setPlannerCardNeedsUpdate: () => {},
+  plannerNeedsUpdate: false,
+  setPlannerNeedsUpdate: () => {},
 })
 
 export const usePlannerContext = () => useContext(PlannerContext)

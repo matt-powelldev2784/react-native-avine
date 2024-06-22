@@ -20,6 +20,7 @@ const Planner = () => {
   const [selectedJob, setSelectedJob] = useState<SelectedJobT | null>(null)
   const [daysToView, setDaysToView] = useState(7)
   const [plannerCardNeedsUpdate, setPlannerCardNeedsUpdate] = useState(false)
+  const [plannerNeedsUpdate, setPlannerNeedsUpdate] = useState(false)
   const screen = route.params?.screen
 
   useEffect(() => {
@@ -38,6 +39,8 @@ const Planner = () => {
     setDaysToView,
     plannerCardNeedsUpdate,
     setPlannerCardNeedsUpdate,
+    plannerNeedsUpdate,
+    setPlannerNeedsUpdate,
   }
 
   return (
