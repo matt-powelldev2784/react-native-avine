@@ -1,4 +1,11 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+} from 'react-native'
 import React, { useContext } from 'react'
 import { PlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 
@@ -53,7 +60,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    transform: [{ translateY: -2.75 }],
+    transform: Platform.OS === 'web' ? [{ translateY: -2.75 }] : [],
     width: 70,
   },
   smallText: {
@@ -65,6 +72,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
-    lineHeight: 12,
+    lineHeight: Platform.OS === 'web' ? 12 : 0,
   },
 })

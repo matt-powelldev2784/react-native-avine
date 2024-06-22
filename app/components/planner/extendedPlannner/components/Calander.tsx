@@ -25,8 +25,6 @@ const Calender = () => {
   )
   const windowWidth = useWindowWidth()
 
-console.log('daysToView', daysToView)
-
   // get round data api call
   const plannerDates = datesToDisplay.map((date) => {
     return formatDateForDb(date)
