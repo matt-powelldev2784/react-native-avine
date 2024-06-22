@@ -25,28 +25,23 @@ const RoundCard = ({ round }: RoundCardProps) => {
       style={[styles.roundContainer, { height: roundTime * 50 }]}
     >
       {smallRound ? (
-        <View style={styles.smallRoundContainer}>
-          <Image
-            source={require('../../../../../assets/round.png')}
-            style={{ width: 20, height: 20 }}
-          />
+        <View style={styles.smallRoundTextContainer}>
+          <Text
+            style={styles.smallRoundTitle}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {round.roundName}
+          </Text>
 
-          <View style={styles.smallRoundTextContainer}>
-            <Text
-              style={styles.smallRoundTitle}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
-              {round.roundName}
-            </Text>
+          <View style={styles.roundCardLine} />
 
-            <Text
-              style={styles.smallRoundTitle}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
-              {roundTime} hrs
-            </Text>
+          <View style={styles.smallRoundIconContainer}>
+            <Image
+              source={require('../../../../../assets/clock_white.png')}
+              style={{ width: 12, height: 12, margin: 4 }}
+            />
+            <Text style={styles.smallRoundTitle}>{roundTime} hrs</Text>
           </View>
         </View>
       ) : null}
@@ -64,17 +59,17 @@ const RoundCard = ({ round }: RoundCardProps) => {
           <View style={styles.iconContainer}>
             <Image
               source={require('../../../../../assets/clock_white.png')}
-              style={{ width: 16, height: 16, margin: 4 }}
+              style={{ width: 16, height: 16 }}
             />
             <Text style={styles.roundText}>{roundTime} hrs</Text>
           </View>
+
+          <View style={styles.roundCardLine} />
         </>
       ) : null}
 
       {largeRound ? (
         <>
-          <View style={styles.roundCardLine} />
-
           <View style={styles.iconContainer}>
             <Image
               source={require('../../../../../assets/clipboard_tick.png')}
@@ -129,15 +124,24 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 122,
-    height: 48,
+    width: 160,
+    height: '100%',
     gap: 2,
   },
   smallRoundTitle: {
     color: theme.colors.white,
     fontSize: 12,
     fontWeight: 'bold',
-    width: '100%',
+    textAlign: 'right',
+    width: 120,
+    height: 17,
+  },
+  smallRoundIconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: 140,
+    height: 17,
   },
   roundTitle: {
     color: theme.colors.white,
@@ -145,7 +149,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 2,
     marginBottom: 8,
-    textAlign: 'center',
   },
   iconContainer: {
     flexDirection: 'row',
@@ -166,7 +169,6 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: theme.colors.white,
     width: '90%',
-    marginVertical: 2,
   },
 })
 
