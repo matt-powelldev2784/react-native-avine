@@ -27,7 +27,9 @@ const Calender = () => {
   // the height of each round card is roundTime x 50 pixels
   // the plus 40 is to allow for the margin and padding
   const longestTime = useMemo(() => {
-    return roundData ? getRoundTimeOfLongestDay(roundData) * 50 + 40 : 200
+    return roundData
+      ? getRoundTimeOfLongestDay(roundData) * 50 + 400
+      : windowHeight
   }, [roundData])
 
   //variables
@@ -73,9 +75,10 @@ const Calender = () => {
 const styles = StyleSheet.create({
   verticalScrollView: {
     height: '110%',
+    marginBottom: 200,
   },
   horizontalScrollView: {
-    paddingHorizontal: 24,
+    paddingHorizontal: 16,
     paddingVertical: 8,
   },
 })

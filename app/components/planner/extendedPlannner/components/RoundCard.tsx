@@ -1,13 +1,19 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Image, ViewStyle } from 'react-native'
+import React, { useState } from 'react'
 import { RoundWithRecurringFlagT } from '../../../../types/RoundT'
 import theme from '../../../../utils/theme/theme'
+import ButtonWithIcon from '../../../../ui/button/ButtonWithIcon'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 interface RoundCardProps {
   round: RoundWithRecurringFlagT
 }
 
 const RoundCard = ({ round }: RoundCardProps) => {
+  //state
+  const [menuIsExpanded, setMenuIsExpanded] = useState<boolean>(false)
+
+  //variables
   const roundTime = round.relatedJobs?.reduce((acc, job) => {
     return acc + Number(job.time)
   }, 0)
@@ -18,14 +24,27 @@ const RoundCard = ({ round }: RoundCardProps) => {
   const smallRound = roundTime * 50 < 100
   const mediumRound = roundTime * 50 > 100
   const largeRound = roundTime * 50 > 200
+  const menuIsExpandedSmallRoundHeight =
+    smallRound && menuIsExpanded && roundTime < 4 ? 135 : 0
+  const menuIsExpandedMediumRoundHeight =
+    mediumRound && menuIsExpanded && roundTime < 4 ? 25 : 0
+  const smallRoundStyle: ViewStyle =
+    menuIsExpanded && roundTime < 4
+      ? { paddingTop: 8, justifyContent: 'flex-start' }
+      : { paddingTop: 0, justifyContent: 'center', height: '100%' }
+  const conatinerHeight =
+    roundTime * 50 +
+    menuIsExpandedSmallRoundHeight +
+    menuIsExpandedMediumRoundHeight
 
   return (
-    <View
+    <TouchableOpacity
       key={round.id}
-      style={[styles.roundContainer, { height: roundTime * 50 }]}
+      style={[styles.roundContainer, { height: conatinerHeight }]}
+      onPress={() => setMenuIsExpanded((prev) => !prev)}
     >
       {smallRound ? (
-        <View style={styles.smallRoundTextContainer}>
+        <View style={[styles.smallRoundTextContainer, smallRoundStyle]}>
           <Text
             style={styles.smallRoundTitle}
             numberOfLines={1}
@@ -59,7 +78,7 @@ const RoundCard = ({ round }: RoundCardProps) => {
           <View style={styles.iconContainer}>
             <Image
               source={require('../../../../../assets/clock_white.png')}
-              style={{ width: 16, height: 16 }}
+              style={{ width: 16, height: 16, margin: 4 }}
             />
             <Text style={styles.roundText}>{roundTime} hrs</Text>
           </View>
@@ -93,13 +112,34 @@ const RoundCard = ({ round }: RoundCardProps) => {
           </View>
         </>
       ) : null}
-    </View>
+
+      {menuIsExpanded ? (
+        <View style={styles.buttonContainer}>
+          <ButtonWithIcon
+            onPress={() => setMenuIsExpanded((prev) => !prev)}
+            backgroundColor={theme.colors.tertiaryBlue}
+            text={'Move Round'}
+            width={150}
+            height={30}
+            icon={require('../../../../../assets/move_icon_white.png')}
+          />
+          <ButtonWithIcon
+            onPress={() => setMenuIsExpanded((prev) => !prev)}
+            backgroundColor={theme.colors.tertiaryBlue}
+            text={'Goto Ticket'}
+            width={150}
+            height={30}
+            icon={require('../../../../../assets/notes_white.png')}
+          />
+        </View>
+      ) : null}
+    </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
   roundContainer: {
-    width: '100%',
+    width: 160,
     marginBottom: 4,
     backgroundColor: theme.colors.primary,
     borderRadius: 4,
@@ -123,9 +163,7 @@ const styles = StyleSheet.create({
   smallRoundTextContainer: {
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
     width: 160,
-    height: '100%',
     gap: 2,
   },
   smallRoundTitle: {
@@ -169,6 +207,14 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: theme.colors.white,
     width: '90%',
+  },
+  buttonContainer: {
+    marginTop: 16,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    width: '100%',
   },
 })
 
