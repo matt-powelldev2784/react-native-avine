@@ -5,6 +5,9 @@ import theme from '../../../../utils/theme/theme'
 import ButtonWithIcon from '../../../../ui/button/ButtonWithIcon'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 
 interface RoundCardProps {
   round: RoundWithRecurringFlagT
@@ -13,11 +16,11 @@ interface RoundCardProps {
 
 const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
   //state
-  const [menuIsExpanded, setMenuIsExpanded] = useState<boolean>(false)
-  console.log('round', round)
+  const [menuIsExpanded, setMenuIsExpanded] = useState<boolean>(true)
 
   //hooks
   const { setSelectedRound } = usePlannerContext()
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
   //functions
   const handleMoveRound = () => {
@@ -34,6 +37,10 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
       roundId: round.id,
       plannerDate: plannerDate,
       recurringRound: round.recurringRound,
+    })
+    console.log('a')
+    navigation.navigate('Planner', {
+      screen: 'PlannerRoundTicketView',
     })
   }
 
@@ -65,7 +72,7 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
     <TouchableOpacity
       key={round.id}
       style={[styles.roundContainer, { height: conatinerHeight }]}
-      onPress={() => setMenuIsExpanded((prev) => !prev)}
+      // onPress={() => setMenuIsExpanded((prev) => !prev)}
     >
       {smallRound ? (
         <View style={[styles.smallRoundTextContainer, smallRoundStyle]}>

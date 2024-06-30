@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     color: 'white',
     borderRadius: 8,
     height: 24,
-    width: 40,
+    width: 50,
     paddingTop: 4,
     textAlign: 'right',
   },

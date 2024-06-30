@@ -50,7 +50,6 @@ const Planner = () => {
     setPlannerNeedsUpdate,
   }
 
-  console.log('screen', screen)
   return (
     <>
       <Dashboard>

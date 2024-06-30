@@ -2,6 +2,7 @@ import { getDoc, doc } from 'firebase/firestore'
 import { db, auth } from '../../../../firebaseConfig'
 import { getJob } from '../../jobs/getJob'
 
+
 interface getPlannerRoundTicketT {
   plannerDate: string
   roundId: string
@@ -15,6 +16,10 @@ export const getPlannerRoundTicket = async ({
 }: getPlannerRoundTicketT) => {
   if (auth.currentUser === null) {
     return
+  }
+
+  if (!plannerDate || !roundId) {
+    throw new Error('Missing required data')
   }
 
   try {

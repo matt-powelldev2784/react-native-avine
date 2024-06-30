@@ -80,7 +80,7 @@ const StackNavigator = () => {
           <Stack.Screen
             name="Planner"
             component={Planner}
-            initialParams={{ screen: 'PlannerRoundTicketView' }}
+            initialParams={{ screen: 'MonthPlannerView' }}
           />
 
           {/* --------------------------  Misc Screens  -------------------------- */}

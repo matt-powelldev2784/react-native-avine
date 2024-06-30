@@ -1,11 +1,132 @@
-import React from 'react'
-import { StyleSheet, Text, View, Platform } from 'react-native'
+import { View, Text, StyleSheet, Image, Platform } from 'react-native'
+import React, { useState } from 'react'
+import { JobWithIdT } from '../../../types/JobT'
 import theme from '../../../utils/theme/theme'
+import { ConfirmModal, Loading } from '../../../ui'
+import { batchToggleJobIsComplete } from '../../../db/jobs/batchToggleJobIsComplete'
+import { formatDateForDb } from '../../../utils/formatDateForDb'
+import { batchToggleInvoiceIsPaid } from '../../../db/jobs/batchToogleInvoiceIsPaid'
+import Button from '../../../ui/button/Button'
+import ScheduledJobListItem from '../scheduledRounds/components/ScheduledJobListItem'
+import { useRoundTicketData } from './hooks/useRoundtTicketData'
+import { usePlannerContext } from '../../../screens/planner/plannerContext/usePlannerContext'
 
 const PlannerRoundTicket = () => {
+  //state
+  const [allPaidModalVisible, setAllPaidModalVisible] = useState(false)
+  const [allCompleteModalVisible, setAllCompleteModalVisible] = useState(false)
+
+  //hooks
+  const { selectedDay, setPlannerCardNeedsUpdate } = usePlannerContext()
+
+  const {
+    round,
+    noJobStatusHasChanged,
+    allJobsAreComplete,
+    allInvoicesArePaid,
+  } = useRoundTicketData()
+
+  if (!round)
+    return <Loading loadingText="Loading Planner Round Ticket Data..." />
+
+  // variables
+  const recurringRound = round?.recurringRound
+  const plannerDate = formatDateForDb(selectedDay)
+
+  //functions
+  const toggleAllJobsComplete = async () => {
+    if (!round) return
+    await batchToggleJobIsComplete({ round, plannerDate })
+    setPlannerCardNeedsUpdate(true)
+  }
+
+  const toggleAllJobsPaid = async () => {
+    if (!round) return
+    await batchToggleInvoiceIsPaid({ round, plannerDate })
+    setPlannerCardNeedsUpdate(true)
+  }
+
   return (
     <View style={styles.roundWrapper}>
-      <Text>123</Text>
+      <View style={styles.roundContainer}>
+        {/* ---------------------- Round Title ----------------------- */}
+        <View style={styles.roundTitleContainer}>
+          <Image
+            source={require('../../../../assets/round_icon.png')}
+            style={{ width: 30, height: 30, margin: 8, marginTop: 20 }}
+          />
+
+          <Text
+            style={styles.roundTitleText}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {round.roundName}
+          </Text>
+
+          <View style={styles.roundIconsContainer}>
+            {recurringRound ? (
+              <Image
+                source={require('../../../../assets/repeat.png')}
+                style={{ width: 25, height: 25 }}
+              />
+            ) : (
+              <Text />
+            )}
+          </View>
+        </View>
+
+        {/* ---------------------- Jobs List ----------------------- */}
+
+        {round?.relatedJobs?.map((job: JobWithIdT, index, self) => (
+          <View key={job.id}>
+            <ScheduledJobListItem
+              key={job.id}
+              job={job}
+              recurringRound={recurringRound}
+              roundId={round.id}
+            />
+            {index !== self.length - 1 && <View style={styles.jobCardLine} />}
+            {round?.relatedJobs.length === 1 && (
+              <View style={styles.jobCardLine} />
+            )}
+          </View>
+        ))}
+
+        <View style={styles.buttonContainer}>
+          {!allInvoicesArePaid && allJobsAreComplete ? (
+            <Button
+              text={'Set all invoices to paid'}
+              onPress={() => setAllPaidModalVisible(true)}
+              backgroundColor={theme.colors.invoicePrimary}
+            />
+          ) : null}
+          {noJobStatusHasChanged ? (
+            <Button
+              text={'Set all jobs to complete'}
+              onPress={() => setAllCompleteModalVisible(true)}
+            />
+          ) : null}
+        </View>
+      </View>
+
+      {/* ---------------------- Toogle all complete model ----------------------- */}
+      <ConfirmModal
+        modalText={`Are you sure you want to set all the jobs in ${round.roundName} round to complete?`}
+        onConfirm={toggleAllJobsComplete}
+        onCancel={() => setAllCompleteModalVisible(false)}
+        visible={allCompleteModalVisible}
+        confirmButtonText={'Yes'}
+      />
+
+      {/* ---------------------- Toogle all paid model ----------------------- */}
+      <ConfirmModal
+        modalText={`Are you sure you want to set all the invoices in ${round.roundName} round to paid?`}
+        onConfirm={toggleAllJobsPaid}
+        onCancel={() => setAllPaidModalVisible(false)}
+        visible={allPaidModalVisible}
+        confirmButtonText={'Yes'}
+      />
     </View>
   )
 }
