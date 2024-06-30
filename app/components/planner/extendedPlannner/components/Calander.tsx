@@ -60,8 +60,9 @@ const Calender = () => {
           ? roundData.map((roundData) => {
               return (
                 <DayView
-                  key={roundData.plannerDate.toString()}
+                  key={roundData.plannerDate}
                   roundData={roundData}
+                  plannerDate={roundData.plannerDate}
                   minHeight={minHeight}
                 />
               )

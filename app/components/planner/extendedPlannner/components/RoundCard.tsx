@@ -4,14 +4,29 @@ import { RoundWithRecurringFlagT } from '../../../../types/RoundT'
 import theme from '../../../../utils/theme/theme'
 import ButtonWithIcon from '../../../../ui/button/ButtonWithIcon'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 
 interface RoundCardProps {
   round: RoundWithRecurringFlagT
+  plannerDate: string
 }
 
-const RoundCard = ({ round }: RoundCardProps) => {
+const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
   //state
   const [menuIsExpanded, setMenuIsExpanded] = useState<boolean>(false)
+
+  //hooks
+  const { setSelectedRound } = usePlannerContext()
+
+  //functions
+  const handleMoveRound = () => {
+    setMenuIsExpanded((prev) => !prev)
+    setSelectedRound({ roundId: round.id, plannerDate: plannerDate })
+  }
+  const handleGotoTicket = () => {
+    setMenuIsExpanded((prev) => !prev)
+    setSelectedRound({ roundId: round.id, plannerDate: plannerDate })
+  }
 
   //variables
   const roundTime = round.relatedJobs?.reduce((acc, job) => {
@@ -116,7 +131,7 @@ const RoundCard = ({ round }: RoundCardProps) => {
       {menuIsExpanded ? (
         <View style={styles.buttonContainer}>
           <ButtonWithIcon
-            onPress={() => setMenuIsExpanded((prev) => !prev)}
+            onPress={handleMoveRound}
             backgroundColor={theme.colors.tertiaryBlue}
             text={'Move Round'}
             width={150}
@@ -124,7 +139,7 @@ const RoundCard = ({ round }: RoundCardProps) => {
             icon={require('../../../../../assets/move_icon_white.png')}
           />
           <ButtonWithIcon
-            onPress={() => setMenuIsExpanded((prev) => !prev)}
+            onPress={handleGotoTicket}
             backgroundColor={theme.colors.tertiaryBlue}
             text={'Goto Ticket'}
             width={150}

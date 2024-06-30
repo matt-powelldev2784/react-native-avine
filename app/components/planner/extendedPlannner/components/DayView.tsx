@@ -8,10 +8,11 @@ import RoundCard from './RoundCard'
 
 interface DayViewProps {
   roundData: ExtendedPlannerRoundsDataT
+  plannerDate: string
   minHeight: number
 }
 
-const DayView = ({ roundData, minHeight }: DayViewProps) => {
+const DayView = ({ roundData, plannerDate, minHeight }: DayViewProps) => {
   const date = convertDbDateToDateString(roundData.plannerDate)
   const formattedDate = format(date, 'EEE dd MMM')
   const rounds = roundData.rounds
@@ -22,7 +23,9 @@ const DayView = ({ roundData, minHeight }: DayViewProps) => {
 
       <View style={[styles.dayContainer, { height: minHeight }]}>
         {rounds.map((round) => {
-          return <RoundCard key={round.id} round={round} />
+          return (
+            <RoundCard key={round.id} round={round} plannerDate={plannerDate} />
+          )
         })}
       </View>
     </View>

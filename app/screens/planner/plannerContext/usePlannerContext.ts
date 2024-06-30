@@ -1,6 +1,7 @@
 import { SelectedJobT } from './../../../types/JobT'
 import React from 'react'
 import { createContext, useContext } from 'react'
+import { SelectedRoundInfoT } from '../../../types/RoundT'
 
 interface PlannerContextType {
   displayWeek: Date
@@ -8,6 +9,10 @@ interface PlannerContextType {
   selectedDay: Date
   setSelectedDay: React.Dispatch<React.SetStateAction<Date>>
   selectedJob: SelectedJobT | null
+  selectedRound: SelectedRoundInfoT | null
+  setSelectedRound: React.Dispatch<
+    React.SetStateAction<SelectedRoundInfoT | null>
+  >
   setSelectedJob: React.Dispatch<React.SetStateAction<SelectedJobT | null>>
   daysToView: number
   setDaysToView: React.Dispatch<React.SetStateAction<number>>
@@ -24,6 +29,8 @@ export const PlannerContext = createContext<PlannerContextType>({
   setSelectedDay: () => {},
   selectedJob: { jobId: '', roundId: '', recurringRound: false },
   setSelectedJob: () => {},
+  selectedRound: { roundId: '', plannerDate: '' },
+  setSelectedRound: () => {},
   daysToView: 0,
   setDaysToView: () => {},
   plannerCardNeedsUpdate: false,

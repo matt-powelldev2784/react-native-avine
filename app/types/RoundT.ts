@@ -46,3 +46,8 @@ export interface ExtendedPlannerRoundsDataT {
   plannerDate: string
   rounds: RoundWithRecurringFlagT[]
 }
+
+export type SelectedRoundInfoT = {
+  roundId: string
+  plannerDate: string
+}

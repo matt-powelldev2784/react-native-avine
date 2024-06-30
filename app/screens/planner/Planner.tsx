@@ -10,6 +10,7 @@ import {
   ScheduleRoundFormView,
   ScheduledJobView,
 } from '../index'
+import { SelectedRoundInfoT } from '../../types/RoundT'
 
 type PlannerRouteProp = RouteProp<RootStackParamList, 'Planner'>
 
@@ -18,6 +19,9 @@ const Planner = () => {
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
   const [selectedJob, setSelectedJob] = useState<SelectedJobT | null>(null)
+  const [selectedRound, setSelectedRound] = useState<SelectedRoundInfoT | null>(
+    null,
+  )
   const [daysToView, setDaysToView] = useState(7)
   const [plannerCardNeedsUpdate, setPlannerCardNeedsUpdate] = useState(false)
   const [plannerNeedsUpdate, setPlannerNeedsUpdate] = useState(false)
@@ -35,6 +39,8 @@ const Planner = () => {
     setSelectedDay,
     selectedJob,
     setSelectedJob,
+    selectedRound,
+    setSelectedRound,
     daysToView,
     setDaysToView,
     plannerCardNeedsUpdate,
