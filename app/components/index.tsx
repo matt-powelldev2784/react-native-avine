@@ -33,6 +33,7 @@ import ExtendedPlanner from './planner/extendedPlannner/ExtendedPlanner'
 import WeekPlanner from './planner/weekPlanner/WeekPlanner'
 import ScheduleRoundForm from './planner/scheduleRoundForm/ScheduleRoundForm'
 import ScheduledJobCard from './planner/scheduledJobCard/ScheduledJobCard'
+import PlannerRoundTicket from './planner/plannerRoundTicket/PlannerRoundTicket'
 
 //invoices
 import AddCompanyInfoForm from './invoices/addCompanyInfoForm/AddCompanyInfoForm'
@@ -44,6 +45,7 @@ import EditInvoiceForm from './invoices/editInvoiceForm/EditInvoiceForm'
 
 export {
   ExtendedPlanner,
+  PlannerRoundTicket,
   RoundMenu,
   RoundCard,
   ClientsMenu,

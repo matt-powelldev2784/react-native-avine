@@ -13,8 +13,8 @@ const ExtendedPlannerView = () => {
     <>
       <>
         <ScreenMenu
-          title={'Extended Planner'}
-          bgColor={theme.colors.invoicePrimary}
+          title={'Planner'}
+          bgColor={theme.colors.plannerPrimary}
           component={<DisplayDayAmountSelector />}
         />
 

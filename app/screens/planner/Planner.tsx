@@ -9,6 +9,7 @@ import {
   ExtendedPlannerView,
   ScheduleRoundFormView,
   ScheduledJobView,
+  PlannerRoundTicketView,
 } from '../index'
 import { SelectedRoundInfoT } from '../../types/RoundT'
 
@@ -49,6 +50,7 @@ const Planner = () => {
     setPlannerNeedsUpdate,
   }
 
+  console.log('screen', screen)
   return (
     <>
       <Dashboard>
@@ -59,6 +61,9 @@ const Planner = () => {
             <ScheduleRoundFormView />
           ) : null}
           {screen === 'ScheduledJobView' ? <ScheduledJobView /> : null}
+          {screen === 'PlannerRoundTicketView' ? (
+            <PlannerRoundTicketView />
+          ) : null}
         </PlannerContext.Provider>
       </Dashboard>
     </>

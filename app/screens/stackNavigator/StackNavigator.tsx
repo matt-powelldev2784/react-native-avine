@@ -80,7 +80,7 @@ const StackNavigator = () => {
           <Stack.Screen
             name="Planner"
             component={Planner}
-            initialParams={{ screen: 'MonthPlannerView' }}
+            initialParams={{ screen: 'PlannerRoundTicketView' }}
           />
 
           {/* --------------------------  Misc Screens  -------------------------- */}
@@ -95,7 +95,6 @@ const StackNavigator = () => {
 
           {/* --------------------------  Invoice Screens  -------------------------- */}
           <Stack.Screen name="InvoiceListView" component={InvoiceListView} />
-
           <Stack.Screen name="EditInvoice" component={EditInvoice} />
           <Stack.Screen name="AddCompanyInfo" component={AddCompanyInfo} />
 
