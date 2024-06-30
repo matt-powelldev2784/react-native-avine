@@ -50,4 +50,5 @@ export interface ExtendedPlannerRoundsDataT {
 export type SelectedRoundInfoT = {
   roundId: string
   plannerDate: string
+  recurringRound: boolean | null
 }
