@@ -67,6 +67,7 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
     roundTime * 50 +
     menuIsExpandedSmallRoundHeight +
     menuIsExpandedMediumRoundHeight
+  const buttonHeight = !menuIsExpanded ? conatinerHeight : '100%'
 
   return (
     <View
@@ -75,7 +76,7 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
     >
       <TouchableOpacity
         onPress={() => setMenuIsExpanded((prev) => !prev)}
-        style={styles.roundButton}
+        style={[styles.roundContainer, { height: buttonHeight }]}
       >
         {smallRound ? (
           <View style={[styles.smallRoundContainer, smallRoundStyle]}>
