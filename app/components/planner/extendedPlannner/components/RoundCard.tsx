@@ -14,6 +14,7 @@ interface RoundCardProps {
 const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
   //state
   const [menuIsExpanded, setMenuIsExpanded] = useState<boolean>(false)
+  console.log('round', round)
 
   //hooks
   const { setSelectedRound } = usePlannerContext()
@@ -21,11 +22,19 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
   //functions
   const handleMoveRound = () => {
     setMenuIsExpanded((prev) => !prev)
-    setSelectedRound({ roundId: round.id, plannerDate: plannerDate })
+    setSelectedRound({
+      roundId: round.id,
+      plannerDate: plannerDate,
+      recurringRound: round.recurringRound,
+    })
   }
   const handleGotoTicket = () => {
     setMenuIsExpanded((prev) => !prev)
-    setSelectedRound({ roundId: round.id, plannerDate: plannerDate })
+    setSelectedRound({
+      roundId: round.id,
+      plannerDate: plannerDate,
+      recurringRound: round.recurringRound,
+    })
   }
 
   //variables

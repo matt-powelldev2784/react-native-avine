@@ -29,7 +29,7 @@ export const PlannerContext = createContext<PlannerContextType>({
   setSelectedDay: () => {},
   selectedJob: { jobId: '', roundId: '', recurringRound: false },
   setSelectedJob: () => {},
-  selectedRound: { roundId: '', plannerDate: '' },
+  selectedRound: { roundId: '', plannerDate: '', recurringRound: null },
   setSelectedRound: () => {},
   daysToView: 0,
   setDaysToView: () => {},
