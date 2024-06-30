@@ -16,7 +16,7 @@ interface RoundCardProps {
 
 const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
   //state
-  const [menuIsExpanded, setMenuIsExpanded] = useState<boolean>(true)
+  const [menuIsExpanded, setMenuIsExpanded] = useState<boolean>(false)
 
   //hooks
   const { setSelectedRound } = usePlannerContext()
@@ -69,80 +69,84 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
     menuIsExpandedMediumRoundHeight
 
   return (
-    <TouchableOpacity
+    <View
       key={round.id}
       style={[styles.roundContainer, { height: conatinerHeight }]}
-      // onPress={() => setMenuIsExpanded((prev) => !prev)}
     >
-      {smallRound ? (
-        <View style={[styles.smallRoundTextContainer, smallRoundStyle]}>
-          <Text
-            style={styles.smallRoundTitle}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {round.roundName}
-          </Text>
+      <TouchableOpacity
+        onPress={() => setMenuIsExpanded((prev) => !prev)}
+        style={styles.roundButton}
+      >
+        {smallRound ? (
+          <View style={[styles.smallRoundContainer, smallRoundStyle]}>
+            <Text
+              style={styles.smallRoundTitle}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {round.roundName}
+            </Text>
 
-          <View style={styles.roundCardLine} />
+            <View style={styles.roundCardLine} />
 
-          <View style={styles.smallRoundIconContainer}>
-            <Image
-              source={require('../../../../../assets/clock_white.png')}
-              style={{ width: 12, height: 12, margin: 4 }}
-            />
-            <Text style={styles.smallRoundTitle}>{roundTime} hrs</Text>
+            <View style={styles.smallRoundIconContainer}>
+              <Image
+                source={require('../../../../../assets/clock_white.png')}
+                style={{ width: 12, height: 12, margin: 4 }}
+              />
+              <Text style={styles.smallRoundTitle}>{roundTime} hrs</Text>
+            </View>
           </View>
-        </View>
-      ) : null}
+        ) : null}
 
-      {mediumRound ? (
-        <Image
-          source={require('../../../../../assets/round.png')}
-          style={{ width: 25, height: 25, marginTop: 8 }}
-        />
-      ) : null}
+        {mediumRound ? (
+          <Image
+            source={require('../../../../../assets/round.png')}
+            style={{ width: 25, height: 25, marginTop: 8 }}
+          />
+        ) : null}
 
-      {mediumRound ? (
-        <>
-          <Text style={styles.roundTitle}>{round.roundName}</Text>
-          <View style={styles.iconContainer}>
-            <Image
-              source={require('../../../../../assets/clock_white.png')}
-              style={{ width: 16, height: 16, margin: 4 }}
-            />
-            <Text style={styles.roundText}>{roundTime} hrs</Text>
-          </View>
+        {mediumRound ? (
+          <>
+            <Text style={styles.roundTitle}>{round.roundName}</Text>
+            <View style={styles.iconContainer}>
+              <Image
+                source={require('../../../../../assets/clock_white.png')}
+                style={{ width: 16, height: 16, margin: 4 }}
+              />
+              <Text style={styles.roundText}>{roundTime} hrs</Text>
+            </View>
 
-          <View style={styles.roundCardLine} />
-        </>
-      ) : null}
+            <View style={styles.roundCardLine} />
+          </>
+        ) : null}
 
-      {largeRound ? (
-        <>
-          <View style={styles.iconContainer}>
-            <Image
-              source={require('../../../../../assets/clipboard_tick.png')}
-              style={{
-                width: 16,
-                height: 16,
-                margin: 4,
-              }}
-            />
-            <Text style={styles.roundText}>{numOfJobs} jobs</Text>
-          </View>
+        {largeRound ? (
+          <>
+            <View style={styles.iconContainer}>
+              <Image
+                source={require('../../../../../assets/clipboard_tick.png')}
+                style={{
+                  width: 16,
+                  height: 16,
+                  margin: 4,
+                }}
+              />
+              <Text style={styles.roundText}>{numOfJobs} jobs</Text>
+            </View>
 
-          <View style={styles.roundCardLine} />
+            <View style={styles.roundCardLine} />
 
-          <View style={styles.iconContainer}>
-            <Image
-              source={require('../../../../../assets/pound_sign_white.png')}
-              style={{ width: 18, height: 18, margin: 4 }}
-            />
-            <Text style={styles.roundText}>£ {totalPrice.toFixed(0)}</Text>
-          </View>
-        </>
-      ) : null}
+            <View style={styles.iconContainer}>
+              <Image
+                source={require('../../../../../assets/pound_sign_white.png')}
+                style={{ width: 18, height: 18, margin: 4 }}
+              />
+              <Text style={styles.roundText}>£ {totalPrice.toFixed(0)}</Text>
+            </View>
+          </>
+        ) : null}
+      </TouchableOpacity>
 
       {menuIsExpanded ? (
         <View style={styles.buttonContainer}>
@@ -164,7 +168,7 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
           />
         </View>
       ) : null}
-    </TouchableOpacity>
+    </View>
   )
 }
 
@@ -182,19 +186,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  smallRoundContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    width: '100%',
+  roundButton: {
+    width: 160,
     height: '100%',
-    padding: 8,
-    gap: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  smallRoundTextContainer: {
+  smallRoundContainer: {
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     width: 160,
+    height: 50,
+    minHeight: 50,
     gap: 2,
   },
   smallRoundTitle: {
