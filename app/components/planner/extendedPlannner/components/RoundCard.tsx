@@ -72,19 +72,8 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
   const smallRound = roundTime * 50 < 100
   const mediumRound = roundTime * 50 > 100
   const largeRound = roundTime * 50 > 200
-  const menuIsExpandedSmallRoundHeight =
-    smallRound && menuIsExpanded && roundTime < 4 ? 180 : 0
-  const menuIsExpandedMediumRoundHeight =
-    mediumRound && menuIsExpanded && roundTime < 4 ? 80 : 0
-  const menuIsExpandedLargeRoundHeight =
-    largeRound && menuIsExpanded && roundTime < 6.5 ? 50 : 0
   const wrapperHeight = roundTime * 50
-  menuIsExpandedSmallRoundHeight +
-    menuIsExpandedMediumRoundHeight +
-    menuIsExpandedLargeRoundHeight
-  const menuIsExpandedHeight = menuIsExpanded
-    ? wrapperHeight - 120
-    : wrapperHeight
+  const menuIsExpandedHeight = menuIsExpanded ? 0 : wrapperHeight
 
   return (
     <View
@@ -230,9 +219,6 @@ const styles = StyleSheet.create({
     minHeight: 50,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'red',
   },
   roundContainer: {
     width: 160,
@@ -241,9 +227,6 @@ const styles = StyleSheet.create({
     minHeight: 50,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'grey',
   },
   smallRoundContainer: {
     flexDirection: 'column',
