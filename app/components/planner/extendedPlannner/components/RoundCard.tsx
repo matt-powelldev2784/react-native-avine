@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, ViewStyle } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { useState } from 'react'
 import { RoundWithRecurringFlagT } from '../../../../types/RoundT'
 import theme from '../../../../utils/theme/theme'
@@ -78,28 +78,25 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
     mediumRound && menuIsExpanded && roundTime < 4 ? 80 : 0
   const menuIsExpandedLargeRoundHeight =
     largeRound && menuIsExpanded && roundTime < 6.5 ? 50 : 0
-  const smallRoundStyle: ViewStyle =
-    menuIsExpanded && roundTime < 4
-      ? { paddingTop: 8, justifyContent: 'flex-start' }
-      : { paddingTop: 0, justifyContent: 'center', height: '100%' }
-  const conatinerHeight =
-    roundTime * 50 +
-    menuIsExpandedSmallRoundHeight +
+  const wrapperHeight = roundTime * 50
+  menuIsExpandedSmallRoundHeight +
     menuIsExpandedMediumRoundHeight +
     menuIsExpandedLargeRoundHeight
-  const buttonHeight = !menuIsExpanded ? conatinerHeight : '100%'
+  const menuIsExpandedHeight = menuIsExpanded
+    ? wrapperHeight - 120
+    : wrapperHeight
 
   return (
     <View
       key={round.id}
-      style={[styles.roundContainer, { height: conatinerHeight }]}
+      style={[styles.roundWrapper, { minHeight: wrapperHeight }]}
     >
       <TouchableOpacity
         onPress={() => setMenuIsExpanded((prev) => !prev)}
-        style={[styles.roundContainer, { height: buttonHeight }]}
+        style={[styles.roundContainer, { minHeight: menuIsExpandedHeight }]}
       >
         {smallRound ? (
-          <View style={[styles.smallRoundContainer, smallRoundStyle]}>
+          <View style={[styles.smallRoundContainer]}>
             <Text
               style={styles.smallRoundTitle}
               numberOfLines={1}
@@ -224,28 +221,35 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
 }
 
 const styles = StyleSheet.create({
-  roundContainer: {
+  roundWrapper: {
+    position: 'relative',
     width: 160,
     marginBottom: 4,
     backgroundColor: theme.colors.primary,
     borderRadius: 4,
-    overflow: 'hidden',
     minHeight: 50,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'red',
   },
-  roundButton: {
+  roundContainer: {
     width: 160,
-    height: '100%',
+    backgroundColor: theme.colors.primary,
+    borderRadius: 4,
+    minHeight: 50,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'grey',
   },
   smallRoundContainer: {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     width: 160,
-    height: '100%',
     minHeight: 50,
     gap: 2,
   },
@@ -292,12 +296,12 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   buttonContainer: {
-    marginTop: 16,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
     width: '100%',
+    height: 120,
   },
 })
 

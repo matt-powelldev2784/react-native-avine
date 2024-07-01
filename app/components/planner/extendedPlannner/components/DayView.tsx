@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    gapVertical: 4,
     margin: 4,
     borderRadius: 4,
   },

@@ -34,7 +34,7 @@ const Calender = () => {
 
   //variables
   const windowHeight = Dimensions.get('window').height
-  const minHeight = Math.max(longestTime, windowHeight - 300)
+  const minHeight = Math.max(longestTime, windowHeight - 300) || 200
   const calanderWidth = datesToDisplay.length * 168
   const calenderIsBiggerThanWindow = windowWidth > calanderWidth
   const containerFlexStyle: ViewStyle = calenderIsBiggerThanWindow
