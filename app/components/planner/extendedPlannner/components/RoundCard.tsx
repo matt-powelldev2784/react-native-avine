@@ -8,6 +8,9 @@ import { usePlannerContext } from '../../../../screens/planner/plannerContext/us
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import { ConfirmModal } from '../../../../ui'
+import Button from '../../../../ui/button/Button'
+import useHandleDelete from '../hooks/useHandleDeleteRound'
 
 interface RoundCardProps {
   round: RoundWithRecurringFlagT
@@ -17,10 +20,24 @@ interface RoundCardProps {
 const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
   //state
   const [menuIsExpanded, setMenuIsExpanded] = useState<boolean>(false)
+  const [recurringModalVisible, setRecurringModalVisible] = useState(false)
+  const [oneOffModalVisible, setOneOffModalVisible] = useState(false)
 
   //hooks
   const { setSelectedRound } = usePlannerContext()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const {
+    handleDeletePress,
+    handleDeleteOneOffRound,
+    handleDeleteAllRecurringRounds,
+    handleDeleteSingleRecurringRound,
+    postApiIsLoading,
+  } = useHandleDelete({
+    setRecurringModalVisible,
+    setOneOffModalVisible,
+    round,
+    plannerDate,
+  })
 
   //functions
   const handleMoveRound = () => {
@@ -56,9 +73,11 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
   const mediumRound = roundTime * 50 > 100
   const largeRound = roundTime * 50 > 200
   const menuIsExpandedSmallRoundHeight =
-    smallRound && menuIsExpanded && roundTime < 4 ? 135 : 0
+    smallRound && menuIsExpanded && roundTime < 4 ? 180 : 0
   const menuIsExpandedMediumRoundHeight =
-    mediumRound && menuIsExpanded && roundTime < 4 ? 25 : 0
+    mediumRound && menuIsExpanded && roundTime < 4 ? 80 : 0
+  const menuIsExpandedLargeRoundHeight =
+    largeRound && menuIsExpanded && roundTime < 6.5 ? 50 : 0
   const smallRoundStyle: ViewStyle =
     menuIsExpanded && roundTime < 4
       ? { paddingTop: 8, justifyContent: 'flex-start' }
@@ -66,7 +85,8 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
   const conatinerHeight =
     roundTime * 50 +
     menuIsExpandedSmallRoundHeight +
-    menuIsExpandedMediumRoundHeight
+    menuIsExpandedMediumRoundHeight +
+    menuIsExpandedLargeRoundHeight
   const buttonHeight = !menuIsExpanded ? conatinerHeight : '100%'
 
   return (
@@ -167,8 +187,38 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
             height={30}
             icon={require('../../../../../assets/notes_white.png')}
           />
+          <Button
+            onPress={handleDeletePress}
+            backgroundColor={'red'}
+            text={'Delete Round'}
+            width={150}
+            height={30}
+          />
         </View>
       ) : null}
+
+      {/* ---------------------- Delete one off round modal ----------------------- */}
+      <ConfirmModal
+        modalText={`Are you sure you want to delete the ${round.roundName} one off round from the planner?`}
+        onConfirm={handleDeleteOneOffRound}
+        onCancel={() => setOneOffModalVisible(false)}
+        visible={oneOffModalVisible}
+        confirmButtonText={'Yes'}
+        isLoading={postApiIsLoading}
+      />
+
+      {/* ---------------------- Delete recurring rounds modal ----------------------- */}
+      <ConfirmModal
+        modalText={`Please confirm deletion of ${round.roundName} recurring round from the planner.`}
+        modalText2={`Do you want to delete a single entry for this date only or all recurring entries?`}
+        onConfirm={handleDeleteAllRecurringRounds}
+        onConfirm2={handleDeleteSingleRecurringRound}
+        onCancel={() => setRecurringModalVisible(false)}
+        visible={recurringModalVisible}
+        confirmButtonText={'Delete All'}
+        onConfirmText2={'Delete Single'}
+        isLoading={postApiIsLoading}
+      />
     </View>
   )
 }

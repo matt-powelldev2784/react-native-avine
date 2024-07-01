@@ -23,9 +23,12 @@ const DayView = ({ roundData, plannerDate, minHeight }: DayViewProps) => {
 
       <View style={[styles.dayContainer, { height: minHeight }]}>
         {rounds.map((round) => {
-          return (
-            <RoundCard key={round.id} round={round} plannerDate={plannerDate} />
-          )
+        const roundType = round.recurringRound
+          ? '@oneOffRound'
+          : '@recurringRound'
+        const key = `${round.id}${roundType}`
+
+        return <RoundCard key={key} round={round} plannerDate={plannerDate} />
         })}
       </View>
     </View>
