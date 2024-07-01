@@ -1,5 +1,4 @@
 import { JobWithIdT } from '../../../../types/JobT'
-import { formatDateForDb } from '../../../../utils/formatDateForDb'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 import { getScheduledJobDetails } from '../../../../db/planner/getScheduledJobDetails/getScheduledJobDetails'
 import { useEffect, useState } from 'react'
@@ -18,11 +17,12 @@ export const useGetJobCardData = () => {
   const {
     selectedDay,
     selectedJob,
+    selectedRound,
     plannerCardNeedsUpdate,
     setPlannerCardNeedsUpdate,
   } = usePlannerContext()
 
-  if (!selectedJob || !selectedDay) {
+  if (!selectedJob || !selectedDay || !selectedRound) {
     return { getApiIsLoading: false, jobData: null, isComplete: null }
   }
 
@@ -33,7 +33,7 @@ export const useGetJobCardData = () => {
       const data = await getScheduledJobDetails({
         roundId: selectedJob.roundId,
         jobId: selectedJob.jobId,
-        plannerDate: formatDateForDb(selectedDay),
+        plannerDate: selectedRound?.plannerDate,
         recurringRound: selectedJob.recurringRound,
       })
       setData(data)
