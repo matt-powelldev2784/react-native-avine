@@ -14,8 +14,6 @@ export const useRoundTicketData = () => {
   const [allInvoicesArePaid, setAllInvoicesArePaid] = useState(false)
   const { selectedRound, plannerCardNeedsUpdate } = usePlannerContext()
 
-  console.log('selectedRound', selectedRound)
-
   useEffect(() => {
     if (!relatedInvoices || !round) {
       return
