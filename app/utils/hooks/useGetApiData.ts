@@ -51,8 +51,6 @@ const useGetApiData = <T>({
           return
         }
 
-        console.log('getApi')
-
         setGetApiIsLoading(true)
         const response = await apiFunction()
 
