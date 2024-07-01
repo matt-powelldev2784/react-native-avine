@@ -1,6 +1,5 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { formatDateForDb } from '../../../../utils/formatDateForDb'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 import { toggleInvoiceIsPaid } from '../../../../db/jobs/toggleInvoiceIsPaid'
 import { useState } from 'react'
@@ -12,7 +11,7 @@ interface useFormikStepsInterface {
 
 const useFormikIsPaid = ({ isPaid, isComplete }: useFormikStepsInterface) => {
   const [isPaidApiIsLoading, setIsPaidPostApiIsLoading] = useState(false)
-  const { selectedDay, selectedJob, setPlannerCardNeedsUpdate } =
+  const { selectedDay, selectedJob, setPlannerCardNeedsUpdate, selectedRound } =
     usePlannerContext()
   const isPaidError = isComplete
     ? false
@@ -28,7 +27,7 @@ const useFormikIsPaid = ({ isPaid, isComplete }: useFormikStepsInterface) => {
     },
     onSubmit: async () => {
       try {
-        if (!selectedJob || !selectedDay) {
+        if (!selectedJob || !selectedDay || !selectedRound) {
           return
         }
         if (typeof isPaid !== 'boolean') {
@@ -43,7 +42,7 @@ const useFormikIsPaid = ({ isPaid, isComplete }: useFormikStepsInterface) => {
 
         await toggleInvoiceIsPaid({
           plannerDocRef: `${selectedJob.roundId}@${selectedJob.jobId}@${relatedJobSuffix}`,
-          plannerDate: formatDateForDb(selectedDay),
+          plannerDate: selectedRound?.plannerDate,
           isPaid: !isPaid,
         }),
           setIsPaidPostApiIsLoading(false)
