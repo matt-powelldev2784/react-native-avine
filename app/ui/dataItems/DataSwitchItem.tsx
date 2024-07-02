@@ -129,9 +129,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
-    paddingRight: 4,
-    paddingLeft: 4,
+    paddingRight: 8,
+    paddingLeft: 8,
     width: '100%',
     height: 65,
   },
@@ -139,6 +138,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.backgroundGrey,
     textAlign: 'center',
     color: theme.colors.primary,
+    paddingHorizontal: 4,
   },
 })
 
