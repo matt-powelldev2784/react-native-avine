@@ -11,6 +11,8 @@ import { usePlannerContext } from '../../../screens/planner/plannerContext/usePl
 import { useRoundData } from './hooks/useRoundData'
 import { useInvoiceStatus } from './hooks/useInvoiceStatus'
 import { useJobStatus } from './hooks/useJobStatus'
+import { format } from 'date-fns'
+import { convertDbDateToDateString } from '../../../utils/convertDbDateToDateString'
 
 const PlannerRoundTicket = () => {
   //state
@@ -26,10 +28,14 @@ const PlannerRoundTicket = () => {
   })
   const { allJobsPaid } = useInvoiceStatus({ round })
 
-  if (!round)
+  if (!round || !selectedRound)
     return <Loading loadingText="Loading Planner Round Ticket Data..." />
+
   // variables
   const recurringRound = round?.recurringRound
+  const plannerDate = selectedRound
+    ? convertDbDateToDateString(selectedRound?.plannerDate)
+    : new Date()
 
   //functions
   const toggleAllJobsComplete = async () => {
@@ -69,6 +75,12 @@ const PlannerRoundTicket = () => {
           >
             {round.roundName}
           </Text>
+
+          <View style={styles.dateTextContainer}>
+            <Text style={styles.dateText}>
+              {format(plannerDate, 'dd MMMM yyyy')}
+            </Text>
+          </View>
 
           <View style={styles.roundIconsContainer}>
             {recurringRound ? (
@@ -170,6 +182,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
+  },
+  dateTextContainer: {
+    borderRadius: 12,
+    backgroundColor: theme.colors.primary,
+    margin: 8,
+  },
+  dateText: {
+    color: theme.colors.white,
+    fontSize: 16,
+    fontWeight: 'bold',
+    padding: 8,
   },
   roundIconsContainer: {
     position: 'absolute',
