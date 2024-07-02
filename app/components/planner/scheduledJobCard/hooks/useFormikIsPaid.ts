@@ -15,7 +15,7 @@ const useFormikIsPaid = ({ isPaid, isComplete }: useFormikStepsInterface) => {
     usePlannerContext()
   const isPaidError = isComplete
     ? false
-    : 'You cannot set the invoice to paid until the job is set to complete.'
+    : 'You cannot set the invoice to paid until the job is set to complete. Set job to complete to enable this toggle.'
 
   const validationSchema = Yup.object().shape({
     isPaid: Yup.boolean(),

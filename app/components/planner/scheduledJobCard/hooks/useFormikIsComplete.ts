@@ -20,7 +20,7 @@ const useFormikIsComplete = ({
     usePlannerContext()
 
   const isCompleteError = isPaid
-    ? 'You cannot change the job to incomplete if the invoice has been set to paid.'
+    ? 'You cannot change the job to incomplete if the invoice has been set to paid. Set job to unpaid to enable this toggle.'
     : false
 
   const validationSchema = Yup.object().shape({
