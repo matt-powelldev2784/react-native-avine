@@ -1,7 +1,6 @@
 import { auth } from '../../../firebaseConfig'
 import { RoundWithRecurringFlagT } from '../../types/RoundT'
 import { authError } from '../authError'
-
 import { getInvoice } from './getInvoice'
 
 interface getInvoicesRelatedToRoundT {
@@ -34,7 +33,9 @@ export const getInvoicesRelatedToRound = async ({
       const invoice = await getInvoice(invoiceId)
 
       if (!invoice) {
-        return null
+        return {
+          isPaid: false,
+        }
       }
 
       return {

@@ -46,6 +46,7 @@ export const getPlannerRoundTicket = async ({
     const roundDocData = roundDoc.data()
     const relatedJobs = roundDocData?.relatedJobs || []
     const completdJobs = plannerDocData?.completedJobs || []
+    const invoicedJobs = plannerDocData?.invoicedJobs || []
 
     const relatedJobsData = await Promise.all(
       relatedJobs.map(async (jobId: string) => {
@@ -57,8 +58,12 @@ export const getPlannerRoundTicket = async ({
           `${roundId}@${jobId}@${roundTypeString}`,
         )
 
+        const jobIsPaid = invoicedJobs.includes(
+          `${roundId}@${jobId}@${roundTypeString}`,
+        )
+
         const job = await getJob(jobId)
-        return { ...job, id: jobId, jobIsComplete }
+        return { ...job, id: jobId, jobIsComplete, jobIsPaid }
       }),
     )
 

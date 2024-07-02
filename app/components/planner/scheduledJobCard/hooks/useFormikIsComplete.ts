@@ -63,7 +63,9 @@ const useFormikIsComplete = ({
     enableReinitialize: true,
   })
 
-  return { isCompleteApiIsLoading, formik, isCompleteError }
+  const formikIsComplete = formik
+
+  return { isCompleteApiIsLoading, formikIsComplete, isCompleteError }
 }
 
 export default useFormikIsComplete

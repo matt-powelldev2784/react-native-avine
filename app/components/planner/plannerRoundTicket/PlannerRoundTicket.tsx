@@ -4,12 +4,13 @@ import { JobWithIdT } from '../../../types/JobT'
 import theme from '../../../utils/theme/theme'
 import { ConfirmModal, Loading } from '../../../ui'
 import { batchToggleJobIsComplete } from '../../../db/jobs/batchToggleJobIsComplete'
-import { formatDateForDb } from '../../../utils/formatDateForDb'
 import { batchToggleInvoiceIsPaid } from '../../../db/jobs/batchToogleInvoiceIsPaid'
 import Button from '../../../ui/button/Button'
 import ScheduledJobListItem from '../scheduledRounds/components/ScheduledJobListItem'
-import { useRoundTicketData } from './hooks/useRoundtTicketData'
 import { usePlannerContext } from '../../../screens/planner/plannerContext/usePlannerContext'
+import { useRoundData } from './hooks/useRoundData'
+import { useInvoiceStatus } from './hooks/useInvoiceStatus'
+import { useJobStatus } from './hooks/useJobStatus'
 
 const PlannerRoundTicket = () => {
   //state
@@ -17,33 +18,38 @@ const PlannerRoundTicket = () => {
   const [allCompleteModalVisible, setAllCompleteModalVisible] = useState(false)
 
   //hooks
-  const { selectedDay, setPlannerCardNeedsUpdate } = usePlannerContext()
+  const { setPlannerCardNeedsUpdate, selectedRound } = usePlannerContext()
 
-  const {
+  const { round } = useRoundData()
+  const { allJobsAreComplete } = useJobStatus({
     round,
-    noJobStatusHasChanged,
-    allJobsAreComplete,
-    allInvoicesArePaid,
-  } = useRoundTicketData()
+  })
+  const { allJobsPaid } = useInvoiceStatus({ round })
 
   if (!round)
     return <Loading loadingText="Loading Planner Round Ticket Data..." />
-
   // variables
   const recurringRound = round?.recurringRound
-  const plannerDate = formatDateForDb(selectedDay)
 
   //functions
   const toggleAllJobsComplete = async () => {
-    if (!round) return
-    await batchToggleJobIsComplete({ round, plannerDate })
+    if (!selectedRound) return
+    await batchToggleJobIsComplete({
+      round,
+      plannerDate: selectedRound?.plannerDate,
+    })
     setPlannerCardNeedsUpdate(true)
+    setAllCompleteModalVisible(false)
   }
 
   const toggleAllJobsPaid = async () => {
-    if (!round) return
-    await batchToggleInvoiceIsPaid({ round, plannerDate })
+    if (!selectedRound) return
+    await batchToggleInvoiceIsPaid({
+      round,
+      plannerDate: selectedRound?.plannerDate,
+    })
     setPlannerCardNeedsUpdate(true)
+    setAllPaidModalVisible(false)
   }
 
   return (
@@ -94,14 +100,14 @@ const PlannerRoundTicket = () => {
         ))}
 
         <View style={styles.buttonContainer}>
-          {!allInvoicesArePaid && allJobsAreComplete ? (
+          {allJobsPaid === false && allJobsAreComplete == true ? (
             <Button
               text={'Set all invoices to paid'}
               onPress={() => setAllPaidModalVisible(true)}
               backgroundColor={theme.colors.invoicePrimary}
             />
           ) : null}
-          {noJobStatusHasChanged ? (
+          {allJobsAreComplete === false ? (
             <Button
               text={'Set all jobs to complete'}
               onPress={() => setAllCompleteModalVisible(true)}

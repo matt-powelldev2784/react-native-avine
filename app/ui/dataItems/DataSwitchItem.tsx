@@ -43,9 +43,9 @@ const DataSwitchItem = ({
   }
 
   const handleToggle = () => {
-    if (error) {
-      handleInfoPress()
-    }
+    if (error) handleInfoPress()
+    if (isLoading) return
+
     formik.handleSubmit()
   }
 

@@ -24,7 +24,7 @@ const ScheduledJobCard = () => {
 
   const { jobData, isComplete, isPaid, client } = useGetJobCardData()
 
-  const { isCompleteApiIsLoading, formik, isCompleteError } =
+  const { isCompleteApiIsLoading, formikIsComplete, isCompleteError } =
     useFormikIsComplete({
       isComplete,
       isPaid,
@@ -74,7 +74,7 @@ const ScheduledJobCard = () => {
             name={'Job Complete'}
             value={isComplete}
             isLoading={isCompleteApiIsLoading}
-            formik={formik}
+            formik={formikIsComplete}
             error={isCompleteError || false}
           />
 
