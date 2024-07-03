@@ -1,12 +1,12 @@
 import {
   Text,
-  TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
   Image,
   View,
   DimensionValue,
 } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import React from 'react'
 import theme from '../../utils/theme/theme'
 

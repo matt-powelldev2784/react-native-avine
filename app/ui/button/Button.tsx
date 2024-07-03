@@ -1,12 +1,12 @@
 import {
   Text,
-  TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
   DimensionValue,
 } from 'react-native'
 import React from 'react'
 import theme from '../../utils/theme/theme'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 interface ButtoMdProps {
   onPress: () => void
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: '100%',
     maxWidth: 270,
+    zIndex: 99999,
   },
   buttonText: {
     color: 'white',

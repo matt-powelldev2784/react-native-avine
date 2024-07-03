@@ -25,7 +25,12 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
   const [oneOffModalVisible, setOneOffModalVisible] = useState(false)
 
   //hooks
-  const { setSelectedRound, setHighlightedDay } = usePlannerContext()
+  const {
+    setSelectedRound,
+    setHighlightedDay,
+    moveRoundState,
+    setMoveRoundState,
+  } = usePlannerContext()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const {
     handleDeletePress,
@@ -48,6 +53,7 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
       plannerDate: plannerDate,
       recurringRound: round.recurringRound,
     })
+    setMoveRoundState(true)
   }
   const handleGotoTicket = () => {
     setMenuIsExpanded((prev) => !prev)
@@ -61,8 +67,9 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
     })
   }
   const handleRoundPress = () => {
-    setMenuIsExpanded((prev) => !prev)
     setHighlightedDay(convertDbDateToDateString(plannerDate))
+    if (moveRoundState) return
+    setMenuIsExpanded((prev) => !prev)
   }
 
   //variables
@@ -187,6 +194,39 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
         </View>
       ) : null}
 
+      {menuIsExpanded ? (
+        <View
+          style={[
+            styles.buttonContainer,
+            { position: 'absolute', zIndex: 99999999999, bottom: 0 },
+          ]}
+        >
+          <ButtonWithIcon
+            onPress={handleMoveRound}
+            backgroundColor={theme.colors.tertiaryBlue}
+            text={'Move Round'}
+            width={150}
+            height={30}
+            icon={require('../../../../../assets/move_icon_white.png')}
+          />
+          <ButtonWithIcon
+            onPress={handleGotoTicket}
+            backgroundColor={theme.colors.tertiaryBlue}
+            text={'Goto Ticket'}
+            width={150}
+            height={30}
+            icon={require('../../../../../assets/notes_white.png')}
+          />
+          <Button
+            onPress={handleDeletePress}
+            backgroundColor={'red'}
+            text={'Delete Round'}
+            width={150}
+            height={30}
+          />
+        </View>
+      ) : null}
+
       {/* ---------------------- Delete one off round modal ----------------------- */}
       <ConfirmModal
         modalText={`Are you sure you want to delete the ${round.roundName} one off round from the planner?`}
@@ -223,6 +263,7 @@ const styles = StyleSheet.create({
     minHeight: 50,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    zIndex: 300,
   },
   roundContainer: {
     width: 160,
@@ -289,6 +330,7 @@ const styles = StyleSheet.create({
     gap: 8,
     width: '100%',
     height: 120,
+    zIndex: 800,
   },
 })
 

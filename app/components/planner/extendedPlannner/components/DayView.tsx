@@ -16,7 +16,8 @@ interface DayViewProps {
 }
 
 const DayView = ({ roundData, plannerDate, minHeight }: DayViewProps) => {
-  const { highlightedDay, setHighlightedDay } = usePlannerContext()
+  const { highlightedDay, setHighlightedDay, moveRoundState } =
+    usePlannerContext()
   const date = convertDbDateToDateString(roundData.plannerDate)
   const formattedDate = format(date, 'EEE dd MMM')
   const rounds = roundData.rounds
@@ -38,6 +39,11 @@ const DayView = ({ roundData, plannerDate, minHeight }: DayViewProps) => {
           backgroundColor: '#F9E5E4',
         }
       : {}
+  const moveDayConatinerStyle: ViewStyle = moveRoundState
+    ? {
+        backgroundColor: '#c4dae8',
+      }
+    : {}
 
   //functions
   const handleDayPress = () => {
@@ -57,6 +63,7 @@ const DayView = ({ roundData, plannerDate, minHeight }: DayViewProps) => {
           styles.dayContainer,
           { height: minHeight },
           highlightDayContainerStyle,
+          moveDayConatinerStyle,
         ]}
       >
         {rounds.map((round) => {
@@ -82,6 +89,7 @@ const styles = StyleSheet.create({
     gapVertical: 4,
     borderRadius: 4,
     padding: 8,
+    zIndex: 0,
   },
   dateText: {
     color: theme.colors.primary,

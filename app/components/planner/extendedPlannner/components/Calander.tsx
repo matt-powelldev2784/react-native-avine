@@ -4,6 +4,8 @@ import {
   Dimensions,
   FlexAlignType,
   ViewStyle,
+  Text,
+  View,
 } from 'react-native'
 import React, { useMemo } from 'react'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
@@ -13,10 +15,12 @@ import { getRoundTimeOfLongestDay } from '../utils/getRoundTmeOfLongestDay'
 import useWindowWidth from '../../../../utils/hooks/useWindowWidth'
 import { getDays } from '../utils/getDays'
 import useRoundData from '../hooks/useRoundData'
+import Button from '../../../../ui/button/Button'
 
 const Calender = () => {
   //functions and hooks
-  const { selectedDay, daysToView } = usePlannerContext()
+  const { selectedDay, daysToView, moveRoundState, setMoveRoundState } =
+    usePlannerContext()
   const datesToDisplay = useMemo(
     () => getDays(selectedDay, daysToView),
     [selectedDay, daysToView],
@@ -42,34 +46,49 @@ const Calender = () => {
     : {}
 
   return (
-    <ScrollView
-      contentContainerStyle={[
-        styles.verticalScrollView,
-        { minHeight: minHeight },
-        containerFlexStyle,
-      ]}
-    >
-      {getApiIsLoading ? <Loading loadingText={'Planner is Loading'} /> : null}
+    <>
+      {moveRoundState ? (
+        <View style={{ width: windowWidth, alignItems: 'center' }}>
+          <View style={[styles.moveRoundContainer]}>
+            <Text style={styles.moveRoundText}>
+              Click the date you wish to move your round to and click submit.
+            </Text>
+            <Button text="Sumbit" onPress={() => setMoveRoundState(false)} />
+          </View>
+        </View>
+      ) : null}
 
       <ScrollView
-        horizontal
-        contentContainerStyle={styles.horizontalScrollView}
+        contentContainerStyle={[
+          styles.verticalScrollView,
+          { minHeight: minHeight },
+          containerFlexStyle,
+        ]}
       >
-        {/* ---------------------- maps days to display ----------------------- */}
-        {roundData && !getApiIsLoading
-          ? roundData.map((roundData) => {
-              return (
-                <DayView
-                  key={roundData.plannerDate}
-                  roundData={roundData}
-                  plannerDate={roundData.plannerDate}
-                  minHeight={minHeight}
-                />
-              )
-            })
-          : null}
+        {getApiIsLoading ? (
+          <Loading loadingText={'Planner is Loading'} />
+        ) : null}
+
+        <ScrollView
+          horizontal
+          contentContainerStyle={styles.horizontalScrollView}
+        >
+          {/* ---------------------- maps days to display ----------------------- */}
+          {roundData && !getApiIsLoading
+            ? roundData.map((roundData) => {
+                return (
+                  <DayView
+                    key={roundData.plannerDate}
+                    roundData={roundData}
+                    plannerDate={roundData.plannerDate}
+                    minHeight={minHeight}
+                  />
+                )
+              })
+            : null}
+        </ScrollView>
       </ScrollView>
-    </ScrollView>
+    </>
   )
 }
 
@@ -81,6 +100,25 @@ const styles = StyleSheet.create({
   horizontalScrollView: {
     paddingHorizontal: 16,
     paddingVertical: 8,
+  },
+
+  moveRoundContainer: {
+    borderWidth: 2,
+    borderStyle: 'solid',
+    borderColor: 'red',
+    borderRadius: 5,
+    backgroundColor: '#c4dae8',
+    padding: 12,
+    marginTop: 8,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 310,
+  },
+  moveRoundText: {
+    fontSize: 14,
+    marginBottom: 8,
+    textAlign: 'center',
   },
 })
 
