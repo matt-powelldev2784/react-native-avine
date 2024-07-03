@@ -11,6 +11,7 @@ import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavi
 import { ConfirmModal } from '../../../../ui'
 import Button from '../../../../ui/button/Button'
 import useHandleDelete from '../hooks/useHandleDeleteRound'
+import { convertDbDateToDateString } from '../../../../utils/convertDbDateToDateString'
 
 interface RoundCardProps {
   round: RoundWithRecurringFlagT
@@ -24,7 +25,7 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
   const [oneOffModalVisible, setOneOffModalVisible] = useState(false)
 
   //hooks
-  const { setSelectedRound } = usePlannerContext()
+  const { setSelectedRound, setHighlightedDay } = usePlannerContext()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const {
     handleDeletePress,
@@ -55,10 +56,13 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
       plannerDate: plannerDate,
       recurringRound: round.recurringRound,
     })
-    console.log('a')
     navigation.navigate('Planner', {
       screen: 'PlannerRoundTicketView',
     })
+  }
+  const handleRoundPress = () => {
+    setMenuIsExpanded((prev) => !prev)
+    setHighlightedDay(convertDbDateToDateString(plannerDate))
   }
 
   //variables
@@ -81,7 +85,7 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
       style={[styles.roundWrapper, { minHeight: wrapperHeight }]}
     >
       <TouchableOpacity
-        onPress={() => setMenuIsExpanded((prev) => !prev)}
+        onPress={handleRoundPress}
         style={[styles.roundContainer, { minHeight: menuIsExpandedHeight }]}
       >
         {smallRound ? (
