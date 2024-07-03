@@ -51,7 +51,7 @@ const Calender = () => {
         <View style={{ width: windowWidth, alignItems: 'center' }}>
           <View style={[styles.moveRoundContainer]}>
             <Text style={styles.moveRoundText}>
-              Click the date you wish to move your round to and click submit.
+              Select the date you wish to move your round to and click submit.
             </Text>
             <Button text="Sumbit" onPress={() => setMoveRoundState(false)} />
           </View>
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
 
   moveRoundContainer: {
-    borderWidth: 2,
+    borderWidth: 1.5,
     borderStyle: 'solid',
     borderColor: 'red',
     borderRadius: 5,
