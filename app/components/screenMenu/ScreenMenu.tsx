@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: '5%',
-    paddingVertical: 8,
+    height: 44,
+    zIndex: 300,
   },
   menuContianerLargeWeb: {
     width: '100%',
@@ -71,7 +72,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 36,
-    paddingVertical: 8,
+    height: 44,
+    zIndex: 300,
   },
   button: {
     alignItems: 'center',

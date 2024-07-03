@@ -2,7 +2,7 @@ import React from 'react'
 import { ExtendedPlanner, ScreenMenu } from '../../components'
 import theme from '../../utils/theme/theme'
 import { FlatList, View } from 'react-native'
-import DisplayDayAmountSelector from '../../components/planner/extendedPlannner/components/ViewDaysSelector'
+import PlannerMenu from '../../components/planner/extendedPlannner/components/PlannerMenu'
 
 const ExtendedPlannerView = () => {
   // flatlist is used to render children to allow the
@@ -15,7 +15,7 @@ const ExtendedPlannerView = () => {
         <ScreenMenu
           title={'Planner'}
           bgColor={theme.colors.plannerPrimary}
-          component={<DisplayDayAmountSelector />}
+          component={<PlannerMenu />}
         />
 
         <FlatList
