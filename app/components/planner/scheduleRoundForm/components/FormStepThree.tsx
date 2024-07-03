@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import WeekPlanner from '../../weekPlanner/WeekPlanner'
 import theme from '../../../../utils/theme/theme'
+import ExtendedPlanner from '../../extendedPlannner/ExtendedPlanner'
 
 const FormStepThree = () => {
   return (
@@ -16,7 +16,7 @@ const FormStepThree = () => {
       </View>
 
       <View style={styles.weekPlannerWrapper}>
-        <WeekPlanner addFooter={false} />
+        <ExtendedPlanner />
       </View>
     </>
   )
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
     paddingHorizontal: 8,
+    marginTop: 16,
   },
   scheduleRoundInfoText: {
     fontSize: 15,
