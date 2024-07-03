@@ -19,6 +19,7 @@ const Planner = () => {
   const route = useRoute<PlannerRouteProp>()
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
+    const [highlightedDay, setHighlightedDay] = useState(new Date())
   const [selectedJob, setSelectedJob] = useState<SelectedJobT | null>(null)
   const [selectedRound, setSelectedRound] = useState<SelectedRoundInfoT | null>(
     null,
@@ -38,6 +39,8 @@ const Planner = () => {
     setDisplayWeek,
     selectedDay,
     setSelectedDay,
+    highlightedDay,
+    setHighlightedDay,
     selectedJob,
     setSelectedJob,
     selectedRound,

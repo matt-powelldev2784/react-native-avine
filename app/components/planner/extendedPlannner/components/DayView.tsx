@@ -1,10 +1,13 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ViewStyle } from 'react-native'
 import React from 'react'
 import { format } from 'date-fns'
 import theme from '../../../../utils/theme/theme'
 import { ExtendedPlannerRoundsDataT } from '../../../../types/RoundT'
 import { convertDbDateToDateString } from '../../../../utils/convertDbDateToDateString'
 import RoundCard from './RoundCard'
+import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
+import { formatDateForDb } from '../../../../utils/formatDateForDb'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 interface DayViewProps {
   roundData: ExtendedPlannerRoundsDataT
@@ -13,25 +16,59 @@ interface DayViewProps {
 }
 
 const DayView = ({ roundData, plannerDate, minHeight }: DayViewProps) => {
+  const { highlightedDay, setHighlightedDay } = usePlannerContext()
   const date = convertDbDateToDateString(roundData.plannerDate)
   const formattedDate = format(date, 'EEE dd MMM')
   const rounds = roundData.rounds
+  const selectedDateString = formatDateForDb(highlightedDay)
+
+  // styles
+  const highlightDateContinerStyle: ViewStyle =
+    selectedDateString === plannerDate
+      ? {
+          borderWidth: 2,
+          borderStyle: 'solid',
+          borderColor: theme.colors.plannerPrimary,
+          backgroundColor: '#F9E5E4',
+        }
+      : {}
+  const highlightDayContainerStyle: ViewStyle =
+    selectedDateString === plannerDate
+      ? {
+          backgroundColor: '#F9E5E4',
+        }
+      : {}
+
+  //functions
+  const handleDayPress = () => {
+    const pressedDate = convertDbDateToDateString(plannerDate)
+    setHighlightedDay(pressedDate)
+  }
 
   return (
-    <View style={styles.dateContiner}>
+    <TouchableOpacity
+      style={[styles.dateContiner, highlightDateContinerStyle]}
+      onPress={handleDayPress}
+    >
       <Text style={styles.dateText}>{formattedDate}</Text>
 
-      <View style={[styles.dayContainer, { height: minHeight }]}>
+      <View
+        style={[
+          styles.dayContainer,
+          { height: minHeight },
+          highlightDayContainerStyle,
+        ]}
+      >
         {rounds.map((round) => {
-        const roundType = round.recurringRound
-          ? '@oneOffRound'
-          : '@recurringRound'
-        const key = `${round.id}${roundType}`
+          const roundType = round.recurringRound
+            ? '@oneOffRound'
+            : '@recurringRound'
+          const key = `${round.id}${roundType}`
 
-        return <RoundCard key={key} round={round} plannerDate={plannerDate} />
+          return <RoundCard key={key} round={round} plannerDate={plannerDate} />
         })}
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
@@ -43,8 +80,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     gapVertical: 4,
-    margin: 4,
     borderRadius: 4,
+    padding: 8,
   },
   dateText: {
     color: theme.colors.primary,

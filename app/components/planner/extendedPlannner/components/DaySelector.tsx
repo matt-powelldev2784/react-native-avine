@@ -15,13 +15,14 @@ interface DaySelectorProps {
 }
 
 const DaySelector = ({ day }: DaySelectorProps) => {
-  const { selectedDay, setSelectedDay } = usePlannerContext()
+  const { selectedDay, setSelectedDay, setHighlightedDay } = usePlannerContext()
   const weekDay = format(day, 'EEEEEE')
   const dateToday = day.getDate()
   const selectDate = selectedDay.getDate()
 
   const handleSelectday = async () => {
     setSelectedDay(day)
+    setHighlightedDay(day)
   }
 
   return (

@@ -8,6 +8,8 @@ interface PlannerContextType {
   setDisplayWeek: React.Dispatch<React.SetStateAction<Date>>
   selectedDay: Date
   setSelectedDay: React.Dispatch<React.SetStateAction<Date>>
+  highlightedDay: Date
+  setHighlightedDay: React.Dispatch<React.SetStateAction<Date>>
   selectedJob: SelectedJobT | null
   selectedRound: SelectedRoundInfoT | null
   setSelectedRound: React.Dispatch<
@@ -27,6 +29,8 @@ export const PlannerContext = createContext<PlannerContextType>({
   setDisplayWeek: () => {},
   selectedDay: new Date(),
   setSelectedDay: () => {},
+  highlightedDay: new Date(),
+  setHighlightedDay: () => {},
   selectedJob: { jobId: '', roundId: '', recurringRound: false },
   setSelectedJob: () => {},
   selectedRound: { roundId: '', plannerDate: '', recurringRound: false },
