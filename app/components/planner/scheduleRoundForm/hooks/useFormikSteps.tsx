@@ -36,6 +36,7 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
 
   const { postApiIsLoading, setApiFunction } = usePostApiData({
     onSuccessScreen: 'Planner',
+    refreshScreen: { date: highlightedDay },
   })
 
   const formik = useFormik({

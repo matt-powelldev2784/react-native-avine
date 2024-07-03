@@ -9,12 +9,13 @@ const ExtendedPlanner = () => {
   const { setDisplayWeek, setSelectedDay, setHighlightedDay } =
     usePlannerContext()
   const route = useRoute()
+const displayDate = route?.params?.date || new Date()
 
-  useEffect(() => {
-    setDisplayWeek(new Date())
-    setSelectedDay(new Date())
-    setHighlightedDay(new Date())
-  }, [route])
+useEffect(() => {
+  setDisplayWeek(displayDate)
+  setSelectedDay(displayDate)
+  setHighlightedDay(displayDate)
+}, [route])
 
   return (
     <View>

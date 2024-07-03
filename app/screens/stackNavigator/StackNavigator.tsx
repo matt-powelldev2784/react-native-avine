@@ -51,6 +51,7 @@ export type RootStackParamList = {
     | {
         refresh?: boolean
         screen: string
+        date?: Date
       }
     | undefined
 
