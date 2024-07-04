@@ -17,13 +17,10 @@ import { getDays } from '../utils/getDays'
 import useRoundData from '../hooks/useRoundData'
 import Button from '../../../../ui/button/Button'
 import { useMoveRound } from '../hooks/useMoveRound'
-import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { useNavigation } from '@react-navigation/native'
+
 
 const Calender = () => {
   //functions and hooks
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { selectedDay, daysToView, moveRoundState } = usePlannerContext()
   const datesToDisplay = useMemo(
     () => getDays(selectedDay, daysToView),
@@ -31,8 +28,7 @@ const Calender = () => {
   )
   const windowWidth = useWindowWidth()
   const { roundData, getApiIsLoading } = useRoundData(datesToDisplay)
-  const { moveRoundIsLoading, moveRoundIsError, handleMoveRound } =
-    useMoveRound()
+  const { moveRoundIsLoading, handleMoveRound } = useMoveRound()
 
   // the height of each round card is roundTime x 50 pixels
   // the plus 40 is to allow for the margin and padding
@@ -53,8 +49,6 @@ const Calender = () => {
 
   if (getApiIsLoading || moveRoundIsLoading)
     return <Loading loadingText={'Planner is Loading'} />
-
-  if (moveRoundIsError) navigation.navigate('Error')
 
   return (
     <>
