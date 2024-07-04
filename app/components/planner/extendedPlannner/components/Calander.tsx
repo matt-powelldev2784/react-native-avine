@@ -17,11 +17,12 @@ import { getDays } from '../utils/getDays'
 import useRoundData from '../hooks/useRoundData'
 import Button from '../../../../ui/button/Button'
 import { useMoveRound } from '../hooks/useMoveRound'
-
+import theme from '../../../../utils/theme/theme'
 
 const Calender = () => {
   //functions and hooks
-  const { selectedDay, daysToView, moveRoundState } = usePlannerContext()
+  const { selectedDay, daysToView, moveRoundState, setMoveRoundState } =
+    usePlannerContext()
   const datesToDisplay = useMemo(
     () => getDays(selectedDay, daysToView),
     [selectedDay, daysToView],
@@ -58,7 +59,14 @@ const Calender = () => {
             <Text style={styles.moveRoundText}>
               Select the date you wish to move your round to and click submit.
             </Text>
-            <Button text="Sumbit" onPress={handleMoveRound} />
+            <View style={styles.buttonContainer}>
+              <Button
+                text="Cancel"
+                backgroundColor={theme.colors.buttonSecondary}
+                onPress={() => setMoveRoundState(false)}
+              />
+              <Button text="Sumbit" onPress={handleMoveRound} />
+            </View>
           </View>
         </View>
       ) : null}
@@ -120,6 +128,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 8,
     textAlign: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    gap: 12,
   },
 })
 
