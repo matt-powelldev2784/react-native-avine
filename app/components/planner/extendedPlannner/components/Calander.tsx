@@ -16,17 +16,23 @@ import useWindowWidth from '../../../../utils/hooks/useWindowWidth'
 import { getDays } from '../utils/getDays'
 import useRoundData from '../hooks/useRoundData'
 import Button from '../../../../ui/button/Button'
+import { useMoveRound } from '../hooks/useMoveRound'
+import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { useNavigation } from '@react-navigation/native'
 
 const Calender = () => {
   //functions and hooks
-  const { selectedDay, daysToView, moveRoundState, setMoveRoundState } =
-    usePlannerContext()
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const { selectedDay, daysToView, moveRoundState } = usePlannerContext()
   const datesToDisplay = useMemo(
     () => getDays(selectedDay, daysToView),
     [selectedDay, daysToView],
   )
   const windowWidth = useWindowWidth()
   const { roundData, getApiIsLoading } = useRoundData(datesToDisplay)
+  const { moveRoundIsLoading, moveRoundIsError, handleMoveRound } =
+    useMoveRound()
 
   // the height of each round card is roundTime x 50 pixels
   // the plus 40 is to allow for the margin and padding
@@ -45,6 +51,11 @@ const Calender = () => {
     ? { alignItems: 'center' as FlexAlignType }
     : {}
 
+  if (getApiIsLoading || moveRoundIsLoading)
+    return <Loading loadingText={'Planner is Loading'} />
+
+  if (moveRoundIsError) navigation.navigate('Error')
+
   return (
     <>
       {moveRoundState ? (
@@ -53,7 +64,7 @@ const Calender = () => {
             <Text style={styles.moveRoundText}>
               Select the date you wish to move your round to and click submit.
             </Text>
-            <Button text="Sumbit" onPress={() => setMoveRoundState(false)} />
+            <Button text="Sumbit" onPress={handleMoveRound} />
           </View>
         </View>
       ) : null}
@@ -65,10 +76,6 @@ const Calender = () => {
           containerFlexStyle,
         ]}
       >
-        {getApiIsLoading ? (
-          <Loading loadingText={'Planner is Loading'} />
-        ) : null}
-
         <ScrollView
           horizontal
           contentContainerStyle={styles.horizontalScrollView}
