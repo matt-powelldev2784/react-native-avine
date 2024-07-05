@@ -64,8 +64,9 @@ const Calender = () => {
                 text="Cancel"
                 backgroundColor={theme.colors.buttonSecondary}
                 onPress={() => setMoveRoundState(false)}
+                width={120}
               />
-              <Button text="Sumbit" onPress={handleMoveRound} />
+              <Button text="Submit" onPress={handleMoveRound} width={120} />
             </View>
           </View>
         </View>
@@ -132,6 +133,10 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     gap: 12,
+    width: '100%',
+    padiingHorizontal: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })
 
