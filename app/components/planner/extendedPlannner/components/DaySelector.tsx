@@ -49,10 +49,17 @@ const DaySelector = ({ day }: DaySelectorProps) => {
         <View>
           <Image
             source={require('../../../../../assets/dot_green.png')}
-            style={{ width: 7, height: 7, marginVertical: 2 }}
+            style={{ width: 7, height: 7, marginVertical: 3 }}
           />
         </View>
-      ) : null}
+      ) : (
+        <View>
+          <Image
+            source={require('../../../../../assets/dot_blue.png')}
+            style={{ width: 7, height: 7, marginVertical: 3 }}
+          />
+        </View>
+      )}
     </TouchableOpacity>
   )
 }
