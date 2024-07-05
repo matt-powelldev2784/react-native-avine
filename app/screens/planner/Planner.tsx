@@ -61,7 +61,7 @@ const Planner = () => {
       <Dashboard>
         <PlannerContext.Provider value={PlannerContextValue}>
           {screen === 'PlannerView' ? <PlannerView /> : null}
-          {screen === 'MonthPlannerView' ? <ExtendedPlannerView /> : null}
+          {screen === 'ExtendedPlannerView' ? <ExtendedPlannerView /> : null}
           {screen === 'ScheduleRoundFormView' ? (
             <ScheduleRoundFormView />
           ) : null}

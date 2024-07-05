@@ -12,7 +12,7 @@ const useNavigationRouteFunctions = () => {
     roundsNavigation: () => navigation.navigate('RoundMenu'),
     plannerNavigation: () =>
       navigation.navigate('Planner', {
-        screen: 'MonthPlannerView',
+        screen: 'ExtendedPlannerView',
       }),
     invoicesNavigation: () =>
       navigation.navigate('InvoiceListView', { refresh: true }),

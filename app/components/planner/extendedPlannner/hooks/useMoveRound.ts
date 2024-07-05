@@ -49,7 +49,7 @@ export const useMoveRound = () => {
       })
 
       navigation.navigate('Planner', {
-        screen: 'MonthPlannerView',
+        screen: 'ExtendedPlannerView',
         date: highlightedDay,
       })
     } catch (error) {

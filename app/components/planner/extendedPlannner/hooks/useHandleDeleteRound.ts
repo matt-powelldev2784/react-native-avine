@@ -22,7 +22,7 @@ const useHandleDelete = ({
   const { postApiIsLoading, setApiFunction } = usePostApiData({
     onSuccessScreen: 'Planner',
     refreshScreen: {
-      screen: 'MonthPlannerView',
+      screen: 'ExtendedPlannerView',
     },
   })
   const { setPlannerNeedsUpdate } = usePlannerContext()
