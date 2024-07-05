@@ -4,11 +4,13 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  View,
 } from 'react-native'
 import React from 'react'
 import { format } from 'date-fns'
 import theme from '../../../../utils/theme/theme'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
+import { formatDateForDb } from '../../../../utils/formatDateForDb'
 
 interface DaySelectorProps {
   day: Date
@@ -19,6 +21,10 @@ const DaySelector = ({ day }: DaySelectorProps) => {
   const weekDay = format(day, 'EEEEEE')
   const dateToday = day.getDate()
   const selectDate = selectedDay.getDate()
+
+  const daySelectDate = formatDateForDb(day)
+  const today = formatDateForDb(new Date())
+  const isToday = daySelectDate === today
 
   const handleSelectday = async () => {
     setSelectedDay(day)
@@ -39,10 +45,21 @@ const DaySelector = ({ day }: DaySelectorProps) => {
         {day.getDate()}
       </Text>
 
-      <Image
-        source={require('../../../../../assets/dot.png')}
-        style={{ width: 7, height: 7, marginVertical: 2 }}
-      />
+      {isToday ? (
+        <View>
+          <Image
+            source={require('../../../../../assets/dot_green.png')}
+            style={{ width: 7, height: 7, marginVertical: 3 }}
+          />
+        </View>
+      ) : (
+        <View>
+          <Image
+            source={require('../../../../../assets/dot_blue.png')}
+            style={{ width: 7, height: 7, marginVertical: 3 }}
+          />
+        </View>
+      )}
     </TouchableOpacity>
   )
 }
@@ -60,6 +77,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 8,
     width: Platform.OS === 'web' ? 36 : 40,
+    height: 55,
   },
   daySelected: {
     alignItems: 'center',
@@ -68,6 +86,10 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 8,
     width: Platform.OS === 'web' ? 36 : 40,
+    height: 55,
+  },
+  dayText: {
+    color: theme.colors.black,
   },
   dayTextSelected: {
     color: theme.colors.formFlowSecondary,
