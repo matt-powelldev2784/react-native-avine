@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   DimensionValue,
   TouchableOpacity,
+  Platform,
 } from 'react-native'
 import React from 'react'
 import theme from '../../utils/theme/theme'
@@ -66,6 +67,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     textAlign: 'center',
-    height: 20,
+    maxHeight: 41,
+    transform:
+      Platform.OS === 'web' ? [{ translateY: 0 }] : [{ translateY: 0.8 }],
   },
 })
