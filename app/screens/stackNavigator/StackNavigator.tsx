@@ -51,6 +51,7 @@ export type RootStackParamList = {
     | {
         refresh?: boolean
         screen: string
+        date?: Date
       }
     | undefined
 
@@ -77,16 +78,15 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userInfo ? (
         <>
-          {/* --------------------------  Misc Screens  -------------------------- */}
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Error" component={Error} />
-
-          {/* --------------------------  Planner Screens  -------------------------- */}
           <Stack.Screen
             name="Planner"
             component={Planner}
-            initialParams={{ screen: 'PlannerView' }}
+            initialParams={{ screen: 'ExtendedPlannerView' }}
           />
+
+          {/* --------------------------  Misc Screens  -------------------------- */}
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Error" component={Error} />
 
           {/* --------------------------  Round Screens  ------------------------- */}
           <Stack.Screen name="RoundMenu" component={RoundMenuScreen} />
@@ -96,7 +96,6 @@ const StackNavigator = () => {
 
           {/* --------------------------  Invoice Screens  -------------------------- */}
           <Stack.Screen name="InvoiceListView" component={InvoiceListView} />
-
           <Stack.Screen name="EditInvoice" component={EditInvoice} />
           <Stack.Screen name="AddCompanyInfo" component={AddCompanyInfo} />
 

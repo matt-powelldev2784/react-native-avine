@@ -1,17 +1,11 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ActivityIndicator,
-  ViewStyle,
-} from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import theme from '../../utils/theme/theme'
 import { CustomSwitch } from '..'
 import { FormikProps } from 'formik'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useDeviceType } from '../../utils/hooks/useDeviceTypes'
+import { usePlannerContext } from '../../screens/planner/plannerContext/usePlannerContext'
 
 interface DataSwitchProps {
   name: string
@@ -30,30 +24,30 @@ const DataSwitchItem = ({
 }: DataSwitchProps) => {
   // state
   const [displayInfoText, setDisplayInfoText] = useState(false)
+  const { plannerCardNeedsUpdate } = usePlannerContext()
 
   //hooks
   const { isLargeWeb } = useDeviceType()
+  useEffect(() => {
+    if (plannerCardNeedsUpdate) {
+      setDisplayInfoText(false)
+    }
+  }, [plannerCardNeedsUpdate])
 
   //functions
   const handleInfoPress = () => {
     setDisplayInfoText(true)
-    setTimeout(() => {
-      setDisplayInfoText(false)
-    }, 8000)
   }
-
   const handleToggle = () => {
-    if (error) {
-      handleInfoPress()
-    }
+    setDisplayInfoText(false)
+    if (error) handleInfoPress()
+    if (isLoading) return
+
     formik.handleSubmit()
   }
 
   //variables
-  const errorContainerStyle: ViewStyle = isLargeWeb
-    ? { width: '100%' }
-    : { width: '100%' }
-  const errorTextStyle = isLargeWeb ? { fontSize: 14 } : { fontSize: 14 }
+  const errorTextSize = isLargeWeb ? { fontSize: 14 } : { fontSize: 12 }
 
   return (
     <>
@@ -65,7 +59,7 @@ const DataSwitchItem = ({
             </Text>
           ) : null}
 
-          {error && !displayInfoText ? (
+          {!displayInfoText ? (
             <TouchableOpacity onPress={handleInfoPress}>
               <Image
                 source={require('../../../assets/info.png')}
@@ -89,13 +83,13 @@ const DataSwitchItem = ({
           ) : null}
         </View>
 
-        {displayInfoText ? (
-          <View style={[styles.errorContainer, errorContainerStyle]}>
+        {displayInfoText && error ? (
+          <View style={[styles.errorContainer]}>
             <Image
               source={require('../../../assets/exclaimation.png')}
               style={{ width: 30, height: 30 }}
             />
-            <Text style={[styles.errorText, errorTextStyle]}>{error}</Text>
+            <Text style={[styles.errorText, errorTextSize]}>{error}</Text>
           </View>
         ) : null}
       </View>
@@ -135,9 +129,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
-    paddingRight: 16,
-    paddingLeft: 16,
+    paddingRight: 8,
+    paddingLeft: 8,
     width: '100%',
     height: 65,
   },
@@ -145,6 +138,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.backgroundGrey,
     textAlign: 'center',
     color: theme.colors.primary,
+    paddingHorizontal: 4,
   },
 })
 

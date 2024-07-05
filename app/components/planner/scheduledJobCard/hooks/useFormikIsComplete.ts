@@ -1,7 +1,6 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { toggleJobIsComplete } from '../../../../db/jobs/toggleJobIsComplete'
-import { formatDateForDb } from '../../../../utils/formatDateForDb'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 import { useState } from 'react'
 
@@ -16,10 +15,12 @@ const useFormikIsComplete = ({
 }: useFormikStepsInterface) => {
   const [isCompleteApiIsLoading, setIsCompletePostApiIsLoading] =
     useState(false)
-  const { selectedDay, selectedJob, setPlannerCardNeedsUpdate } =
+
+  const { selectedDay, selectedJob, setPlannerCardNeedsUpdate, selectedRound } =
     usePlannerContext()
+
   const isCompleteError = isPaid
-    ? 'You cannot change the job to incomplete if the invoice has been set to paid.'
+    ? 'You cannot change the job to incomplete if the invoice has been set to paid. Set job to unpaid to enable this toggle.'
     : false
 
   const validationSchema = Yup.object().shape({
@@ -32,7 +33,8 @@ const useFormikIsComplete = ({
     },
     onSubmit: async () => {
       try {
-        if (!selectedJob || !selectedDay) {
+        setIsCompletePostApiIsLoading(true)
+        if (!selectedJob || !selectedDay || !selectedRound) {
           return
         }
         if (typeof isComplete !== 'boolean') {
@@ -43,17 +45,17 @@ const useFormikIsComplete = ({
           ? 'recurringRound'
           : 'oneOffRound'
 
-        setIsCompletePostApiIsLoading(true)
-
         await toggleJobIsComplete({
           plannerJobRef: `${selectedJob.roundId}@${selectedJob.jobId}@${relatedJobSuffix}`,
-          plannerDate: formatDateForDb(selectedDay),
+          plannerDate: selectedRound?.plannerDate,
           isComplete: !isComplete,
-        }),
-          setIsCompletePostApiIsLoading(false)
+        })
+
         setPlannerCardNeedsUpdate(true)
       } catch (error) {
         console.log('error', error)
+        setIsCompletePostApiIsLoading(false)
+      } finally {
         setIsCompletePostApiIsLoading(false)
       }
     },
@@ -61,7 +63,9 @@ const useFormikIsComplete = ({
     enableReinitialize: true,
   })
 
-  return { isCompleteApiIsLoading, formik, isCompleteError }
+  const formikIsComplete = formik
+
+  return { isCompleteApiIsLoading, formikIsComplete, isCompleteError }
 }
 
 export default useFormikIsComplete

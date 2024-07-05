@@ -41,3 +41,14 @@ export interface RoundWithRelatedJobsT {
 export interface RoundWithRecurringFlagT extends RoundWithRelatedJobsT {
   recurringRound: boolean
 }
+
+export interface ExtendedPlannerRoundsDataT {
+  plannerDate: string
+  rounds: RoundWithRecurringFlagT[]
+}
+
+export type SelectedRoundInfoT = {
+  roundId: string
+  plannerDate: string
+  recurringRound: boolean
+}

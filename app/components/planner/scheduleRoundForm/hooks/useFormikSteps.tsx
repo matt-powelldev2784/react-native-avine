@@ -24,7 +24,7 @@ interface useFormikStepsProps {
 }
 
 const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
-  const { selectedDay } = usePlannerContext()
+  const { highlightedDay } = usePlannerContext()
 
   const validationSchemas: { [key: number]: Yup.ObjectSchema<any, any> } = {
     0: stepOneSchema,
@@ -36,17 +36,18 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
 
   const { postApiIsLoading, setApiFunction } = usePostApiData({
     onSuccessScreen: 'Planner',
+    refreshScreen: { date: highlightedDay },
   })
 
   const formik = useFormik({
     initialValues: {
       roundId: '',
       roundFrequency: '',
-      date: formatDateForDb(selectedDay),
+      date: formatDateForDb(highlightedDay),
       recurring: false,
     },
     onSubmit: async (values) => {
-      const dateForDb = formatDateForDb(selectedDay)
+      const dateForDb = formatDateForDb(highlightedDay)
       values.date = dateForDb
 
       setApiFunction(() => async () => addRound(values))

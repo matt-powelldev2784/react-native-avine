@@ -13,14 +13,18 @@ import DataSwitchItem from '../../../ui/dataItems/DataSwitchItem'
 import LongDataItem from '../../../ui/dataItems/LongDataItem'
 import { Loading } from '../../../ui'
 import useFormikIsPaid from './hooks/useFormikIsPaid'
+import { convertDbDateToDateString } from '../../../utils/convertDbDateToDateString'
 
 const ScheduledJobCard = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { selectedDay, selectedJob } = usePlannerContext()
+  const { selectedDay, selectedJob, selectedRound } = usePlannerContext()
+  const plannerDate = selectedRound
+    ? convertDbDateToDateString(selectedRound?.plannerDate)
+    : new Date()
 
   const { jobData, isComplete, isPaid, client } = useGetJobCardData()
 
-  const { isCompleteApiIsLoading, formik, isCompleteError } =
+  const { isCompleteApiIsLoading, formikIsComplete, isCompleteError } =
     useFormikIsComplete({
       isComplete,
       isPaid,
@@ -31,7 +35,7 @@ const ScheduledJobCard = () => {
     isComplete,
   })
 
-  if (!selectedJob || !selectedDay) {
+  if (!selectedJob || !selectedDay || !selectedRound) {
     navigation.navigate('Error')
     return
   }
@@ -60,7 +64,7 @@ const ScheduledJobCard = () => {
 
           <View style={styles.dateTextContainer}>
             <Text style={styles.dateText}>
-              {format(selectedDay, 'dd MMMM yyyy')}
+              {format(plannerDate, 'dd MMMM yyyy')}
             </Text>
           </View>
         </View>
@@ -70,7 +74,7 @@ const ScheduledJobCard = () => {
             name={'Job Complete'}
             value={isComplete}
             isLoading={isCompleteApiIsLoading}
-            formik={formik}
+            formik={formikIsComplete}
             error={isCompleteError || false}
           />
 

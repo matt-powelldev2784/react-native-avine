@@ -11,6 +11,7 @@ interface ScreenMenuProps {
   navigateToProp?: any
   buttonText?: string
   bgColor: string
+  component?: React.ReactNode
 }
 
 const ScreenMenu = ({
@@ -19,6 +20,7 @@ const ScreenMenu = ({
   navigateToProp,
   buttonText,
   bgColor,
+  component,
 }: ScreenMenuProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { isLargeWeb } = useDeviceType()
@@ -48,6 +50,8 @@ const ScreenMenu = ({
           <Text style={styles.buttonText}>{buttonText}</Text>
         </TouchableOpacity>
       ) : null}
+
+      {component ? component : null}
     </View>
   )
 }
@@ -59,7 +63,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: '5%',
-    paddingVertical: 8,
+    height: 44,
+    zIndex: 300,
   },
   menuContianerLargeWeb: {
     width: '100%',
@@ -67,7 +72,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 36,
-    paddingVertical: 8,
+    height: 44,
+    zIndex: 300,
   },
   button: {
     alignItems: 'center',

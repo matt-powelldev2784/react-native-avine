@@ -29,9 +29,11 @@ import AddRoundForm from './rounds/addRound/AddRoundForm'
 import EditRoundForm from './rounds/editRound/EditRoundForm'
 
 //planner
+import ExtendedPlanner from './planner/extendedPlannner/ExtendedPlanner'
 import WeekPlanner from './planner/weekPlanner/WeekPlanner'
 import ScheduleRoundForm from './planner/scheduleRoundForm/ScheduleRoundForm'
 import ScheduledJobCard from './planner/scheduledJobCard/ScheduledJobCard'
+import PlannerRoundTicket from './planner/plannerRoundTicket/PlannerRoundTicket'
 
 //invoices
 import AddCompanyInfoForm from './invoices/addCompanyInfoForm/AddCompanyInfoForm'
@@ -39,10 +41,11 @@ import InvoiceList from './invoices/invoiceList/InvoiceList'
 import InvoiceCard from './invoices/InvoiceCard/InvoiceCard'
 import EditInvoiceForm from './invoices/editInvoiceForm/EditInvoiceForm'
 
-
 //otheres
 
 export {
+  ExtendedPlanner,
+  PlannerRoundTicket,
   RoundMenu,
   RoundCard,
   ClientsMenu,

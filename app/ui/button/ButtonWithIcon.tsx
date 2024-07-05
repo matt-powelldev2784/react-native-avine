@@ -1,16 +1,14 @@
 import {
   Text,
-  TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
   Image,
   View,
+  DimensionValue,
 } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import React from 'react'
 import theme from '../../utils/theme/theme'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 
 interface ButtoMdProps {
   backgroundColor?: string
@@ -18,7 +16,10 @@ interface ButtoMdProps {
   isLoading?: boolean
   disabled?: boolean
   opacity?: number
-  navigateTo: keyof RootStackParamList
+  width?: DimensionValue
+  height?: DimensionValue
+  icon?: string
+  onPress: () => void
 }
 
 const ButtonWithIcon = ({
@@ -27,26 +28,29 @@ const ButtonWithIcon = ({
   isLoading,
   disabled,
   opacity,
-  navigateTo,
+  width,
+  height,
+  icon,
+  onPress,
 }: ButtoMdProps) => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-
   return (
     <>
       <TouchableOpacity
-        onPress={() => navigation.navigate(navigateTo)}
+        onPress={onPress}
         style={[
           styles.button,
           backgroundColor ? { backgroundColor: backgroundColor } : null,
           opacity ? { opacity: opacity } : null,
+          width ? { width: width } : null,
+          height ? { height: height } : null,
         ]}
         disabled={isLoading || disabled}
       >
         {!isLoading ? (
           <View style={styles.buttonContent}>
             <Image
-              source={require('../../../assets/plus.png')}
-              style={{ width: 13, height: 13 }}
+              source={icon ? icon : require('../../../assets/plus.png')}
+              style={{ width: 18, height: 18 }}
             />
             <Text style={styles.buttonText}>{text}</Text>
           </View>
@@ -63,9 +67,10 @@ export default ButtonWithIcon
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: theme.colors.primary,
     padding: 10,
-    paddingHorizontal: 32,
+    paddingHorizontal: 4,
     borderRadius: 8,
     width: '100%',
     maxWidth: 220,
@@ -73,7 +78,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 14,
+    width: 105,
+    textAlign: 'center',
   },
   buttonContent: {
     flexDirection: 'row',

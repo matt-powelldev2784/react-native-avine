@@ -41,9 +41,6 @@ const ScheduleRoundForm = () => {
         ) : null}
 
         {/*************** Step 3 Select Date From Week Planner ******************/}
-        {activeStep === 2 ? <FormStepThree /> : null}
-
-        {/********************  Buttons  ***************************************/}
         <FormButtons
           activeStep={activeStep}
           setActiveStep={setActiveStep}
@@ -51,6 +48,10 @@ const ScheduleRoundForm = () => {
           formik={formik}
           setRecurringRoundExistsMessage={setRecurringRoundExistsMessage}
         />
+
+        {activeStep === 2 ? <FormStepThree /> : null}
+
+        {/********************  Buttons  ***************************************/}
       </View>
 
       <View style={{ height: 70 }} />

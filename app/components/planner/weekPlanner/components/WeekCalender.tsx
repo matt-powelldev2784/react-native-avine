@@ -3,12 +3,13 @@ import React from 'react'
 import { format, startOfWeek, addDays } from 'date-fns'
 import DaySelector from './DaySelector'
 import theme from '../../../../utils/theme/theme'
-import { getWeek } from '../utils/getWeek'
+import { getWeek } from '../../../../utils/getWeek'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 
 const WeekCalender = () => {
   const { displayWeek, setDisplayWeek, setSelectedDay } = usePlannerContext()
   const weekToDisplay = getWeek(displayWeek)
+
 
   const handleMoveToPrevWeek = () => {
     const newWeek = addDays(displayWeek, -7)

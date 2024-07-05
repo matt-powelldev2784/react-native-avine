@@ -3,10 +3,15 @@ import { Dashboard } from '../../components'
 import { PlannerContext } from './plannerContext/usePlannerContext'
 import { RouteProp, useRoute } from '@react-navigation/native'
 import { RootStackParamList } from '../stackNavigator/StackNavigator'
-import PlannerView from './PlannerView'
-import ScheduledJobView from './ScheduledJobView'
 import { SelectedJobT } from '../../types/JobT'
-import ScheduleRoundFormView from './ScheduleRoundFormView'
+import {
+  PlannerView,
+  ExtendedPlannerView,
+  ScheduleRoundFormView,
+  ScheduledJobView,
+  PlannerRoundTicketView,
+} from '../index'
+import { SelectedRoundInfoT } from '../../types/RoundT'
 
 type PlannerRouteProp = RouteProp<RootStackParamList, 'Planner'>
 
@@ -14,8 +19,15 @@ const Planner = () => {
   const route = useRoute<PlannerRouteProp>()
   const [displayWeek, setDisplayWeek] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
+  const [highlightedDay, setHighlightedDay] = useState(new Date())
+  const [moveRoundState, setMoveRoundState] = useState(false)
   const [selectedJob, setSelectedJob] = useState<SelectedJobT | null>(null)
+  const [selectedRound, setSelectedRound] = useState<SelectedRoundInfoT | null>(
+    null,
+  )
+  const [daysToView, setDaysToView] = useState(7)
   const [plannerCardNeedsUpdate, setPlannerCardNeedsUpdate] = useState(false)
+  const [plannerNeedsUpdate, setPlannerNeedsUpdate] = useState(false)
   const screen = route.params?.screen
 
   useEffect(() => {
@@ -28,10 +40,20 @@ const Planner = () => {
     setDisplayWeek,
     selectedDay,
     setSelectedDay,
+    highlightedDay,
+    setHighlightedDay,
+    moveRoundState,
+    setMoveRoundState,
     selectedJob,
     setSelectedJob,
+    selectedRound,
+    setSelectedRound,
+    daysToView,
+    setDaysToView,
     plannerCardNeedsUpdate,
     setPlannerCardNeedsUpdate,
+    plannerNeedsUpdate,
+    setPlannerNeedsUpdate,
   }
 
   return (
@@ -39,10 +61,14 @@ const Planner = () => {
       <Dashboard>
         <PlannerContext.Provider value={PlannerContextValue}>
           {screen === 'PlannerView' ? <PlannerView /> : null}
+          {screen === 'ExtendedPlannerView' ? <ExtendedPlannerView /> : null}
           {screen === 'ScheduleRoundFormView' ? (
             <ScheduleRoundFormView />
           ) : null}
           {screen === 'ScheduledJobView' ? <ScheduledJobView /> : null}
+          {screen === 'PlannerRoundTicketView' ? (
+            <PlannerRoundTicketView />
+          ) : null}
         </PlannerContext.Provider>
       </Dashboard>
     </>

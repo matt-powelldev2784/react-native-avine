@@ -1,9 +1,22 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
-import WeekPlanner from '../../weekPlanner/WeekPlanner'
+import React, { useEffect } from 'react'
 import theme from '../../../../utils/theme/theme'
+import ExtendedPlanner from '../../extendedPlannner/ExtendedPlanner'
+import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
+import { useRoute } from '@react-navigation/native'
+
 
 const FormStepThree = () => {
+  const { setDisplayWeek, setSelectedDay, setHighlightedDay } =
+    usePlannerContext()
+  const route = useRoute()
+
+  useEffect(() => {
+    setDisplayWeek(new Date())
+    setSelectedDay(new Date())
+    setHighlightedDay(new Date())
+  }, [route])
+
   return (
     <>
       <View style={styles.scheduleRoundInfo}>
@@ -16,7 +29,7 @@ const FormStepThree = () => {
       </View>
 
       <View style={styles.weekPlannerWrapper}>
-        <WeekPlanner addFooter={false} />
+        <ExtendedPlanner />
       </View>
     </>
   )
@@ -29,6 +42,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
     paddingHorizontal: 8,
+    marginTop: 16,
   },
   scheduleRoundInfoText: {
     fontSize: 15,

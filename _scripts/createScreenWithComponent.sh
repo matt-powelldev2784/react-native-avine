@@ -3,14 +3,14 @@
 # bash ./_scripts/createScreenWithComponent.sh
 
 # Input parameters
-folderName="rounds"
-ScreenName="RoundMenu"
-ComponentName="RoundMenu"
-componentFolderName="roundMenu"
+folderName="planner"
+ScreenName="MonthPlanner"
+ComponentName="MonthPlanner"
+componentFolderName="monthPlanner"
 navigateTo="navigateTo"
 buttonText="buttonText"
-screenTitle="Round Database"
-importComment="rounds"
+screenTitle="Month Planner"
+importComment="planner"
 
 # Create the directory if it doesn't exist
 mkdir -p "./app/screens/$folderName"

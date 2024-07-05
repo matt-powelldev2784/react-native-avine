@@ -36,8 +36,13 @@ const useGetApiData = <T>({
   const [data, setData] = useState<T | null>(null)
   const [getApiIsLoading, setGetApiIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<unknown>()
-  const { plannerCardNeedsUpdate, setPlannerCardNeedsUpdate } =
-    usePlannerContext()
+  const {
+    plannerCardNeedsUpdate,
+    setPlannerCardNeedsUpdate,
+    daysToView,
+    plannerNeedsUpdate,
+    setPlannerNeedsUpdate,
+  } = usePlannerContext()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,6 +57,7 @@ const useGetApiData = <T>({
         setData(response)
         setGetApiIsLoading(false)
         setPlannerCardNeedsUpdate(false)
+        setPlannerNeedsUpdate(false)
       } catch (error: unknown) {
         console.log('error', error)
         setGetApiIsLoading(false)
@@ -61,7 +67,13 @@ const useGetApiData = <T>({
     }
 
     fetchData()
-  }, [route, selectedDay, plannerCardNeedsUpdate])
+  }, [
+    route,
+    selectedDay,
+    plannerCardNeedsUpdate,
+    daysToView,
+    plannerNeedsUpdate,
+  ])
 
   return {
     data,
