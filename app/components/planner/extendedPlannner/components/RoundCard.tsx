@@ -2,14 +2,13 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { useState } from 'react'
 import { RoundWithRecurringFlagT } from '../../../../types/RoundT'
 import theme from '../../../../utils/theme/theme'
-import ButtonWithIcon from './RoundButtonWithIcon'
+import RoundButtonWithIcon from './RoundButtonWithIcon'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { usePlannerContext } from '../../../../screens/planner/plannerContext/usePlannerContext'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavigator'
 import { ConfirmModal } from '../../../../ui'
-import Button from '../../../../ui/button/Button'
 import useHandleDelete from '../hooks/useHandleDeleteRound'
 import { convertDbDateToDateString } from '../../../../utils/convertDbDateToDateString'
 
@@ -168,61 +167,29 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
 
       {menuIsExpanded ? (
         <View style={styles.buttonContainer}>
-          <ButtonWithIcon
+          <RoundButtonWithIcon
             onPress={handleMoveRound}
             backgroundColor={theme.colors.tertiaryBlue}
             text={'Move Round'}
             width={150}
-            height={30}
+            height={35}
             icon={require('../../../../../assets/move_icon_white.png')}
           />
-          <ButtonWithIcon
+          <RoundButtonWithIcon
             onPress={handleGotoTicket}
             backgroundColor={theme.colors.tertiaryBlue}
             text={'Goto Ticket'}
             width={150}
-            height={30}
+            height={35}
             icon={require('../../../../../assets/notes_white.png')}
           />
-          <Button
+          <RoundButtonWithIcon
             onPress={handleDeletePress}
             backgroundColor={'red'}
             text={'Delete Round'}
             width={150}
-            height={30}
-          />
-        </View>
-      ) : null}
-
-      {menuIsExpanded ? (
-        <View
-          style={[
-            styles.buttonContainer,
-            { position: 'absolute', zIndex: 99999999999, bottom: 0 },
-          ]}
-        >
-          <ButtonWithIcon
-            onPress={handleMoveRound}
-            backgroundColor={theme.colors.tertiaryBlue}
-            text={'Move Round'}
-            width={150}
-            height={30}
-            icon={require('../../../../../assets/move_icon_white.png')}
-          />
-          <ButtonWithIcon
-            onPress={handleGotoTicket}
-            backgroundColor={theme.colors.tertiaryBlue}
-            text={'Goto Ticket'}
-            width={150}
-            height={30}
-            icon={require('../../../../../assets/notes_white.png')}
-          />
-          <Button
-            onPress={handleDeletePress}
-            backgroundColor={'red'}
-            text={'Delete Round'}
-            width={150}
-            height={30}
+            height={35}
+            icon={require('../../../../../assets/bin_white.png')}
           />
         </View>
       ) : null}
@@ -327,10 +294,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 8,
+    gap: 6,
     width: '100%',
     height: 120,
     zIndex: 800,
+    marginVertical: 8,
+    marginHorizontal: 4,
   },
 })
 

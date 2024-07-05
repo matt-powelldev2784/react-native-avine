@@ -22,7 +22,7 @@ interface ButtoMdProps {
   onPress: () => void
 }
 
-const ButtonWithIcon = ({
+const RoundButtonWithIcon = ({
   backgroundColor,
   text,
   isLoading,
@@ -49,7 +49,7 @@ const ButtonWithIcon = ({
         {!isLoading ? (
           <View style={styles.buttonContent}>
             <Image
-              source={icon ? icon : require('../../../assets/plus.png')}
+              source={icon ? icon : require('../../../../../assets/plus.png')}
               style={{ width: 18, height: 18 }}
             />
             <Text style={styles.buttonText}>{text}</Text>
@@ -62,25 +62,27 @@ const ButtonWithIcon = ({
   )
 }
 
-export default ButtonWithIcon
+export default RoundButtonWithIcon
 
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: theme.colors.primary,
-    padding: 10,
-    paddingHorizontal: 4,
+    paddingHorizontal: 6,
     borderRadius: 8,
     width: '100%',
     maxWidth: 220,
+    borderWidth: 1.5,
+    borderStyle: 'solid',
+    borderColor: theme.colors.backgroundGrey,
   },
   buttonText: {
     color: 'white',
+    fontSize: 15,
     fontWeight: 'bold',
-    fontSize: 14,
-    width: 105,
     textAlign: 'center',
+    width: 100,
   },
   buttonContent: {
     flexDirection: 'row',
