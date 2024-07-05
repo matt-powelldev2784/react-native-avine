@@ -3,10 +3,10 @@ import {
   StyleSheet,
   ActivityIndicator,
   DimensionValue,
+  TouchableOpacity,
 } from 'react-native'
 import React from 'react'
 import theme from '../../utils/theme/theme'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 interface ButtoMdProps {
   onPress: () => void
