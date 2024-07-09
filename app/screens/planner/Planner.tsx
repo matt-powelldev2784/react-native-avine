@@ -10,7 +10,7 @@ import {
   ScheduleRoundFormView,
   ScheduledJobView,
   PlannerRoundTicketView,
-} from '../index'
+} from '../indexPlanner'
 import { SelectedRoundInfoT } from '../../types/RoundT'
 
 type PlannerRouteProp = RouteProp<RootStackParamList, 'Planner'>
