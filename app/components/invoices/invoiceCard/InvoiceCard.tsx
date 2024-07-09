@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { useState } from 'react'
-import { useNavigation, useRoute } from '@react-navigation/native'
-import { RouteProp } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { useGetInvoiceData } from './hooks/getInvoiceData'
 import { ConfirmModal, Loading } from '../../../ui'
 import useFormikIsPaid from './hooks/useFormikIsPaid'
@@ -20,25 +19,22 @@ interface InvoiceCardProps {
   setInvoiceCardModalVisible: (value: boolean) => void
 }
 
-type InvoiceCardRouteProp = RouteProp<RootStackParamList, 'InvoiceListView'>
-
 const InvoiceCard = ({
   invoiceId,
   setInvoiceCardModalVisible,
 }: InvoiceCardProps) => {
   // state
   const [modalVisible, setModalVisible] = useState<boolean>(false)
+  const [isPaid, setIsPaid] = useState<boolean | null | undefined>(null)
 
   // hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const route = useRoute<InvoiceCardRouteProp>()
-  const { invoiceData, user, isComplete, isPaid } = useGetInvoiceData({
+  const { invoiceData, user, isComplete } = useGetInvoiceData({
     invoiceId,
-    route,
+    setIsPaid,
   })
-  const { isPaidApiIsLoading, formikIsPaid, isPaidError } = useFormikIsPaid({
+  const { isPaidApiIsLoading, formikIsPaid } = useFormikIsPaid({
     isPaid,
-    isComplete,
     invoiceId,
     plannerDate: invoiceData?.completedDate || null,
   })
@@ -62,6 +58,7 @@ const InvoiceCard = ({
     navigation.navigate('AddCompanyInfo')
   }
   const handleDownloadInvoice = async () => {
+    if (!user) return
     if (!user.companyDetailsProvided) {
       setModalVisible(true)
       return
@@ -101,7 +98,7 @@ const InvoiceCard = ({
             value={isPaid}
             isLoading={isPaidApiIsLoading}
             formik={formikIsPaid}
-            error={isPaidError || false}
+            error={false}
           />
         </View>
 
