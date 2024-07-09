@@ -3,6 +3,7 @@ import { Dashboard, EditInvoiceForm, ScreenMenu } from '../../components'
 import theme from '../../utils/theme/theme'
 import { FlatList, View } from 'react-native'
 
+
 const EditInvoice = () => {
   // flatlist is used to render children to allow the
   // dashboatd header to be sticky in the webview
