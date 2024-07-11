@@ -25,6 +25,7 @@ const InvoiceCard = ({
 }: InvoiceCardProps) => {
   // state
   const [modalVisible, setModalVisible] = useState<boolean>(false)
+  const [invoiceIsLoading, setInvoiceIsLoading] = useState<boolean>(false)
 
   // hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -61,8 +62,9 @@ const InvoiceCard = ({
       setModalVisible(true)
       return
     }
-
-    createWebPdf({ invoiceId })
+    setInvoiceIsLoading(true)
+    await createWebPdf({ invoiceId })
+    setTimeout(() => setInvoiceIsLoading(false), 1500)
   }
 
   // variables
@@ -113,7 +115,12 @@ const InvoiceCard = ({
 
         {/* --------------------------  Buttons -------------------------- */}
         <View style={styles.buttonContainer}>
-          <Button text={'Download Invoice'} onPress={handleDownloadInvoice} />
+          <Button
+            text={'Download Invoice'}
+            onPress={handleDownloadInvoice}
+            isLoading={invoiceIsLoading}
+            disabled={invoiceIsLoading}
+          />
           {!isPaid ? (
             <Button
               text={'Edit Invoice'}

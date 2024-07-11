@@ -30,6 +30,8 @@ const Button = ({
   width,
   height,
 }: ButtoMdProps) => {
+console.log('isLoading', isLoading)
+
   return (
     <TouchableOpacity
       onPress={onPress}
