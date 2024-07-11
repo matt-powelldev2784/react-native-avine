@@ -5,6 +5,7 @@ import {
   Image,
   Dimensions,
   ViewStyle,
+  FlatList,
 } from 'react-native'
 import React, { useState } from 'react'
 import InputField from '../../../ui/formElements/InputField'
@@ -13,7 +14,6 @@ import JobListItem from './components/JobListItem'
 import Button from '../../../ui/button/Button'
 import theme from '../../../utils/theme/theme'
 import useFormikSearch from './hooks/useFormikSearch'
-import { JobWithIdT } from '../../../types/JobT'
 import NoDataFound from './components/NoDataFound'
 import useResetSearchOnFocus from '../../../utils/hooks/useResetSearchOnFocus'
 import { useDeviceType } from '../../../utils/hooks/useDeviceTypes'
@@ -62,11 +62,6 @@ const JobList = () => {
 
   //variables
   const jobDataHasLength = jobData.length > 0
-  const jobCards = jobDataHasLength
-    ? jobData.map((client: JobWithIdT) => {
-        return <JobListItem {...client} key={client.id} />
-      })
-    : null
   const allDataReturned = docCount === jobData.length
 
   //styles
@@ -81,129 +76,133 @@ const JobList = () => {
   const searchResultsStyle: ViewStyle = isLargeWeb
     ? { width: '70%' }
     : { width: '100%', paddingTop: 20 }
-   const containerHeightStyle: ViewStyle = !searchIsActive
-     ? { height: deviceHeight }
-     : { height: '100%' }
+  const containerHeightStyle: ViewStyle = !searchIsActive
+    ? { height: deviceHeight }
+    : { height: '100%' }
 
-   return (
-     <View style={[styles.container, containerStyle, containerHeightStyle]}>
-       {/* -------------------- Header---------------------------- */}
-       {!searchIsActive || (searchIsActive && !isLargeWeb) ? (
-         <View style={[styles.headerContainer, { height: deviceHeight }]}>
-           <Image
-             source={require('../../../../assets/jobs.jpg')}
-             style={{ width: '100%', height: deviceHeight, marginBottom: 8 }}
-           />
-         </View>
-       ) : null}
+  return (
+    <View style={[styles.container, containerStyle, containerHeightStyle]}>
+      {/* -------------------- Header---------------------------- */}
+      {!searchIsActive || (searchIsActive && !isLargeWeb) ? (
+        <View style={[styles.headerContainer, { height: deviceHeight }]}>
+          <Image
+            source={require('../../../../assets/jobs.jpg')}
+            style={{ width: '100%', height: deviceHeight, marginBottom: 8 }}
+          />
+        </View>
+      ) : null}
 
-       {/* -------------------- Search Container ---------------------------- */}
-       <View style={[styles.searchContainer, searchContainerStyle]}>
-         <View style={styles.searchTitleContainer}>
-           <Image
-             source={require('../../../../assets/search_white.png')}
-             style={{ width: 25, height: 25 }}
-           />
-           <Text style={styles.searchTitle}>
-             Search{' '}
-             <Text
-               style={[styles.searchTitle, { color: theme.colors.secondary }]}
-             >
-               Jobs
-             </Text>
-           </Text>
-         </View>
+      {/* -------------------- Search Container ---------------------------- */}
+      <View style={[styles.searchContainer, searchContainerStyle]}>
+        <View style={styles.searchTitleContainer}>
+          <Image
+            source={require('../../../../assets/search_white.png')}
+            style={{ width: 25, height: 25 }}
+          />
+          <Text style={styles.searchTitle}>
+            Search{' '}
+            <Text
+              style={[styles.searchTitle, { color: theme.colors.secondary }]}
+            >
+              Jobs
+            </Text>
+          </Text>
+        </View>
 
-         <View style={styles.inputContainer}>
-           <Dropdown
-             formik={formik}
-             name="searchField"
-             placeholder="Search By"
-             title="Search By"
-             options={[
-               { label: 'Job Name', value: '_searchJobName' },
-               { label: 'Contact Name', value: '_searchContactName' },
-               { label: 'Frequency', value: '_searchFrequency' },
-               { label: 'Job Type', value: '_searchJobType' },
-               { label: 'Town', value: '_searchTown' },
-               { label: 'Address', value: '_searchAddress' },
-             ]}
-             imageName={'notes'}
-           />
-           <InputField
-             formik={formik}
-             name="searchTerm"
-             placeholder="Search Term"
-             title="Search Term"
-             imageName={'search'}
-           />
-         </View>
+        <View style={styles.inputContainer}>
+          <Dropdown
+            formik={formik}
+            name="searchField"
+            placeholder="Search By"
+            title="Search By"
+            options={[
+              { label: 'Job Name', value: '_searchJobName' },
+              { label: 'Contact Name', value: '_searchContactName' },
+              { label: 'Frequency', value: '_searchFrequency' },
+              { label: 'Job Type', value: '_searchJobType' },
+              { label: 'Town', value: '_searchTown' },
+              { label: 'Address', value: '_searchAddress' },
+            ]}
+            imageName={'notes'}
+          />
+          <InputField
+            formik={formik}
+            name="searchTerm"
+            placeholder="Search Term"
+            title="Search Term"
+            imageName={'search'}
+          />
+        </View>
 
-         <View style={styles.buttonContainer}>
-           <Button
-             onPress={handleSearchAllJobsPress}
-             text="Find All Jobs"
-             isLoading={searchApiIsLoading}
-             backgroundColor={theme.colors.buttonSecondary}
-           />
-           <Button
-             onPress={handleSearchPress}
-             text="Search"
-             isLoading={searchApiIsLoading}
-           />
-         </View>
-       </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            onPress={handleSearchAllJobsPress}
+            text="Find All Jobs"
+            isLoading={searchApiIsLoading}
+            backgroundColor={theme.colors.buttonSecondary}
+          />
+          <Button
+            onPress={handleSearchPress}
+            text="Search"
+            isLoading={searchApiIsLoading}
+          />
+        </View>
+      </View>
 
-       {/* -------------------- Job Cards ---------------------------- */}
-       {searchIsActive ? (
-         <View style={[styles.searchResultsContainer, searchResultsStyle]}>
-           {isLargeWeb ? (
-             <View style={styles.searchTitleContainer}>
-               <Image
-                 source={require('../../../../assets/search_white.png')}
-                 style={{ width: 25, height: 25 }}
-               />
-               <Text style={styles.searchTitle}>
-                 Search{' '}
-                 <Text
-                   style={[
-                     styles.searchTitle,
-                     { color: theme.colors.secondary },
-                   ]}
-                 >
-                   Results
-                 </Text>
-               </Text>
-             </View>
-           ) : null}
+      {/* -------------------- Job Cards ---------------------------- */}
+      {searchIsActive ? (
+        <View style={[styles.searchResultsContainer, searchResultsStyle]}>
+          {isLargeWeb ? (
+            <View style={styles.searchTitleContainer}>
+              <Image
+                source={require('../../../../assets/search_white.png')}
+                style={{ width: 25, height: 25 }}
+              />
+              <Text style={styles.searchTitle}>
+                Search{' '}
+                <Text
+                  style={[
+                    styles.searchTitle,
+                    { color: theme.colors.secondary },
+                  ]}
+                >
+                  Results
+                </Text>
+              </Text>
+            </View>
+          ) : null}
 
-           {jobCards}
+          <FlatList
+            data={jobData}
+            renderItem={({ item }) => <JobListItem {...item} />}
+            keyExtractor={(item) => item.id}
+            ListEmptyComponent={NoDataFound}
+            style={{ width: '100%' }}
+          />
 
-           {docCount === 0 ? <NoDataFound /> : null}
+          {jobDataHasLength ? (
+            <View style={styles.buttonContainer}>
+              <Button
+                onPress={resetSearchForm}
+                text="Reset Search Form"
+                isLoading={false}
+                backgroundColor={theme.colors.buttonSecondary}
+              />
+              <Button
+                onPress={handleMoreResultsPress}
+                text={allDataReturned ? 'No More Results' : 'Next 10 Results'}
+                isLoading={searchApiIsLoading}
+                opacity={allDataReturned ? 0.75 : 1}
+                disabled={allDataReturned}
+              />
+            </View>
+          ) : null}
 
-           {jobDataHasLength ? (
-             <View style={styles.buttonContainer}>
-               <Button
-                 onPress={resetSearchForm}
-                 text="Reset Search Form"
-                 isLoading={false}
-                 backgroundColor={theme.colors.buttonSecondary}
-               />
-               <Button
-                 onPress={handleMoreResultsPress}
-                 text={allDataReturned ? 'No More Results' : 'Next 10 Results'}
-                 isLoading={searchApiIsLoading}
-                 opacity={allDataReturned ? 0.75 : 1}
-                 disabled={allDataReturned}
-               />
-             </View>
-           ) : null}
-
-           <View style={styles.footer} />
-         </View>
-       ) : null}
-     </View>
-   )
+          <View style={styles.footer} />
+        </View>
+      ) : null}
+    </View>
+  )
 }
 
 export default JobList
