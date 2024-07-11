@@ -269,6 +269,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 2,
     marginBottom: 8,
+    textAlign: 'center',
   },
   iconContainer: {
     flexDirection: 'row',
