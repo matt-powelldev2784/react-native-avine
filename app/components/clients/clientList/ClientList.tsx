@@ -5,12 +5,12 @@ import {
   Dimensions,
   ViewStyle,
   Image,
+  FlatList,
 } from 'react-native'
 import React, { useState } from 'react'
 import InputField from '../../../ui/formElements/InputField'
 import Dropdown from '../../../ui/formElements/DropDown'
 import ClientListItem from './components/ClientListItem'
-import { ClientWithIdT } from '../../../types/ClientT'
 import Button from '../../../ui/button/Button'
 import theme from '../../../utils/theme/theme'
 import useFormikSearch from './hooks/useFormikSearch'
@@ -62,11 +62,6 @@ const ClientList = () => {
 
   //variables
   const clientDataHasLength = clientData.length > 0
-  const ClientCards = clientDataHasLength
-    ? clientData.map((client: ClientWithIdT) => {
-        return <ClientListItem {...client} key={client.id} />
-      })
-    : null
   const allDataReturned = docCount === clientData.length
 
   //styles
@@ -170,9 +165,13 @@ const ClientList = () => {
             </View>
           ) : null}
 
-          {ClientCards}
-
-          {docCount === 0 ? <NoDataFound /> : null}
+          <FlatList
+            data={clientData}
+            renderItem={({ item }) => <ClientListItem {...item} />}
+            keyExtractor={(item) => item.id}
+            ListEmptyComponent={<NoDataFound />}
+            style={{ width: '100%' }}
+          />
 
           {clientDataHasLength ? (
             <View style={styles.buttonContainer}>
