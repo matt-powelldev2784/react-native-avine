@@ -5,6 +5,7 @@ import {
   Image,
   Dimensions,
   ViewStyle,
+  FlatList,
 } from 'react-native'
 import React, { useState } from 'react'
 import InputField from '../../../ui/formElements/InputField'
@@ -15,7 +16,6 @@ import useFormikSearch from './hooks/useFormikSearch'
 import NoDataFound from './components/NoDataFound'
 import useResetSearchOnFocus from '../../../utils/hooks/useResetSearchOnFocus'
 import { useDeviceType } from '../../../utils/hooks/useDeviceTypes'
-import { InvoiceWithIdT } from '../../../types/InvoiceT'
 import InvoiceListItem from './components/InvoiceListItem'
 
 const InvoiceList = () => {
@@ -79,17 +79,6 @@ const InvoiceList = () => {
 
   //variables
   const invoiceDataHasLength = invoiceData.length > 0
-  const invoiceCards = invoiceDataHasLength
-    ? invoiceData.map((invoice: InvoiceWithIdT) => {
-        return (
-          <InvoiceListItem
-            {...invoice}
-            key={invoice.id}
-            addOrRemoveIsPaidInvoice={addOrRemoveIsPaidInvoice}
-          />
-        )
-      })
-    : null
   const allDataReturned = docCount === invoiceData.length
 
   //styles
@@ -224,9 +213,18 @@ const InvoiceList = () => {
             </Text>
           </View>
 
-          {invoiceCards}
-
-          {docCount === 0 ? <NoDataFound /> : null}
+          <FlatList
+            data={invoiceData}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <InvoiceListItem
+                {...item}
+                addOrRemoveIsPaidInvoice={addOrRemoveIsPaidInvoice}
+              />
+            )}
+            ListEmptyComponent={NoDataFound}
+            style={{ width: '100%' }}
+          />
 
           {invoiceDataHasLength ? (
             <View style={styles.buttonContainer}>
