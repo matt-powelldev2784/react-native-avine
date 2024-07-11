@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { useState } from 'react'
-import { useNavigation, useRoute } from '@react-navigation/native'
-import { RouteProp } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { useGetInvoiceData } from './hooks/getInvoiceData'
 import { ConfirmModal, Loading } from '../../../ui'
 import useFormikIsPaid from './hooks/useFormikIsPaid'
@@ -21,25 +20,21 @@ interface InvoiceCardProps {
   setInvoiceCardModalVisible: (value: boolean) => void
 }
 
-type InvoiceCardRouteProp = RouteProp<RootStackParamList, 'InvoiceListView'>
-
 const InvoiceCard = ({
   invoiceId,
   setInvoiceCardModalVisible,
 }: InvoiceCardProps) => {
   // state
   const [modalVisible, setModalVisible] = useState<boolean>(false)
+  const [invoiceIsLoading, setInvoiceIsLoading] = useState<boolean>(false)
 
   // hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const route = useRoute<InvoiceCardRouteProp>()
-  const { invoiceData, user, client, isComplete, isPaid } = useGetInvoiceData({
+  const { invoiceData, user, isComplete, isPaid } = useGetInvoiceData({
     invoiceId,
-    route,
   })
-  const { isPaidApiIsLoading, formikIsPaid, isPaidError } = useFormikIsPaid({
+  const { isPaidApiIsLoading, formikIsPaid } = useFormikIsPaid({
     isPaid,
-    isComplete,
     invoiceId,
     plannerDate: invoiceData?.completedDate || null,
   })
@@ -49,8 +44,7 @@ const InvoiceCard = ({
     typeof isComplete !== 'boolean' ||
     typeof isPaid !== 'boolean' ||
     !invoiceData ||
-    !user ||
-    !client
+    !user
   ) {
     return <Loading loadingText={'Loading job details...'} />
   }
@@ -70,8 +64,10 @@ const InvoiceCard = ({
       return
     }
 
+    setInvoiceIsLoading(true)
     const html = await nativeInvoiceHtml(invoiceId)
-    createNativePdf(html)
+    await createNativePdf(html)
+    setTimeout(() => setInvoiceIsLoading(false), 1500)
   }
 
   // variables
@@ -105,7 +101,7 @@ const InvoiceCard = ({
             value={isPaid}
             isLoading={isPaidApiIsLoading}
             formik={formikIsPaid}
-            error={isPaidError || false}
+            error={false}
           />
         </View>
 
@@ -122,7 +118,12 @@ const InvoiceCard = ({
 
         {/* --------------------------  Buttons -------------------------- */}
         <View style={styles.buttonContainer}>
-          <Button text={'Download Invoice'} onPress={handleDownloadInvoice} />
+          <Button
+            text={'Download Invoice'}
+            onPress={handleDownloadInvoice}
+            isLoading={invoiceIsLoading}
+            disabled={invoiceIsLoading}
+          />
           {!isPaid ? (
             <Button
               text={'Edit Invoice'}
