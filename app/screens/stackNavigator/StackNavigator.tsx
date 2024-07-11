@@ -1,7 +1,6 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
-  Planner,
   InvoiceListView,
   AddCompanyInfo,
   EditInvoice,
@@ -21,6 +20,7 @@ import {
   ClientMenuScreen,
   JobMenuScreen,
 } from '../../screens'
+import Planner from '../../screens/planner/Planner'
 import { useAuth } from '../../components/auth/AuthProvider'
 import RoundMenuScreen from '../rounds/RoundMenuScreen'
 

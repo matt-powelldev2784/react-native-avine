@@ -18,13 +18,6 @@ import Jobs from './jobs/Jobs'
 import AddJob from './jobs/AddJob'
 import EditJob from './jobs/EditJob'
 
-//planner
-import ExtendedPlannerView from './planner/ExtendedPlannerView'
-import Planner from './planner/Planner'
-import PlannerView from './planner/PlannerView'
-import ScheduledJobView from './planner/ScheduledJobView'
-import ScheduleRoundFormView from './planner/ScheduleRoundFormView'
-import PlannerRoundTicketView from './planner/PlannerRoundTicketView'
 
 //rounds
 import RoundMenu from './rounds/RoundMenuScreen'
@@ -38,12 +31,7 @@ import InvoiceListView from './invoices/InvoiceListView'
 import EditInvoice from './invoices/EditInvoice'
 
 export {
-  ExtendedPlannerView,
-  PlannerView,
-  PlannerRoundTicketView,
   RoundMenu,
-  ScheduledJobView,
-  ScheduleRoundFormView,
   ClientMenuScreen,
   AddCompanyInfo,
   Clients,
@@ -56,7 +44,6 @@ export {
   Rounds,
   AddRound,
   EditRound,
-  Planner,
   InvoiceListView,
   EditInvoice,
   SignInScreen,
