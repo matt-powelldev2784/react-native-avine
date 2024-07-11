@@ -7,7 +7,6 @@ import { UserT } from '../../../../types/UserT'
 
 interface UseGetJobCardDataT {
   invoiceId: string
-  setIsPaid: (value: boolean) => void
 }
 
 interface InvoiceDataT {
@@ -16,12 +15,10 @@ interface InvoiceDataT {
   client: ClientWithIdT
 }
 
-export const useGetInvoiceData = ({
-  invoiceId,
-  setIsPaid,
-}: UseGetJobCardDataT) => {
+export const useGetInvoiceData = ({ invoiceId }: UseGetJobCardDataT) => {
   const [data, setData] = useState<InvoiceDataT | null>(null)
   const [getApiIsLoading, setGetApiIsLoading] = useState<boolean>(false)
+  const [isPaid, setIsPaid] = useState<boolean | null | undefined>(null)
   const { setInvoiceCardNeedsUpdate, invoiceCardNeedsUpdate } =
     useInvoiceContext()
 
@@ -44,5 +41,5 @@ export const useGetInvoiceData = ({
   const client = data?.client || null
   const isComplete = true
 
-  return { getApiIsLoading, invoiceData, user, client, isComplete }
+  return { getApiIsLoading, invoiceData, user, client, isComplete, isPaid }
 }

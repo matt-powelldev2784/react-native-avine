@@ -25,13 +25,11 @@ const InvoiceCard = ({
 }: InvoiceCardProps) => {
   // state
   const [modalVisible, setModalVisible] = useState<boolean>(false)
-  const [isPaid, setIsPaid] = useState<boolean | null | undefined>(null)
 
   // hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { invoiceData, user, isComplete } = useGetInvoiceData({
+  const { invoiceData, user, isComplete, isPaid } = useGetInvoiceData({
     invoiceId,
-    setIsPaid,
   })
   const { isPaidApiIsLoading, formikIsPaid } = useFormikIsPaid({
     isPaid,
