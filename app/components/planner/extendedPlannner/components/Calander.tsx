@@ -41,7 +41,7 @@ const Calender = () => {
 
   //variables
   const windowHeight = Dimensions.get('window').height
-  const minHeight = Math.max(longestTime, windowHeight - 300) || 200
+  const minHeight = Math.max(longestTime, 200) || 200
   const calanderWidth = datesToDisplay.length * 168
   const calenderIsBiggerThanWindow = windowWidth > calanderWidth
   const containerFlexStyle: ViewStyle = calenderIsBiggerThanWindow
@@ -104,14 +104,13 @@ const Calender = () => {
 
 const styles = StyleSheet.create({
   verticalScrollView: {
-    height: '110%',
+    // height: '110%',
     marginBottom: 200,
   },
   horizontalScrollView: {
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
-
   moveRoundContainer: {
     borderWidth: 1.5,
     borderStyle: 'solid',
