@@ -5,6 +5,7 @@ import {
   Dimensions,
   ViewStyle,
   Image,
+  FlatList,
 } from 'react-native'
 import React, { useState } from 'react'
 import InputField from '../../../ui/formElements/InputField'
@@ -16,7 +17,6 @@ import useFormikSearch from './hooks/useFormikSearch'
 import { useDeviceType } from '../../../utils/hooks/useDeviceTypes'
 import useResetSearchOnFocus from '../../../utils/hooks/useResetSearchOnFocus'
 import NoDataFound from './components/NoDataFound'
-import { RoundWithIdT } from '../../../types/RoundT'
 
 const RoundList = () => {
   //state
@@ -62,11 +62,6 @@ const RoundList = () => {
 
   //variables
   const roundDataHasLength = roundData.length > 0
-  const RoundCards = roundDataHasLength
-    ? roundData.map((round: RoundWithIdT) => {
-        return <RoundListItem {...round} key={round.id} />
-      })
-    : null
   const allDataReturned = docCount === roundData.length
 
   //styles
@@ -174,9 +169,13 @@ const RoundList = () => {
             </View>
           ) : null}
 
-          {RoundCards}
-
-          {docCount === 0 ? <NoDataFound /> : null}
+          <FlatList
+            data={roundData}
+            renderItem={({ item }) => <RoundListItem {...item} />}
+            keyExtractor={(item) => item.id}
+            ListEmptyComponent={NoDataFound}
+            style={{ width: '100%' }}
+          />
 
           {roundDataHasLength ? (
             <View style={styles.buttonContainer}>
