@@ -8,6 +8,7 @@ import FormButtons from './components/FormButtons'
 import FormStepThree from './components/FormStepThree'
 import FormStepTwo from './components/FormStepTwo'
 import FormStepOne from './components/FormStepOne'
+import PleaseWaitModal from '../../../ui/modal/PleaseWaitModal'
 
 const ScheduleRoundForm = () => {
   // state
@@ -55,6 +56,18 @@ const ScheduleRoundForm = () => {
       </View>
 
       <View style={{ height: 70 }} />
+
+      {postApiIsLoading ? (
+        <PleaseWaitModal
+          modalText={`Please wait...`}
+          modalText2={`Do not close or navigate to away from this page whilst rounds are being added.`}
+          modalText3={
+            'This could take a few minutes if the a recurring round is being added.'
+          }
+          visible={postApiIsLoading}
+          isLoading={postApiIsLoading}
+        />
+      ) : null}
     </ScrollView>
   )
 }
