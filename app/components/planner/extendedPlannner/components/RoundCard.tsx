@@ -11,6 +11,7 @@ import { RootStackParamList } from '../../../../screens/stackNavigator/StackNavi
 import { ConfirmModal } from '../../../../ui'
 import useHandleDelete from '../hooks/useHandleDeleteRound'
 import { convertDbDateToDateString } from '../../../../utils/convertDbDateToDateString'
+import PleaseWaitModal from '../../../../ui/modal/PleaseWaitModal'
 
 interface RoundCardProps {
   round: RoundWithRecurringFlagT
@@ -211,11 +212,24 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
         onConfirm={handleDeleteAllRecurringRounds}
         onConfirm2={handleDeleteSingleRecurringRound}
         onCancel={() => setRecurringModalVisible(false)}
-        visible={recurringModalVisible}
+        visible={recurringModalVisible && !postApiIsLoading}
         confirmButtonText={'Delete All'}
         onConfirmText2={'Delete Single'}
         isLoading={postApiIsLoading}
       />
+
+      {/* ---------------------- show please wait modal when recurring round is deleting ----------------------- */}
+      {postApiIsLoading && round.recurringRound === true ? (
+        <PleaseWaitModal
+          modalText={`Please wait...`}
+          modalText2={`Do not close or navigate to away from this page whilst rounds are being deleted.`}
+          modalText3={
+            'This could take a few minutes if a recurring round is being deleted.'
+          }
+          visible={postApiIsLoading}
+          isLoading={postApiIsLoading}
+        />
+      ) : null}
     </View>
   )
 }

@@ -50,6 +50,7 @@ const useHandleDelete = ({
         date: plannerDate,
       })
     })
+
     setPlannerNeedsUpdate(true)
   }
 
@@ -61,7 +62,14 @@ const useHandleDelete = ({
         roundId: round.id,
       })
     })
-    setPlannerNeedsUpdate(true)
+
+
+    // rerender planner when api has finished loading
+    while (postApiIsLoading === true) {
+      if (!postApiIsLoading) {
+        setPlannerNeedsUpdate(true)
+      }
+    }
   }
 
   // *************************************************************************
