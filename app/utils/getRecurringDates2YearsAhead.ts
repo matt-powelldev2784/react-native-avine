@@ -13,6 +13,7 @@ export const getRecurringDatesTwoYearsAhead = (
 
   // Get the number from the frequency string
   const freqNum = parseInt(frequency.split(' ')[0], 10)
+  const dailyFreqNum = 1
 
   // Calculate the end date (2 years later)
   const endDate = addYears(new Date(convertedDateString), 2)
@@ -21,7 +22,7 @@ export const getRecurringDatesTwoYearsAhead = (
   while (isBefore(currentDate, endDate)) {
     // Check the frequency and add the corresponding number of days/weeks/months
     if (frequency.includes('Daily')) {
-      currentDate = addDays(currentDate, freqNum)
+      currentDate = addDays(currentDate, dailyFreqNum)
     } else if (frequency.includes('Weekly')) {
       currentDate = addWeeks(currentDate, freqNum)
     } else if (frequency.includes('Monthly')) {
