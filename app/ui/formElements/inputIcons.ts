@@ -3,7 +3,7 @@ export const inputIcons = {
   location: require('../../../assets/location.png'),
   locationCircle: require('../../../assets/location_circle.png'),
   diamond: require('../../../assets/diamond.png'),
-  clock: require('../../../assets/clock.png'),
+  clock: require('../../../assets/clock_sm.png'),
   poundSign: require('../../../assets/pound_sign.png'),
   calender: require('../../../assets/calender.png'),
   tel: require('../../../assets/tel.png'),

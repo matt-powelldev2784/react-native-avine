@@ -2,9 +2,12 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { addJob } from '../../../../db/jobs/addJob'
 import usePostApiData from '../../../../utils/hooks/usePostApiData'
+import { convertTimeToDecimal } from '../../../../utils/convertHoursAndMinsToDecimal'
 
 export const stepOneSchema = Yup.object().shape({
-  clientId: Yup.string().required('A job must have a related client for invoicing purposes'),
+  clientId: Yup.string().required(
+    'A job must have a related client for invoicing purposes',
+  ),
 })
 
 export const stepTwoSchema = Yup.object().shape({
@@ -22,10 +25,13 @@ export const stepTwoSchema = Yup.object().shape({
 export const stepThreeSchema = Yup.object().shape({
   clientId: Yup.string().required('Client is required'),
   jobType: Yup.string().required('Job Type is required'),
-  time: Yup.number()
-    .typeError('Time must be a number')
-    .required('Time is required')
-    .positive(),
+  time: Yup.number().typeError('Time must be a number').positive(),
+  hours: Yup.number()
+    .typeError('Hours must be a number')
+    .required('Hours is required'),
+  mins: Yup.number()
+    .typeError('Mins must be a number')
+    .required('Mins is required'),
   price: Yup.number()
     .typeError('Price must be a number')
     .required('Price is required')
@@ -58,6 +64,8 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
       town: '',
       postcode: '',
       jobType: '',
+      hours: '' as number | string,
+      mins: '' as number | string,
       time: '',
       price: '' as number | string,
       frequency: '',
@@ -68,7 +76,13 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
       isDeleted: false,
     },
     onSubmit: async (values) => {
-      setApiFunction(() => async () => addJob(values))
+      const time = convertTimeToDecimal(
+        Number(values.hours),
+        Number(values.mins),
+      ).toString()
+      const valuesWithDecimalTime = { ...values, time }
+
+      setApiFunction(() => async () => addJob(valuesWithDecimalTime))
     },
     validationSchema,
   })
