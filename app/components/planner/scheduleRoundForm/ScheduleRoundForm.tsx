@@ -62,7 +62,7 @@ const ScheduleRoundForm = () => {
           modalText={`Please wait...`}
           modalText2={`Do not close or navigate to away from this page whilst rounds are being added.`}
           modalText3={
-            'This could take a few minutes if the a recurring round is being added.'
+            'This could take a few minutes if a recurring round is being added.'
           }
           visible={postApiIsLoading}
           isLoading={postApiIsLoading}
