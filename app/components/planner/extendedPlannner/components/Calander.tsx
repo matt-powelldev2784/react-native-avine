@@ -42,7 +42,7 @@ const Calender = () => {
   //variables
   const windowHeight = Dimensions.get('window').height
   const minHeight = Math.max(longestTime, 200) || 200
-  const calanderWidth = datesToDisplay.length * 168
+  const calanderWidth = datesToDisplay.length * 180
   const calenderIsBiggerThanWindow = windowWidth > calanderWidth
   const containerFlexStyle: ViewStyle = calenderIsBiggerThanWindow
     ? { alignItems: 'center' as FlexAlignType }
