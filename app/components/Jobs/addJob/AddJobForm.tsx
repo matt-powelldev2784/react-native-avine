@@ -304,6 +304,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     color: theme.colors.primary,
+    maxWidth: 230,
   },
   toggleContainer: {
     flexDirection: 'row',
