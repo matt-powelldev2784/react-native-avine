@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import {
   TextInput,
   Text,
@@ -20,49 +20,62 @@ interface InputFieldProps {
   keyboardType?: KeyboardTypeOptions
   imageName: keyof typeof inputIcons
   height?: number
+  backgroundColor?: string
+  onFocus?: () => void
 }
 
-const InputField: React.FC<InputFieldProps> = ({
-  formik,
-  name,
-  placeholder,
-  title,
-  keyboardType,
-  imageName,
-  height,
-}) => {
-  const cssHeight = height ? height : 40
+const InputField = forwardRef<any, InputFieldProps>(
+  (
+    {
+      formik,
+      name,
+      placeholder,
+      title,
+      keyboardType,
+      imageName,
+      height,
+      backgroundColor,
+      onFocus,
+    },
+    innerRef,
+  ) => {
+    const cssHeight = height ? height : 40
+    const backgroundColorValue = backgroundColor ? backgroundColor : 'white'
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{title.toUpperCase()}</Text>
-      <Image source={inputIcons[imageName]} style={styles.image} />
+    return (
+      <View style={styles.container}>
+        <Text style={styles.label}>{title.toUpperCase()}</Text>
+        <Image source={inputIcons[imageName]} style={styles.image} />
 
-      <TextInput
-        onChangeText={formik.handleChange(name)}
-        onBlur={formik.handleBlur(name)}
-        value={formik.values[name]}
-        placeholder={placeholder}
-        placeholderTextColor={Platform.OS === 'web' ? '#828585' : '#bfbfbf'}
-        style={[
-          formik.touched[name] && formik.errors[name]
-            ? styles.errorInput
-            : styles.input,
-          { height: cssHeight || null },
-        ]}
-        keyboardType={keyboardType !== undefined ? keyboardType : 'default'}
-        multiline={height ? true : false}
-      />
-      {formik.touched[name] && formik.errors[name] ? (
-        <Text style={styles.errorText}>{String(formik.errors[name])}</Text>
-      ) : (
-        <Text style={styles.errorPlaceholder}>
-          {String(formik.errors[name])}
-        </Text>
-      )}
-    </View>
-  )
-}
+        <TextInput
+          onChangeText={formik.handleChange(name)}
+          onBlur={formik.handleBlur(name)}
+          value={formik.values[name]}
+          placeholder={placeholder}
+          placeholderTextColor={Platform.OS === 'web' ? '#828585' : '#bfbfbf'}
+          style={[
+            formik.touched[name] && formik.errors[name]
+              ? styles.errorInput
+              : styles.input,
+            { height: cssHeight || null },
+            { backgroundColor: backgroundColorValue },
+          ]}
+          keyboardType={keyboardType !== undefined ? keyboardType : 'default'}
+          multiline={height ? true : false}
+          ref={innerRef}
+          onFocus={() => (onFocus ? onFocus() : () => {})}
+        />
+        {formik.touched[name] && formik.errors[name] ? (
+          <Text style={styles.errorText}>{String(formik.errors[name])}</Text>
+        ) : (
+          <Text style={styles.errorPlaceholder}>
+            {String(formik.errors[name])}
+          </Text>
+        )}
+      </View>
+    )
+  },
+)
 
 const styles = StyleSheet.create({
   container: {
@@ -122,4 +135,5 @@ const styles = StyleSheet.create({
   },
 })
 
+InputField.displayName = 'InputField'
 export default InputField

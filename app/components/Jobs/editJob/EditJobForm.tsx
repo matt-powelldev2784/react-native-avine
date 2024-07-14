@@ -78,7 +78,9 @@ const EditJobForm = () => {
             />
 
             <View style={styles.toggleContainer}>
-              <Text style={styles.text}>Copy contact details from client</Text>
+              <Text style={styles.text}>
+                Copy name and address details from client
+              </Text>
               <CustomSwitch
                 value={toggleCopyClient}
                 onValueChange={handleToggleCopyClient}
@@ -90,28 +92,6 @@ const EditJobForm = () => {
         {/*********************  Step 2 ***************************/}
         {activeStep === 1 ? (
           <>
-            <InputField
-              formik={formik}
-              name="jobName"
-              placeholder="Job Name"
-              title="Job Name"
-              imageName={'wiper'}
-            />
-            <InputField
-              formik={formik}
-              name="contactName"
-              placeholder="Contact Name"
-              title="Contact Name"
-              imageName={'person'}
-            />
-            <InputField
-              formik={formik}
-              name="contactTel"
-              placeholder="Contact Telephone Number"
-              title="Contact Telephone Number"
-              keyboardType={'phone-pad'}
-              imageName={'tel'}
-            />
             <InputField
               formik={formik}
               name="address"
@@ -132,6 +112,28 @@ const EditJobForm = () => {
               placeholder="Post Code"
               title="Post Code"
               imageName={'locationCircle'}
+            />
+            <InputField
+              formik={formik}
+              name="contactName"
+              placeholder="Contact Name"
+              title="Contact Name"
+              imageName={'person'}
+            />
+            <InputField
+              formik={formik}
+              name="contactTel"
+              placeholder="Contact Telephone Number"
+              title="Contact Telephone Number"
+              keyboardType={'phone-pad'}
+              imageName={'tel'}
+            />
+            <InputField
+              formik={formik}
+              name="jobName"
+              placeholder="Job Name"
+              title="Job Name"
+              imageName={'wiper'}
             />
           </>
         ) : null}
@@ -193,6 +195,7 @@ const EditJobForm = () => {
               placeholder="Notes"
               title="Notes"
               imageName={'notes'}
+              height={100}
             />
           </>
         ) : null}

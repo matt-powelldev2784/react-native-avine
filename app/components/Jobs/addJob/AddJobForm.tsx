@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { StyleSheet, View, ScrollView, Platform, Text } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from '../../../ui/formElements/InputField'
@@ -18,6 +18,7 @@ const AddJobForm = () => {
   //state
   const [activeStep, setActiveStep] = useState(0)
   const [toggleCopyClient, setToggleCopyClient] = useState(false)
+  const [jobNameIsAutoFill, setJobNameIsAutoFill] = useState(true)
 
   //hooks
   const { postApiIsLoading, formik } = useFormikSteps({
@@ -31,7 +32,16 @@ const AddJobForm = () => {
   })
   const clientList = useGetClientOptions()
   const { isLargeWeb } = useDeviceType()
+  const contactNameRef = useRef('')
+  const addressRef = useRef('')
   useFormResetOnBlur(formik, setActiveStep)
+  useEffect(() => {
+    if (jobNameIsAutoFill) {
+      contactNameRef.current = formik.values.contactName
+      addressRef.current = formik.values.address
+      formik.values.jobName = `${addressRef.current} ${contactNameRef.current}`
+    }
+  }, [formik.values.contactName, formik.values.address, formik.values.jobName])
 
   //functions
   const handleToggleCopyClient = async () => {
@@ -67,7 +77,9 @@ const AddJobForm = () => {
               imageName={'person'}
             />
             <View style={styles.toggleContainer}>
-              <Text style={styles.text}>Copy contact details from client</Text>
+              <Text style={styles.text}>
+                Copy name and address details from client
+              </Text>
               <CustomSwitch
                 value={toggleCopyClient}
                 onValueChange={handleToggleCopyClient}
@@ -79,28 +91,6 @@ const AddJobForm = () => {
         {/*********************  Step 2 ***************************/}
         {activeStep === 1 ? (
           <>
-            <InputField
-              formik={formik}
-              name="jobName"
-              placeholder="Job Name"
-              title="Job Name"
-              imageName={'wiper'}
-            />
-            <InputField
-              formik={formik}
-              name="contactName"
-              placeholder="Contact Name"
-              title="Contact Name"
-              imageName={'person'}
-            />
-            <InputField
-              formik={formik}
-              name="contactTel"
-              placeholder="Contact Telephone Number"
-              title="Contact Telephone Number"
-              keyboardType={'phone-pad'}
-              imageName={'tel'}
-            />
             <InputField
               formik={formik}
               name="address"
@@ -121,6 +111,33 @@ const AddJobForm = () => {
               placeholder="Post Code"
               title="Post Code"
               imageName={'locationCircle'}
+            />
+            <InputField
+              formik={formik}
+              name="contactName"
+              placeholder="Contact Name"
+              title="Contact Name"
+              imageName={'person'}
+              ref={contactNameRef}
+            />
+            <InputField
+              formik={formik}
+              name="contactTel"
+              placeholder="Contact Telephone Number"
+              title="Contact Telephone Number"
+              keyboardType={'phone-pad'}
+              imageName={'tel'}
+            />
+            <InputField
+              formik={formik}
+              name="jobName"
+              placeholder="Job Name"
+              title="Job Name"
+              imageName={'wiper'}
+              backgroundColor={
+                jobNameIsAutoFill ? theme.colors.backgroundGrey : 'white'
+              }
+              onFocus={() => setJobNameIsAutoFill(false)}
             />
           </>
         ) : null}
@@ -183,6 +200,7 @@ const AddJobForm = () => {
               placeholder="Notes"
               title="Notes"
               imageName={'notes'}
+              height={100}
             />
           </>
         ) : null}
