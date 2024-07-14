@@ -38,6 +38,7 @@ export const useMoveToNextStep = ({
       formik.setFieldValue('contactTel', contactTel)
       formik.setFieldValue('town', town)
       formik.setFieldValue('postcode', postcode)
+      formik.setFieldValue('jobName', `${address} ${name}`)
     }
 
     if (formIsValid) {

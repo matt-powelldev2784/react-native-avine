@@ -20,6 +20,9 @@ interface InputFieldProps {
   keyboardType?: KeyboardTypeOptions
   imageName: keyof typeof inputIcons
   height?: number
+  ref?: any
+  backgroundColor?: string
+  onFocus?: () => void
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -30,8 +33,12 @@ const InputField: React.FC<InputFieldProps> = ({
   keyboardType,
   imageName,
   height,
+  ref,
+  backgroundColor,
+  onFocus,
 }) => {
   const cssHeight = height ? height : 40
+  const backgroundColorValue = backgroundColor ? backgroundColor : 'white'
 
   return (
     <View style={styles.container}>
@@ -49,9 +56,12 @@ const InputField: React.FC<InputFieldProps> = ({
             ? styles.errorInput
             : styles.input,
           { height: cssHeight || null },
+          { backgroundColor: backgroundColorValue },
         ]}
         keyboardType={keyboardType !== undefined ? keyboardType : 'default'}
         multiline={height ? true : false}
+        ref={ref}
+        onFocus={() => (onFocus ? onFocus() : () => {})}
       />
       {formik.touched[name] && formik.errors[name] ? (
         <Text style={styles.errorText}>{String(formik.errors[name])}</Text>
