@@ -195,6 +195,7 @@ const EditJobForm = () => {
               placeholder="Notes"
               title="Notes"
               imageName={'notes'}
+              height={100}
             />
           </>
         ) : null}
