@@ -4,6 +4,7 @@ import { updateJob } from '../../../../db/jobs/updateJob'
 import { getJob } from '../../../../db/jobs/getJob'
 import useGetApiData from '../../../../utils/hooks/useGetApiData'
 import usePostApiData from '../../../../utils/hooks/usePostApiData'
+import { convertTimeToDecimal } from '../../../../utils/convertHoursAndMinsToDecimal'
 
 export const stepOneSchema = Yup.object().shape({
   clientId: Yup.string().required(
@@ -25,10 +26,13 @@ export const stepTwoSchema = Yup.object().shape({
 
 export const stepThreeSchema = Yup.object().shape({
   jobType: Yup.string().required('Job Type is required'),
-  time: Yup.number()
-    .typeError('Time must be a number')
-    .required('Time is required')
-    .positive(),
+  time: Yup.number().typeError('Time must be a number'),
+  hours: Yup.number()
+    .typeError('Hours must be a number')
+    .required('Hours is required'),
+  mins: Yup.number()
+    .typeError('Mins must be a number')
+    .required('Mins is required'),
   price: Yup.number()
     .typeError('Price must be a number')
     .required('Price is required')
@@ -69,6 +73,8 @@ const useFormikSteps = ({ activeStep, jobId }: useFormikStepsInterface) => {
       postcode: '',
       jobType: '',
       time: '',
+      hours: '' as number | string,
+      mins: '' as number | string,
       price: '' as number | string,
       frequency: '',
       contactName: '',
@@ -79,7 +85,13 @@ const useFormikSteps = ({ activeStep, jobId }: useFormikStepsInterface) => {
       ...data,
     },
     onSubmit: async (values) => {
-      setApiFunction(() => async () => updateJob(values))
+      const time = convertTimeToDecimal(
+        Number(values.hours),
+        Number(values.mins),
+      ).toString()
+      const valuesWithDecimalTime = { ...values, time }
+
+      setApiFunction(() => async () => updateJob(valuesWithDecimalTime))
     },
     validationSchema,
     enableReinitialize: true,

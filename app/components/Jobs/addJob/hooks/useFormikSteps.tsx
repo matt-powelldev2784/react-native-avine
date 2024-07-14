@@ -25,7 +25,7 @@ export const stepTwoSchema = Yup.object().shape({
 export const stepThreeSchema = Yup.object().shape({
   clientId: Yup.string().required('Client is required'),
   jobType: Yup.string().required('Job Type is required'),
-  time: Yup.number().typeError('Time must be a number').positive(),
+  time: Yup.number().typeError('Time must be a number'),
   hours: Yup.number()
     .typeError('Hours must be a number')
     .required('Hours is required'),
