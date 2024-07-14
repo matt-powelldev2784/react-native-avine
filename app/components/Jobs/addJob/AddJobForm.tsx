@@ -143,14 +143,31 @@ const AddJobForm = () => {
               options={freqencyArray}
               imageName={'calender'}
             />
-            <InputField
-              formik={formik}
-              name="time"
-              placeholder="Estimated Job Time In Hours e.g 1.5"
-              title="Estimated Job Time"
-              keyboardType={Platform.OS === 'web' ? 'default' : 'numeric'}
-              imageName={'clock'}
-            />
+
+            <View style={styles.timeContainer}>
+              <View style={styles.timeInput}>
+                <InputField
+                  formik={formik}
+                  name="hours"
+                  placeholder="Hours"
+                  title="Time Hours"
+                  keyboardType={Platform.OS === 'web' ? 'default' : 'numeric'}
+                  imageName={'clock'}
+                />
+              </View>
+
+              <View style={styles.timeInput}>
+                <InputField
+                  formik={formik}
+                  name="mins"
+                  placeholder="Mins"
+                  title="Time Mins"
+                  keyboardType={Platform.OS === 'web' ? 'default' : 'numeric'}
+                  imageName={'clock'}
+                />
+              </View>
+            </View>
+
             <InputField
               formik={formik}
               name="price"
@@ -225,6 +242,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingBottom: 80,
   },
+  timeContainer: {
+    position: 'relative',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    maxWidth: 700,
+    width: '100%',
+    gap: 10,
+  },
+  timeInput: { flex: 1, maxWidth: 340, width: '50%' },
   buttonContainer: {
     display: 'flex',
     alignItems: 'center',
