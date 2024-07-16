@@ -14,6 +14,7 @@ export const stepOneSchema = Yup.object().shape({
     .typeError('Telephone number must be a number')
     .required('Telephone number is required')
     .positive(),
+  taxRate: Yup.number().required('Tax rate is required'),
 })
 
 // if upload is declined, logoUrl is not required
@@ -47,6 +48,7 @@ const useFormikSteps = ({ activeStep }: useFormikStepsProps) => {
       county: '',
       postcode: '',
       contactTel: '' as number | string,
+      taxRate: '20',
       logoUrl: '',
       logoUploadDeclined: false,
       companyDetailsProvided: true,
