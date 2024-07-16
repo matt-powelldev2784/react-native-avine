@@ -1,4 +1,5 @@
 import { getRelatedInvoiceData } from '../../../../db/invoice/getRelatedInvoiceData'
+import theme from '../../../../utils/theme/theme'
 
 export const nativeInvoiceHtml = async (invoiceId: string) => {
   const { user, client, invoiceData } = await getRelatedInvoiceData(invoiceId)
@@ -11,6 +12,7 @@ export const nativeInvoiceHtml = async (invoiceId: string) => {
     <html>
     <head>
       <style>
+        * { print-color-adjust:exact !important; }
         body {
           font-family: Arial, sans-serif;
           color: #555;
@@ -53,20 +55,25 @@ export const nativeInvoiceHtml = async (invoiceId: string) => {
           width: 100%;
           border-collapse: collapse;
         }
-        th, td {
-          border: 1px solid #ddd;
-          padding: 8px;
+        .table-head {
+          background-color: ${theme.colors.primary};
+          text-align : left;
+          color: ${theme.colors.white};
         }
-        th {
-          background-color: #f2f2f2;
-          text-align: left;
+        .paddingLeft6px {
+        padding-left: 6px;
         }
+        .paddingLeft8px {
+        padding-left: 8px;
+        }
+
         .footer {
           text-align: center;
           margin-top: 50px;
           color: #656768;
           width: 100%;          
         }
+       
       </style>
     </head>
     <body>
@@ -92,13 +99,14 @@ export const nativeInvoiceHtml = async (invoiceId: string) => {
             
         <div class="details">
           <div class="section-header">Invoice Details</div>
+
           <table>
-            <tr>
-              <th>Description</th>
+            <tr class="table-head">
+              <th class="paddingLeft8px">Description</th>
               <th>Price</th>
             </tr>
             <tr>
-              <td>${invoiceData.description}</td>
+              <td class="paddingLeft6px">${invoiceData.description}</td>
               <td>£${invoiceData.price}</td>
             </tr>
           </table>
@@ -111,7 +119,7 @@ export const nativeInvoiceHtml = async (invoiceId: string) => {
             user.postcode
           }
           <br>
-          ${user.contactTel}
+          Telephone : ${user.contactTel}
           </p>   
         </div>
     </body>

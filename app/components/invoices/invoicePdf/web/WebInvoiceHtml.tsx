@@ -2,6 +2,7 @@ import React from 'react'
 import { UserT } from '../../../../types/UserT'
 import { ClientWithIdT } from '../../../../types/ClientT'
 import { InvoiceWithIdT } from '../../../../types/InvoiceT'
+import theme from '../../../../utils/theme/theme'
 
 interface CreateInvoiceProps {
   user: UserT
@@ -53,34 +54,49 @@ export const WebInvoiceHtml = ({
     details: {
       margin: 'auto',
       maxWidth: 185,
-      color: '#000000',
+      color: '#555',
+      marginTop: '10px',
     },
     table: {
       width: '100%',
       borderCollapse: 'collapse' as const,
     },
-    th: {
-      borderTop: '0.05px solid #ddd',
-      borderLeft: '0.025px solid #ddd',
-      borderRight: '0.025px solid #ddd',
+    tableHead: {
+      backgroundColor: theme.colors.primary,
       textAlign: 'left' as const,
-      paddingTop: '2px',
-      paddingBottom: '3px',
+      height: '4.5px',
+      overflow: 'hidden',
+    },
+    th: {
+      textAlign: 'left' as const,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: theme.colors.primary,
+      color: 'white',
+      fontWeight: 'normal' as const,
+      transform: 'translateY(-1.5px)',
+    },
+    descriptionHeader: {
+      textAlign: 'left' as const,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: theme.colors.primary,
+      color: 'white',
+      fontWeight: 'normal' as const,
+      transform: 'translateY(-1.5px)',
       paddingLeft: '2px',
     },
     td: {
-      border: '0.05px solid #ddd',
-      paddingTop: '2px',
-      paddingBottom: '4px',
       paddingLeft: '2px',
-      color: '#000000',
+      color: '#555',
       textDecoration: 'none',
+      transform: 'translateY(-1.5px)',
     },
     footer: {
       textAlign: 'center' as const,
       marginTop: '10px',
       width: '100%',
-      color: '#555',
+      color: '#656768',
       textDecoration: 'none',
     },
   }
@@ -112,11 +128,11 @@ export const WebInvoiceHtml = ({
         </p>
 
         <div style={styles.details}>
-          <h2>Invoice Details</h2>
+          <h3>Invoice Details</h3>
           <table style={styles.table}>
             <tbody>
-              <tr>
-                <th style={styles.th}>Description</th>
+              <tr style={styles.tableHead}>
+                <th style={styles.descriptionHeader}>Description</th>
                 <th style={styles.th}>Price</th>
               </tr>
               <tr>
@@ -132,7 +148,7 @@ export const WebInvoiceHtml = ({
         {user.companyName}, {user.address}, {user.town}, {user.county},{' '}
         {user.postcode}
         <br />
-        {user.contactTel?.toString()}
+        {`Telephone : ${user.contactTel?.toString()}`}
       </div>
     </div>
   )
