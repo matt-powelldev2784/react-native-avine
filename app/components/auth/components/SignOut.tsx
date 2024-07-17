@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { useAuth } from '../../../components/auth/AuthProvider'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -18,16 +18,32 @@ const SignOut = () => {
 
   const userEmail = userInfo.providerData[0].email
 
+  const updateCompnayDetails = () => {
+    navigation.navigate('AddCompanyInfo')
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
         <PlanMeLogo />
-        <Text style={styles.text}>Quick and Simple Round Planner</Text>
+        <Text style={styles.text}>
+          Database, planner and invoicing for window cleaning professionals.
+        </Text>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={signOut}>
-        <Text style={styles.buttonText}>Sign Out</Text>
-      </TouchableOpacity>
+      <Button
+        onPress={updateCompnayDetails}
+        text="Update Company Details"
+        isLoading={false}
+        backgroundColor={theme.colors.invoicePrimary}
+      />
+
+      <Button
+        onPress={signOut}
+        text="Sign Out"
+        isLoading={false}
+        backgroundColor={'red'}
+      />
 
       {/* ------ Seeds ----------- */}
       {userEmail === 'matt.powell2784@gmail.com' ? (
@@ -55,14 +71,12 @@ const SignOut = () => {
         </>
       ) : null}
 
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => {
-          navigation.goBack()
-        }}
-      >
-        <Text style={styles.backText}>Go Back</Text>
-      </TouchableOpacity>
+      <Button
+        onPress={() => navigation.goBack()}
+        text="Go Back"
+        isLoading={false}
+        backgroundColor={theme.colors.buttonSecondary}
+      />
     </SafeAreaView>
   )
 }
@@ -91,6 +105,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     padding: 8,
+    textAlign: 'center',
   },
   button: {
     backgroundColor: 'white',
