@@ -34,6 +34,8 @@ export const getInvoiceIsPaid = async ({
 
     const relatedJobString = `${roundId}@${jobId}@${relatedJobSuffix}`
 
+    console.log('relatedJobString', relatedJobString)
+
     // if job is complete return jobIsInvoiced true property
     if (plannerData?.invoicedJobs?.includes(relatedJobString)) {
       const invoiceIsPaid = true
@@ -46,11 +48,11 @@ export const getInvoiceIsPaid = async ({
       return { invoiceIsPaid }
     }
 
-    //if job not found in planner throw error
-    throw new Error('Scheduled job not found in planner')
+    return { invoiceIsPaid: false }
+
   } catch (error) {
     throw new Error(
-      `Error getting invoice is paid at getInvoiceIsPaid route: ${error}`,
+      `Error getting invoice is complete at getInvoiceIsPaid route: ${error}`,
     )
   }
 }

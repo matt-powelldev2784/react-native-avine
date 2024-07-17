@@ -46,8 +46,8 @@ export const getJobIsComplete = async ({
       return { jobIsComplete }
     }
 
-    //if job not found in planner throw error
-    throw new Error('Job not found in planner')
+    return { jobIsComplete: false }
+
   } catch (error) {
     throw new Error(
       `Error getting job is complete at getJobIsComplete route: ${error}`,

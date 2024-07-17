@@ -25,7 +25,7 @@ export const addJob = async (jobData: JobT) => {
       hours: jobData.hours,
       mins: jobData.mins,
       price: jobData.price,
-      taxtRate: jobData.taxRate,
+      taxRate: jobData.taxRate,
       frequency: jobData.frequency,
       contactName: jobData.contactName,
       contactTel: jobData.contactTel,
