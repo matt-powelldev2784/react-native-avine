@@ -92,6 +92,14 @@ export const nativeInvoiceHtml = async (invoiceId: string) => {
         text-align: right;
         padding-right: 8px;
         vertical-align: top;
+        color: #888;
+        }
+        .totalAmount {
+        width: 70px;
+        text-align: right;
+        padding-right: 8px;
+        vertical-align: top;
+        font-weight: bold;
         }
         .footer {
         text-align: center;
@@ -138,7 +146,7 @@ export const nativeInvoiceHtml = async (invoiceId: string) => {
               <td class="decription items">${invoiceData.description}</td>
               <td class="amount items">${invoiceData.taxRate}</td>
               <td class="amount items">£${invoiceData.price}</td>
-              <td class="amount items">£${invoiceData.totalPrice}</td>
+              <td class="totalAmount items">£${invoiceData.totalPrice}</td>
             </tr>
           </table>
         </div>
