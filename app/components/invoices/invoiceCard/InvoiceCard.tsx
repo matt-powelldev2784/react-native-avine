@@ -109,6 +109,10 @@ const InvoiceCard = ({
 
         <View style={styles.infoWrapper}>
           <DataLineItem name={'Client Name'} value={client?.name} />
+          <DataLineItem
+            name={'Client Compnay Name'}
+            value={client?.companyName || ''}
+          />
           <DataLineItem name={'Client Address'} value={client?.address} />
           <DataLineItem name={'Client Post Code'} value={client?.postcode} />
           <DataLineItem name={'Client Telephone'} value={client.contactTel} />
