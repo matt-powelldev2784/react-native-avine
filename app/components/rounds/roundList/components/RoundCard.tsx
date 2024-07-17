@@ -100,7 +100,7 @@ const RoundCard = ({ roundId, setRoundCardModalVisible }: RoundCardProps) => {
       {/* --------------------------------  Confirm Modal --------------------------------- */}
       <ConfirmModal
         modalText={`Are you sure you want to delete round ${roundData.roundName}?`}
-        modalText2={`${roundData.roundName} will be deleted from view but will still be accessible for previously created planner entries and invoices.`}
+        modalText2={`${roundData.roundName} will be deleted, although it will still be available for use in current planner and invoice documents.`}
         onConfirm={handleConfirmDeleteClientPress}
         onCancel={() => setModalVisible(false)}
         visible={modalVisible}
