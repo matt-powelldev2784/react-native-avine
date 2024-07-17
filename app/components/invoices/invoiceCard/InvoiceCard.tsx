@@ -29,7 +29,7 @@ const InvoiceCard = ({
 
   // hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { invoiceData, user, isComplete, isPaid } = useGetInvoiceData({
+  const { invoiceData, user, isComplete, isPaid, client } = useGetInvoiceData({
     invoiceId,
   })
   const { isPaidApiIsLoading, formikIsPaid } = useFormikIsPaid({
@@ -42,7 +42,8 @@ const InvoiceCard = ({
   if (
     typeof isComplete !== 'boolean' ||
     typeof isPaid !== 'boolean' ||
-    !invoiceData
+    !invoiceData ||
+    !client
   ) {
     return <Loading loadingText={'Loading job details...'} />
   }
@@ -105,9 +106,21 @@ const InvoiceCard = ({
         </View>
 
         <View style={styles.infoWrapper}>
+          <DataLineItem name={'Client Name'} value={client?.name} />
+          <DataLineItem name={'Client Address'} value={client?.address} />
+          <DataLineItem name={'Client Post Code'} value={client?.postcode} />
+          <DataLineItem name={'Client Telephone'} value={client.contactTel} />
+
+          <View style={styles.spacer} />
+
           <DataLineItem name={'Job Name'} value={invoiceData.job.jobName} />
           <DataLineItem name={'Date Completed'} value={shortDateString} />
-          <DataLineItem name={'Price'} value={`£${invoiceData.price}`} />
+          <DataLineItem name={'Tax Rate'} value={`${invoiceData.taxRate}%`} />
+          <DataLineItem name={'NET Price'} value={`£${invoiceData.price}`} />
+          <DataLineItem
+            name={'Total Price'}
+            value={`£${invoiceData.totalPrice}`}
+          />
 
           <LongDataItem
             name={'Description'}
@@ -245,6 +258,7 @@ const styles = StyleSheet.create({
     height: 150,
     objectFit: 'contain' as const,
   },
+  spacer: { height: 32 },
 })
 
 export default InvoiceCard
