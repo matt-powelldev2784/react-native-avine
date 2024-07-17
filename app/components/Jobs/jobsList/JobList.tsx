@@ -176,7 +176,7 @@ const JobList = () => {
             data={jobData}
             renderItem={({ item }) => <JobListItem {...item} />}
             keyExtractor={(item) => item.id}
-            ListEmptyComponent={NoDataFound}
+            ListEmptyComponent={searchIsActive ? null : NoDataFound}
             style={{ width: '100%' }}
           />
 
