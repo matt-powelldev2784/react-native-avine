@@ -34,8 +34,6 @@ export const getInvoiceIsPaid = async ({
 
     const relatedJobString = `${roundId}@${jobId}@${relatedJobSuffix}`
 
-    console.log('relatedJobString', relatedJobString)
-
     // if job is complete return jobIsInvoiced true property
     if (plannerData?.invoicedJobs?.includes(relatedJobString)) {
       const invoiceIsPaid = true
