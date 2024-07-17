@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { StyleSheet, View, ScrollView, Platform, Text } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from '../../../ui/formElements/InputField'
@@ -13,6 +13,8 @@ import Button from '../../../ui/button/Button'
 import { handleFormStepBack } from '../../../utils/handleFormStepBack'
 import { useGetClientOptions } from '../editJob/hooks/useFetchClients'
 import { CustomSwitch } from '../../../ui'
+import { useCalculateTotal } from './hooks/useCalculateTotal'
+import { useAutoFillJobName } from './hooks/useAutoFillJobName'
 
 const AddJobForm = () => {
   //state
@@ -34,14 +36,16 @@ const AddJobForm = () => {
   const { isLargeWeb } = useDeviceType()
   const contactNameRef = useRef('')
   const addressRef = useRef('')
+  const netPriceRef = useRef(formik.values.price || '')
+  const taxRateRef = useRef(formik.values.taxRate || '')
+  useCalculateTotal({ formik, netPriceRef, taxRateRef })
+  useAutoFillJobName({
+    formik,
+    jobNameIsAutoFill,
+    contactNameRef,
+    addressRef,
+  })
   useFormResetOnBlur(formik, setActiveStep)
-  useEffect(() => {
-    if (jobNameIsAutoFill) {
-      contactNameRef.current = formik.values.contactName
-      addressRef.current = formik.values.address
-      formik.values.jobName = `${addressRef.current} ${contactNameRef.current}`
-    }
-  }, [formik.values.contactName, formik.values.address, formik.values.jobName])
 
   //functions
   const handleToggleCopyClient = async () => {
@@ -161,8 +165,8 @@ const AddJobForm = () => {
               imageName={'calender'}
             />
 
-            <View style={styles.timeContainer}>
-              <View style={styles.timeInput}>
+            <View style={styles.splitContainer}>
+              <View style={styles.splitInput}>
                 <InputField
                   formik={formik}
                   name="hours"
@@ -173,7 +177,7 @@ const AddJobForm = () => {
                 />
               </View>
 
-              <View style={styles.timeInput}>
+              <View style={styles.splitInput}>
                 <InputField
                   formik={formik}
                   name="mins"
@@ -188,11 +192,36 @@ const AddJobForm = () => {
             <InputField
               formik={formik}
               name="price"
-              placeholder="Price"
-              title="Price"
+              placeholder="Net Price"
+              title="Net Price"
               keyboardType={Platform.OS === 'web' ? 'default' : 'numeric'}
               imageName={'poundSign'}
             />
+
+            <View style={styles.splitContainer}>
+              <View style={styles.splitInput}>
+                <InputField
+                  formik={formik}
+                  name="taxRate"
+                  placeholder="Tax Rate"
+                  title="Tax Rate"
+                  imageName={'percent'}
+                  ref={taxRateRef}
+                />
+              </View>
+
+              <View style={styles.splitInput}>
+                <InputField
+                  formik={formik}
+                  name="TotalAmount"
+                  placeholder="Total Amount"
+                  title="Total Amount"
+                  imageName={'poundSign'}
+                  backgroundColor={theme.colors.backgroundGrey}
+                  disabled={true}
+                />
+              </View>
+            </View>
 
             <InputField
               formik={formik}
@@ -260,7 +289,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingBottom: 80,
   },
-  timeContainer: {
+  splitContainer: {
     position: 'relative',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -268,7 +297,7 @@ const styles = StyleSheet.create({
     width: '100%',
     gap: 10,
   },
-  timeInput: { flex: 1, maxWidth: 340, width: '50%' },
+  splitInput: { flex: 1, maxWidth: 340, width: '50%' },
   buttonContainer: {
     display: 'flex',
     alignItems: 'center',

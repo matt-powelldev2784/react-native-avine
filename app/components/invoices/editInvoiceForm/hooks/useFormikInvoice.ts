@@ -9,6 +9,9 @@ export const validationSchema = Yup.object().shape({
   price: Yup.number().required('Price is required'),
   description: Yup.string().required('Description is required'),
   clientId: Yup.string().required('Client is required'),
+  taxRate: Yup.number()
+    .required('Tax Rate is required')
+    .typeError('Tax Rate must be a number'),
 })
 
 interface useFormikStepsInterface {
@@ -28,8 +31,10 @@ const useFormikInvoice = ({ invoiceId }: useFormikStepsInterface) => {
   const formik = useFormik({
     initialValues: {
       id: data?.id || '',
-      price: (data?.price.toString() as number | string) || '',
+      price: (data?.price.toString() as string) || '',
+      taxRate: data?.taxRate || '',
       description: data?.description || '',
+      totalPrice: data?.totalPrice || '',
       clientId: data?.job?.clientId,
     },
     onSubmit: async (values) => {
@@ -39,6 +44,7 @@ const useFormikInvoice = ({ invoiceId }: useFormikStepsInterface) => {
         id: values.id,
         price: Number(values.price),
         description: values.description,
+        taxRate: Number(values.taxRate),
         clientId: values.clientId,
       }
 

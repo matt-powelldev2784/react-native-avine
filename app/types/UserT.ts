@@ -11,5 +11,6 @@ export interface UserT {
   logoUrl?: string
   postcode?: string
   town?: string
+  taxRate: number | string
   userId: string
 }

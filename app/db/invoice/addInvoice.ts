@@ -49,11 +49,14 @@ export const addInvoice = async ({
         completedDate: plannerDate,
         job: job,
         client: client,
+        taxtRate: job.taxRate,
         price: job.price,
+        totalPrice: Number(job.price) * (1 + Number(job.taxRate) / 100),
         description: `Window cleaning services completed on ${convertPlannerDateToShortDate(
           plannerDate,
         )}`,
         isPaid: false,
+        taxRate: job.taxRate,
       })
     }
 

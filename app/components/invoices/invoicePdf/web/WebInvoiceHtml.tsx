@@ -67,14 +67,16 @@ export const WebInvoiceHtml = ({
       height: '4.5px',
       overflow: 'hidden',
     },
-    th: {
-      textAlign: 'left' as const,
+    amountHeader: {
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: theme.colors.primary,
       color: 'white',
       fontWeight: 'normal' as const,
-      transform: 'translateY(-1.5px)',
+      transform: 'translateY(-0.8px)',
+      width: '22px',
+      fontSize: '3.8px',
+      textAlign: 'right' as const,
     },
     descriptionHeader: {
       textAlign: 'left' as const,
@@ -83,14 +85,34 @@ export const WebInvoiceHtml = ({
       backgroundColor: theme.colors.primary,
       color: 'white',
       fontWeight: 'normal' as const,
-      transform: 'translateY(-1.5px)',
+      transform: 'translateY(-1.2px)',
       paddingLeft: '2px',
+      fontSize: '3.9px',
     },
-    td: {
+    description: {
       paddingLeft: '2px',
       color: '#555',
       textDecoration: 'none',
       transform: 'translateY(-1.5px)',
+    },
+    amount: {
+      paddingLeft: '2px',
+      paddingRight: '2px',
+      color: '#888',
+      textDecoration: 'none',
+      transform: 'translateY(-1.5px)',
+      verticalAlign: 'top',
+      textAlign: 'right' as const,
+    },
+    total: {
+      paddingLeft: '2px',
+      paddingRight: '2px',
+      color: '#555',
+      textDecoration: 'none',
+      transform: 'translateY(-1.5px)',
+      verticalAlign: 'top',
+      textAlign: 'right' as const,
+      fontWeight: 'bold' as const,
     },
     footer: {
       textAlign: 'center' as const,
@@ -133,11 +155,16 @@ export const WebInvoiceHtml = ({
             <tbody>
               <tr style={styles.tableHead}>
                 <th style={styles.descriptionHeader}>Description</th>
-                <th style={styles.th}>Price</th>
+                <th style={styles.amountHeader}>Tax Rate %</th>
+                <th style={styles.amountHeader}>NET Price</th>
+                <th style={styles.amountHeader}>Total Price</th>
               </tr>
+
               <tr>
-                <td style={styles.td}>{invoiceData.description}</td>
-                <td style={styles.td}>{`£${invoiceData.price.toString()}`}</td>
+                <td style={styles.description}>{invoiceData.description}</td>
+                <td style={styles.amount}>{`${invoiceData.taxRate}`}</td>
+                <td style={styles.amount}>{`£${invoiceData.price}`}</td>
+                <td style={styles.total}>{`£${invoiceData.totalPrice}`}</td>
               </tr>
             </tbody>
           </table>
