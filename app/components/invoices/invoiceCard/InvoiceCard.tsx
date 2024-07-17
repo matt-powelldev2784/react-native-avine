@@ -90,7 +90,9 @@ const InvoiceCard = ({
           </Text>
 
           <View style={styles.dateTextContainer}>
-            <Text style={styles.dateText}>{invoiceData.invoiceId}</Text>
+            <Text style={styles.dateText}>
+              Invoice Number: {invoiceData.invoiceId}
+            </Text>
           </View>
         </View>
 
