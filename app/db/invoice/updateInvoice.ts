@@ -6,6 +6,7 @@ import { getClient } from '../clients/getClient'
 interface updateInvoiceT {
   id: string
   price: number
+  taxRate: number
   description: string
   clientId: string
 }
@@ -14,6 +15,7 @@ export const updateInvoice = async ({
   id,
   clientId,
   price,
+  taxRate,
   description,
 }: updateInvoiceT) => {
   if (auth.currentUser === null) {
@@ -39,8 +41,10 @@ export const updateInvoice = async ({
 
     await updateDoc(invoiceDocRef, {
       clientId,
-      price,
       client,
+      taxRate,
+      price,
+      totalPrice: Number(price) * (1 + Number(taxRate) / 100),
       description,
       job: { ...invoiceData.job, clientId: clientId },
     })

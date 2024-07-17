@@ -37,6 +37,9 @@ export const stepThreeSchema = Yup.object().shape({
     .typeError('Price must be a number')
     .required('Price is required')
     .positive(),
+  taxRate: Yup.number()
+    .required('Tax Rate is required')
+    .typeError('Tax Rate must be a number'),
   frequency: Yup.string().required('Frequency is required'),
   notes: Yup.string(),
 })
@@ -75,7 +78,8 @@ const useFormikSteps = ({ activeStep, jobId }: useFormikStepsInterface) => {
       time: '',
       hours: '' as number | string,
       mins: '' as number | string,
-      price: '' as number | string,
+      price: '' as string,
+      taxRate: '' as string,
       frequency: '',
       contactName: '',
       contactTel: '' as number | string,

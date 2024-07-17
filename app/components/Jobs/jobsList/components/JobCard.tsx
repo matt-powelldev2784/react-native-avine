@@ -102,7 +102,7 @@ const JobCard = ({ jobId, setRoundCardModalVisible }: JobCardProps) => {
       {/* --------------------------------  Confirm Modal --------------------------------- */}
       <ConfirmModal
         modalText={`Are you sure you want to delete job ${jobData.jobName}?`}
-        modalText2={`${jobData.jobName} will be deleted from view but will still be accessible for previously created invoices.`}
+        modalText2={`${jobData.jobName} will be deleted, although it will still be available in current round, planner and invoice docuemnts.`}
         onConfirm={handleConfirmDeleteClientPress}
         onCancel={() => setModalVisible(false)}
         visible={modalVisible}

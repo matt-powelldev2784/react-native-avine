@@ -1,5 +1,5 @@
 import { View, ScrollView, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useRef } from 'react'
 import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 import { RouteProp, useRoute } from '@react-navigation/native'
 import InputField from '../../../ui/formElements/InputField'
@@ -9,6 +9,8 @@ import FormFlowTitles from './components/FormFlowTitles'
 import { useGetClientOptions } from '../../Jobs/editJob/hooks/useFetchClients'
 import Dropdown from '../../../ui/formElements/DropDown'
 import Button from '../../../ui/button/Button'
+import theme from '../../../utils/theme/theme'
+import { useCalculateTotal } from './hooks/useCalculateTotal'
 
 type EditInvoiceFormRouteProp = RouteProp<RootStackParamList, 'EditInvoice'>
 
@@ -20,6 +22,9 @@ const EditInvoiceForm = () => {
     invoiceId,
   })
   const clientList = useGetClientOptions()
+  const netPriceRef = useRef(formik.values.price || '')
+  const taxRateRef = useRef(formik.values.taxRate || '')
+  useCalculateTotal({ formik, netPriceRef, taxRateRef })
 
   //functions
   const handleSumbit = () => {
@@ -50,10 +55,36 @@ const EditInvoiceForm = () => {
         <InputField
           formik={formik}
           name="price"
-          placeholder="Price"
-          title="Price"
+          placeholder="NET Price"
+          title="NET Price"
           imageName={'poundSign'}
+          ref={netPriceRef}
         />
+
+        <View style={styles.splitContainer}>
+          <View style={styles.splitInput}>
+            <InputField
+              formik={formik}
+              name="taxRate"
+              placeholder="Tax Rate"
+              title="Tax Rate"
+              imageName={'percent'}
+              ref={taxRateRef}
+            />
+          </View>
+
+          <View style={styles.splitInput}>
+            <InputField
+              formik={formik}
+              name="TotalAmount"
+              placeholder="Total Amount"
+              title="Total Amount"
+              imageName={'poundSign'}
+              backgroundColor={theme.colors.backgroundGrey}
+              disabled={true}
+            />
+          </View>
+        </View>
 
         <InputField
           formik={formik}
@@ -97,4 +128,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingBottom: 80,
   },
+  splitContainer: {
+    position: 'relative',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    maxWidth: 700,
+    width: '100%',
+    gap: 10,
+  },
+  splitInput: { flex: 1, maxWidth: 340, width: '50%' },
 })

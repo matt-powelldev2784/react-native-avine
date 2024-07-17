@@ -1,4 +1,5 @@
 import { getRelatedInvoiceData } from '../../../../db/invoice/getRelatedInvoiceData'
+import theme from '../../../../utils/theme/theme'
 
 export const nativeInvoiceHtml = async (invoiceId: string) => {
   const { user, client, invoiceData } = await getRelatedInvoiceData(invoiceId)
@@ -11,9 +12,11 @@ export const nativeInvoiceHtml = async (invoiceId: string) => {
     <html>
     <head>
       <style>
+        * { print-color-adjust:exact !important; }
         body {
           font-family: Arial, sans-serif;
           color: #555;
+          line-height: 1.2;  
         }
         .invoice-box {
           max-width: 800px;
@@ -41,6 +44,9 @@ export const nativeInvoiceHtml = async (invoiceId: string) => {
           height: 150px;
           object-fit: contain;
         }
+        .address {
+          line-height: 1.3;
+        }
         .section-header {
           margin-top: 20px;
           margin-bottom: 10px;
@@ -48,25 +54,61 @@ export const nativeInvoiceHtml = async (invoiceId: string) => {
         }
         .details {
           margin-bottom: 20px;
+          margin-top: 40px;
         }
         table {
           width: 100%;
           border-collapse: collapse;
         }
-        th, td {
-          border: 1px solid #ddd;
-          padding: 8px;
+        .table-head {
+          background-color: ${theme.colors.primary};
+          text-align : left;
+          color: ${theme.colors.white};
         }
-        th {
-          background-color: #f2f2f2;
-          text-align: left;
+        .decriptionHeader {
+        font-size: 12px;
+        padding-left: 6px;
+        }
+        .items {
+        padding-top: 5px;
+        }
+        .decription {
+        padding-left: 6px;
+        paddingRight: 10px;
+        line-height: 1.3;
+        font-size: 16px;
+        }
+        .paddingLeft8px {
+        padding-left: 8px;
+        }
+        .amountHeader {
+        font-size: 12px;
+        width: 70px;
+        text-align: right;
+        padding-right: 6px;
+        }
+        .amount {
+        width: 70px;
+        text-align: right;
+        padding-right: 8px;
+        vertical-align: top;
+        color: #888;
+        }
+        .totalAmount {
+        width: 70px;
+        text-align: right;
+        padding-right: 8px;
+        vertical-align: top;
+        font-weight: bold;
         }
         .footer {
-          text-align: center;
-          margin-top: 50px;
-          color: #656768;
-          width: 100%;          
+        text-align: center;
+        margin-top: 50px;
+        color: #656768;
+        width: 100%; 
+        line-height: 1.2;         
         }
+       
       </style>
     </head>
     <body>
@@ -80,7 +122,7 @@ export const nativeInvoiceHtml = async (invoiceId: string) => {
           invoiceData.invoiceId || 'ADD INVOICE NUMBER'
         }</h3>
         
-        <div>
+        <div class="address">
           <p>
           ${client.name}<br>
           ${client.address}<br>
@@ -92,14 +134,19 @@ export const nativeInvoiceHtml = async (invoiceId: string) => {
             
         <div class="details">
           <div class="section-header">Invoice Details</div>
+
           <table>
-            <tr>
-              <th>Description</th>
-              <th>Price</th>
+            <tr class="table-head">
+              <th class="decriptionHeader">Description</th>
+              <th class="amountHeader">Tax Rate %</th>
+               <th class="amountHeader">NET Price</>
+               <th class="amountHeader">Total Price</th>
             </tr>
-            <tr>
-              <td>${invoiceData.description}</td>
-              <td>£${invoiceData.price}</td>
+            <tr class="items">
+              <td class="decription items">${invoiceData.description}</td>
+              <td class="amount items">${invoiceData.taxRate}</td>
+              <td class="amount items">£${invoiceData.price}</td>
+              <td class="totalAmount items">£${invoiceData.totalPrice}</td>
             </tr>
           </table>
         </div>
@@ -111,7 +158,7 @@ export const nativeInvoiceHtml = async (invoiceId: string) => {
             user.postcode
           }
           <br>
-          ${user.contactTel}
+          Telephone : ${user.contactTel}
           </p>   
         </div>
     </body>

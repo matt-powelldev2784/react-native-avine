@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { StyleSheet, View, ScrollView, Platform, Text } from 'react-native'
 import useFormikSteps from './hooks/useFormikSteps'
 import InputField from '../../../ui/formElements/InputField'
@@ -15,6 +15,7 @@ import Button from '../../../ui/button/Button'
 import { handleFormStepBack } from '../../../utils/handleFormStepBack'
 import { CustomSwitch, Loading } from '../../../ui'
 import { useGetClientOptions } from './hooks/useFetchClients'
+import { useCalculateTotal } from '../addJob/hooks/useCalculateTotal'
 
 type EditJobFormRouteProp = RouteProp<RootStackParamList, 'EditJob'>
 
@@ -38,6 +39,9 @@ const EditJobForm = () => {
     setActiveStep,
     toggleCopyClient,
   })
+  const netPriceRef = useRef(formik.values.price || '')
+  const taxRateRef = useRef(formik.values.taxRate || '')
+  useCalculateTotal({ formik, netPriceRef, taxRateRef })
 
   //functions
   const handleToggleCopyClient = async () => {
@@ -149,8 +153,8 @@ const EditJobForm = () => {
               imageName={'diamond'}
             />
 
-            <View style={styles.timeContainer}>
-              <View style={styles.timeInput}>
+            <View style={styles.splitContainer}>
+              <View style={styles.splitInput}>
                 <InputField
                   formik={formik}
                   name="hours"
@@ -161,7 +165,7 @@ const EditJobForm = () => {
                 />
               </View>
 
-              <View style={styles.timeInput}>
+              <View style={styles.splitInput}>
                 <InputField
                   formik={formik}
                   name="mins"
@@ -181,6 +185,32 @@ const EditJobForm = () => {
               keyboardType={Platform.OS === 'web' ? 'default' : 'numeric'}
               imageName={'poundSign'}
             />
+
+            <View style={styles.splitContainer}>
+              <View style={styles.splitInput}>
+                <InputField
+                  formik={formik}
+                  name="taxRate"
+                  placeholder="Tax Rate"
+                  title="Tax Rate"
+                  imageName={'percent'}
+                  ref={taxRateRef}
+                />
+              </View>
+
+              <View style={styles.splitInput}>
+                <InputField
+                  formik={formik}
+                  name="TotalAmount"
+                  placeholder="Total Amount"
+                  title="Total Amount"
+                  imageName={'poundSign'}
+                  backgroundColor={theme.colors.backgroundGrey}
+                  disabled={true}
+                />
+              </View>
+            </View>
+
             <Dropdown
               formik={formik}
               name="frequency"
@@ -255,7 +285,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingBottom: 80,
   },
-  timeContainer: {
+  splitContainer: {
     position: 'relative',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -263,7 +293,7 @@ const styles = StyleSheet.create({
     width: '100%',
     gap: 10,
   },
-  timeInput: { flex: 1, maxWidth: 340, width: '50%' },
+  splitInput: { flex: 1, maxWidth: 340, width: '50%' },
   buttonContainer: {
     display: 'flex',
     alignItems: 'center',

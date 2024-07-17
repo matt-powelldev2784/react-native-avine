@@ -99,7 +99,14 @@ const ScheduledJobCard = () => {
 
           <DataLineItem name={'Job Type'} value={jobData.jobType} />
           <DataLineItem name={'Estimated Time'} value={`${jobData.time} hrs`} />
-          <DataLineItem name={'Price'} value={jobData.price} />
+          <DataLineItem name={'NET Price'} value={`£${jobData.price}`} />
+          <DataLineItem name={'Tax Rate'} value={`${jobData.taxRate}%`} />
+          <DataLineItem
+            name={'Total Price'}
+            value={`£${
+              Number(jobData.price) * (1 + Number(jobData.taxRate) / 100)
+            }`}
+          />
           <DataLineItem name={'Frequency'} value={jobData.frequency} />
 
           <View style={styles.spacer} />

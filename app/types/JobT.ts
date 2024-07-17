@@ -8,6 +8,7 @@ export interface JobT {
   hours: number | string
   mins: number | string
   price: number | string
+  taxRate: number | string
   frequency: string
   contactName: string
   contactTel: number | string

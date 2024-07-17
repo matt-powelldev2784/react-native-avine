@@ -22,6 +22,7 @@ interface InputFieldProps {
   height?: number
   backgroundColor?: string
   onFocus?: () => void
+  disabled?: boolean
 }
 
 const InputField = forwardRef<any, InputFieldProps>(
@@ -36,6 +37,7 @@ const InputField = forwardRef<any, InputFieldProps>(
       height,
       backgroundColor,
       onFocus,
+      disabled,
     },
     innerRef,
   ) => {
@@ -64,6 +66,7 @@ const InputField = forwardRef<any, InputFieldProps>(
           multiline={height ? true : false}
           ref={innerRef}
           onFocus={() => (onFocus ? onFocus() : () => {})}
+          editable={disabled ? false : true}
         />
         {formik.touched[name] && formik.errors[name] ? (
           <Text style={styles.errorText}>{String(formik.errors[name])}</Text>

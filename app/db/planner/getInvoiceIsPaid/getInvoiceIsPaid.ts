@@ -46,11 +46,11 @@ export const getInvoiceIsPaid = async ({
       return { invoiceIsPaid }
     }
 
-    //if job not found in planner throw error
-    throw new Error('Scheduled job not found in planner')
+    return { invoiceIsPaid: false }
+
   } catch (error) {
     throw new Error(
-      `Error getting job is complete at getInvoiceIsPaid route: ${error}`,
+      `Error getting invoice is complete at getInvoiceIsPaid route: ${error}`,
     )
   }
 }

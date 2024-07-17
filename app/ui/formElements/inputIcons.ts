@@ -11,4 +11,5 @@ export const inputIcons = {
   notes: require('../../../assets/notes.png'),
   round: require('../../../assets/round_icon.png'),
   search: require('../../../assets/search.png'),
+  percent: require('../../../assets/percent.png'),
 }
