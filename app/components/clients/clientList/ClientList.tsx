@@ -17,6 +17,7 @@ import useFormikSearch from './hooks/useFormikSearch'
 import { useDeviceType } from '../../../utils/hooks/useDeviceTypes'
 import useResetSearchOnFocus from '../../../utils/hooks/useResetSearchOnFocus'
 import NoDataFound from './components/NoDataFound'
+import { Loading } from '../../../ui'
 
 const ClientList = () => {
   //state
@@ -165,11 +166,16 @@ const ClientList = () => {
             </View>
           ) : null}
 
+          {docCount === 0 ? <NoDataFound /> : null}
+
+          {searchApiIsLoading ? (
+            <Loading loadingText="Searching..." color={'white'} />
+          ) : null}
+
           <FlatList
             data={clientData}
             renderItem={({ item }) => <ClientListItem {...item} />}
             keyExtractor={(item) => item.id}
-            ListEmptyComponent={<NoDataFound />}
             style={{ width: '100%' }}
           />
 
