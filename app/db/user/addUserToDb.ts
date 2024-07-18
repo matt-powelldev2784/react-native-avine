@@ -6,12 +6,16 @@ export const addUserToDb = async () => {
     return
   }
 
-  const userDoc = doc(db, 'users', auth.currentUser.uid)
-  const docSnap = await getDoc(userDoc)
-  console.log('docSnap', docSnap)
+  const userDocRef = doc(db, 'users', auth.currentUser.uid)
+  const userDocSnap = await getDoc(userDocRef)
+  const userData = userDocSnap.data()
 
-  if (!docSnap.exists()) {
-    await setDoc(userDoc, {
+  if (
+    !userData?.email ||
+    !userData?.userId ||
+    userData?.companyDetailsProvided === undefined
+  ) {
+    await setDoc(userDocRef, {
       email: auth.currentUser.email,
       userId: auth.currentUser.uid,
       companyDetailsProvided: false,

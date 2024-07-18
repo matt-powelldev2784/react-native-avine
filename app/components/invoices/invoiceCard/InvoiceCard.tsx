@@ -59,8 +59,7 @@ const InvoiceCard = ({
     navigation.navigate('AddCompanyInfo')
   }
   const handleDownloadInvoice = async () => {
-    if (!user) return
-    if (!user.companyDetailsProvided) {
+    if (!user?.companyDetailsProvided) {
       setModalVisible(true)
 
       return

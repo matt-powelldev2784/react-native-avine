@@ -14,6 +14,7 @@ export const getRelatedInvoiceData = async (
   try {
     const invoiceData = await getInvoice(invoiceId)
     const user = await getUser()
+    console.log('user', user)
     const client = await getClient(invoiceData.job.clientId)
 
     return { invoiceData, user, client }
