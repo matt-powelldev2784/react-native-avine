@@ -5,7 +5,6 @@ import { RouteProp, useRoute } from '@react-navigation/native'
 import { RootStackParamList } from '../stackNavigator/StackNavigator'
 import { SelectedJobT } from '../../types/JobT'
 import {
-  PlannerView,
   ExtendedPlannerView,
   ScheduleRoundFormView,
   ScheduledJobView,
@@ -60,7 +59,6 @@ const Planner = () => {
     <>
       <Dashboard>
         <PlannerContext.Provider value={PlannerContextValue}>
-          {screen === 'PlannerView' ? <PlannerView /> : null}
           {screen === 'ExtendedPlannerView' ? <ExtendedPlannerView /> : null}
           {screen === 'ScheduleRoundFormView' ? (
             <ScheduleRoundFormView />
