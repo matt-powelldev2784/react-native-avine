@@ -22,7 +22,6 @@ import { Loading } from '../../../ui'
 const InvoiceList = () => {
   //state
   const [searchIsActive, setSearchIsActive] = useState<boolean>(false)
-  const [currentSearch, setCurrentSearch] = useState<() => void>(() => {})
 
   //hooks
   const { isLargeWeb } = useDeviceType()
@@ -48,7 +47,6 @@ const InvoiceList = () => {
     resetSearchForm()
     formik.handleSubmit()
     setSearchIsActive(true)
-    setCurrentSearch(() => handleSearchAllDueInvoicesPress)
   }
   const handleSearchAllPaidInvoicesPress = () => {
     formik.setFieldValue('findAll', true)
@@ -56,14 +54,12 @@ const InvoiceList = () => {
     resetSearchForm()
     formik.handleSubmit()
     setSearchIsActive(true)
-    setCurrentSearch(() => handleSearchAllPaidInvoicesPress)
   }
   const handleSearchPress = async () => {
     formik.setFieldValue('findAll', false)
     resetSearchForm()
     formik.handleSubmit()
     setSearchIsActive(true)
-    setCurrentSearch(() => handleSearchPress)
   }
   const handleMoreResultsPress = async () => {
     formik.handleSubmit()
@@ -73,9 +69,6 @@ const InvoiceList = () => {
     setDocCount(null)
     setLastVisibleDocument(null)
     setSearchIsActive(false)
-  }
-  const addOrRemoveIsPaidInvoice = () => {
-    currentSearch()
   }
 
   //variables
@@ -223,12 +216,7 @@ const InvoiceList = () => {
           <FlatList
             data={invoiceData}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <InvoiceListItem
-                {...item}
-                addOrRemoveIsPaidInvoice={addOrRemoveIsPaidInvoice}
-              />
-            )}
+            renderItem={({ item }) => <InvoiceListItem {...item} />}
             refreshing={searchApiIsLoading}
             style={{ width: '100%' }}
           />
