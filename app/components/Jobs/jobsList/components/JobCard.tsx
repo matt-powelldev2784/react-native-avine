@@ -46,7 +46,7 @@ const JobCard = ({ jobId, setRoundCardModalVisible }: JobCardProps) => {
 
   // if data is null show loading state
   if (getApiIsLoading || !jobData) {
-    return <Loading loadingText={'Loading job details...'} />
+    return <Loading loadingText={'Loading job details...'} color="#888" />
   }
 
   return (

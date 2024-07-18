@@ -46,7 +46,7 @@ const ScheduledJobCard = () => {
     !jobData ||
     !client
   ) {
-    return <Loading loadingText={'Loading job details...'} />
+    return <Loading loadingText={'Loading job details...'} color="#888" />
   }
 
   return (

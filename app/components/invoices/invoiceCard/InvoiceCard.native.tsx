@@ -47,7 +47,7 @@ const InvoiceCard = ({
     !user ||
     !client
   ) {
-    return <Loading loadingText={'Loading job details...'} />
+    return <Loading loadingText={'Loading invoice details...'} color="#888" />
   }
 
   //functions

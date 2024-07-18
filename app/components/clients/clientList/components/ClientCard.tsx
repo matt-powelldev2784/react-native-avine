@@ -49,7 +49,7 @@ const ClientCard = ({
 
   // if data is null show loading state
   if (getApiIsLoading || !clientData) {
-    return <Loading loadingText={'Loading client details...'} />
+    return <Loading loadingText={'Loading client details...'} color="#888" />
   }
 
   return (

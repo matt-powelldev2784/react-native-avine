@@ -46,7 +46,7 @@ const RoundCard = ({ roundId, setRoundCardModalVisible }: RoundCardProps) => {
 
   // if data is null show loading state
   if (getApiIsLoading || !roundData) {
-    return <Loading loadingText={'Loading round details...'} />
+    return <Loading loadingText={'Loading round details...'} color="#888" />
   }
 
   return (
