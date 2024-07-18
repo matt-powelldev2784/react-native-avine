@@ -43,7 +43,6 @@ const useHandleDelete = ({
   }
 
   const handleDeleteOneOffRound = async () => {
-    console.log('round.id', round.id)
     setApiFunction(() => async () => {
       await deleteOneOffRound({
         roundId: `${round.id}`,

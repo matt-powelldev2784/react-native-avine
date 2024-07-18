@@ -19,7 +19,6 @@ export const deleteOneOffRound = async ({
   try {
     //remove scheduled round from planner document
     const plannerDoc = await getDoc(plannerDocRef)
-    console.log('plannerDoc', plannerDoc.data())
 
     if (!plannerDoc.exists()) {
       throw Error('Planner document does not exist')
@@ -53,7 +52,6 @@ export const deleteOneOffRound = async ({
       }),
     )
 
-    console.log(`Scheduled round with round id ${roundId} removed from db`)
   } catch (error) {
     console.error(`Error removing round ${roundId} from db`, error)
   }
