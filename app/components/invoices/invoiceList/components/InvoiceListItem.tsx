@@ -9,25 +9,13 @@ import { InvoiceWithIdT } from '../../../../types/InvoiceT'
 import { convertPlannerDateToShortDate } from '../../../../utils/convertPlannerDateToShortDate'
 import CardModal from '../../../../ui/modal/CardModal'
 import InvoiceCard from '../../InvoiceCard/InvoiceCard'
-import useIsPaidHasUpdated from '../hooks/useIsPaidHasUpdated'
 
-interface InvoiceListItemProps extends InvoiceWithIdT {
-  addOrRemoveIsPaidInvoice: () => void
-}
-
-const InvoiceListItem = ({
-  id,
-  completedDate,
-  price,
-  job,
-  addOrRemoveIsPaidInvoice,
-}: InvoiceListItemProps) => {
+const InvoiceListItem = ({ id, completedDate, price, job }: InvoiceWithIdT) => {
   // state
   const [modalVisible, setModalVisible] = useState<boolean>(false)
 
   //hooks
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  useIsPaidHasUpdated(addOrRemoveIsPaidInvoice, modalVisible)
 
   // functions
   const handleEditInvoicePress = () => {
