@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
   InvoiceListView,
@@ -23,6 +23,8 @@ import {
 import Planner from '../../screens/planner/Planner'
 import { useAuth } from '../../components/auth/AuthProvider'
 import RoundMenuScreen from '../rounds/RoundMenuScreen'
+import { useNavigationState } from '@react-navigation/native'
+import { Platform } from 'react-native'
 
 export type RootStackParamList = {
   //auth
@@ -73,6 +75,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>()
 
 const StackNavigator = () => {
   const { userInfo } = useAuth()
+  const navigationState = useNavigationState((state) => state)
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      document.title = 'PlanMe'
+    }
+  }, [navigationState])
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
