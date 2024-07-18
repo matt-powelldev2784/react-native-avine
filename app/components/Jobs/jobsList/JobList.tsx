@@ -17,6 +17,7 @@ import useFormikSearch from './hooks/useFormikSearch'
 import NoDataFound from './components/NoDataFound'
 import useResetSearchOnFocus from '../../../utils/hooks/useResetSearchOnFocus'
 import { useDeviceType } from '../../../utils/hooks/useDeviceTypes'
+import { Loading } from '../../../ui'
 
 const JobList = () => {
   //state
@@ -172,11 +173,17 @@ const JobList = () => {
             </View>
           ) : null}
 
+          {docCount === 0 ? <NoDataFound /> : null}
+
+          {searchApiIsLoading ? (
+            <Loading loadingText="Searching..." color={'white'} />
+          ) : null}
+
           <FlatList
             data={jobData}
             renderItem={({ item }) => <JobListItem {...item} />}
             keyExtractor={(item) => item.id}
-            ListEmptyComponent={searchIsActive ? null : NoDataFound}
+            refreshing={searchApiIsLoading}
             style={{ width: '100%' }}
           />
 

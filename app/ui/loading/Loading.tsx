@@ -4,9 +4,10 @@ import theme from '../../utils/theme/theme'
 
 interface LoadingProps {
   loadingText: string
+  color?: string
 }
 
-const Loading = ({ loadingText }: LoadingProps) => {
+const Loading = ({ loadingText, color }: LoadingProps) => {
   return (
     <View style={styles.container}>
       <ActivityIndicator
@@ -15,9 +16,14 @@ const Loading = ({ loadingText }: LoadingProps) => {
           marginBottom: 16,
         }}
         size="large"
-        color={theme.colors.primary}
+        color={color ? color : theme.colors.primary}
       />
-      <Text style={{ color: theme.colors.primary, fontWeight: 'bold' }}>
+      <Text
+        style={{
+          color: color ? color : theme.colors.primary,
+          fontWeight: 'bold',
+        }}
+      >
         {loadingText}
       </Text>
     </View>

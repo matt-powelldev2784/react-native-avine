@@ -17,6 +17,7 @@ import NoDataFound from './components/NoDataFound'
 import useResetSearchOnFocus from '../../../utils/hooks/useResetSearchOnFocus'
 import { useDeviceType } from '../../../utils/hooks/useDeviceTypes'
 import InvoiceListItem from './components/InvoiceListItem'
+import { Loading } from '../../../ui'
 
 const InvoiceList = () => {
   //state
@@ -213,6 +214,12 @@ const InvoiceList = () => {
             </Text>
           </View>
 
+          {docCount === 0 ? <NoDataFound /> : null}
+
+          {searchApiIsLoading ? (
+            <Loading loadingText="Searching..." color={'white'} />
+          ) : null}
+
           <FlatList
             data={invoiceData}
             keyExtractor={(item) => item.id}
@@ -222,7 +229,7 @@ const InvoiceList = () => {
                 addOrRemoveIsPaidInvoice={addOrRemoveIsPaidInvoice}
               />
             )}
-            ListEmptyComponent={searchIsActive ? null : NoDataFound}
+            refreshing={searchApiIsLoading}
             style={{ width: '100%' }}
           />
 

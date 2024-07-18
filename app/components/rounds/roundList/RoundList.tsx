@@ -17,6 +17,7 @@ import useFormikSearch from './hooks/useFormikSearch'
 import { useDeviceType } from '../../../utils/hooks/useDeviceTypes'
 import useResetSearchOnFocus from '../../../utils/hooks/useResetSearchOnFocus'
 import NoDataFound from './components/NoDataFound'
+import { Loading } from '../../../ui'
 
 const RoundList = () => {
   //state
@@ -169,12 +170,18 @@ const RoundList = () => {
             </View>
           ) : null}
 
+          {docCount === 0 ? <NoDataFound /> : null}
+
+          {searchApiIsLoading ? (
+            <Loading loadingText="Searching..." color={'white'} />
+          ) : null}
+
           <FlatList
             data={roundData}
             renderItem={({ item }) => <RoundListItem {...item} />}
             keyExtractor={(item) => item.id}
-            ListEmptyComponent={searchIsActive ? null : NoDataFound}
             style={{ width: '100%' }}
+            refreshing={searchApiIsLoading}
           />
 
           {roundDataHasLength ? (
