@@ -128,13 +128,6 @@ const AddCompanyInfoForm = () => {
               keyboardType={'phone-pad'}
               imageName={'tel'}
             />
-            <InputField
-              formik={formik}
-              name="taxRate"
-              placeholder="Default Tax Rate"
-              title="Default Rate"
-              imageName={'percent'}
-            />
           </>
         ) : null}
 

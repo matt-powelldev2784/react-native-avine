@@ -173,7 +173,7 @@ const RoundList = () => {
             data={roundData}
             renderItem={({ item }) => <RoundListItem {...item} />}
             keyExtractor={(item) => item.id}
-            ListEmptyComponent={NoDataFound}
+            ListEmptyComponent={searchIsActive ? null : NoDataFound}
             style={{ width: '100%' }}
           />
 

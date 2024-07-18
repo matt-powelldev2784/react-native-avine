@@ -222,7 +222,7 @@ const InvoiceList = () => {
                 addOrRemoveIsPaidInvoice={addOrRemoveIsPaidInvoice}
               />
             )}
-            ListEmptyComponent={NoDataFound}
+            ListEmptyComponent={searchIsActive ? null : NoDataFound}
             style={{ width: '100%' }}
           />
 
