@@ -25,7 +25,7 @@ const RoundMenu = () => {
         <MenuCard
           image={require('../../../../assets/plus.png')}
           text="Add Round"
-          secondaryText="Click here to add a round. Rounds can be added to the planner as a one off or recurring round."
+          secondaryText="Click here to add a round. Rounds contain single or multiple jobs, that can be scheduled to the planner"
           navigateTo="AddRound"
           backgroundColor={theme.colors.roundPrimary}
         />

@@ -25,7 +25,7 @@ const ClientsMenu = () => {
         <MenuCard
           image={require('../../../../assets/plus.png')}
           text="Add Client"
-          secondaryText="Click here to add a client. Every job requires a client for invoicing purposes."
+          secondaryText="Click here to add a client. These details are used for invoicing purposes."
           navigateTo="AddClient"
           backgroundColor={theme.colors.clientPrimary}
         />
