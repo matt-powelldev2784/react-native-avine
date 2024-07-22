@@ -8,7 +8,8 @@ import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigat
 interface InstructionBoxProps {
   number: string
   text: string
-  secondaryText: string
+  secondaryText?: string
+  teriaryText?: string
   navigateTo: keyof RootStackParamList
   backgroundColor: string
 }
@@ -17,6 +18,7 @@ const InstructionBox = ({
   number,
   text,
   secondaryText,
+  teriaryText,
   navigateTo,
   backgroundColor,
 }: InstructionBoxProps) => {
@@ -31,7 +33,12 @@ const InstructionBox = ({
     >
       <Text style={styles.instructionNumber}>{number}</Text>
       <Text style={styles.primaryText}>{text}</Text>
-      <Text style={styles.secondaryText}>{secondaryText}</Text>
+      {secondaryText ? (
+        <Text style={styles.secondaryText}>{secondaryText}</Text>
+      ) : null}
+      {teriaryText ? (
+        <Text style={styles.tertiaryText}>{teriaryText}</Text>
+      ) : null}
     </TouchableOpacity>
   )
 }
@@ -45,7 +52,6 @@ const styles = StyleSheet.create({
     width: 300,
     height: 180,
     borderRadius: 12,
-    paddingTop: 8,
     paddingBottom: 6,
     paddingHorizontal: 16,
   },
@@ -60,10 +66,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
-    height: 25,
+    height: 20,
   },
   secondaryText: {
     fontSize: 14,
+    color: 'white',
+    textAlign: 'center',
+  },
+  tertiaryText: {
+    fontSize: 12,
     color: 'white',
     textAlign: 'center',
   },

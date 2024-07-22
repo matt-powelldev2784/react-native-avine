@@ -25,7 +25,7 @@ const JobsMenu = () => {
         <MenuCard
           image={require('../../../../assets/plus.png')}
           text="Add Job"
-          secondaryText="Click here to add a job. Following this you should add the job to a round which can be added to the planner."
+          secondaryText="Click here to add a job. Jobs must be added to a round, which can be scheduled to the planner."
           navigateTo="AddJob"
           backgroundColor={theme.colors.jobPrimary}
         />

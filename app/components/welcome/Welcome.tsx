@@ -39,8 +39,9 @@ const Welcome = () => {
           <InstructionBox
             number="1"
             text="Add Client"
-            secondaryText="Click here to add a client. Every job requires a client for invoicing purposes."
-            navigateTo="AddClient"
+            secondaryText="Click here to go to the client database. Click add client and fill in the form. These details are used for invoicing purposes."
+            teriaryText=""
+            navigateTo="ClientMenu"
             backgroundColor={theme.colors.clientPrimary}
           />
 
@@ -48,8 +49,8 @@ const Welcome = () => {
           <InstructionBox
             number="2"
             text="Add Job"
-            secondaryText="Click here to add a job. Follow the instructions in the form."
-            navigateTo="AddJob"
+            secondaryText="Click here to go to the job database. Click add job and fill in the form. Jobs must be added to a round, which can be scheduled to the planner."
+            navigateTo="JobsMenu"
             backgroundColor={theme.colors.jobPrimary}
           />
 
@@ -57,8 +58,8 @@ const Welcome = () => {
           <InstructionBox
             number="3"
             text="Add Round"
-            secondaryText="Click here to add a round. Each round can contain multiple jobs, which can be ordered to your preference."
-            navigateTo="AddRound"
+            secondaryText="Click here to go to the round database. Click add round and fill in the form. Rounds contain single or multiple jobs, that can be scheduled to the planner."
+            navigateTo="RoundMenu"
             backgroundColor={theme.colors.roundPrimary}
           />
 
@@ -66,7 +67,7 @@ const Welcome = () => {
           <InstructionBox
             number="4"
             text="Schedule Round"
-            secondaryText="Click here to scheudle a round. The round can be scheduled as a one-off clean or recurring round."
+            secondaryText="Click here to go to the planner. Click on the menu button, then click schedule round. Fill in the form by selecting round, one off or recurring, and finally the date."
             navigateTo="Planner"
             backgroundColor={theme.colors.plannerPrimary}
           />
@@ -74,7 +75,7 @@ const Welcome = () => {
           <InstructionBox
             number="5"
             text="Set Job To Complete"
-            secondaryText="Click here to go to the planner. Click on a job in the planner and set to complete."
+            secondaryText="Click here to go to the planner. Navigate to the date of the round. Click the round name, click goto ticket. Click the pencil icon and click the job complete toggle. "
             navigateTo="Planner"
             backgroundColor={theme.colors.primary}
           />
@@ -82,7 +83,7 @@ const Welcome = () => {
           <InstructionBox
             number="6"
             text="Invoice Job"
-            secondaryText="Click here to display due invoices. PDF invoices can be downloaded and emailed to clients. Once paid, the invoice can be marked as paid."
+            teriaryText="Click here to go to invoice database. Click find all due invoices. Click the eye icon to view invoice details. You can download a PDF of the invoice to print or email to the client. Click the invoice paid toggle to mark as paid. "
             navigateTo="InvoiceListView"
             backgroundColor={theme.colors.invoicePrimary}
           />
