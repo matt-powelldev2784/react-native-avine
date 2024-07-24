@@ -16,6 +16,8 @@ export const addRound = async ({ recurring, roundId, date }: planInfoT) => {
     return
   }
   try {
+    console.log('test')
+
     if (recurring) {
       const roundExistsData = await checkIfRecurringRoundExists({ roundId })
       const roundExists = roundExistsData?.recurringRoundExists || false

@@ -24,53 +24,60 @@ export const addOneOffRound = async ({
     return
   }
 
-  try {
-    //add one off round to planner document
-    const plannerDocRef = doc(
-      db,
-      'users',
-      auth.currentUser.uid,
-      'planner',
-      date,
-    )
-    const plannerDoc = await getDoc(plannerDocRef)
+const day: string = date.slice(0, 2)
+const month: string = date.slice(2, 4)
+const year: string = date.slice(4)
 
-    if (!plannerDoc.exists()) {
-      await setDoc(plannerDocRef, {
-        oneOffRounds: [],
-        relatedJobs: [],
-        completedJobs: [],
-        recurringRounds: [],
-      })
-    }
 
-    if (!recurringRound) {
-      await updateDoc(plannerDocRef, {
-        oneOffRounds: arrayUnion(`${roundId}@oneOffRound`),
-      })
-    }
+try {
+  //add one off round to planner document
+  const plannerDocRef = doc(db, 'users', auth.currentUser.uid, 'planner', date)
+  const plannerDoc = await getDoc(plannerDocRef)
 
-    //add each related to job to planner document
-    const round = await getRound(roundId)
-    const relatedJobs = round?.relatedJobs || []
-
-    await Promise.all(
-      relatedJobs.map(async (jobId) => {
-        if (auth.currentUser === null) {
-          return
-        }
-
-        await updateDoc(plannerDocRef, {
-          relatedJobs: arrayUnion(`${roundId}@${jobId}@oneOffRound`),
-        })
-      }),
-    )
-
-    const updatedPlannerDoc = await getDoc(plannerDocRef)
-    const updatedPlannerData = updatedPlannerDoc.data()
-
-    return updatedPlannerData
-  } catch (error) {
-    return { error }
+  if (!plannerDoc.exists()) {
+    await setDoc(plannerDocRef, {
+      oneOffRounds: [],
+      relatedJobs: [],
+      completedJobs: [],
+      recurringRounds: [],
+      _date: date,
+      _day: day,
+      _month: month,
+      _year: year,
+    })
   }
+
+  if (!recurringRound) {
+    await updateDoc(plannerDocRef, {
+      oneOffRounds: arrayUnion(`${roundId}@oneOffRound`),
+      _date: date,
+      _day: day,
+      _month: month,
+      _year: year,
+    })
+  }
+
+  //add each related to job to planner document
+  const round = await getRound(roundId)
+  const relatedJobs = round?.relatedJobs || []
+
+  await Promise.all(
+    relatedJobs.map(async (jobId) => {
+      if (auth.currentUser === null) {
+        return
+      }
+
+      await updateDoc(plannerDocRef, {
+        relatedJobs: arrayUnion(`${roundId}@${jobId}@oneOffRound`),
+      })
+    }),
+  )
+
+  const updatedPlannerDoc = await getDoc(plannerDocRef)
+  const updatedPlannerData = updatedPlannerDoc.data()
+
+  return updatedPlannerData
+} catch (error) {
+  return { error }
+}
 }
