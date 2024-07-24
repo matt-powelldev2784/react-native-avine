@@ -1,7 +1,7 @@
 import { auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
+import { getJobTotals } from './getJobTotals'
 import { getPlanneerDocsInDateRange } from './getPlanneerDocsInDateRange'
-import { getTotalHoursForJobs } from './getTotalHoursForJobs'
 
 interface getTotalJobHoursT {
   startDate: string
@@ -23,13 +23,33 @@ export const getJobStats = async ({
     const plannerJobRefs = plannerDocs.map(
       (plannerDoc) => plannerDoc?.relatedJobs,
     )
-    const plannerJobRefsFlatArray = plannerJobRefs.flat()
-    const jobIds = plannerJobRefsFlatArray.map((plannerDocRef) => {
+    const jobRefsFlatArray = plannerJobRefs.flat()
+    const jobIds = jobRefsFlatArray.map((plannerDocRef) => {
       return plannerDocRef.split('@')[1]
     })
 
-    const totalHours = await getTotalHoursForJobs(jobIds)
-    console.log('totalHours', totalHours)
+    //get job stats
+    const jobStats = await getJobTotals(jobIds)
+
+    //get all round ids from planner docs
+    const oneOffRoundRefs = plannerDocs.map(
+      (plannerDoc) => plannerDoc?.oneOffRounds,
+    )
+    const recurringRoundRef = plannerDocs.map(
+      (plannerDoc) => plannerDoc?.recurringRounds,
+    )
+    const roundRefsFlatArray = [
+      ...oneOffRoundRefs.flat(),
+      ...recurringRoundRef.flat(),
+    ]
+    const roundIds = roundRefsFlatArray.map((plannerDocRef) => {
+      return plannerDocRef.split('@')[0]
+    })
+    const roundCount = roundIds.length
+
+    console.log('{ ...jobStats, roundCount }', { ...jobStats, roundCount })
+
+    return { ...jobStats, roundCount }
   } catch (error) {
     throw new Error(`Error getting job stats getJobStats route: ${error}`)
   }
