@@ -1,10 +1,18 @@
-import { doc, collection, getDocs, query, where } from 'firebase/firestore'
+import {
+  doc,
+  collection,
+  getDocs,
+  query,
+  where,
+  Timestamp,
+} from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
+import { convertDbDateToDateString } from '../../utils/convertDbDateToDateString'
 
 interface getJobstats {
-  startDate?: string
-  endDate?: string
+  startDate: string
+  endDate: string
 }
 
 export const getJobstats = async ({ startDate, endDate }: getJobstats) => {
@@ -16,7 +24,21 @@ export const getJobstats = async ({ startDate, endDate }: getJobstats) => {
     const userDoc = doc(db, 'users', auth.currentUser.uid)
     const plannerCollection = collection(userDoc, 'planner')
 
-    const q = query(plannerCollection)
+    // format dates
+    const startDateObj = convertDbDateToDateString(startDate)
+    const endDateObj = convertDbDateToDateString(endDate)
+    const startTimestamp = new Timestamp(
+      new Date(startDateObj).getTime() / 1000,
+      0,
+    )
+    const endTimestamp = new Timestamp(new Date(endDateObj).getTime() / 1000, 0)
+
+    //query planner documents
+    const q = query(
+      plannerCollection,
+      where('_dateTimestamp', '>=', startTimestamp),
+      where('_dateTimestamp', '<=', endTimestamp),
+    )
 
     const querySnapshot = await getDocs(q)
 
