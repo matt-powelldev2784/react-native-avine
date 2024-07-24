@@ -15,7 +15,10 @@ interface getJobstats {
   endDate: string
 }
 
-export const getJobstats = async ({ startDate, endDate }: getJobstats) => {
+export const getPlanneerDocsInDateRange = async ({
+  startDate,
+  endDate,
+}: getJobstats) => {
   if (!auth.currentUser) {
     return authError({ filename: 'getJobstats' })
   }
@@ -51,6 +54,8 @@ export const getJobstats = async ({ startDate, endDate }: getJobstats) => {
 
     return plannerDocs
   } catch (error) {
-    throw new Error(`Error getting clients at getJobstats route: ${error}`)
+    throw new Error(
+      `Error getting clients at getPlanneerDocsInDateRange route: ${error}`,
+    )
   }
 }
