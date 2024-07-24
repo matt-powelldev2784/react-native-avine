@@ -20,7 +20,7 @@ export const getPlanneerDocsInDateRange = async ({
   endDate,
 }: getJobstats) => {
   if (!auth.currentUser) {
-    return authError({ filename: 'getJobstats' })
+    return authError({ filename: 'getPlanneerDocsInDateRange' })
   }
 
   try {
