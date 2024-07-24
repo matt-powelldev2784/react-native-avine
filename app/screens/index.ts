@@ -2,7 +2,8 @@
 import SignInScreen from './auth/SignInScreen'
 import SignOutScreen from './auth/SignOutScreen'
 
-//Misc
+//misc
+import jobStats from './jobStats/JobsStats'
 import Home from './home/Home'
 import Error from './error/Error'
 
@@ -31,6 +32,7 @@ import InvoiceListView from './invoices/InvoiceListView'
 import EditInvoice from './invoices/EditInvoice'
 
 export {
+  jobStats,
   RoundMenu,
   ClientMenuScreen,
   AddCompanyInfo,
