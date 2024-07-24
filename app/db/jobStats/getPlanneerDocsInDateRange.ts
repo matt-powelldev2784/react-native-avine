@@ -9,6 +9,7 @@ import {
 import { db, auth } from '../../../firebaseConfig'
 import { authError } from '../authError'
 import { convertDbDateToDateString } from '../../utils/convertDbDateToDateString'
+import { PlannerDocT } from '../../types/PlannerDocT'
 
 interface getJobstats {
   startDate: string
@@ -50,9 +51,7 @@ export const getPlanneerDocsInDateRange = async ({
       ...plannerDoc.data(),
     }))
 
-    console.log('plannerDocs', plannerDocs)
-
-    return plannerDocs
+    return plannerDocs as PlannerDocT[]
   } catch (error) {
     throw new Error(
       `Error getting clients at getPlanneerDocsInDateRange route: ${error}`,

@@ -1,7 +1,8 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import Button from '../../../ui/button/Button'
-import { getPlanneerDocsInDateRange } from '../../../db/jobStats/getPlanneerDocsInDateRange'
+import { getJob } from '../../../db/jobs/getJob'
+import { getJobStats } from '../../../db/jobStats/getJobStats'
 
 const JobStats = () => {
   return (
@@ -10,12 +11,13 @@ const JobStats = () => {
       <Button
         text="JobStats"
         onPress={() =>
-          getPlanneerDocsInDateRange({
+          getJobStats({
             startDate: '24072024',
             endDate: '22072026',
           })
         }
       />
+      <Button text="getJob" onPress={() => getJob('AnACuqQomK4mk490Ctl3')} />
     </View>
   )
 }
