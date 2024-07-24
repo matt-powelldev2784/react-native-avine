@@ -45,6 +45,8 @@ export const getJobStats = async ({
     const roundIds = roundRefsFlatArray.map((plannerDocRef) => {
       return plannerDocRef.split('@')[0]
     })
+
+    //get round count
     const roundCount = roundIds.length
 
     console.log('{ ...jobStats, roundCount }', { ...jobStats, roundCount })
