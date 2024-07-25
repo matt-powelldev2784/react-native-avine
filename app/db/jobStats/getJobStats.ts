@@ -1,4 +1,5 @@
 import { auth } from '../../../firebaseConfig'
+import { JobStatsArray } from '../../types/JobStatsT'
 import { authError } from '../authError'
 import { getJobTotals } from './getJobTotals'
 import { getPlanneerDocsInDateRange } from './getPlanneerDocsInDateRange'
@@ -49,9 +50,17 @@ export const getJobStats = async ({
     //get round count
     const roundCount = roundIds.length
 
-    console.log('{ ...jobStats, roundCount }', { ...jobStats, roundCount })
+    //return Array
+    const jobStatsObject = { ...jobStats, roundCount }
+    const JobStatsArray = Object.entries(jobStatsObject).map(
+      ([key, value]) => ({
+        [key]: value,
+      }),
+    )
 
-    return { ...jobStats, roundCount }
+    console.log('JobStatsArray', JobStatsArray)
+
+    return JobStatsArray as JobStatsArray
   } catch (error) {
     throw new Error(`Error getting job stats getJobStats route: ${error}`)
   }
