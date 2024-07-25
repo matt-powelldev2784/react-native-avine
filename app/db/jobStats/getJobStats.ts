@@ -50,17 +50,42 @@ export const getJobStats = async ({
     //get round count
     const roundCount = roundIds.length
 
-    //return Array
-    const jobStatsObject = { ...jobStats, roundCount }
+
+    const pricePerHour = (jobStats.totalPrice / jobStats.totalTime).toFixed(2)
+
+    //genrate array of objects
+    const jobStatsObject = { ...jobStats, roundCount, pricePerHour }
     const JobStatsArray = Object.entries(jobStatsObject).map(
       ([key, value]) => ({
         [key]: value,
       }),
     )
+    const keyMapping = {
+      totalTime: 'Hours Spent Cleaning',
+      totalPrice: 'Net Monthly Income ',
+      jobCount: 'Number of Jobs',
+      roundCount: 'Number of Rounds',
+      pricePerHour: '£s Per Hour',
+    }
+    type JobStatKey =
+      | 'totalTime'
+      | 'totalPrice'
+      | 'jobCount'
+      | 'roundCount'
+      | 'pricePerHour'
+    const mappedArray = JobStatsArray.map((obj) => {
+      const [originalKey, value] = Object.entries(obj)[0]
+      const newKey = keyMapping[originalKey as JobStatKey]
+      const newValue =
+        originalKey === 'totalPrice' || originalKey === 'pricePerHour'
+          ? `£${value}`
+          : value
+      return { [newKey]: newValue }
+    })
 
-    console.log('JobStatsArray', JobStatsArray)
+    console.log('mappedArray', mappedArray)
 
-    return JobStatsArray as JobStatsArray
+    return mappedArray as JobStatsArray
   } catch (error) {
     throw new Error(`Error getting job stats getJobStats route: ${error}`)
   }

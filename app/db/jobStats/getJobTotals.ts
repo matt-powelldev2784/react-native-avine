@@ -5,7 +5,6 @@ import { authError } from '../authError'
 export const getJobTotals = async (
   jobIds: string[],
 ): Promise<{
-  totalHours: number
   totalTime: number
   totalPrice: number
   jobCount: number
@@ -18,16 +17,17 @@ export const getJobTotals = async (
     const jobPromises = jobIds.map((jobId) => getJob(jobId))
     const jobs = await Promise.all(jobPromises)
 
+    console.log('jobs', jobs)
+
     const totals = jobs.reduce(
       (acc, job) => {
         if (job) {
-          acc.totalHours += Number(job.hours)
           acc.totalTime += Number(job.time)
           acc.totalPrice += Number(job.price)
         }
         return acc
       },
-      { totalHours: 0, totalTime: 0, totalPrice: 0, jobCount: jobs.length },
+      { totalTime: 0, totalPrice: 0, jobCount: jobs.length },
     )
 
     return totals
