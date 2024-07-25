@@ -50,7 +50,7 @@ export const getJobStats = async ({
     //get round count
     const roundCount = roundIds.length
 
-
+    // get price per hour
     const pricePerHour = (jobStats.totalPrice / jobStats.totalTime).toFixed(2)
 
     //genrate array of objects
