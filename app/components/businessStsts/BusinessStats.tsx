@@ -15,7 +15,7 @@ interface GetJobStatsT {
   endDate: string
 }
 
-const Welcome = () => {
+const BusinessStats = () => {
   const [dateRange, setDateRange] = useState<GetJobStatsT>({} as GetJobStatsT)
   const [jobStats, setJobStats] = useState<JobStatsArray>([])
   const { userInfo } = useAuth()
@@ -190,4 +190,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Welcome
+export default BusinessStats

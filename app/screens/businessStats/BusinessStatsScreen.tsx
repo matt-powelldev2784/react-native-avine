@@ -1,12 +1,12 @@
 import React from 'react'
-import { Dashboard, JobStats, ScreenMenu } from '../../components'
+import { Dashboard, BusinessStats, ScreenMenu } from '../../components'
 import theme from '../../utils/theme/theme'
 import { FlatList, View } from 'react-native'
 
-const jobStats = () => {
+const BusinessStatsScreen = () => {
   // flatlist is used to render children to allow the
   // dashboard header to be sticky in the webview
-  const childrenArray = [<JobStats key={0} />]
+  const childrenArray = [<BusinessStats key={0} />]
 
   return (
     <>
@@ -34,4 +34,4 @@ const jobStats = () => {
   )
 }
 
-export default jobStats
+export default BusinessStatsScreen

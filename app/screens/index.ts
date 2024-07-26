@@ -3,7 +3,7 @@ import SignInScreen from './auth/SignInScreen'
 import SignOutScreen from './auth/SignOutScreen'
 
 //misc
-import jobStats from './jobStats/JobsStats'
+import BusinessStatsScreen from './businessStats/BusinessStatsScreen'
 import Home from './home/Home'
 import Error from './error/Error'
 
@@ -19,7 +19,6 @@ import Jobs from './jobs/Jobs'
 import AddJob from './jobs/AddJob'
 import EditJob from './jobs/EditJob'
 
-
 //rounds
 import RoundMenu from './rounds/RoundMenuScreen'
 import Rounds from './rounds/Rounds'
@@ -32,7 +31,7 @@ import InvoiceListView from './invoices/InvoiceListView'
 import EditInvoice from './invoices/EditInvoice'
 
 export {
-  jobStats,
+  BusinessStatsScreen,
   RoundMenu,
   ClientMenuScreen,
   AddCompanyInfo,
