@@ -23,7 +23,7 @@ const BusinessStatsScreen = () => {
           style={{
             flex: 1,
             width: '100%',
-            backgroundColor: theme.colors.backgroundGrey,
+            backgroundColor: theme.colors.white,
           }}
           data={childrenArray}
           renderItem={({ item }) => <View>{item}</View>}
