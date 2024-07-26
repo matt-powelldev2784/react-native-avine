@@ -89,9 +89,10 @@ const StackNavigator = () => {
       {userInfo ? (
         <>
           {/* --------------------------  Misc Screens  -------------------------- */}
-          <Stack.Screen name="BusinessStats" component={BusinessStatsScreen} />
+
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Error" component={Error} />
+          <Stack.Screen name="BusinessStats" component={BusinessStatsScreen} />
 
           {/* --------------------------  Planner Screens  -------------------------- */}
           <Stack.Screen
