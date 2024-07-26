@@ -4,6 +4,7 @@ import {
   runTransaction,
   setDoc,
   getDoc,
+  Timestamp,
 } from 'firebase/firestore'
 import { db, auth } from '../../../../firebaseConfig'
 import { getRound } from '../../rounds/getRound'
@@ -24,14 +25,22 @@ export const addRecurringRound = async ({
     return
   }
 
-  console.log(recurringRound, roundId, recurringDates)
-
   try {
     await runTransaction(db, async (transaction) => {
       for (const date of recurringDates) {
         if (auth.currentUser === null) {
           return
         }
+
+        const day: string = date.slice(0, 2)
+        const month: string = date.slice(2, 4)
+        const year: string = date.slice(4)
+        const dateObject = new Date(
+          parseInt(year),
+          parseInt(month) - 1,
+          parseInt(day),
+        )
+        const dateTimestamp = Timestamp.fromDate(dateObject)
 
         const plannerDocRef = doc(
           db,
@@ -48,14 +57,24 @@ export const addRecurringRound = async ({
             relatedJobs: [],
             completedJobs: [],
             recurringRounds: [],
+            _date: date,
+            _day: day,
+            _month: month,
+            _year: year,
+            _dateTimestamp: dateTimestamp,
           })
         }
 
-        if (recurringRound) {
-          transaction.update(plannerDocRef, {
-            recurringRounds: arrayUnion(`${roundId}@recurringRound`),
-          })
-        }
+          if (recurringRound) {
+            transaction.update(plannerDocRef, {
+              recurringRounds: arrayUnion(`${roundId}@recurringRound`),
+              _date: date,
+              _day: day,
+              _month: month,
+              _year: year,
+              _dateTimestamp: dateTimestamp,
+            })
+          }
 
         //add each related to job to planner document
         const round = await getRound(roundId)

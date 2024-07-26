@@ -1,4 +1,5 @@
-// misc
+//misc
+import BusinessStats from './businessStsts/BusinessStats'
 import ScreenMenu from './screenMenu/ScreenMenu'
 import PlanMeLogo from './PlanMeLogo/PlanMeLogo'
 import Dashboard from './dashboard/Dashboard'
@@ -43,6 +44,7 @@ import EditInvoiceForm from './invoices/editInvoiceForm/EditInvoiceForm'
 //otheres
 
 export {
+  BusinessStats,
   ExtendedPlanner,
   PlannerRoundTicket,
   RoundMenu,

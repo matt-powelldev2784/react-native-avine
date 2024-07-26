@@ -10,7 +10,7 @@ interface DropdownProps {
   name: string
   placeholder: string
   title: string
-  options: { label: string; value: string | boolean }[]
+  options: { label: string; value: string | boolean | object }[]
   imageName: keyof typeof inputIcons
 }
 

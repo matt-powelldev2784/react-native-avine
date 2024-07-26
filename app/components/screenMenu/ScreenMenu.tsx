@@ -12,6 +12,7 @@ interface ScreenMenuProps {
   buttonText?: string
   bgColor: string
   component?: React.ReactNode
+  icon?: string
 }
 
 const ScreenMenu = ({
@@ -21,6 +22,7 @@ const ScreenMenu = ({
   buttonText,
   bgColor,
   component,
+  icon,
 }: ScreenMenuProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { isLargeWeb } = useDeviceType()
@@ -44,7 +46,7 @@ const ScreenMenu = ({
       {navigateTo ? (
         <TouchableOpacity style={styles.button} onPress={handleNaviagteTo}>
           <Image
-            source={require('../../../assets/plus.png')}
+            source={icon ? icon : require('../../../assets/plus.png')}
             style={{ width: 13, height: 13 }}
           />
           <Text style={styles.buttonText}>{buttonText}</Text>

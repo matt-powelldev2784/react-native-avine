@@ -19,6 +19,7 @@ import {
   EditClient,
   ClientMenuScreen,
   JobMenuScreen,
+  BusinessStatsScreen,
 } from '../../screens'
 import Planner from '../../screens/planner/Planner'
 import { useAuth } from '../../components/auth/AuthProvider'
@@ -35,6 +36,7 @@ export type RootStackParamList = {
   //misc
   Home: undefined
   Error: undefined
+  BusinessStats: undefined
 
   //clients
   Clients: { refresh?: boolean } | undefined
@@ -87,9 +89,11 @@ const StackNavigator = () => {
       {userInfo ? (
         <>
           {/* --------------------------  Misc Screens  -------------------------- */}
+          <Stack.Screen name="BusinessStats" component={BusinessStatsScreen} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Error" component={Error} />
 
+          {/* --------------------------  Planner Screens  -------------------------- */}
           <Stack.Screen
             name="Planner"
             component={Planner}
