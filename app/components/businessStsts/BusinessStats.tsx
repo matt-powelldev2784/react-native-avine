@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import theme from '../../utils/theme/theme'
 import { useAuth } from '../auth/AuthProvider'
@@ -9,6 +9,8 @@ import { JobStatsArray } from '../../types/JobStatsT'
 import useFormikJobStats from './hooks/useFormikJobStats'
 import Dropdown from '../../ui/formElements/DropDown'
 import { dateRangeOptions } from './utils/dateRangeOptions'
+import useWindowWidth from '../../utils/hooks/useWindowWidth'
+import { Loading } from '../../ui'
 
 interface GetJobStatsT {
   startDate: string
@@ -18,16 +20,21 @@ interface GetJobStatsT {
 const BusinessStats = () => {
   const [dateRange, setDateRange] = useState<GetJobStatsT>({} as GetJobStatsT)
   const [jobStats, setJobStats] = useState<JobStatsArray>([])
+  const [isLoading, setIsLoading] = useState(false)
   const { userInfo } = useAuth()
   const { formik } = useFormikJobStats({ setDateRange })
+  const width = useWindowWidth()
+
+  console.log('isLoading', isLoading)
 
   useEffect(() => {
     if (dateRange.startDate && dateRange.endDate) {
+      setIsLoading(true)
       const getStats = async () => {
         const stats = await getJobStats(dateRange)
         setJobStats(stats)
       }
-
+      setIsLoading(false)
       getStats()
     }
   }, [dateRange])
@@ -49,14 +56,14 @@ const BusinessStats = () => {
           job statistics below.
         </Text>
 
-        <View style={styles.dropdownConatiner}>
+        <View style={[styles.dropdownConatiner, { width: width }]}>
           <Dropdown
             formik={formik}
             name="dateRange"
             placeholder="Select Date Range"
             title=""
             options={dateRangeOptions}
-            imageName={'notes'}
+            imageName={'diamond'}
           />
         </View>
         <View style={styles.buttonContainer}>
@@ -64,6 +71,8 @@ const BusinessStats = () => {
         </View>
 
         <View style={styles.instructionWrapper}>
+          {isLoading ? <Loading loadingText="Loading statistics" /> : null}
+
           {jobStats
             ? jobStats.map((jobStat, i) => {
                 const value = Object.values(jobStat)[0]
@@ -123,9 +132,9 @@ const styles = StyleSheet.create({
     gap: 16,
     marginBottom: 16,
     maxWidth: 600,
-    width: '100%',
+    minWidth: 300,
     zIndex: 200,
-    height: 70,
+    height: Platform.OS === 'web' ? 70 : 80,
     padding: 15,
   },
   buttonContainer: {
