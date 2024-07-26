@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, StyleSheet, View } from 'react-native'
 import React from 'react'
 
 interface InstructionBoxProps {
@@ -11,10 +11,10 @@ const StatsItem = ({ number, text, backgroundColor }: InstructionBoxProps) => {
   const backgroundStyle = { backgroundColor: backgroundColor }
 
   return (
-    <TouchableOpacity style={[styles.instructionConatiner, backgroundStyle]}>
+    <View style={[styles.instructionConatiner, backgroundStyle]}>
       <Text style={styles.instructionNumber}>{number}</Text>
       <Text style={styles.primaryText}>{text}</Text>
-    </TouchableOpacity>
+    </View>
   )
 }
 
