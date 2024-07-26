@@ -51,10 +51,20 @@ export const getJobStats = async ({
     const roundCount = roundIds.length
 
     // get price per hour
-    const pricePerHour = (jobStats.totalPrice / jobStats.totalTime).toFixed(2)
+    const pricePerHour = () => {
+      const pricePerHour = (jobStats.totalPrice / jobStats.totalTime).toFixed(2)
+      if (pricePerHour === 'NaN') {
+        return 0
+      }
+      return pricePerHour
+    }
 
     //genrate array of objects
-    const jobStatsObject = { ...jobStats, roundCount, pricePerHour }
+    const jobStatsObject = {
+      ...jobStats,
+      roundCount,
+      pricePerHour: pricePerHour(),
+    }
     const JobStatsArray = Object.entries(jobStatsObject).map(
       ([key, value]) => ({
         [key]: value,
