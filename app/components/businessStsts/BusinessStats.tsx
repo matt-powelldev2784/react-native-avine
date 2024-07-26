@@ -15,17 +15,17 @@ import { Loading } from '../../ui'
 interface GetJobStatsT {
   startDate: string
   endDate: string
+  title: string
 }
 
 const BusinessStats = () => {
   const [dateRange, setDateRange] = useState<GetJobStatsT>({} as GetJobStatsT)
   const [jobStats, setJobStats] = useState<JobStatsArray>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [dateRangeTitle, setDateRangeTitle] = useState('')
   const { userInfo } = useAuth()
   const { formik } = useFormikJobStats({ setDateRange })
   const width = useWindowWidth()
-
-  console.log('isLoading', isLoading)
 
   useEffect(() => {
     if (dateRange.startDate && dateRange.endDate) {
@@ -33,6 +33,7 @@ const BusinessStats = () => {
       const getStats = async () => {
         const stats = await getJobStats(dateRange)
         setJobStats(stats)
+        setDateRangeTitle(dateRange?.title)
       }
       setIsLoading(false)
       getStats()
@@ -92,6 +93,7 @@ const BusinessStats = () => {
                     key={key}
                     number={valueString}
                     text={key}
+                    dateRangeTitle={dateRangeTitle}
                     backgroundColor={colors[i]}
                   />
                 )

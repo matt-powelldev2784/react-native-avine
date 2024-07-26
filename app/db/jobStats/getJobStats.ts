@@ -71,11 +71,11 @@ export const getJobStats = async ({
       }),
     )
     const keyMapping = {
-      totalTime: 'Hours Spent Cleaning',
+      totalTime: 'Working Hours',
       totalPrice: 'Net Monthly Income ',
       jobCount: 'Number of Jobs',
       roundCount: 'Number of Rounds',
-      pricePerHour: '£s Per Hour',
+      pricePerHour: 'Price Per Hour',
     }
     type JobStatKey =
       | 'totalTime'
