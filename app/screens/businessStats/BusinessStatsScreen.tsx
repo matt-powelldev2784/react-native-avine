@@ -12,11 +12,11 @@ const BusinessStatsScreen = () => {
     <>
       <Dashboard>
         <ScreenMenu
-          title={'Welcome'}
+          title={'Statistics'}
           bgColor={theme.colors.invoicePrimary}
           navigateTo="Home"
-          buttonText="Job Statistics"
-          icon={require('../../../assets/stars_white.png')}
+          buttonText="Quick Start"
+          icon={require('../../../assets/right_arrow_white.png')}
         />
 
         <FlatList

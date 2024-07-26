@@ -11,7 +11,13 @@ const Home = () => {
   return (
     <>
       <Dashboard>
-        <ScreenMenu title={'Welcome'} bgColor={theme.colors.jobPrimary} />
+        <ScreenMenu
+          title={'Quick Start'}
+          bgColor={theme.colors.jobPrimary}
+          navigateTo="BusinessStats"
+          buttonText="Statistics"
+          icon={require('../../../assets/stars_white.png')}
+        />
 
         <FlatList
           style={{ flex: 1, width: '100%' }}
