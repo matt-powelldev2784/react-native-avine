@@ -34,14 +34,14 @@ const styles = StyleSheet.create({
     fontSize: 50,
     fontWeight: 'bold',
     color: 'white',
-    height: 50,
+    height: 60,
   },
   primaryText: {
     fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
-    height: 20,
+    height: 25,
   },
   secondaryText: {
     fontSize: 14,
