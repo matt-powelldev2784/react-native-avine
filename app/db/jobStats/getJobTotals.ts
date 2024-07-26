@@ -17,8 +17,6 @@ export const getJobTotals = async (
     const jobPromises = jobIds.map((jobId) => getJob(jobId))
     const jobs = await Promise.all(jobPromises)
 
-    console.log('jobs', jobs)
-
     const totals = jobs.reduce(
       (acc, job) => {
         if (job) {

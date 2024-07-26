@@ -93,8 +93,6 @@ export const getJobStats = async ({
       return { [newKey]: newValue }
     })
 
-    console.log('mappedArray', mappedArray)
-
     return mappedArray as JobStatsArray
   } catch (error) {
     throw new Error(`Error getting job stats getJobStats route: ${error}`)

@@ -1,5 +1,5 @@
 //misc
-import JobStats from './jobStats/jobsStats/JobStats'
+import JobStats from './jobStats/JobStats'
 import ScreenMenu from './screenMenu/ScreenMenu'
 import PlanMeLogo from './PlanMeLogo/PlanMeLogo'
 import Dashboard from './dashboard/Dashboard'
