@@ -253,8 +253,8 @@ const styles = StyleSheet.create({
   searchTitle: {
     color: theme.colors.white,
     fontSize: 24,
-    fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'Roboto_700Bold',
   },
   inputContainer: {
     width: '90%',

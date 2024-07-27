@@ -88,8 +88,13 @@ const ClientCard = ({
             text={'Delete Client'}
             onPress={handleDeleteClientPress}
             backgroundColor="red"
+            width={270}
           />
-          <Button text={'Edit Client'} onPress={handleNavigateToEditClient} />
+          <Button
+            text={'Edit Client'}
+            onPress={handleNavigateToEditClient}
+            width={270}
+          />
         </View>
       </View>
 

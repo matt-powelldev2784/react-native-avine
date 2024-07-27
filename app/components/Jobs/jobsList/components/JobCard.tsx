@@ -92,8 +92,13 @@ const JobCard = ({ jobId, setRoundCardModalVisible }: JobCardProps) => {
             text={'Delete Job'}
             onPress={handleDeleteJobPress}
             backgroundColor="red"
+            width={270}
           />
-          <Button text={'Edit Job'} onPress={handleNavigateToEditJob} />
+          <Button
+            text={'Edit Job'}
+            onPress={handleNavigateToEditJob}
+            width={270}
+          />
         </View>
       </View>
 
@@ -140,8 +145,9 @@ const styles = StyleSheet.create({
   titleText: {
     color: theme.colors.white,
     fontSize: 20,
-    fontWeight: 'bold',
     marginBottom: 8,
+    fontFamily: 'Roboto_700Bold',
+    letterSpacing: 0.2,
   },
   dateTextContainer: {
     borderRadius: 12,
@@ -151,8 +157,8 @@ const styles = StyleSheet.create({
   dateText: {
     color: theme.colors.primary,
     fontSize: 16,
-    fontWeight: 'bold',
     padding: 8,
+    fontFamily: 'Roboto_700Bold',
   },
   switchWrapper: {
     justifyContent: 'space-between',
