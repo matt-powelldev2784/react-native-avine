@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 15,
     textAlign: 'center',
     maxHeight: 41,
     transform:

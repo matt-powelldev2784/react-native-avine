@@ -264,8 +264,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: '100%',
     maxWidth: 600,
-    paddingHorizontal: 10,
     gap: 8,
+    paddingHorizontal: 15,
     zIndex: -1,
   },
   searchResultsContainer: {

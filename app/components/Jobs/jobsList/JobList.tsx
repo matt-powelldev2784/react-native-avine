@@ -269,6 +269,7 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 600,
     gap: 8,
+    paddingHorizontal: 15,
     zIndex: -1,
   },
   searchResultsContainer: {
