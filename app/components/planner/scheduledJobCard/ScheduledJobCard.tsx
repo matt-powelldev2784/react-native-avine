@@ -158,8 +158,8 @@ const styles = StyleSheet.create({
   titleText: {
     color: theme.colors.white,
     fontSize: 20,
-    fontWeight: 'bold',
     marginBottom: 8,
+    fontFamily: 'Roboto_700Bold',
   },
   dateTextContainer: {
     borderRadius: 12,
@@ -169,8 +169,8 @@ const styles = StyleSheet.create({
   dateText: {
     color: theme.colors.primary,
     fontSize: 16,
-    fontWeight: 'bold',
     padding: 8,
+    fontFamily: 'Roboto_700Bold',
   },
   switchWrapper: {
     justifyContent: 'space-between',
@@ -189,8 +189,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: theme.colors.primary,
     textAlign: 'center',
-    fontWeight: 'bold',
     marginBottom: 8,
+    fontFamily: 'Roboto_700Bold',
   },
   footer: {
     position: 'absolute',

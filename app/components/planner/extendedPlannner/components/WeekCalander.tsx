@@ -79,9 +79,9 @@ const styles = StyleSheet.create({
   },
   monthName: {
     color: theme.colors.primary,
-    fontWeight: 'bold',
     fontSize: 20,
     marginVertical: 4,
+    fontFamily: 'Roboto_700Bold',
   },
   dayWrapper: {
     flexDirection: 'row',

@@ -49,20 +49,21 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     textAlign: 'center',
     marginBottom: 2,
+    fontFamily: 'Roboto_400Regular',
   },
   scheduleRoundInfoTextBold: {
     fontSize: 15,
     color: theme.colors.primary,
     textAlign: 'center',
     marginBottom: 2,
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
   },
   scheduleRoundInfoTextRed: {
     fontSize: 15,
     color: 'red',
     textAlign: 'center',
     marginBottom: 2,
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
   },
   weekPlannerWrapper: {
     width: '100%',

@@ -99,12 +99,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: 8,
     flex: 1,
+    fontFamily: 'Roboto_400Regular',
   },
   scheduleRoundInfoText: {
     fontSize: 15,
     color: theme.colors.primary,
     textAlign: 'center',
     marginBottom: 2,
+    fontFamily: 'Roboto_400Regular',
   },
   scheduleRoundInfoTextBold: {
     fontSize: 15,
@@ -112,13 +114,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 2,
     fontWeight: 'bold',
+    fontFamily: 'Roboto_400Regular',
   },
   scheduleRoundInfoTextRed: {
     fontSize: 15,
     color: 'red',
     textAlign: 'center',
     marginBottom: 2,
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
   },
   weekPlannerWrapper: {
     width: '100%',
@@ -129,6 +132,7 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     marginBottom: 32,
     textAlign: 'center',
+    fontFamily: 'Roboto_400Regular',
   },
 })
 

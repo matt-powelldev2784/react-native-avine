@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
   },
   menu: {
     position: 'absolute',
@@ -140,12 +140,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 12,
     fontWeight: 'bold',
+    fontFamily: 'Roboto_400Regular',
   },
   text: {
     color: 'white',
     fontSize: 16,
-    fontWeight: 'bold',
     lineHeight: Platform.OS === 'web' ? 12 : 0,
+    fontFamily: 'Roboto_700Bold',
   },
   line: {
     width: '90%',

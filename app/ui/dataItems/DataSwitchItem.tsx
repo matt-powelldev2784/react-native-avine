@@ -121,8 +121,8 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    fontWeight: 'bold',
     color: theme.colors.primary,
+    fontFamily: 'Roboto_700Bold',
   },
   errorContainer: {
     backgroundColor: theme.colors.backgroundGrey,
@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: theme.colors.primary,
     paddingHorizontal: 4,
+    fontFamily: 'Roboto_400Regular',
   },
 })
 

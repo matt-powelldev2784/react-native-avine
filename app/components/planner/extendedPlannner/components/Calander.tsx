@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 8,
     textAlign: 'center',
+    fontFamily: 'Roboto_400Regular',
   },
   buttonContainer: {
     flexDirection: 'row',

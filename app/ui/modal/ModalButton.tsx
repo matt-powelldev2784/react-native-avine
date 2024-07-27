@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontWeight: 'bold',
     fontSize: 16,
     textAlign: 'center',
+    fontFamily: 'LibreFranklin_600SemiBold',
   },
 })

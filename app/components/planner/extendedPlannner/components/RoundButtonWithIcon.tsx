@@ -80,9 +80,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 15,
-    fontWeight: 'bold',
     textAlign: 'center',
     width: 100,
+    fontFamily: 'Roboto_700Bold',
   },
   buttonContent: {
     flexDirection: 'row',

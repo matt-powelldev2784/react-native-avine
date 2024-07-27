@@ -265,10 +265,10 @@ const styles = StyleSheet.create({
   smallRoundTitle: {
     color: theme.colors.white,
     fontSize: 12,
-    fontWeight: 'bold',
     textAlign: 'right',
     width: 120,
     height: 17,
+    fontFamily: 'Roboto_700Bold',
   },
   smallRoundIconContainer: {
     flexDirection: 'row',
@@ -280,10 +280,10 @@ const styles = StyleSheet.create({
   roundTitle: {
     color: theme.colors.white,
     fontSize: 18,
-    fontWeight: 'bold',
     padding: 2,
     marginBottom: 8,
     textAlign: 'center',
+    fontFamily: 'Roboto_700Bold',
   },
   iconContainer: {
     flexDirection: 'row',
@@ -299,6 +299,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     textAlign: 'right',
     width: 120,
+    fontFamily: 'Roboto_400Regular',
   },
   roundCardLine: {
     height: 1,
