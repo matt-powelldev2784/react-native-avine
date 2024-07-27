@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
   circleText: {
     color: 'white',
     fontSize: 16,
+    fontFamily: 'Roboto_400Regular',
   },
   textContainer: {
     flexDirection: 'column',
@@ -78,17 +79,19 @@ const styles = StyleSheet.create({
     width: '80%',
     maxWidth: 550,
     paddingRight: 16,
+    fontFamily: 'Roboto_400Regular',
   },
   jobText: {
     color: theme.colors.primary,
     fontSize: 16,
-    fontWeight: 'bold',
     maxwidth: '100%',
+    fontFamily: 'Roboto_700Bold',
   },
   addressText: {
     color: theme.colors.primary,
     fontSize: 16,
     maxwidth: '100%',
+    fontFamily: 'Roboto_400Regular',
   },
 })
 

@@ -90,8 +90,13 @@ const RoundCard = ({ roundId, setRoundCardModalVisible }: RoundCardProps) => {
             text={'Delete Round'}
             onPress={handleDeleteRoundPress}
             backgroundColor="red"
+            width={270}
           />
-          <Button text={'Edit Round'} onPress={handleNavigateToEditRound} />
+          <Button
+            text={'Edit Round'}
+            onPress={handleNavigateToEditRound}
+            width={270}
+          />
         </View>
       </View>
 
@@ -138,14 +143,15 @@ const styles = StyleSheet.create({
   titleText: {
     color: theme.colors.white,
     fontSize: 20,
-    fontWeight: 'bold',
     marginBottom: 8,
+    fontFamily: 'Roboto_700Bold',
+    letterSpacing: 0.2,
   },
   titleTextBlue: {},
   relatedJobTitle: {
     color: theme.colors.primary,
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
   },
   relatedJobInfo: {
     color: theme.colors.primary,
@@ -157,12 +163,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: 'white',
     margin: 8,
+    fontFamily: 'Roboto_400Regular',
   },
   dateText: {
     color: theme.colors.primary,
     fontSize: 16,
-    fontWeight: 'bold',
     padding: 8,
+    fontFamily: 'Roboto_700Bold',
   },
   switchWrapper: {
     justifyContent: 'space-between',
@@ -185,9 +192,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: theme.colors.primary,
     textAlign: 'center',
-    fontWeight: 'bold',
     marginBottom: 16,
     marginTop: 12,
+    fontFamily: 'Roboto_700Bold',
   },
   jobListContainer: {
     width: '100%',
