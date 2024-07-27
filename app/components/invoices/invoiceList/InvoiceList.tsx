@@ -169,14 +169,16 @@ const InvoiceList = () => {
               text="Find All Due Invoices"
               isLoading={searchApiIsLoading}
               backgroundColor={theme.colors.buttonSecondary}
-              width={!isLargeWeb ? '33%' : 147}
+              width={!isLargeWeb ? '34%' : 147}
+              fontSize={15}
             />
             <Button
               onPress={handleSearchAllPaidInvoicesPress}
               text="Find All Paid Invoices"
               isLoading={searchApiIsLoading}
               backgroundColor={theme.colors.buttonSecondary}
-              width={!isLargeWeb ? '33%' : 147}
+              width={!isLargeWeb ? '34%' : 147}
+              fontSize={15}
             />
           </View>
           <Button
@@ -320,7 +322,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     maxWidth: 600,
     gap: 8,
-    paddingHorizontal: 20,
     zIndex: -1,
   },
   searchResultsContainer: {

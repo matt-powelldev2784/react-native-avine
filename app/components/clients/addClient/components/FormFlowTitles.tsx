@@ -41,8 +41,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   titleActive: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 15,
     color: 'white',
     backgroundColor: theme.colors.primary,
     borderRadius: 8,
@@ -50,10 +49,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     minWidth: 88,
     overflow: 'hidden',
+    fontFamily: 'Roboto_700Bold',
   },
   title: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 15,
     color: theme.colors.primary,
     backgroundColor: theme.colors.formFlowSecondary,
     borderRadius: 8,
@@ -61,6 +60,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     minWidth: 88,
     overflow: 'hidden',
+    fontFamily: 'Roboto_700Bold',
   },
   line: {
     width: 32,
