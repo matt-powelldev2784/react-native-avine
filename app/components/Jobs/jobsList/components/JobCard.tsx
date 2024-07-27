@@ -80,7 +80,7 @@ const JobCard = ({ jobId, setRoundCardModalVisible }: JobCardProps) => {
 
           <DataLineItem name={'Frequency'} value={jobData.frequency} />
           <DataLineItem name={'Job Type'} value={jobData.jobType} />
-          <DataLineItem name={'Price'} value={jobData.price} />
+          <DataLineItem name={'Price'} value={`£${jobData.price}`} />
           <DataLineItem name={'Time'} value={`${jobData.time} hrs`} />
 
           <LongDataItem name={'Notes'} value={jobData.notes || ''} />
