@@ -140,11 +140,13 @@ const InvoiceCard = ({
             onPress={handleDownloadInvoice}
             isLoading={invoiceIsLoading}
             disabled={invoiceIsLoading}
+            width={270}
           />
           {!isPaid ? (
             <Button
               text={'Edit Invoice'}
               onPress={handleNavigateToEditInvoice}
+              width={270}
             />
           ) : null}
         </View>

@@ -21,7 +21,7 @@ const Loading = ({ loadingText, color }: LoadingProps) => {
       <Text
         style={{
           color: color ? color : theme.colors.primary,
-          fontWeight: 'bold',
+          fontFamily: 'Roboto_700Bold',
         }}
       >
         {loadingText}

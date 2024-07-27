@@ -90,9 +90,10 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 15,
     marginLeft: 8,
+    fontFamily: 'LibreFranklin_600SemiBold',
+    letterSpacing: 0.2,
   },
   pageTitle: {
     fontSize: 20,
