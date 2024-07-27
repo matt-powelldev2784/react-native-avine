@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: Platform.OS === 'web' ? 36 : 40,
     height: 55,
+    fontFamily: 'Roboto_400Regular',
   },
   daySelected: {
     alignItems: 'center',
@@ -87,13 +88,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: Platform.OS === 'web' ? 36 : 40,
     height: 55,
+    fontFamily: 'Roboto_400Regular',
   },
   dayText: {
     color: theme.colors.black,
+    fontFamily: 'Roboto_400Regular',
   },
   dayTextSelected: {
     color: theme.colors.formFlowSecondary,
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
   },
 })
 

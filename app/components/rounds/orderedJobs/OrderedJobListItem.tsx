@@ -71,6 +71,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: theme.colors.primary,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
   },
 })

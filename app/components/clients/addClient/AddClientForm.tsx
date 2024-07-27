@@ -47,7 +47,7 @@ const AddClientForm = () => {
           formik={formik}
           name="companyName"
           placeholder="Company Name"
-          title="companyName"
+          title="company Name"
           imageName={'person'}
         />
         <InputField

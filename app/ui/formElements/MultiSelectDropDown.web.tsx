@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     top: -22,
     color: theme.colors.primary,
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
   },
   image: {
     position: 'absolute',
@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlign: 'center',
     fontSize: 12,
+    fontFamily: 'Roboto_400Regular',
   },
   errorPlaceholder: {
     color: 'red',
@@ -213,6 +214,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: 'red',
+    fontFamily: 'Roboto_400Regular',
   },
 })
 

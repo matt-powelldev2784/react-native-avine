@@ -23,7 +23,6 @@ const FormFlowTitles = ({ activeStep }: FormFlowTitlesProps) => {
     </View>
   )
 }
-
 const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
@@ -41,40 +40,42 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   titleActive: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 15,
     color: 'white',
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.invoicePrimary,
     borderRadius: 8,
     padding: 7,
     textAlign: 'center',
     minWidth: 88,
     overflow: 'hidden',
+    fontFamily: 'Roboto_700Bold',
   },
   title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: theme.colors.primary,
-    backgroundColor: theme.colors.formFlowSecondary,
+    fontSize: 15,
+    color: theme.colors.invoicePrimary,
     borderRadius: 8,
     padding: 7,
     textAlign: 'center',
-    minWidth: 88,
+    minWidth: 80,
     overflow: 'hidden',
+    fontFamily: 'Roboto_700Bold',
+    borderWidth: 2,
+    borderStyle: 'solid',
+    borderColor: theme.colors.invoicePrimary,
   },
   line: {
     width: 32,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.invoicePrimary,
     borderWidth: 3,
     borderStyle: 'solid',
-    borderColor: theme.colors.primary,
+    borderColor: theme.colors.invoicePrimary,
   },
   lineSmallWeb: {
     width: 24,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.invoicePrimary,
     borderWidth: 3,
     borderStyle: 'solid',
-    borderColor: theme.colors.primary,
+    borderColor: theme.colors.invoicePrimary,
   },
 })
 

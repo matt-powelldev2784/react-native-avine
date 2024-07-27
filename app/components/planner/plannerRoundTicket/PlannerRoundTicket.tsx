@@ -180,8 +180,8 @@ const styles = StyleSheet.create({
   roundTitleText: {
     color: theme.colors.primary,
     fontSize: 20,
-    fontWeight: 'bold',
     marginBottom: 8,
+    fontFamily: 'Roboto_700Bold',
   },
   dateTextContainer: {
     borderRadius: 12,
@@ -191,8 +191,8 @@ const styles = StyleSheet.create({
   dateText: {
     color: theme.colors.white,
     fontSize: 16,
-    fontWeight: 'bold',
     padding: 8,
+    fontFamily: 'Roboto_700Bold',
   },
   roundIconsContainer: {
     position: 'absolute',
@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     width: '25%',
     textAlign: 'right',
+    fontFamily: 'Roboto_400Regular',
   },
   roundCardLine: {
     height: 2,

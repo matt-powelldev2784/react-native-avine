@@ -34,12 +34,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: theme.colors.primary,
     fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
   },
   value: {
     fontSize: 16,
     color: 'black',
     paddingHorizontal: 8,
-    // textAlign: 'center',
+    fontFamily: 'Roboto_400Regular',
   },
   line: {
     marginVertical: 8,

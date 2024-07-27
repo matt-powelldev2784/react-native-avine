@@ -83,12 +83,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     maxWidth: 120,
     minWidth: 100,
+    fontFamily: 'LibreFranklin_600SemiBold',
   },
   buttonCancel: {
     backgroundColor: theme.colors.buttonSecondary,
+    fontFamily: 'LibreFranklin_600SemiBold',
   },
   buttonConfirm: {
     backgroundColor: '#337bae',
+    fontFamily: 'LibreFranklin_600SemiBold',
   },
   closeButton: {
     alignItems: 'center',
@@ -113,6 +116,7 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    fontFamily: 'Roboto_400Regular',
   },
 })
 

@@ -249,8 +249,8 @@ const styles = StyleSheet.create({
   searchTitle: {
     color: theme.colors.white,
     fontSize: 24,
-    fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'Roboto_700Bold',
   },
   inputContainer: {
     width: '90%',
@@ -264,8 +264,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: '100%',
     maxWidth: 600,
-    paddingHorizontal: 10,
     gap: 8,
+    paddingHorizontal: 15,
     zIndex: -1,
   },
   searchResultsContainer: {

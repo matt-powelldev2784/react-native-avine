@@ -223,13 +223,14 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     marginBottom: 32,
     textAlign: 'center',
+    fontFamily: 'Roboto_400Regular',
   },
   textBold: {
     fontSize: 16,
     color: theme.colors.primary,
     marginBottom: 32,
     textAlign: 'center',
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
   },
   orderJobs: {
     width: '100%',

@@ -92,7 +92,7 @@ const InvoiceList = () => {
     : { height: '100%' }
   const buttonsContainerStyle: ViewStyle = isLargeWeb
     ? { maxWidth: 600 }
-    : { maxWidth: 300 }
+    : { maxWidth: 270 }
 
   return (
     <View style={[styles.container, containerStyle, containerHeightStyle]}>
@@ -170,6 +170,7 @@ const InvoiceList = () => {
               isLoading={searchApiIsLoading}
               backgroundColor={theme.colors.buttonSecondary}
               width={130}
+              fontSize={15}
             />
             <Button
               onPress={handleSearchAllPaidInvoicesPress}
@@ -177,6 +178,7 @@ const InvoiceList = () => {
               isLoading={searchApiIsLoading}
               backgroundColor={theme.colors.buttonSecondary}
               width={130}
+              fontSize={15}
             />
           </View>
           <Button
@@ -184,7 +186,7 @@ const InvoiceList = () => {
             text="Search"
             isLoading={searchApiIsLoading}
             width={
-              searchIsActive || (!searchIsActive && !isLargeWeb) ? '100%' : 130
+              searchIsActive || (!searchIsActive && !isLargeWeb) ? 270 : 147
             }
             height={
               searchIsActive || (!searchIsActive && !isLargeWeb) ? 40 : 60
@@ -258,6 +260,7 @@ const styles = StyleSheet.create({
     height: '100%',
     flex: 1,
     backgroundColor: theme.colors.tertiaryBlue,
+    paddingBottom: 80,
   },
   headerContainer: {
     position: 'absolute',
@@ -282,13 +285,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 16,
     marginBottom: 30,
-    marginTop: 30,
+    marginTop: 20,
   },
   searchTitle: {
     color: theme.colors.white,
     fontSize: 24,
-    fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'Roboto_700Bold',
   },
   searchTitleSpan: {
     color: theme.colors.secondary,

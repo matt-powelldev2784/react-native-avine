@@ -112,11 +112,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: theme.colors.primary,
     marginBottom: 2,
+    fontFamily: 'Roboto_400Regular',
   },
   text: {
     fontSize: 16,
     color: 'black',
     marginBottom: 0,
+    fontFamily: 'Roboto_400Regular',
   },
 })
 

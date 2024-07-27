@@ -1,6 +1,5 @@
 import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
-import theme from '../../../../utils/theme/theme'
 
 const NoDataFound = () => {
   return (
@@ -42,8 +41,8 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     fontSize: 24,
-    fontWeight: 'bold',
     color: 'black',
+    fontFamily: 'Roboto_700Bold',
   },
   secondaryText: {
     fontSize: 18,
@@ -51,24 +50,7 @@ const styles = StyleSheet.create({
     margin: 4,
     textAlign: 'center',
     marginHorizontal: 20,
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    paddingVertical: 8,
-    paddingHorizontal: 32,
-    backgroundColor: theme.colors.primary,
-    borderRadius: 8,
-    gap: 8,
-    marginBottom: 60,
-    marginTop: 16,
-    width: 200,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontFamily: 'Roboto_400Regular',
   },
 })
 

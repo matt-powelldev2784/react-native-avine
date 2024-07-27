@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   jobText: {
     fontSize: 16,
     color: theme.colors.primary,
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
   },
   image: {
     width: 35,
@@ -113,9 +113,9 @@ const styles = StyleSheet.create({
   },
   time: {
     fontSize: 12,
-    fontWeight: 'bold',
     color: 'white',
     textAlign: 'right',
+    fontFamily: 'Roboto_700Bold',
   },
   opacity50opercent: {
     opacity: 0.5,

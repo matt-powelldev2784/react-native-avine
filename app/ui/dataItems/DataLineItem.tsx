@@ -34,11 +34,13 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     color: theme.colors.primary,
+    fontFamily: 'Roboto_400Regular',
   },
   value: {
     fontSize: 16,
     color: 'black',
     maxWidth: '70%',
+    fontFamily: 'Roboto_400Regular',
   },
   line: {
     marginTop: 8,

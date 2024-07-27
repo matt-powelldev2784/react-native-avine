@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     top: Platform.OS === 'web' ? -22 : -20,
     color: theme.colors.primary,
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
   },
   image: {
     position: 'absolute',
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
   },
   placeholder: {
     color: Platform.OS === 'web' ? '#828585' : '#bfbfbf',
+    fontFamily: 'Roboto_400Regular',
   },
   errorInput: {
     height: 40,

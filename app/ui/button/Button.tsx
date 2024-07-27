@@ -18,6 +18,7 @@ interface ButtoMdProps {
   opacity?: number
   width?: DimensionValue
   height?: DimensionValue
+  fontSize?: number
 }
 
 const Button = ({
@@ -29,7 +30,10 @@ const Button = ({
   opacity,
   width,
   height,
+  fontSize,
 }: ButtoMdProps) => {
+  const fontSizeStyle = fontSize ? { fontSize: fontSize } : { fontSize: 17 }
+
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -42,7 +46,9 @@ const Button = ({
       ]}
       disabled={isLoading || disabled}
     >
-      {!isLoading ? <Text style={styles.buttonText}>{text}</Text> : null}
+      {!isLoading ? (
+        <Text style={[styles.buttonText, fontSizeStyle]}>{text}</Text>
+      ) : null}
       {isLoading ? <ActivityIndicator size="small" color={'white'} /> : null}
     </TouchableOpacity>
   )
@@ -59,16 +65,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 8,
     width: '100%',
-    maxWidth: 270,
+    maxWidth: 300,
     zIndex: 99999,
   },
   buttonText: {
     color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 17,
     textAlign: 'center',
     maxHeight: 41,
     transform:
       Platform.OS === 'web' ? [{ translateY: 0 }] : [{ translateY: 0.8 }],
+    fontFamily: 'LibreFranklin_600SemiBold',
+    letterSpacing: 0.5,
   },
 })

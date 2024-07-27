@@ -20,8 +20,9 @@ const Welcome = () => {
         </Text>
 
         <Text style={styles.secondaryText}>
-          Welcome to PlanMe. An intuitive database, planner and invoicing
-          application built to make life easy for window cleaning professionals.
+          Welcome to PlanMe. A intuitive database, planner and invoicing
+          application purpose built to streamline your business and improve
+          profits.
         </Text>
 
         <View style={styles.instructions}>
@@ -119,6 +120,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 16,
+    marginHorizontal: 12,
   },
   instructionWrapper: {
     flexDirection: 'row',
@@ -132,10 +134,10 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     fontSize: 24,
-    fontWeight: 'bold',
     textAlign: 'center',
     color: theme.colors.primary,
     marginTop: 16,
+    fontFamily: 'Roboto_700Bold',
   },
   secondaryText: {
     fontSize: 18,
@@ -144,6 +146,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginHorizontal: 12,
     maxWidth: 800,
+    fontFamily: 'Roboto_400Regular',
   },
   tertiaryText: {
     fontSize: 15,
@@ -152,24 +155,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     maxWidth: 800,
     marginBottom: 4,
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    paddingVertical: 8,
-    paddingHorizontal: 32,
-    backgroundColor: theme.colors.primary,
-    borderRadius: 8,
-    gap: 8,
-    marginVertical: 16,
-    marginTop: 16,
-    width: 200,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
 })
 

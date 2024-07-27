@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: 'black',
+    fontFamily: 'Roboto_700Bold',
   },
   secondaryText: {
     fontSize: 18,
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
     margin: 4,
     textAlign: 'center',
     marginHorizontal: 20,
+    fontFamily: 'Roboto_400Regular',
   },
   button: {
     alignItems: 'center',

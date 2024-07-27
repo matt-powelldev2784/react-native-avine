@@ -41,10 +41,10 @@ const styles = StyleSheet.create({
   },
   instructionNumber: {
     fontSize: 50,
-    fontWeight: 'bold',
     color: 'white',
     height: 60,
     marginTop: 8,
+    fontFamily: 'Roboto_700Bold',
   },
   textContainer: {
     flexDirection: 'column',
@@ -54,20 +54,22 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     fontSize: 18,
-    fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
-    height: 25,
+    height: 19,
+    fontFamily: 'Roboto_400Regular',
   },
   secondaryText: {
     fontSize: 14,
     color: 'white',
     textAlign: 'center',
+    fontFamily: 'Roboto_400Regular',
   },
   tertiaryText: {
     fontSize: 12,
     color: 'white',
     textAlign: 'center',
+    fontFamily: 'Roboto_400Regular',
   },
 })
 

@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     top: Platform.OS === 'web' ? -22 : -20,
     color: theme.colors.primary,
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
   },
   image: {
     position: 'absolute',

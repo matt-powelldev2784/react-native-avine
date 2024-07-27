@@ -63,15 +63,16 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     fontSize: 18,
-    fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
     height: 25,
+    fontFamily: 'Roboto_700Bold',
   },
   secondaryText: {
     fontSize: 16,
     color: 'white',
     textAlign: 'center',
+    fontFamily: 'Roboto_400Regular',
   },
 })
 

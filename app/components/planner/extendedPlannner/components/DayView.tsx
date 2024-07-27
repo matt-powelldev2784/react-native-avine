@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
   dateText: {
     color: theme.colors.primary,
     fontSize: 16,
-    fontWeight: 'bold',
     marginBottom: 4,
+    fontFamily: 'Roboto_700Bold',
   },
   dayContainer: {
     flexDirection: 'column',
