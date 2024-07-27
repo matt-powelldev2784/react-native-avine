@@ -95,32 +95,57 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
         onPress={handleRoundPress}
         style={[styles.roundContainer, { minHeight: menuIsExpandedHeight }]}
       >
+        {/* ---------------------- Small round card ----------------------- */}
         {smallRound ? (
           <View style={[styles.smallRoundContainer]}>
-            <Text
-              style={styles.smallRoundTitle}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
-              {round.roundName}
-            </Text>
+            <View style={styles.smallRoundIconContainer}>
+              {smallRound && !round.recurringRound ? (
+                <Image
+                  source={require('../../../../../assets/round.png')}
+                  style={{ width: 12, height: 12, marginRight: 8 }}
+                />
+              ) : null}
+
+              {smallRound && round.recurringRound ? (
+                <Image
+                  source={require('../../../../../assets/repeat_white.png')}
+                  style={{ width: 12, height: 12, marginRight: 8 }}
+                />
+              ) : null}
+
+              <Text
+                style={styles.smallRoundTitle}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {round.roundName}
+              </Text>
+            </View>
 
             <View style={styles.roundCardLine} />
 
             <View style={styles.smallRoundIconContainer}>
               <Image
                 source={require('../../../../../assets/clock_white.png')}
-                style={{ width: 12, height: 12, margin: 4 }}
+                style={{ width: 12, height: 12, marginRight: 8 }}
               />
               <Text style={styles.smallRoundTitle}>{roundTime} hrs</Text>
             </View>
           </View>
         ) : null}
 
-        {mediumRound ? (
+        {/* ---------------------- Medium round card ----------------------- */}
+        {mediumRound && !round.recurringRound ? (
           <Image
             source={require('../../../../../assets/round.png')}
-            style={{ width: 25, height: 25, marginTop: 8 }}
+            style={{ width: 25, height: 25, marginTop: 8, marginBottom: 4 }}
+          />
+        ) : null}
+
+        {mediumRound && round.recurringRound ? (
+          <Image
+            source={require('../../../../../assets/repeat_white.png')}
+            style={{ width: 25, height: 25, marginTop: 8, marginBottom: 4 }}
           />
         ) : null}
 
@@ -139,6 +164,7 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
           </>
         ) : null}
 
+        {/* ---------------------- large round card ----------------------- */}
         {largeRound ? (
           <>
             <View style={styles.iconContainer}>
@@ -166,6 +192,7 @@ const RoundCard = ({ round, plannerDate }: RoundCardProps) => {
         ) : null}
       </TouchableOpacity>
 
+      {/* ---------------------- Menu Card ----------------------- */}
       {menuIsExpanded ? (
         <View style={styles.buttonContainer}>
           <RoundButtonWithIcon
