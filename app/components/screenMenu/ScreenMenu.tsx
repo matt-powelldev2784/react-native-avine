@@ -99,11 +99,13 @@ const styles = StyleSheet.create({
     color: 'white',
     marginTop: 2,
     marginBottom: 2,
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
+    letterSpacing: 0.2,
   },
   text: {
     color: 'white',
     fontSize: 20,
+    fontFamily: 'Roboto_400Regular',
   },
 })
 
