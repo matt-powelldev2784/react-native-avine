@@ -132,10 +132,10 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     fontSize: 24,
-    fontWeight: 'bold',
     textAlign: 'center',
     color: theme.colors.primary,
     marginTop: 16,
+    fontFamily: 'Roboto_700Bold',
   },
   secondaryText: {
     fontSize: 18,
@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginHorizontal: 12,
     maxWidth: 800,
+    fontFamily: 'Roboto_400Regular',
   },
   tertiaryText: {
     fontSize: 15,
@@ -152,24 +153,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     maxWidth: 800,
     marginBottom: 4,
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    paddingVertical: 8,
-    paddingHorizontal: 32,
-    backgroundColor: theme.colors.primary,
-    borderRadius: 8,
-    gap: 8,
-    marginVertical: 16,
-    marginTop: 16,
-    width: 200,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
 })
 

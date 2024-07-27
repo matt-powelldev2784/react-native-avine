@@ -57,26 +57,28 @@ const styles = StyleSheet.create({
   },
   instructionNumber: {
     fontSize: 50,
-    fontWeight: 'bold',
     color: 'white',
     height: 50,
+    fontFamily: 'Roboto_700Bold',
   },
   primaryText: {
     fontSize: 18,
-    fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
-    height: 20,
+    height: 22,
+    fontFamily: 'Roboto_700Bold',
   },
   secondaryText: {
     fontSize: 14,
     color: 'white',
     textAlign: 'center',
+    fontFamily: 'Roboto_400Regular',
   },
   tertiaryText: {
     fontSize: 12,
     color: 'white',
     textAlign: 'center',
+    fontFamily: 'Roboto_400Regular',
   },
 })
 
