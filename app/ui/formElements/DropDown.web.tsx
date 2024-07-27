@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     top: Platform.OS === 'web' ? -22 : -20,
     color: theme.colors.primary,
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_700Bold',
   },
   placeHolder: {
     fontSize: 16,
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlign: 'center',
     fontSize: 12,
+    fontFamily: 'Roboto_400Regular',
   },
   errorPlaceholder: {
     color: 'red',

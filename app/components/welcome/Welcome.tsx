@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 16,
+    marginHorizontal: 12,
   },
   instructionWrapper: {
     flexDirection: 'row',
