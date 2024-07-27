@@ -15,6 +15,7 @@ import {
   Roboto_400Regular,
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto'
+import { LibreFranklin_600SemiBold } from '@expo-google-fonts/libre-franklin'
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -23,6 +24,7 @@ const App = () => {
     Roboto_300Light,
     Roboto_400Regular,
     Roboto_700Bold,
+    LibreFranklin_600SemiBold,
   })
 
   if (!fontsLoaded) {

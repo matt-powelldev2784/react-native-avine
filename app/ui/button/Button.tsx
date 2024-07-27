@@ -59,16 +59,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 8,
     width: '100%',
-    maxWidth: 270,
+    maxWidth: 300,
     zIndex: 99999,
   },
   buttonText: {
     color: 'white',
-    fontWeight: 'bold',
     fontSize: 16,
     textAlign: 'center',
     maxHeight: 41,
     transform:
       Platform.OS === 'web' ? [{ translateY: 0 }] : [{ translateY: 0.8 }],
+    fontFamily: 'LibreFranklin_600SemiBold',
+    letterSpacing: 0.5,
   },
 })
