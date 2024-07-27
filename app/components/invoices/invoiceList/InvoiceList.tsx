@@ -169,7 +169,7 @@ const InvoiceList = () => {
               text="Find All Due Invoices"
               isLoading={searchApiIsLoading}
               backgroundColor={theme.colors.buttonSecondary}
-              width={!isLargeWeb ? '34%' : 147}
+              width={130}
               fontSize={15}
             />
             <Button
@@ -177,7 +177,7 @@ const InvoiceList = () => {
               text="Find All Paid Invoices"
               isLoading={searchApiIsLoading}
               backgroundColor={theme.colors.buttonSecondary}
-              width={!isLargeWeb ? '34%' : 147}
+              width={130}
               fontSize={15}
             />
           </View>
@@ -186,7 +186,7 @@ const InvoiceList = () => {
             text="Search"
             isLoading={searchApiIsLoading}
             width={
-              searchIsActive || (!searchIsActive && !isLargeWeb) ? '100%' : 150
+              searchIsActive || (!searchIsActive && !isLargeWeb) ? 270 : 147
             }
             height={
               searchIsActive || (!searchIsActive && !isLargeWeb) ? 40 : 60
@@ -290,8 +290,8 @@ const styles = StyleSheet.create({
   searchTitle: {
     color: theme.colors.white,
     fontSize: 24,
-    fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'Roboto_700Bold',
   },
   searchTitleSpan: {
     color: theme.colors.secondary,

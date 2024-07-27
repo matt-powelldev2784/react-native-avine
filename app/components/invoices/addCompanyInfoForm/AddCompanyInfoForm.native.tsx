@@ -215,6 +215,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: 16,
     marginBottom: 16,
+    fontFamily: 'Roboto_400Regular',
   },
   formContainer: {
     width: '90%',
@@ -267,6 +268,7 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     textAlign: 'center',
     paddingHorizontal: 48,
+    fontFamily: 'Roboto_700Bold',
   },
   toggleContainer: {
     flexDirection: 'row',
@@ -281,7 +283,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
   },
-  toggleLabel: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  toggleLabel: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    fontFamily: 'Roboto_400Regular',
+  },
   buttonContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -292,36 +299,15 @@ const styles = StyleSheet.create({
     gap: 8,
     marginTop: 16,
   },
-  button: {
-    alignItems: 'center',
-    backgroundColor: theme.colors.primary,
-    padding: 10,
-    paddingHorizontal: 32,
-    borderRadius: 8,
-    width: '100%',
-    maxWidth: 270,
-  },
-  buttonSecondary: {
-    alignItems: 'center',
-    backgroundColor: theme.colors.buttonSecondary,
-    padding: 10,
-    paddingHorizontal: 32,
-    borderRadius: 8,
-    width: '100%',
-    maxWidth: 270,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
   text: {
     fontSize: 14,
     color: theme.colors.primary,
+    fontFamily: 'Roboto_400Regular',
   },
   errorText: {
     fontSize: 14,
     color: 'red',
+    fontFamily: 'Roboto_400Regular',
   },
 })
 

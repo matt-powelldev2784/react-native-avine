@@ -58,9 +58,9 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     fontSize: 24,
-    fontWeight: 'bold',
     color: theme.colors.primary,
     marginVertical: 16,
+    fontFamily: 'Roboto_700Bold',
   },
   secondaryText: {
     fontSize: 18,
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     margin: 4,
     textAlign: 'center',
     marginHorizontal: 50,
+    fontFamily: 'Roboto_400Regular',
   },
   button: {
     alignItems: 'center',
@@ -86,6 +87,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
+    fontFamily: 'Roboto_700Bold',
   },
 })
 
