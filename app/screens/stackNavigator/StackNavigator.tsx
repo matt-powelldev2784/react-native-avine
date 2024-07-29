@@ -20,6 +20,7 @@ import {
   ClientMenuScreen,
   JobMenuScreen,
   BusinessStatsScreen,
+  StaticSiteScreen,
 } from '../../screens'
 import Planner from '../../screens/planner/Planner'
 import { useAuth } from '../../components/auth/AuthProvider'
@@ -37,6 +38,7 @@ export type RootStackParamList = {
   Home: undefined
   Error: undefined
   BusinessStats: undefined
+  StaticSite: undefined
 
   //clients
   Clients: { refresh?: boolean } | undefined
@@ -129,6 +131,7 @@ const StackNavigator = () => {
         </>
       ) : (
         <>
+          <Stack.Screen name="StaticSite" component={StaticSiteScreen} />
           <Stack.Screen name="SignIn" component={SignInScreen} />
         </>
       )}

@@ -7,6 +7,7 @@ import ServerError from './serverError/ServerError'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import Welcome from './welcome/Welcome'
+import HomePage from './staticSite/HoemPage'
 
 //clients
 import ClientCard from './clients/clientList/components/ClientCard'
@@ -44,6 +45,7 @@ import EditInvoiceForm from './invoices/editInvoiceForm/EditInvoiceForm'
 //otheres
 
 export {
+  HomePage,
   BusinessStats,
   ExtendedPlanner,
   PlannerRoundTicket,
