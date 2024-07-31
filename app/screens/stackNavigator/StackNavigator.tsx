@@ -38,7 +38,7 @@ export type RootStackParamList = {
   Home: undefined
   Error: undefined
   BusinessStats: undefined
-  StaticSite: undefined
+  PlanMe: undefined
 
   //clients
   Clients: { refresh?: boolean } | undefined
@@ -131,8 +131,13 @@ const StackNavigator = () => {
         </>
       ) : (
         <>
-          <Stack.Screen name="StaticSite" component={StaticSiteScreen} />
-          <Stack.Screen name="SignIn" component={SignInScreen} />
+          {Platform.OS === 'web' ? (
+            <>
+              <Stack.Screen name="PlanMe" component={StaticSiteScreen} />
+            </>
+          ) : (
+            <Stack.Screen name="SignIn" component={SignInScreen} />
+          )}
         </>
       )}
     </Stack.Navigator>

@@ -7,7 +7,7 @@ import ServerError from './serverError/ServerError'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import Welcome from './welcome/Welcome'
-import HomePage from './staticSite/HoemPage'
+import HomePage from './staticSite/HomePage.web'
 
 //clients
 import ClientCard from './clients/clientList/components/ClientCard'
