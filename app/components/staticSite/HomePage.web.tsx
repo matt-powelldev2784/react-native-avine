@@ -11,13 +11,13 @@ const HomePage = () => {
   const logoStyle = isLargeWeb ? styles.logo : styles.logoSmall
   const h1Style = isLargeWeb ? styles.h1 : styles.h1Small
   const h2Style = isLargeWeb ? styles.h2 : styles.h2Small
-  const mainStyle = isLargeWeb ? styles.main : styles.mainSmall
+  const heroStyle = isLargeWeb ? styles.hero : styles.heroSmall
   const buttonContainerStyle = isLargeWeb
     ? styles.buttonContainer
     : styles.buttonContainerSmall
   const textContainerStyle = isLargeWeb
-    ? styles.mainTextContainer
-    : styles.mainTextContaineSmall
+    ? styles.heroTextContainer
+    : styles.heroTextContaineSmall
 
   return (
     <section style={styles.container}>
@@ -39,7 +39,7 @@ const HomePage = () => {
         ) : null}
       </nav>
 
-      <div style={mainStyle}>
+      <div style={heroStyle}>
         <img
           src={require('../../../assets/sky_clean_blur_extended.jpg')}
           style={styles.backgroundImage2}
@@ -48,9 +48,11 @@ const HomePage = () => {
         <div style={textContainerStyle}>
           <h1 style={h1Style}>Welcome to PlanMe</h1>
           <h2 style={h2Style}>
-            A intuitive database, planner and invoicing application for window
-            cleaning professionals. Purpose built to streamline your business
-            and improve profits.
+            A intuitive database, planner and invoicing application for{' '}
+            <span style={{ color: theme.colors.lightBlue }}>
+              window cleaning professionals
+            </span>
+            . Purpose built to streamline your business and improve profits.
           </h2>
 
           <div style={buttonContainerStyle}>
@@ -65,6 +67,15 @@ const HomePage = () => {
 
         {isLargeWeb ? <div style={styles.imageContainer}></div> : null}
       </div>
+
+      <div style={heroStyle}>
+        <div style={styles.featureContainer}>
+          <img
+            src={require('../../../assets/planner_screenshot.jpg')}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
+      </div>
     </section>
   )
 }
@@ -74,18 +85,7 @@ const styles: { [key: string]: CSSProperties } = {
     minHeight: '100vh',
     minWidth: '100vw',
     background: '#2272ab',
-    // background: 'linear-gradient(45deg, #2272ab 20%, #00b4e1 95%)',
-    // background: 'linear-gradient(315deg, #2272ab 60%, #00b4e1 98%)',
     overflowX: 'hidden',
-  },
-  backgroundImage: {
-    position: 'absolute',
-    top: '70px',
-    width: '100%',
-    height: '200px',
-    zIndex: 0,
-    opacity: 0.2,
-    objectFit: 'cover',
   },
   backgroundImage2: {
     position: 'absolute',
@@ -130,7 +130,7 @@ const styles: { [key: string]: CSSProperties } = {
     fontFamily: 'Roboto_400Regular',
     minWidth: '80px',
   },
-  main: {
+  hero: {
     position: 'relative',
     display: 'flex',
     justifyContent: 'space-evenly',
@@ -139,7 +139,7 @@ const styles: { [key: string]: CSSProperties } = {
     minHeight: '70vh',
     overflow: 'hidden',
   },
-  mainSmall: {
+  heroSmall: {
     position: 'relative',
     display: 'flex',
     justifyContent: 'space-evenly',
@@ -148,14 +148,14 @@ const styles: { [key: string]: CSSProperties } = {
     height: 'fit-content',
     overflow: 'hidden',
   },
-  mainTextContainer: {
+  heroTextContainer: {
     width: '580px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
   },
-  mainTextContaineSmall: {
+  heroTextContaineSmall: {
     width: '100%',
     maxWidth: '700px',
     height: 'fit-content',
@@ -172,7 +172,7 @@ const styles: { [key: string]: CSSProperties } = {
   h1: {
     fontFamily: 'Roboto_700Bold',
     fontSize: '38px',
-    color: '#d2e2ee',
+    color: theme.colors.lightBlue,
     margin: 0,
     marginLeft: '30px',
     padding: 0,
@@ -180,7 +180,7 @@ const styles: { [key: string]: CSSProperties } = {
   h1Small: {
     fontFamily: 'Roboto_700Bold',
     fontSize: '35px',
-    color: '#d2e2ee',
+    color: theme.colors.lightBlue,
     margin: 0,
     padding: 0,
     textAlign: 'center',
@@ -244,6 +244,17 @@ const styles: { [key: string]: CSSProperties } = {
     zIndex: 0,
     opacity: 1,
     objectFit: 'contain',
+  },
+  featureContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '35%',
+    borderRadius: '20px',
+    overflow: 'hidden',
+    borderWidth: 10,
+    borderStyle: 'solid',
+    borderColor: theme.colors.black,
   },
 }
 
