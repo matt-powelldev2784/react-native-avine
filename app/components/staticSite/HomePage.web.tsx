@@ -18,6 +18,12 @@ const HomePage = () => {
   const textContainerStyle = isLargeWeb
     ? styles.heroTextContainer
     : styles.heroTextContaineSmall
+  const featuresStyle = isLargeWeb
+    ? styles.featuresContainer
+    : styles.featuresContainerSmall
+  const featureImageContainerStyle = isLargeWeb
+    ? styles.featureImageContainer
+    : styles.featureImageContainerSmall
 
   return (
     <section style={styles.container}>
@@ -68,12 +74,16 @@ const HomePage = () => {
         {isLargeWeb ? <div style={styles.imageContainer}></div> : null}
       </div>
 
-      <div style={heroStyle}>
-        <div style={styles.featureContainer}>
+      <div style={featuresStyle}>
+        <div style={featureImageContainerStyle}>
           <img
             src={require('../../../assets/planner_screenshot.jpg')}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
+        </div>
+
+        <div style={textContainerStyle}>
+          <h1 style={h1Style}>Welcome to PlanMe Welcome to PlanMe</h1>
         </div>
       </div>
     </section>
@@ -245,11 +255,49 @@ const styles: { [key: string]: CSSProperties } = {
     opacity: 1,
     objectFit: 'contain',
   },
-  featureContainer: {
+  featuresContainer: {
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    flexDirection: 'row',
+    minHeight: '70vh',
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'red',
+  },
+  featuresContainerSmall: {
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    flexDirection: 'column',
+    height: 'fit-content',
+    overflow: 'hidden',
+    paddingTop: '30px',
+    paddingLeft: '10px',
+    paddingRight: '10px',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'green',
+  },
+  featureImageContainer: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     width: '35%',
+    borderRadius: '20px',
+    overflow: 'hidden',
+    borderWidth: 10,
+    borderStyle: 'solid',
+    borderColor: theme.colors.black,
+  },
+  featureImageContainerSmall: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '60%',
     borderRadius: '20px',
     overflow: 'hidden',
     borderWidth: 10,
