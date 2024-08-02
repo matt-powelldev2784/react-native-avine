@@ -27,9 +27,6 @@ const HomePage = () => {
   const featureTextContainerStyle = isLargeWeb
     ? styles.featureTextContainer
     : styles.featureTextContaineSmall
-  const featureHeadingStyle = isLargeWeb
-    ? styles.featureHeading
-    : styles.featureHeadingSmall
 
   return (
     <section style={styles.container}>
@@ -89,96 +86,50 @@ const HomePage = () => {
         </div>
 
         <div style={featureTextContainerStyle}>
-          <p style={featureHeadingStyle}>Features</p>
+          <p style={styles.featureHeadingStyle}>Features</p>
 
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              borderRadius: '20px',
-              backgroundColor: theme.colors.lightBlue,
-              width: '100%',
-              minWidth: '300px',
-              height: 'fit-content',
-            }}
-          >
+          <div style={styles.featureCard}>
             <img
               src={require('../../../assets/calendar_icon_large.png')}
               style={{ width: 50, height: 50, padding: '20px' }}
             />
-            <p
-              style={{
-                color: theme.colors.black,
-                fontFamily: 'Roboto_400Regular',
-                width: '100%',
-                marginRight: '20px',
-              }}
-            >
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industrys standard dummy text
-              ever since the 1500s.
-            </p>
+            <div style={styles.featureCardTextContainer}>
+              <p style={styles.featureTitle}>Planner</p>
+              <p style={styles.featureText}>
+                Simple planner system that schedules one off or recurring
+                rounds. Rounds can be rescheduled easily from computer or mobile
+                device.
+              </p>
+            </div>
           </div>
 
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              borderRadius: '20px',
-              backgroundColor: theme.colors.lightBlue,
-              width: '100%',
-              minWidth: '300px',
-              height: 'fit-content',
-            }}
-          >
+          <div style={styles.featureCard}>
             <img
-              src={require('../../../assets/pound_sign.png')}
+              src={require('../../../assets/calendar_icon_large.png')}
               style={{ width: 50, height: 50, padding: '20px' }}
             />
-            <p
-              style={{
-                color: theme.colors.black,
-                fontFamily: 'Roboto_400Regular',
-                width: '100%',
-                marginRight: '20px',
-              }}
-            >
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industrys standard dummy text
-              ever since the 1500s.
-            </p>
+            <div style={styles.featureCardTextContainer}>
+              <p style={styles.featureTitle}>Business Stastistics</p>
+              <p style={styles.featureText}>
+                Track your business performance with our easy to use statistics
+                page. Real time updates of your NET income, average price per
+                hour and more.
+              </p>
+            </div>
           </div>
 
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              borderRadius: '20px',
-              backgroundColor: theme.colors.lightBlue,
-              width: '100%',
-              minWidth: '300px',
-              height: 'fit-content',
-            }}
-          >
+          <div style={styles.featureCard}>
             <img
-              src={require('../../../assets/pound_sign.png')}
+              src={require('../../../assets/calendar_icon_large.png')}
               style={{ width: 50, height: 50, padding: '20px' }}
             />
-            <p
-              style={{
-                color: theme.colors.black,
-                fontFamily: 'Roboto_400Regular',
-                width: '100%',
-                marginRight: '20px',
-              }}
-            >
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industrys standard dummy text
-              ever since the 1500s.
-            </p>
+            <div style={styles.featureCardTextContainer}>
+              <p style={styles.featureTitle}>Automatied Invoicing</p>
+              <p style={styles.featureText}>
+                Automated invoice generation and payment tracking. Email PDF
+                invoices to clients from any device.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -458,6 +409,48 @@ const styles: { [key: string]: CSSProperties } = {
     marginRight: 15,
     gap: '20px',
     zIndex: 2,
+  },
+  featureHeadingStyle: {
+    fontFamily: 'Roboto_700Bold',
+    fontSize: '38px',
+    color: theme.colors.lightBlue,
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    padding: 0,
+  },
+  featureCard: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: '20px',
+    backgroundColor: theme.colors.lightBlue,
+    width: '100%',
+    minWidth: '300px',
+    height: 'fit-content',
+    padding: 6,
+  },
+  featureCardTextContainer: { margin: 0, padding: 0, marginRight: '20px' },
+  featureTitle: {
+    fontFamily: 'Roboto_700Bold',
+    fontSize: '18px',
+    color: theme.colors.primary,
+    marginTop: 0,
+    marginBottom: 2,
+    marginLeft: 0,
+    marginRight: 0,
+    padding: 0,
+  },
+  featureText: {
+    fontFamily: 'Roboto_400Regular',
+    fontSize: '16px',
+    color: theme.colors.black,
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    padding: 0,
   },
 }
 
