@@ -15,7 +15,7 @@ const HomePage = () => {
   const buttonContainerStyle = isLargeWeb
     ? styles.buttonContainer
     : styles.buttonContainerSmall
-  const textContainerStyle = isLargeWeb
+  const heroTextContainerStyle = isLargeWeb
     ? styles.heroTextContainer
     : styles.heroTextContaineSmall
   const featuresStyle = isLargeWeb
@@ -24,6 +24,12 @@ const HomePage = () => {
   const featureImageContainerStyle = isLargeWeb
     ? styles.featureImageContainer
     : styles.featureImageContainerSmall
+  const featureTextContainerStyle = isLargeWeb
+    ? styles.featureTextContainer
+    : styles.featureTextContaineSmall
+  const featureHeadingStyle = isLargeWeb
+    ? styles.featureHeading
+    : styles.featureHeadingSmall
 
   return (
     <section style={styles.container}>
@@ -51,7 +57,7 @@ const HomePage = () => {
           style={styles.backgroundImage2}
         />
 
-        <div style={textContainerStyle}>
+        <div style={heroTextContainerStyle}>
           <h1 style={h1Style}>Welcome to PlanMe</h1>
           <h2 style={h2Style}>
             A intuitive database, planner and invoicing application for{' '}
@@ -82,8 +88,98 @@ const HomePage = () => {
           />
         </div>
 
-        <div style={textContainerStyle}>
-          <h1 style={h1Style}>Welcome to PlanMe Welcome to PlanMe</h1>
+        <div style={featureTextContainerStyle}>
+          <p style={featureHeadingStyle}>Features</p>
+
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderRadius: '20px',
+              backgroundColor: theme.colors.lightBlue,
+              width: '100%',
+              minWidth: '300px',
+              height: 'fit-content',
+            }}
+          >
+            <img
+              src={require('../../../assets/calendar_icon_large.png')}
+              style={{ width: 50, height: 50, padding: '20px' }}
+            />
+            <p
+              style={{
+                color: theme.colors.black,
+                fontFamily: 'Roboto_400Regular',
+                width: '100%',
+                marginRight: '20px',
+              }}
+            >
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industrys standard dummy text
+              ever since the 1500s.
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderRadius: '20px',
+              backgroundColor: theme.colors.lightBlue,
+              width: '100%',
+              minWidth: '300px',
+              height: 'fit-content',
+            }}
+          >
+            <img
+              src={require('../../../assets/pound_sign.png')}
+              style={{ width: 50, height: 50, padding: '20px' }}
+            />
+            <p
+              style={{
+                color: theme.colors.black,
+                fontFamily: 'Roboto_400Regular',
+                width: '100%',
+                marginRight: '20px',
+              }}
+            >
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industrys standard dummy text
+              ever since the 1500s.
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderRadius: '20px',
+              backgroundColor: theme.colors.lightBlue,
+              width: '100%',
+              minWidth: '300px',
+              height: 'fit-content',
+            }}
+          >
+            <img
+              src={require('../../../assets/pound_sign.png')}
+              style={{ width: 50, height: 50, padding: '20px' }}
+            />
+            <p
+              style={{
+                color: theme.colors.black,
+                fontFamily: 'Roboto_400Regular',
+                width: '100%',
+                marginRight: '20px',
+              }}
+            >
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industrys standard dummy text
+              ever since the 1500s.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -164,6 +260,10 @@ const styles: { [key: string]: CSSProperties } = {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 5,
+    marginRight: 5,
   },
   heroTextContaineSmall: {
     width: '100%',
@@ -173,25 +273,30 @@ const styles: { [key: string]: CSSProperties } = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    marginTop: '30px',
-    marginBottom: '40px',
-    marginLeft: '15px',
-    marginRight: '15px',
+    marginTop: 30,
+    marginBottom: 40,
+    marginLeft: 15,
+    marginRight: 15,
     zIndex: 2,
   },
   h1: {
     fontFamily: 'Roboto_700Bold',
     fontSize: '38px',
     color: theme.colors.lightBlue,
-    margin: 0,
-    marginLeft: '30px',
+    marginTop: 30,
+    marginBottom: 40,
+    marginLeft: 30,
+    marginRight: 15,
     padding: 0,
   },
   h1Small: {
     fontFamily: 'Roboto_700Bold',
     fontSize: '35px',
     color: theme.colors.lightBlue,
-    margin: 0,
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
     padding: 0,
     textAlign: 'center',
     width: '100%',
@@ -200,13 +305,14 @@ const styles: { [key: string]: CSSProperties } = {
     color: 'white',
     fontFamily: 'Roboto_300Light',
     fontSize: '20px',
-    marginLeft: '30px',
+    marginLeft: 30,
   },
   h2Small: {
     color: 'white',
     fontFamily: 'Roboto_300Light',
     fontSize: '18px',
     textAlign: 'center',
+    marginLeft: 0,
   },
   buttonContainer: {
     display: 'flex',
@@ -214,17 +320,18 @@ const styles: { [key: string]: CSSProperties } = {
     alignItems: 'center',
     flexWrap: 'wrap',
     gap: '20px',
-    marginTop: '20px',
-    marginLeft: '30px',
+    marginTop: 20,
+    marginLeft: 30,
   },
   buttonContainerSmall: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginTop: '20px',
+    gap: '20px',
     width: '100%',
-    margin: 0,
+    marginTop: 0,
+    marginLeft: 0,
     padding: 0,
   },
   imageContainer: {
@@ -263,9 +370,8 @@ const styles: { [key: string]: CSSProperties } = {
     flexDirection: 'row',
     minHeight: '70vh',
     overflow: 'hidden',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'red',
+    marginLeft: 20,
+    marginRight: 20,
   },
   featuresContainerSmall: {
     position: 'relative',
@@ -275,12 +381,11 @@ const styles: { [key: string]: CSSProperties } = {
     flexDirection: 'column',
     height: 'fit-content',
     overflow: 'hidden',
-    paddingTop: '30px',
-    paddingLeft: '10px',
-    paddingRight: '10px',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'green',
+    paddingTop: 30,
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginLeft: 0,
+    marginRight: 0,
   },
   featureImageContainer: {
     display: 'flex',
@@ -297,12 +402,62 @@ const styles: { [key: string]: CSSProperties } = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '60%',
+    width: '80%',
+    maxWidth: '450px',
     borderRadius: '20px',
     overflow: 'hidden',
     borderWidth: 10,
     borderStyle: 'solid',
     borderColor: theme.colors.black,
+  },
+  featureHeading: {
+    fontFamily: 'Roboto_700Bold',
+    fontSize: '38px',
+    color: theme.colors.lightBlue,
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    padding: 0,
+  },
+  featureHeadingSmall: {
+    fontFamily: 'Roboto_700Bold',
+    fontSize: '35px',
+    color: theme.colors.lightBlue,
+    padding: 0,
+    marginTop: 20,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    textAlign: 'center',
+    width: '100%',
+  },
+  featureTextContainer: {
+    width: '550px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    gap: '20px',
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+  },
+  featureTextContaineSmall: {
+    width: '100%',
+    maxWidth: '700px',
+    height: 'fit-content',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 0,
+    marginBottom: 40,
+    marginLeft: 15,
+    marginRight: 15,
+    gap: '20px',
+    zIndex: 2,
   },
 }
 
