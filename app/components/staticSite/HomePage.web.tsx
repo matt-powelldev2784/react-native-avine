@@ -4,9 +4,12 @@ import { CSSProperties } from 'react'
 import Button from '../../ui/button/Button'
 import theme from '../../utils/theme/theme'
 import { useDeviceType } from '../../utils/hooks/useDeviceTypes'
+import { useWindowDimensions } from 'react-native'
 
 const HomePage = () => {
   const { isLargeWeb } = useDeviceType()
+  const { width } = useWindowDimensions()
+  console.log('width', width)
 
   const logoStyle = isLargeWeb ? styles.logo : styles.logoSmall
   const h1Style = isLargeWeb ? styles.h1 : styles.h1Small
@@ -18,7 +21,7 @@ const HomePage = () => {
   const heroTextContainerStyle = isLargeWeb
     ? styles.heroTextContainer
     : styles.heroTextContaineSmall
-  const featuresStyle = isLargeWeb
+  const featuresContainerStyle = isLargeWeb
     ? styles.featuresContainer
     : styles.featuresContainerSmall
   const featureImageContainerStyle = isLargeWeb
@@ -27,6 +30,11 @@ const HomePage = () => {
   const featureTextContainerStyle = isLargeWeb
     ? styles.featureTextContainer
     : styles.featureTextContaineSmall
+  const featureFontSize =
+    width < 500 ? { fontSize: '13.5px' } : { fontSize: '16px' }
+  const featureTextStyle = isLargeWeb
+    ? { ...styles.featureText, ...featureFontSize }
+    : { ...styles.featureTextSmall, ...featureFontSize }
 
   return (
     <section style={styles.container}>
@@ -77,7 +85,7 @@ const HomePage = () => {
         {isLargeWeb ? <div style={styles.imageContainer}></div> : null}
       </div>
 
-      <div style={featuresStyle}>
+      <div style={featuresContainerStyle}>
         <div style={featureImageContainerStyle}>
           <img
             src={require('../../../assets/planner_screenshot.jpg')}
@@ -95,10 +103,10 @@ const HomePage = () => {
             />
             <div style={styles.featureCardTextContainer}>
               <p style={styles.featureTitle}>Planner</p>
-              <p style={styles.featureText}>
+              <p style={featureTextStyle}>
                 Simple planner system that schedules one off or recurring
-                rounds. Rounds can be rescheduled easily from computer or mobile
-                device.
+                rounds. Rounds can be rescheduled easily from a computer or
+                mobile device.
               </p>
             </div>
           </div>
@@ -110,7 +118,7 @@ const HomePage = () => {
             />
             <div style={styles.featureCardTextContainer}>
               <p style={styles.featureTitle}>Business Stastistics</p>
-              <p style={styles.featureText}>
+              <p style={featureTextStyle}>
                 Track your business performance with our easy to use statistics
                 page. Real time updates of your NET income, average price per
                 hour and more.
@@ -125,13 +133,23 @@ const HomePage = () => {
             />
             <div style={styles.featureCardTextContainer}>
               <p style={styles.featureTitle}>Automatied Invoicing</p>
-              <p style={styles.featureText}>
+              <p style={featureTextStyle}>
                 Automated invoice generation and payment tracking. Email PDF
                 invoices to clients from any device.
               </p>
             </div>
           </div>
         </div>
+      </div>
+
+      <div
+        style={{
+          width: '100vw',
+          height: '200px',
+          background: theme.colors.tertiaryBlue,
+        }}
+      >
+        Footer
       </div>
     </section>
   )
@@ -323,6 +341,7 @@ const styles: { [key: string]: CSSProperties } = {
     overflow: 'hidden',
     marginLeft: 20,
     marginRight: 20,
+    paddingBottom: 40,
   },
   featuresContainerSmall: {
     position: 'relative',
@@ -333,8 +352,8 @@ const styles: { [key: string]: CSSProperties } = {
     height: 'fit-content',
     overflow: 'hidden',
     paddingTop: 30,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
     marginLeft: 0,
     marginRight: 0,
   },
@@ -348,6 +367,7 @@ const styles: { [key: string]: CSSProperties } = {
     borderWidth: 10,
     borderStyle: 'solid',
     borderColor: theme.colors.black,
+    marginRight: 20,
   },
   featureImageContainerSmall: {
     display: 'flex',
@@ -403,7 +423,7 @@ const styles: { [key: string]: CSSProperties } = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 0,
+    marginTop: 15,
     marginBottom: 40,
     marginLeft: 15,
     marginRight: 15,
@@ -429,9 +449,18 @@ const styles: { [key: string]: CSSProperties } = {
     width: '100%',
     minWidth: '300px',
     height: 'fit-content',
-    padding: 6,
+    paddingTop: 6,
+    paddingBottom: 6,
+    marginLeft: 10,
+    marginRight: 10,
   },
-  featureCardTextContainer: { margin: 0, padding: 0, marginRight: '20px' },
+  featureCardTextContainer: {
+    margin: 0,
+    padding: 0,
+    paddingTop: 5,
+    paddingBottom: 5,
+    marginRight: '5px',
+  },
   featureTitle: {
     fontFamily: 'Roboto_700Bold',
     fontSize: '18px',
@@ -451,6 +480,20 @@ const styles: { [key: string]: CSSProperties } = {
     marginLeft: 0,
     marginRight: 0,
     padding: 0,
+    paddingRight: 10,
+  },
+  featureTextSmall: {
+    fontFamily: 'Roboto_400Regular',
+    fontSize: '16px',
+    color: theme.colors.black,
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    padding: 0,
+    paddingRight: 10,
+    // textAlign: 'justify',
+    // textJustify: 'inter-word',
   },
 }
 
