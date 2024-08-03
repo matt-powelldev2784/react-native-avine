@@ -540,15 +540,14 @@ const styles: { [key: string]: CSSProperties } = {
   },
   footerTitle: {
     fontFamily: 'Roboto_700Bold',
-    fontSize: 20,
+    fontSize: 24,
     color: theme.colors.lightBlue,
     textAlign: 'right',
     marginTop: 20,
     marginBottom: 5,
-    paddingRight: 20,
+    paddingRight: 30,
   },
   footerText: {
-    paddingRight: 20,
     fontFamily: 'Roboto_400Regular',
     color: theme.colors.white,
     textAlign: 'right',
@@ -556,6 +555,7 @@ const styles: { [key: string]: CSSProperties } = {
     marginBottom: 4,
     cursor: 'pointer',
     textDecoration: 'none',
+    paddingRight: 30,
   },
 }
 
