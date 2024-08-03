@@ -89,7 +89,7 @@ const HomePage = () => {
 
           <div style={buttonContainerStyle}>
             <Button
-              text="SIGN UP TODAY"
+              text="Get Started"
               onPress={handleSignUp}
               backgroundColor={theme.colors.plannerPrimary}
               width={200}
@@ -159,9 +159,15 @@ const HomePage = () => {
 
       <div style={styles.footer}>
         <p style={styles.footerTitle}>PlanME</p>
-        <a style={styles.footerText}>Privacy Policy</a>
-        <p style={styles.footerText}>Terms of Service</p>
-        <p style={styles.footerText}>Support</p>
+        <a style={styles.footerText} onClick={() => {}}>
+          Privacy Policy
+        </a>
+        <a style={styles.footerText} onClick={() => {}}>
+          Terms of Service
+        </a>
+        <a style={styles.footerText} onClick={() => {}}>
+          Support
+        </a>
       </div>
     </section>
   )
@@ -538,6 +544,7 @@ const styles: { [key: string]: CSSProperties } = {
     textAlign: 'right',
     margin: 0,
     marginBottom: 4,
+    cursor: 'pointer',
   },
 }
 
