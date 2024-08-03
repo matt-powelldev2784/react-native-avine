@@ -40,6 +40,7 @@ const SignOut = () => {
          text="Update Company Details"
          isLoading={false}
          backgroundColor={theme.colors.invoicePrimary}
+         width={300}
        />
 
        <Button
@@ -47,6 +48,7 @@ const SignOut = () => {
          text="Privacy Policy"
          isLoading={false}
          backgroundColor={theme.colors.invoicePrimary}
+         width={300}
        />
 
        <Button
@@ -54,6 +56,7 @@ const SignOut = () => {
          text="Sign Out"
          isLoading={false}
          backgroundColor={'red'}
+         width={300}
        />
 
        {/* ------ Seeds ----------- */}
@@ -87,6 +90,7 @@ const SignOut = () => {
          text="Go Back"
          isLoading={false}
          backgroundColor={theme.colors.buttonSecondary}
+         width={300}
        />
      </SafeAreaView>
    )

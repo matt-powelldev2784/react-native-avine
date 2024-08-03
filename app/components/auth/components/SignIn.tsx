@@ -31,7 +31,7 @@ const SignIn = () => {
           text="Create Google Account"
           onPress={handleCreateGoogleAccount}
           backgroundColor={theme.colors.plannerPrimary}
-          height={35}
+          height={40}
         />
 
         <Text style={styles.linkText} onPress={handleCreateGoogleAccount}>
