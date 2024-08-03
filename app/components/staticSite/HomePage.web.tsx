@@ -5,10 +5,18 @@ import Button from '../../ui/button/Button'
 import theme from '../../utils/theme/theme'
 import { useDeviceType } from '../../utils/hooks/useDeviceTypes'
 import { useWindowDimensions } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
 
 const HomePage = () => {
   const { isLargeWeb } = useDeviceType()
   const { width } = useWindowDimensions()
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+
+  const handleSignUp = () => {
+    navigation.navigate('SignIn')
+  }
 
   const logoStyle = isLargeWeb ? styles.logo : styles.logoSmall
   const h1Style = isLargeWeb ? styles.h1 : styles.h1Small
@@ -74,7 +82,7 @@ const HomePage = () => {
           <div style={buttonContainerStyle}>
             <Button
               text="SIGN UP TODAY"
-              onPress={() => console.log('Sign Up')}
+              onPress={handleSignUp}
               backgroundColor={theme.colors.plannerPrimary}
               width={200}
             />
@@ -141,14 +149,11 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div
-        style={{
-          width: '100vw',
-          height: '200px',
-          background: theme.colors.tertiaryBlue,
-        }}
-      >
-        Footer
+      <div style={styles.footer}>
+        <p style={styles.footerTitle}>PlanME</p>
+        <p style={styles.footerText}>Privacy Policy</p>
+        <p style={styles.footerText}>Terms of Service</p>
+        <p style={styles.footerText}>Support</p>
       </div>
     </section>
   )
@@ -493,6 +498,32 @@ const styles: { [key: string]: CSSProperties } = {
     paddingRight: 10,
     // textAlign: 'justify',
     // textJustify: 'inter-word',
+  },
+  footer: {
+    width: '100vw',
+    height: '200px',
+    background: theme.colors.tertiaryBlue,
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    flexDirection: 'column',
+  },
+  footerTitle: {
+    fontFamily: 'Roboto_700Bold',
+    fontSize: 20,
+    color: theme.colors.lightBlue,
+    textAlign: 'right',
+    marginTop: 10,
+    marginBottom: 5,
+    paddingRight: 20,
+  },
+  footerText: {
+    paddingRight: 20,
+    fontFamily: 'Roboto_400Regular',
+    color: theme.colors.white,
+    textAlign: 'right',
+    margin: 0,
+    marginBottom: 4,
   },
 }
 

@@ -134,6 +134,7 @@ const StackNavigator = () => {
           {Platform.OS === 'web' ? (
             <>
               <Stack.Screen name="PlanMe" component={StaticSiteScreen} />
+              <Stack.Screen name="SignIn" component={SignInScreen} />
             </>
           ) : (
             <Stack.Screen name="SignIn" component={SignInScreen} />
