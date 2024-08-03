@@ -59,7 +59,7 @@ const HomePage = () => {
         {isLargeWeb ? (
           <div style={styles.navItems}>
             <a style={styles.navItem} onClick={handleFeaturesClick}>
-              FEARTURES
+              FEATURES
             </a>
             <a style={styles.navItem} onClick={handleSignUp}>
               SIGN UP
