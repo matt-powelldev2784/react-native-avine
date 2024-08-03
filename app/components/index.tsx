@@ -8,6 +8,7 @@ import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import Welcome from './welcome/Welcome'
 import HomePage from './staticSite/HomePage.web'
+import PrivacyPolicy from './staticSite/PrivacyPolicy'
 
 //clients
 import ClientCard from './clients/clientList/components/ClientCard'
@@ -46,6 +47,7 @@ import EditInvoiceForm from './invoices/editInvoiceForm/EditInvoiceForm'
 
 export {
   HomePage,
+  PrivacyPolicy,
   BusinessStats,
   ExtendedPlanner,
   PlannerRoundTicket,

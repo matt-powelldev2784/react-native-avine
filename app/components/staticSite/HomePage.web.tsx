@@ -159,12 +159,15 @@ const HomePage = () => {
 
       <div style={styles.footer}>
         <p style={styles.footerTitle}>PlanME</p>
-        <a style={styles.footerText} onClick={() => {}}>
+        <a
+          style={styles.footerText}
+          onClick={() => {
+            navigation.navigate('PrivacyPolicy')
+          }}
+        >
           Privacy Policy
         </a>
-        <a style={styles.footerText} onClick={() => {}}>
-          Terms of Service
-        </a>
+
         <a style={styles.footerText} onClick={() => {}}>
           Support
         </a>

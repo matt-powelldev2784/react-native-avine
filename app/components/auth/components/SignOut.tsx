@@ -22,63 +22,74 @@ const SignOut = () => {
     navigation.navigate('AddCompanyInfo')
   }
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.logoContainer}>
-        <PlanMeLogo />
-        <Text style={styles.text}>
-          Database, planner and invoicing for window cleaning professionals.
-        </Text>
-      </View>
+   const handlePrivacyPolicyClick = () => {
+     navigation.navigate('PrivacyPolicy')
+   }
 
-      <Button
-        onPress={updateCompnayDetails}
-        text="Update Company Details"
-        isLoading={false}
-        backgroundColor={theme.colors.invoicePrimary}
-      />
+   return (
+     <SafeAreaView style={styles.container}>
+       <View style={styles.logoContainer}>
+         <PlanMeLogo />
+         <Text style={styles.text}>
+           Database, planner and invoicing for window cleaning professionals.
+         </Text>
+       </View>
 
-      <Button
-        onPress={signOut}
-        text="Sign Out"
-        isLoading={false}
-        backgroundColor={'red'}
-      />
+       <Button
+         onPress={updateCompnayDetails}
+         text="Update Company Details"
+         isLoading={false}
+         backgroundColor={theme.colors.invoicePrimary}
+       />
 
-      {/* ------ Seeds ----------- */}
-      {userEmail === 'matt.powell2784@gmail.com' ? (
-        <>
-          <Button
-            onPress={addClientSeeds}
-            text="Add Client Seeds"
-            isLoading={false}
-            backgroundColor={'red'}
-          />
+       <Button
+         onPress={handlePrivacyPolicyClick}
+         text="Privacy Policy"
+         isLoading={false}
+         backgroundColor={theme.colors.invoicePrimary}
+       />
 
-          <Button
-            onPress={addJobSeeds}
-            text="Add Job Seeds"
-            isLoading={false}
-            backgroundColor={'red'}
-          />
+       <Button
+         onPress={signOut}
+         text="Sign Out"
+         isLoading={false}
+         backgroundColor={'red'}
+       />
 
-          <Button
-            onPress={addRoundSeeds}
-            text="Add Round Seeds"
-            isLoading={false}
-            backgroundColor={'red'}
-          />
-        </>
-      ) : null}
+       {/* ------ Seeds ----------- */}
+       {userEmail === 'matt.powell2784@gmail.com' ? (
+         <>
+           <Button
+             onPress={addClientSeeds}
+             text="Add Client Seeds"
+             isLoading={false}
+             backgroundColor={'red'}
+           />
 
-      <Button
-        onPress={() => navigation.goBack()}
-        text="Go Back"
-        isLoading={false}
-        backgroundColor={theme.colors.buttonSecondary}
-      />
-    </SafeAreaView>
-  )
+           <Button
+             onPress={addJobSeeds}
+             text="Add Job Seeds"
+             isLoading={false}
+             backgroundColor={'red'}
+           />
+
+           <Button
+             onPress={addRoundSeeds}
+             text="Add Round Seeds"
+             isLoading={false}
+             backgroundColor={'red'}
+           />
+         </>
+       ) : null}
+
+       <Button
+         onPress={() => navigation.goBack()}
+         text="Go Back"
+         isLoading={false}
+         backgroundColor={theme.colors.buttonSecondary}
+       />
+     </SafeAreaView>
+   )
 }
 
 const styles = StyleSheet.create({
