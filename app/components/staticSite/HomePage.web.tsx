@@ -68,7 +68,11 @@ const HomePage = () => {
               LOGIN
             </p>
           </div>
-        ) : null}
+        ) : (
+          <p style={styles.navItem} onClick={handleSignUp}>
+            LOGIN
+          </p>
+        )}
       </nav>
 
       <div style={heroStyle}>
@@ -195,7 +199,6 @@ const styles: { [key: string]: CSSProperties } = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    flexWrap: 'wrap',
   },
   logo: {
     paddingLeft: '30px',
@@ -205,11 +208,10 @@ const styles: { [key: string]: CSSProperties } = {
   },
   logoSmall: {
     width: '100%',
-    paddingLeft: '30px',
-    paddingRight: '20px',
+    paddingLeft: 15,
+    paddingRight: 0,
     paddingTop: '10px',
     paddingBottom: '10px',
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
