@@ -10,6 +10,9 @@ import Button from '../../../ui/button/Button'
 
 const SignIn = () => {
   const { signIn } = useAuth()
+  const handleCreateGoogleAccount = () => {
+    WebBrowser.openBrowserAsync('https://accounts.google.com/signup')
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,17 +29,12 @@ const SignIn = () => {
       <View style={styles.linkContainer}>
         <Button
           text="Create Google Account"
-          onPress={() => {}}
+          onPress={handleCreateGoogleAccount}
           backgroundColor={theme.colors.plannerPrimary}
           height={35}
         />
 
-        <Text
-          style={styles.linkText}
-          onPress={() =>
-            WebBrowser.openBrowserAsync('https://accounts.google.com/signup')
-          }
-        >
+        <Text style={styles.linkText} onPress={handleCreateGoogleAccount}>
           If you do not have a google account, create a new one here and login
           using your google credientials.
         </Text>
