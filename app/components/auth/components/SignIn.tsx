@@ -18,7 +18,7 @@ const SignIn = () => {
     WebBrowser.openBrowserAsync('https://accounts.google.com/signup')
   }
   const handleHomeClick = () => {
-    navigation.navigate('Home')
+    navigation.navigate('PlanMe')
   }
 
   return (

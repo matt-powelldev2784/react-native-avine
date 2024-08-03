@@ -5,7 +5,7 @@ export default function usePreventPullToRefresh() {
   useEffect(() => {
     if (Platform.OS === 'web') {
       const preventDefault = (e: TouchEvent) => {
-        if (window.scrollY === 0) {
+        if (window.scrollY === -5) {
           e.preventDefault()
         }
       }

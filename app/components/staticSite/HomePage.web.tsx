@@ -4,15 +4,17 @@ import { CSSProperties } from 'react'
 import Button from '../../ui/button/Button'
 import theme from '../../utils/theme/theme'
 import { useDeviceType } from '../../utils/hooks/useDeviceTypes'
-import { useWindowDimensions } from 'react-native'
+import { ScrollView, StyleSheet, useWindowDimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../screens/stackNavigator/StackNavigator'
+import usePreventPullToRefresh from '../../utils/hooks/usePreventPullToRefresh'
 
 const HomePage = () => {
   const { isLargeWeb } = useDeviceType()
   const { width } = useWindowDimensions()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  usePreventPullToRefresh()
 
   const handleSignUp = () => {
     navigation.navigate('SignIn')
@@ -51,138 +53,148 @@ const HomePage = () => {
     : { ...styles.featureTextSmall, ...featureFontSize }
 
   return (
-    <section style={styles.container}>
-      <nav style={styles.nav}>
-        <div style={logoStyle}>
-          <PlanMeLogo width={200} height={48} />
-        </div>
-        {isLargeWeb ? (
-          <div style={styles.navItems}>
-            <a style={styles.navItem} onClick={handleFeaturesClick}>
-              FEATURES
-            </a>
-            <a style={styles.navItem} onClick={handleSignUp}>
-              SIGN UP
-            </a>
+    <ScrollView style={nativeStyles.container}>
+      <div style={styles.container}>
+        <nav style={styles.nav}>
+          <div style={logoStyle}>
+            <PlanMeLogo width={200} height={48} />
+          </div>
+          {isLargeWeb ? (
+            <div style={styles.navItems}>
+              <a style={styles.navItem} onClick={handleFeaturesClick}>
+                FEATURES
+              </a>
+              <a style={styles.navItem} onClick={handleSignUp}>
+                SIGN UP
+              </a>
+              <p style={styles.navItem} onClick={handleSignUp}>
+                LOGIN
+              </p>
+            </div>
+          ) : (
             <p style={styles.navItem} onClick={handleSignUp}>
               LOGIN
             </p>
-          </div>
-        ) : (
-          <p style={styles.navItem} onClick={handleSignUp}>
-            LOGIN
-          </p>
-        )}
-      </nav>
+          )}
+        </nav>
 
-      <div style={heroStyle}>
-        <img
-          src={require('../../../assets/sky_clean_blur_extended.jpg')}
-          style={styles.backgroundImage2}
-        />
-
-        <div style={heroTextContainerStyle}>
-          <h1 style={h1Style}>Welcome to PlanMe</h1>
-          <h2 style={h2Style}>
-            A intuitive database, planner and invoicing application for{' '}
-            <span style={{ color: theme.colors.lightBlue }}>
-              window cleaning professionals
-            </span>
-            . Purpose built to streamline your business and improve profits.
-          </h2>
-
-          <div style={buttonContainerStyle}>
-            <Button
-              text="Get Started"
-              onPress={handleSignUp}
-              backgroundColor={theme.colors.plannerPrimary}
-              width={200}
-            />
-          </div>
-        </div>
-
-        {isLargeWeb ? <div style={styles.imageContainer}></div> : null}
-      </div>
-
-      <div style={featuresContainerStyle} id="features">
-        <div style={featureImageContainerStyle}>
+        <div style={heroStyle}>
           <img
-            src={require('../../../assets/planner_screenshot.jpg')}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            src={require('../../../assets/sky_clean_blur_extended.jpg')}
+            style={styles.backgroundImage2}
           />
+
+          <div style={heroTextContainerStyle}>
+            <h1 style={h1Style}>Welcome to PlanMe</h1>
+            <h2 style={h2Style}>
+              A intuitive database, planner and invoicing application for{' '}
+              <span style={{ color: theme.colors.lightBlue }}>
+                window cleaning professionals
+              </span>
+              . Purpose built to streamline your business and improve profits.
+            </h2>
+
+            <div style={buttonContainerStyle}>
+              <Button
+                text="Get Started"
+                onPress={handleSignUp}
+                backgroundColor={theme.colors.plannerPrimary}
+                width={200}
+              />
+            </div>
+          </div>
+
+          {isLargeWeb ? <div style={styles.imageContainer}></div> : null}
         </div>
 
-        <div style={featureTextContainerStyle}>
-          <p style={styles.featureHeadingStyle}>Features</p>
-
-          <div style={styles.featureCard}>
+        <div style={featuresContainerStyle} id="features">
+          <div style={featureImageContainerStyle}>
             <img
-              src={require('../../../assets/calender_red.png')}
-              style={{ width: 50, height: 50, padding: '20px' }}
+              src={require('../../../assets/planner_screenshot.jpg')}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
-            <div style={styles.featureCardTextContainer}>
-              <p style={styles.featureTitle}>Planner</p>
-              <p style={featureTextStyle}>
-                Simple planner system that schedules one off or recurring
-                rounds. Rounds can be rescheduled easily from a computer or
-                mobile device.
-              </p>
-            </div>
           </div>
 
-          <div style={styles.featureCard}>
-            <img
-              src={require('../../../assets/graph.png')}
-              style={{ width: 50, height: 50, padding: '20px' }}
-            />
-            <div style={styles.featureCardTextContainer}>
-              <p style={styles.featureTitle}>Business Stastistics</p>
-              <p style={featureTextStyle}>
-                Track your business performance with our easy to use statistics
-                page. Real time updates of your NET income, average price per
-                hour and more.
-              </p>
-            </div>
-          </div>
+          <div style={featureTextContainerStyle}>
+            <p style={styles.featureHeadingStyle}>Features</p>
 
-          <div style={styles.featureCard}>
-            <img
-              src={require('../../../assets/automate.png')}
-              style={{ width: 50, height: 50, padding: '20px' }}
-            />
-            <div style={styles.featureCardTextContainer}>
-              <p style={styles.featureTitle}>Automatied Invoicing</p>
-              <p style={featureTextStyle}>
-                Automated invoice generation and payment tracking. Email PDF
-                invoices to clients from any device.
-              </p>
+            <div style={styles.featureCard}>
+              <img
+                src={require('../../../assets/calender_red.png')}
+                style={{ width: 50, height: 50, padding: '20px' }}
+              />
+              <div style={styles.featureCardTextContainer}>
+                <p style={styles.featureTitle}>Planner</p>
+                <p style={featureTextStyle}>
+                  Simple planner system that schedules one off or recurring
+                  rounds. Rounds can be rescheduled easily from a computer or
+                  mobile device.
+                </p>
+              </div>
+            </div>
+
+            <div style={styles.featureCard}>
+              <img
+                src={require('../../../assets/graph.png')}
+                style={{ width: 50, height: 50, padding: '20px' }}
+              />
+              <div style={styles.featureCardTextContainer}>
+                <p style={styles.featureTitle}>Business Stastistics</p>
+                <p style={featureTextStyle}>
+                  Track your business performance with our easy to use
+                  statistics page. Real time updates of your NET income, average
+                  price per hour and more.
+                </p>
+              </div>
+            </div>
+
+            <div style={styles.featureCard}>
+              <img
+                src={require('../../../assets/automate.png')}
+                style={{ width: 50, height: 50, padding: '20px' }}
+              />
+              <div style={styles.featureCardTextContainer}>
+                <p style={styles.featureTitle}>Automatied Invoicing</p>
+                <p style={featureTextStyle}>
+                  Automated invoice generation and payment tracking. Email PDF
+                  invoices to clients from any device.
+                </p>
+              </div>
             </div>
           </div>
         </div>
+
+        <div style={styles.footer}>
+          <p style={styles.footerTitle}>PlanME</p>
+          <a
+            style={styles.footerText}
+            onClick={() => {
+              navigation.navigate('PrivacyPolicy')
+            }}
+          >
+            Privacy Policy
+          </a>
+
+          <a style={styles.footerText} href="mailto:planmewindows@gmail.com">
+            Support
+          </a>
+
+          <a style={styles.footerText} href="mailto:planmewindows@gmail.com">
+            planmewindows@gmail.com
+          </a>
+        </div>
       </div>
-
-      <div style={styles.footer}>
-        <p style={styles.footerTitle}>PlanME</p>
-        <a
-          style={styles.footerText}
-          onClick={() => {
-            navigation.navigate('PrivacyPolicy')
-          }}
-        >
-          Privacy Policy
-        </a>
-
-        <a style={styles.footerText} href="mailto:planmewindows@gmail.com">
-          Support
-        </a>
-
-        <a style={styles.footerText} href="mailto:planmewindows@gmail.com">
-          planmewindows@gmail.com
-        </a>
-      </div>
-    </section>
+    </ScrollView>
   )
 }
+
+const nativeStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    background: '#2272ab',
+    overflowX: 'hidden',
+  },
+})
 
 const styles: { [key: string]: CSSProperties } = {
   container: {
@@ -198,17 +210,20 @@ const styles: { [key: string]: CSSProperties } = {
     zIndex: 0,
     opacity: 0.2,
     objectFit: 'cover',
+    overflow: 'hidden',
   },
   nav: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    overflow: 'hidden',
   },
   logo: {
     paddingLeft: '30px',
     paddingRight: '20px',
     paddingTop: '10px',
     paddingBottom: '10px',
+    overflow: 'hidden',
   },
   logoSmall: {
     width: '100%',
@@ -218,6 +233,7 @@ const styles: { [key: string]: CSSProperties } = {
     paddingBottom: '10px',
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'hidden',
   },
   navItems: {
     display: 'flex',
@@ -225,6 +241,7 @@ const styles: { [key: string]: CSSProperties } = {
     alignItems: 'center',
     gap: '30px',
     paddingRight: '30px',
+    overflow: 'hidden',
   },
   navItem: {
     color: 'white',
@@ -232,6 +249,7 @@ const styles: { [key: string]: CSSProperties } = {
     fontFamily: 'Roboto_400Regular',
     minWidth: '80px',
     cursor: 'pointer',
+    overflow: 'hidden',
   },
   hero: {
     position: 'relative',
@@ -262,6 +280,7 @@ const styles: { [key: string]: CSSProperties } = {
     marginBottom: 0,
     marginLeft: 5,
     marginRight: 5,
+    overflow: 'hidden',
   },
   heroTextContaineSmall: {
     width: '100%',
@@ -276,6 +295,7 @@ const styles: { [key: string]: CSSProperties } = {
     marginLeft: 15,
     marginRight: 15,
     zIndex: 2,
+    overflow: 'hidden',
   },
   h1: {
     fontFamily: 'Roboto_700Bold',
@@ -286,6 +306,7 @@ const styles: { [key: string]: CSSProperties } = {
     marginLeft: 30,
     marginRight: 15,
     padding: 0,
+    overflow: 'hidden',
   },
   h1Small: {
     fontFamily: 'Roboto_700Bold',
@@ -298,19 +319,23 @@ const styles: { [key: string]: CSSProperties } = {
     padding: 0,
     textAlign: 'center',
     width: '100%',
+    overflow: 'hidden',
   },
   h2: {
     color: 'white',
     fontFamily: 'Roboto_300Light',
     fontSize: '20px',
     marginLeft: 30,
+    overflow: 'hidden',
   },
+
   h2Small: {
     color: 'white',
     fontFamily: 'Roboto_300Light',
     fontSize: '18px',
     textAlign: 'center',
     marginLeft: 0,
+    overflow: 'hidden',
   },
   buttonContainer: {
     display: 'flex',
@@ -320,6 +345,7 @@ const styles: { [key: string]: CSSProperties } = {
     gap: '20px',
     marginTop: 20,
     marginLeft: 30,
+    overflow: 'hidden',
   },
   buttonContainerSmall: {
     display: 'flex',
@@ -337,12 +363,14 @@ const styles: { [key: string]: CSSProperties } = {
     justifyContent: 'center',
     alignItems: 'center',
     width: '35%',
+    overflow: 'hidden',
   },
   imageContainerSmall: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    overflow: 'hidden',
   },
   image: {
     width: '100%',
@@ -359,6 +387,7 @@ const styles: { [key: string]: CSSProperties } = {
     zIndex: 0,
     opacity: 1,
     objectFit: 'contain',
+    overflow: 'hidden',
   },
   featuresContainer: {
     position: 'relative',
@@ -423,6 +452,7 @@ const styles: { [key: string]: CSSProperties } = {
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: 'red',
+    overflow: 'hidden',
   },
   featureHeadingSmall: {
     fontFamily: 'Roboto_700Bold',
@@ -435,6 +465,7 @@ const styles: { [key: string]: CSSProperties } = {
     marginRight: 0,
     textAlign: 'center',
     width: '100%',
+    overflow: 'hidden',
   },
   featureTextContainer: {
     width: '550px',
@@ -447,6 +478,7 @@ const styles: { [key: string]: CSSProperties } = {
     marginBottom: 0,
     marginLeft: 0,
     marginRight: 0,
+    overflow: 'hidden',
   },
   featureTextContaineSmall: {
     width: '100%',
@@ -462,6 +494,7 @@ const styles: { [key: string]: CSSProperties } = {
     marginRight: 15,
     gap: '20px',
     zIndex: 2,
+    overflow: 'hidden',
   },
   featureHeadingStyle: {
     fontFamily: 'Roboto_700Bold',
@@ -472,6 +505,7 @@ const styles: { [key: string]: CSSProperties } = {
     marginLeft: 0,
     marginRight: 0,
     padding: 0,
+    overflow: 'hidden',
   },
   featureCard: {
     display: 'flex',
@@ -486,6 +520,7 @@ const styles: { [key: string]: CSSProperties } = {
     paddingBottom: 6,
     marginLeft: 10,
     marginRight: 10,
+    overflow: 'hidden',
   },
   featureCardTextContainer: {
     margin: 0,
@@ -493,6 +528,7 @@ const styles: { [key: string]: CSSProperties } = {
     paddingTop: 5,
     paddingBottom: 5,
     marginRight: '5px',
+    overflow: 'hidden',
   },
   featureTitle: {
     fontFamily: 'Roboto_700Bold',
@@ -503,6 +539,7 @@ const styles: { [key: string]: CSSProperties } = {
     marginLeft: 0,
     marginRight: 0,
     padding: 0,
+    overflow: 'hidden',
   },
   featureText: {
     fontFamily: 'Roboto_400Regular',
@@ -530,13 +567,14 @@ const styles: { [key: string]: CSSProperties } = {
   },
   footer: {
     width: '100vw',
-    height: '200px',
+    height: '250px',
     background: theme.colors.tertiaryBlue,
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
     flexDirection: 'column',
     gap: 2,
+    overflow: 'hidden',
   },
   footerTitle: {
     fontFamily: 'Roboto_700Bold',
