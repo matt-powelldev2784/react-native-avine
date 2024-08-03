@@ -20,6 +20,8 @@ import {
   ClientMenuScreen,
   JobMenuScreen,
   BusinessStatsScreen,
+  StaticSiteScreen,
+  PrivacyPolicyScreen,
 } from '../../screens'
 import Planner from '../../screens/planner/Planner'
 import { useAuth } from '../../components/auth/AuthProvider'
@@ -37,6 +39,8 @@ export type RootStackParamList = {
   Home: undefined
   Error: undefined
   BusinessStats: undefined
+  PlanMe: undefined
+  PrivacyPolicy: undefined
 
   //clients
   Clients: { refresh?: boolean } | undefined
@@ -126,10 +130,28 @@ const StackNavigator = () => {
 
           {/* --------------------------  Auth Screens Screens  ------------------- */}
           <Stack.Screen name="SignOut" component={SignOutScreen} />
+          <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
         </>
       ) : (
         <>
-          <Stack.Screen name="SignIn" component={SignInScreen} />
+          {Platform.OS === 'web' ? (
+            <>
+              <Stack.Screen name="PlanMe" component={StaticSiteScreen} />
+              <Stack.Screen
+                name="PrivacyPolicy"
+                component={PrivacyPolicyScreen}
+              />
+              <Stack.Screen name="SignIn" component={SignInScreen} />
+            </>
+          ) : (
+            <>
+              <Stack.Screen name="SignIn" component={SignInScreen} />
+              <Stack.Screen
+                name="PrivacyPolicy"
+                component={PrivacyPolicyScreen}
+              />
+            </>
+          )}
         </>
       )}
     </Stack.Navigator>

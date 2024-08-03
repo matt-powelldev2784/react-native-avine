@@ -6,6 +6,8 @@ import SignOutScreen from './auth/SignOutScreen'
 import BusinessStatsScreen from './businessStats/BusinessStatsScreen'
 import Home from './home/Home'
 import Error from './error/Error'
+import StaticSiteScreen from './staticSite/StaticSiteScreen'
+import PrivacyPolicyScreen from './staticSite/PrivacyPolicyScreen'
 
 //clients
 import ClientMenuScreen from './clients/ClientMenuScreen'
@@ -31,6 +33,8 @@ import InvoiceListView from './invoices/InvoiceListView'
 import EditInvoice from './invoices/EditInvoice'
 
 export {
+  PrivacyPolicyScreen,
+  StaticSiteScreen,
   BusinessStatsScreen,
   RoundMenu,
   ClientMenuScreen,

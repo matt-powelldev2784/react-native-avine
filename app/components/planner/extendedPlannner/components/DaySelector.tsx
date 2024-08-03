@@ -49,7 +49,11 @@ const DaySelector = ({ day }: DaySelectorProps) => {
         <View>
           <Image
             source={require('../../../../../assets/dot_green.png')}
-            style={{ width: 7, height: 7, marginVertical: 3 }}
+            style={{
+              width: 7,
+              height: 7,
+              marginVertical: 3,
+            }}
           />
         </View>
       ) : (
