@@ -18,6 +18,13 @@ const HomePage = () => {
     navigation.navigate('SignIn')
   }
 
+  const handleFeaturesClick = () => {
+    const featuresSection = document.getElementById('features')
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   const logoStyle = isLargeWeb ? styles.logo : styles.logoSmall
   const h1Style = isLargeWeb ? styles.h1 : styles.h1Small
   const h2Style = isLargeWeb ? styles.h2 : styles.h2Small
@@ -45,20 +52,21 @@ const HomePage = () => {
 
   return (
     <section style={styles.container}>
-      {/* <img
-        src={require('../../../assets/sky_clean_blur.jpg')}
-        style={styles.backgroundImage}
-      /> */}
-
       <nav style={styles.nav}>
         <div style={logoStyle}>
           <PlanMeLogo width={200} height={48} />
         </div>
         {isLargeWeb ? (
           <div style={styles.navItems}>
-            <p style={styles.navItem}>FEATURES</p>
-            <p style={styles.navItem}>SIGN UP</p>
-            <p style={styles.navItem}>LOGIN</p>
+            <a style={styles.navItem} onClick={handleFeaturesClick}>
+              FEARTURES
+            </a>
+            <a style={styles.navItem} onClick={handleSignUp}>
+              SIGN UP
+            </a>
+            <p style={styles.navItem} onClick={handleSignUp}>
+              LOGIN
+            </p>
           </div>
         ) : null}
       </nav>
@@ -92,7 +100,7 @@ const HomePage = () => {
         {isLargeWeb ? <div style={styles.imageContainer}></div> : null}
       </div>
 
-      <div style={featuresContainerStyle}>
+      <div style={featuresContainerStyle} id="features">
         <div style={featureImageContainerStyle}>
           <img
             src={require('../../../assets/planner_screenshot.jpg')}
@@ -151,7 +159,7 @@ const HomePage = () => {
 
       <div style={styles.footer}>
         <p style={styles.footerTitle}>PlanME</p>
-        <p style={styles.footerText}>Privacy Policy</p>
+        <a style={styles.footerText}>Privacy Policy</a>
         <p style={styles.footerText}>Terms of Service</p>
         <p style={styles.footerText}>Support</p>
       </div>
@@ -208,6 +216,7 @@ const styles: { [key: string]: CSSProperties } = {
     fontSize: '20px',
     fontFamily: 'Roboto_400Regular',
     minWidth: '80px',
+    cursor: 'pointer',
   },
   hero: {
     position: 'relative',
@@ -215,7 +224,8 @@ const styles: { [key: string]: CSSProperties } = {
     justifyContent: 'space-evenly',
     alignItems: 'center',
     flexDirection: 'row',
-    minHeight: '70vh',
+    height: '70vh',
+    minHeight: '500px',
     overflow: 'hidden',
   },
   heroSmall: {
@@ -257,7 +267,7 @@ const styles: { [key: string]: CSSProperties } = {
     fontSize: '38px',
     color: theme.colors.lightBlue,
     marginTop: 30,
-    marginBottom: 40,
+    marginBottom: 0,
     marginLeft: 30,
     marginRight: 15,
     padding: 0,
@@ -341,7 +351,8 @@ const styles: { [key: string]: CSSProperties } = {
     justifyContent: 'space-evenly',
     alignItems: 'center',
     flexDirection: 'row',
-    minHeight: '70vh',
+    height: '70vh',
+    minHeight: '500px',
     overflow: 'hidden',
     marginLeft: 20,
     marginRight: 20,
@@ -387,13 +398,16 @@ const styles: { [key: string]: CSSProperties } = {
   },
   featureHeading: {
     fontFamily: 'Roboto_700Bold',
-    fontSize: '38px',
+    fontSize: '24px',
     color: theme.colors.lightBlue,
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 0,
     marginRight: 0,
     padding: 0,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'red',
   },
   featureHeadingSmall: {
     fontFamily: 'Roboto_700Bold',
@@ -436,7 +450,7 @@ const styles: { [key: string]: CSSProperties } = {
   },
   featureHeadingStyle: {
     fontFamily: 'Roboto_700Bold',
-    fontSize: '38px',
+    fontSize: '30px',
     color: theme.colors.lightBlue,
     marginTop: 0,
     marginBottom: 0,
@@ -513,7 +527,7 @@ const styles: { [key: string]: CSSProperties } = {
     fontSize: 20,
     color: theme.colors.lightBlue,
     textAlign: 'right',
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 5,
     paddingRight: 20,
   },
