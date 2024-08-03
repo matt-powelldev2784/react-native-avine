@@ -7,11 +7,18 @@ import * as WebBrowser from 'expo-web-browser'
 import GoogleLoginButton from '../../../components/auth/components/GoogleLoginButton'
 import theme from '../../../utils/theme/theme'
 import Button from '../../../ui/button/Button'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../../screens/stackNavigator/StackNavigator'
 
 const SignIn = () => {
   const { signIn } = useAuth()
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const handleCreateGoogleAccount = () => {
     WebBrowser.openBrowserAsync('https://accounts.google.com/signup')
+  }
+  const handleHomeClick = () => {
+    navigation.navigate('Home')
   }
 
   return (
@@ -27,6 +34,13 @@ const SignIn = () => {
       <GoogleLoginButton signInFn={signIn} />
 
       <View style={styles.linkContainer}>
+        <Button
+          text="Go back"
+          onPress={handleHomeClick}
+          backgroundColor={theme.colors.buttonSecondary}
+          height={40}
+        />
+
         <Button
           text="Create Google Account"
           onPress={handleCreateGoogleAccount}
