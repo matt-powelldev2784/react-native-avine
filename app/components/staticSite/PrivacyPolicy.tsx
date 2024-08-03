@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Platform, ScrollView } from 'react-native'
 import React from 'react'
 import theme from '../../utils/theme/theme'
 import { useNavigation } from '@react-navigation/native'
@@ -24,7 +24,13 @@ const PrivacyPolicy = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+      }}
+    >
       <View style={navStyle}>
         <View style={styles.logo}>
           <PlanMeLogo width={200} height={48} />
@@ -38,7 +44,7 @@ const PrivacyPolicy = () => {
           />
         </View>
       </View>
-      <Text style={styles.title}>Privacy Policy for Plan Me</Text>
+
       <Text style={styles.title}>Privacy Policy</Text>
       <Text style={styles.text}>Last updated: August 03, 2024</Text>
       <Text style={styles.text}>
@@ -299,19 +305,18 @@ const PrivacyPolicy = () => {
         If you have any questions about this Privacy Policy, You can contact us:
         By email: planmewindows@gmail.com
       </Text>
-      <View style={{ height: 20, opacity: 0 }}>
+      <View style={{ height: 80, opacity: 0 }}>
         <Text>.</Text>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
     backgroundColor: theme.colors.primary,
     paddingHorizontal: 16,
+    paddingTop: Platform.OS === 'web' ? 0 : 20,
   },
   title: {
     fontSize: 24,
@@ -332,22 +337,22 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: '100%',
     paddingHorizontal: 16,
-    margin: 0,
+    marginTop: 16,
   },
   navMobile: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: Platform.OS === 'web' ? 'column' : 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: 2,
     width: '100%',
+    gap: 10,
     paddingHorizontal: 16,
-    margin: 0,
+    marginTop: 30,
+    marginBottom: 10,
   },
   logo: {
-    paddingTop: 15,
-    paddingBottom: 15,
+    paddingTop: 5,
+    paddingBottom: 0,
   },
   navItems: {
     display: 'flex',
