@@ -42,6 +42,7 @@ export const addRecurringData = async ({
     await setDoc(recurringRoundDocRef, {
       roundId: roundId,
       startDate: date,
+      lastDateBooked: recurringDates[recurringDates.length - 1],
       frequency: round.frequency,
       recurringDates: recurringDates,
     })
