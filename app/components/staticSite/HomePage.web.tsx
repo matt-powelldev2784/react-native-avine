@@ -172,8 +172,12 @@ const HomePage = () => {
           Privacy Policy
         </a>
 
-        <a style={styles.footerText} onClick={() => {}}>
+        <a style={styles.footerText} href="mailto:planmewindows@gmail.com">
           Support
+        </a>
+
+        <a style={styles.footerText} href="mailto:planmewindows@gmail.com">
+          planmewindows@gmail.com
         </a>
       </div>
     </section>
@@ -532,6 +536,7 @@ const styles: { [key: string]: CSSProperties } = {
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
     flexDirection: 'column',
+    gap: 2,
   },
   footerTitle: {
     fontFamily: 'Roboto_700Bold',
@@ -550,6 +555,7 @@ const styles: { [key: string]: CSSProperties } = {
     margin: 0,
     marginBottom: 4,
     cursor: 'pointer',
+    textDecoration: 'none',
   },
 }
 
