@@ -6,6 +6,7 @@ import PlanMeLogo from '../../../components/PlanMeLogo/PlanMeLogo'
 import * as WebBrowser from 'expo-web-browser'
 import GoogleLoginButton from '../../../components/auth/components/GoogleLoginButton'
 import theme from '../../../utils/theme/theme'
+import Button from '../../../ui/button/Button'
 
 const SignIn = () => {
   const { signIn } = useAuth()
@@ -14,19 +15,32 @@ const SignIn = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
         <PlanMeLogo />
-        <Text style={styles.text}>Quick and Simple Round Planner</Text>
+        <Text style={styles.text}>
+          Database, planner and invoicing application for window cleaning
+          professionals.
+        </Text>
       </View>
 
       <GoogleLoginButton signInFn={signIn} />
 
-      <Text
-        style={styles.linkText}
-        onPress={() =>
-          WebBrowser.openBrowserAsync('https://accounts.google.com/signup')
-        }
-      >
-        Create a Google Account
-      </Text>
+      <View style={styles.linkContainer}>
+        <Button
+          text="Create Google Account"
+          onPress={() => {}}
+          backgroundColor={theme.colors.plannerPrimary}
+          height={35}
+        />
+
+        <Text
+          style={styles.linkText}
+          onPress={() =>
+            WebBrowser.openBrowserAsync('https://accounts.google.com/signup')
+          }
+        >
+          If you do not have a google account, create a new one here and login
+          using your google credientials.
+        </Text>
+      </View>
     </SafeAreaView>
   )
 }
@@ -50,12 +64,23 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     padding: 8,
+    textAlign: 'center',
+    fontFamily: 'Roboto_400Regular',
+  },
+  linkContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
   },
   linkText: {
     color: 'white',
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: 'bold',
     marginBottom: 16,
+    fontFamily: 'Roboto_300Light',
+    textAlign: 'center',
+    paddingHorizontal: 16,
+    cursor: 'pointer',
   },
 })
 
