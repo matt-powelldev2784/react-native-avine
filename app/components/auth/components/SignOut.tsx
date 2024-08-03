@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     gap: 20,
     padding: 4,
     backgroundColor: theme.colors.primary,
+    minHeight: 500,
   },
   logoContainer: {
     alignItems: 'center',
