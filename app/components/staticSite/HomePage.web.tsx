@@ -9,7 +9,6 @@ import { useWindowDimensions } from 'react-native'
 const HomePage = () => {
   const { isLargeWeb } = useDeviceType()
   const { width } = useWindowDimensions()
-  console.log('width', width)
 
   const logoStyle = isLargeWeb ? styles.logo : styles.logoSmall
   const h1Style = isLargeWeb ? styles.h1 : styles.h1Small
@@ -98,7 +97,7 @@ const HomePage = () => {
 
           <div style={styles.featureCard}>
             <img
-              src={require('../../../assets/calendar_icon_large.png')}
+              src={require('../../../assets/calender_red.png')}
               style={{ width: 50, height: 50, padding: '20px' }}
             />
             <div style={styles.featureCardTextContainer}>
@@ -113,7 +112,7 @@ const HomePage = () => {
 
           <div style={styles.featureCard}>
             <img
-              src={require('../../../assets/calendar_icon_large.png')}
+              src={require('../../../assets/graph.png')}
               style={{ width: 50, height: 50, padding: '20px' }}
             />
             <div style={styles.featureCardTextContainer}>
@@ -128,7 +127,7 @@ const HomePage = () => {
 
           <div style={styles.featureCard}>
             <img
-              src={require('../../../assets/calendar_icon_large.png')}
+              src={require('../../../assets/automate.png')}
               style={{ width: 50, height: 50, padding: '20px' }}
             />
             <div style={styles.featureCardTextContainer}>
