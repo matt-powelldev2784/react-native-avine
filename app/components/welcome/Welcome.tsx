@@ -3,12 +3,19 @@ import React from 'react'
 import theme from '../../utils/theme/theme'
 import { useAuth } from '../auth/AuthProvider'
 import InstructionBox from './components/InstructionBox'
+import Button from '../../ui/button/Button'
+import { updateRecurringEntriesWithLessThanOneYeaLeft } from '../../db/planner/extendedRecurringEntires/getRecurringEntriesWithLessThanOneYeaLeft'
 
 const Welcome = () => {
   const { userInfo } = useAuth()
 
+  const test = async () => {
+    return await updateRecurringEntriesWithLessThanOneYeaLeft()
+  }
+
   return (
     <View style={styles.container}>
+      <Button text={'test'} onPress={test} />
       <View style={styles.flexContainer}>
         <Image
           source={require('../../../assets/hi.png')}
