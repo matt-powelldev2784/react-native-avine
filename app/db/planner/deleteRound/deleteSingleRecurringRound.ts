@@ -15,6 +15,8 @@ export const deleteSingleRecurringRound = async ({
       if (auth.currentUser === null) {
         return
       }
+
+      console.log('delete date', date)
       // get planner document
       const plannerDocRef = doc(
         db,
@@ -82,6 +84,9 @@ export const deleteSingleRecurringRound = async ({
       )
     })
   } catch (error) {
-    console.error(`Error removing round ${roundId} from db`, error)
+    console.error(
+      `Error removing round ${roundId} from db at deleteSingleRecurringRound route: `,
+      error,
+    )
   }
 }

@@ -3,6 +3,7 @@ import { db, auth } from '../../../../firebaseConfig'
 import { getRound } from '../../rounds/getRound'
 import { getRecurringDatesTwoYearsAhead } from '../../../utils/getRecurringDates2YearsAhead'
 import { convertDbDateToDateString } from '../../../utils/convertDbDateToDateString'
+import { authError } from '../../authError'
 
 interface addRecurringRoundT {
   roundId: string
@@ -11,13 +12,13 @@ interface addRecurringRoundT {
 }
 
 //add recurring data to recurring data collection
-export const addRecurringData = async ({
+export const updateRecurringData = async ({
   recurringRound,
   roundId,
   date,
 }: addRecurringRoundT) => {
-  if (auth.currentUser === null) {
-    return
+  if (!auth.currentUser) {
+    return authError({ filename: 'updateRecurringData' })
   }
 
   try {
@@ -35,10 +36,30 @@ export const addRecurringData = async ({
 
     const round = await getRound(roundId)
     if (!round) {
-      return
+      throw Error('Round document does not exist at updateRecurringData')
     }
 
-    const recurringDates = getRecurringDatesTwoYearsAhead(date, round.frequency)
+    const recurringRoundDoc = await getDoc(recurringRoundDocRef)
+
+    if (!recurringRoundDoc.exists()) {
+      throw Error(
+        'Recurring round document does not exist at updateRecurringData',
+      )
+    }
+
+    const currentRecurringRoundDates = recurringRoundDoc.data().recurringDates
+    console.log('currentRecurringRoundDates', currentRecurringRoundDates)
+
+    const newRecurringDates = getRecurringDatesTwoYearsAhead(
+      date,
+      round.frequency,
+    )
+
+    const mergedRecurringDates = [
+      ...currentRecurringRoundDates,
+      ...newRecurringDates,
+    ]
+    console.log('mergedRecurringDates', mergedRecurringDates)
 
     const createTimeStanp = (date: string) => {
       const dateString = convertDbDateToDateString(date)
@@ -46,7 +67,7 @@ export const addRecurringData = async ({
       return timestamp
     }
     const lastDateBooked = createTimeStanp(
-      recurringDates[recurringDates.length - 1],
+      newRecurringDates[newRecurringDates.length - 1],
     )
 
     await setDoc(recurringRoundDocRef, {
@@ -54,13 +75,15 @@ export const addRecurringData = async ({
       startDate: date,
       lastDateBooked: lastDateBooked,
       frequency: round.frequency,
-      recurringDates: recurringDates,
+      recurringDates: mergedRecurringDates,
     })
 
-    const recurringRoundDoc = await getDoc(recurringRoundDocRef)
-    const recurringRoundData = recurringRoundDoc.data()
+    const updatedrecurringRoundDoc = await getDoc(recurringRoundDocRef)
+    const recurringRoundData = updatedrecurringRoundDoc.data()
     return recurringRoundData
   } catch (error) {
-    return { error }
+    throw new Error(
+      `Error updating recurring data at updateRecurringData route: ${error}`,
+    )
   }
 }

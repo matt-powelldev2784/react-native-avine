@@ -4,14 +4,21 @@ import { addOneOffRound } from './addOneOffRound'
 import { addRecurringData } from './addRecurringData'
 import { checkIfRecurringRoundExists } from '../getRoundsByPlannerDate/checkIfRecurringRoundExists'
 import { deleteAllRecurringRounds } from '../deleteRound/deleteAllRecurrringRounds'
+import { updateRecurringData } from './updateRecurringData'
 
 interface planInfoT {
   roundId: string
   date: string
   recurring: boolean
+  skipDeleteRecurringRounds?: boolean
 }
 
-export const addRound = async ({ recurring, roundId, date }: planInfoT) => {
+export const addRound = async ({
+  recurring,
+  roundId,
+  date,
+  skipDeleteRecurringRounds,
+}: planInfoT) => {
   if (auth.currentUser === null) {
     return
   }
@@ -21,15 +28,25 @@ export const addRound = async ({ recurring, roundId, date }: planInfoT) => {
     if (recurring) {
       const roundExistsData = await checkIfRecurringRoundExists({ roundId })
       const roundExists = roundExistsData?.recurringRoundExists || false
-      if (roundExists) {
+      if (roundExists && !skipDeleteRecurringRounds) {
         await deleteAllRecurringRounds({ roundId })
       }
 
-      const recurringData = await addRecurringData({
-        recurringRound: recurring,
-        roundId,
-        date,
-      })
+      let recurringData
+
+      if (!skipDeleteRecurringRounds) {
+        recurringData = await addRecurringData({
+          recurringRound: recurring,
+          roundId,
+          date,
+        })
+      } else {
+        recurringData = await updateRecurringData({
+          recurringRound: recurring,
+          roundId,
+          date,
+        })
+      }
 
       if (!recurringData) {
         throw new Error('No recurring data')
