@@ -15,6 +15,7 @@ interface ConfirmModalProps {
   modalText: string
   modalText2?: string
   modalText3?: string
+  modalText4?: string
   isLoading?: boolean
 }
 
@@ -23,6 +24,7 @@ const PleaseWaitModal = ({
   modalText,
   modalText2,
   modalText3,
+  modalText4,
 }: ConfirmModalProps) => {
   //variables
   const windowWidth = useWindowDimensions().width
@@ -34,14 +36,18 @@ const PleaseWaitModal = ({
       <View style={styles.centeredView}>
         <View style={[styles.modalView, { maxWidth: modalWidth }]}>
           {/********************************** Text ***********************************/}
-          <Text style={styles.modalText}>{modalText}</Text>
+          <Text style={styles.modalTextBold}>{modalText}</Text>
 
           {modalText2 ? (
-            <Text style={styles.modalText}>{modalText2}</Text>
+            <Text style={styles.modalTextBold}>{modalText2}</Text>
           ) : null}
 
           {modalText3 ? (
             <Text style={styles.modalText}>{modalText3}</Text>
+          ) : null}
+
+          {modalText4 ? (
+            <Text style={styles.modalText}>{modalText4}</Text>
           ) : null}
 
           <Progress.Bar width={200} indeterminate={true} />
@@ -117,6 +123,13 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
     fontFamily: 'Roboto_400Regular',
+  },
+  modalTextBold: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontFamily: 'Roboto_700Bold',
+    color: theme.colors.primary,
+    fontSize: 18,
   },
 })
 
